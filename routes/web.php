@@ -21,6 +21,46 @@ Route::get('/', function () {
     return Inertia::render('Home');
 })->name('landing');
 
+Route::prefix('book')->name('book.')->group(function () {
+    Route::get('/quote', function () {
+        return Inertia::render('Book/QuotePage');
+    })->name('quote');
+
+    Route::get('/repair', function () {
+        return Inertia::render('Book/RepairPage');
+    })->name('repair');
+    Route::get('/service', function () {
+        return Inertia::render('Book/ServicePage', [
+            'pageTitle' => 'Book a Service',
+        ]);
+    })->name('service');
+
+    Route::get('/power-flush', function () {
+        return Inertia::render('Book/PowerFlushPage', [
+            'pageTitle' => 'Book Power Flush',
+        ]);
+    })->name('powerflush');
+});
+
+Route::get('/about', function () {
+    return Inertia::render('About/AboutPage', [
+        'pageTitle' => 'About Us',
+    ]);
+})->name('about');
+
+Route::inertia('/privacy-policy', 'PrivacyPolicyPage', [
+    'pageTitle' => 'Privacy Policy',
+])->name('privacy.policy');
+
+Route::inertia('/terms-conditions', 'TermsConditionsPage', [
+    'pageTitle' => 'Terms & Conditions',
+])->name('terms.conditions');
+
+
+
+
+// Route::post('/repair/submit', [RepairController::class, 'store']);
+
 
 
 //Authenticated Routes
@@ -35,4 +75,4 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';

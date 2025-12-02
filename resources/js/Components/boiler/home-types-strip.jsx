@@ -29,7 +29,7 @@ export function HomeTypesStrip() {
   return (
     <section className="border-y border-border bg-card py-8">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <p className="mb-6 text-center text-sm font-medium uppercase tracking-wider text-muted-foreground">
+        <p className="mb-6 text-center text-md font-semibold uppercase tracking-wider text-muted-foreground">
           We service all home types
         </p>
         <div className="grid grid-cols-2 gap-4 sm:grid-cols-4 sm:gap-8">

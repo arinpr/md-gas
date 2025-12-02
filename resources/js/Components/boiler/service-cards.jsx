@@ -8,7 +8,7 @@ const services = [
         id: "repair",
         title: "Boiler Repair",
         description: "Fixed £75 labour charge for all repairs. Fast, professional service to get your heating back on.",
-        image: "/images/ideal-20logic.png",
+        image: "/images/boler image.jpg",
         buttonText: "Book Repair",
         highlight: "£75 Fixed Labour",
         href: "/book/repair",
@@ -17,7 +17,7 @@ const services = [
         id: "service",
         title: "Boiler Service",
         description: "Annual servicing from £75. Keep your boiler running efficiently and safely.",
-        image: "/images/baxi-20-20any.webp",
+        image: "/images/Boiler Service img.jpg",
         buttonText: "Book Service",
         highlight: "From £75",
         href: "/book/service",
@@ -26,7 +26,7 @@ const services = [
         id: "quote",
         title: "New Boiler Quote",
         description: "Competitive pricing with £750+ margin over wholesale costs. Get your instant quote.",
-        image: "/images/ideal-20atlantic.webp",
+        image: "/images/Boiler Quote new.webp",
         buttonText: "Get Quote",
         highlight: "Instant Pricing",
         href: "/book/quote",
@@ -35,7 +35,7 @@ const services = [
         id: "powerflush",
         title: "Power Flush",
         description: "Prices scale by radiator count. Remove sludge and restore system efficiency.",
-        image: "/images/standard-20included-20filter.webp",
+        image: "/images/powerflush.webp",
         buttonText: "Book Power Flush",
         highlight: "From £400",
         href: "/book/power-flush",
@@ -57,7 +57,7 @@ export function ServiceCards() {
                     {services.map((service) => (
                         <Card
                             key={service.id}
-                            className="group relative flex flex-col overflow-hidden transition-all duration-300 hover:shadow-xl hover:-translate-y-1 bg-card"
+                            className="group relative flex flex-col overflow-hidden transition-all duration-300 hover:shadow-xl hover:-translate-y-1 bg-card p-0"
                         >
                             <div className="absolute right-4 top-4 z-10 rounded-full bg-primary px-3 py-1 text-xs font-semibold text-primary-foreground">
                                 {service.highlight}
@@ -69,15 +69,15 @@ export function ServiceCards() {
                                     src={service.image || "/placeholder.svg"}
                                     alt={service.title}
                                     fill
-                                    className="object-contain p-4 transition-transform duration-300 group-hover:scale-105 max-w-[180px] mx-auto"
+                                    className="absolute inset-0 w-full h-full object-cover"
                                 />
                             </div>
 
-                            <CardHeader className="pb-2 pt-4">
+                            <CardHeader className="pb-0 pt-4">
                                 <CardTitle className="text-xl">{service.title}</CardTitle>
                             </CardHeader>
                             <CardContent className="flex-1">
-                                <CardDescription className="text-sm leading-relaxed">{service.description}</CardDescription>
+                                <CardDescription className="text-[14px] leading-relaxed">{service.description}</CardDescription>
                             </CardContent>
                             <CardFooter className="pt-2 pb-4">
                                 <Button asChild className="w-full gap-2 transition-all group-hover:gap-3">

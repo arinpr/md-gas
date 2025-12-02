@@ -1,7 +1,5 @@
-"use client"
-
-import Link from "next/link"
 import { useState } from "react"
+import { Link } from "@inertiajs/react"
 import { Button } from "@/components/ui/button"
 import { Menu, X, Phone, Flame } from "lucide-react"
 
@@ -18,6 +16,7 @@ export function PageHeader({ title }) {
   return (
     <header className="sticky top-0 z-50 border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <nav className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
+        
         {/* Logo */}
         <Link href="/" className="flex items-center gap-2">
           <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary">
@@ -45,6 +44,7 @@ export function PageHeader({ title }) {
             <Phone className="h-4 w-4 text-primary" />
             0800 123 4567
           </a>
+
           <Button asChild>
             <Link href="/book/quote">Get Quote</Link>
           </Button>
@@ -56,7 +56,6 @@ export function PageHeader({ title }) {
           className="inline-flex items-center justify-center rounded-md p-2 text-muted-foreground md:hidden"
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
         >
-          <span className="sr-only">Open main menu</span>
           {mobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
         </button>
       </nav>
@@ -65,6 +64,7 @@ export function PageHeader({ title }) {
       {mobileMenuOpen && (
         <div className="border-t border-border bg-background md:hidden">
           <div className="space-y-1 px-4 py-4">
+
             {navigation.map((item) => (
               <Link
                 key={item.name}
@@ -75,6 +75,7 @@ export function PageHeader({ title }) {
                 {item.name}
               </Link>
             ))}
+
             <div className="mt-4 border-t border-border pt-4">
               <a
                 href="tel:08001234567"
@@ -83,10 +84,12 @@ export function PageHeader({ title }) {
                 <Phone className="h-5 w-5 text-primary" />
                 0800 123 4567
               </a>
+
               <Button className="mt-2 w-full" asChild>
                 <Link href="/book/quote">Get Quote</Link>
               </Button>
             </div>
+
           </div>
         </div>
       )}
