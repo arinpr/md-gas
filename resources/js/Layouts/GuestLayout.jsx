@@ -1,211 +1,32 @@
-
-
 import { useState } from "react";
 import ApplicationLogo from "@/Components/ApplicationLogo";
 
-import { Flame, Phone, Mail, MapPin, Menu, X  } from "lucide-react"
+import { Flame, Phone, Menu, X } from "lucide-react";
 import { Link } from "@inertiajs/react";
 
 // Icons (update based on your setup)
 // import { Flame, Phone, Menu, X } from "lucide-react";
 import { Button } from "@/Components/ui/button"; // update if different
+import Header from "@/Components/boiler/header";
+import { Footer } from "@/Components/boiler/footer";
 
 export default function GuestLayout({ children }) {
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
     return (
-        <div className="flex min-h-screen flex-col bg-gray-100">
+        <div className="flex min-h-screen flex-col relative">
+            <Header />
 
-            <header className="relative z-20 border-b border-border/50 bg-card/80 backdrop-blur-sm">
-                <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 sm:px-6 lg:px-8">
-                    <Link href="/" className="flex items-center gap-2">
-                        <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary">
-                            <Flame className="h-6 w-6 text-primary-foreground" />
-                        </div>
-                        <span className="text-2xl font-bold text-foreground">MD Gas</span>
-                    </Link>
-
-                    <nav className="hidden items-center gap-6 md:flex">
-                        <a
-                            href="/#services"
-                            className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
-                        >
-                            Services
-                        </a>
-                        <Link
-                            href="/about"
-                            className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
-                        >
-                            About
-                        </Link>
-                        <a
-                            href="/#contact"
-                            className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
-                        >
-                            Contact
-                        </a>
-                    </nav>
-
-                    <div className="flex items-center gap-3">
-                        <img
-                            src="/images/511-5113277-gas-safe-register-logo-symbol-gas-safe-logo.png"
-                            alt="Gas Safe Register"
-                            width={40}
-                            height={40}
-                            className="hidden sm:block"
-                        />
-
-                        <Button size="sm" className="gap-2">
-                            <Phone className="h-4 w-4" />
-                            <span className="hidden sm:inline">Call Now</span>
-                        </Button>
-
-                        <button
-                            className="md:hidden p-2 text-muted-foreground hover:text-foreground"
-                            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                        >
-                            {mobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
-                        </button>
-                    </div>
-                </div>
-
-                {/* Mobile menu */}
-                {mobileMenuOpen && (
-                    <div className="md:hidden border-t border-border bg-card/95 backdrop-blur-sm">
-                        <nav className="flex flex-col px-4 py-4 space-y-3">
-                            <a
-                                href="/#services"
-                                className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground py-2"
-                                onClick={() => setMobileMenuOpen(false)}
-                            >
-                                Services
-                            </a>
-
-                            <Link
-                                href="/about"
-                                className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground py-2"
-                                onClick={() => setMobileMenuOpen(false)}
-                            >
-                                About
-                            </Link>
-
-                            <a
-                                href="/#contact"
-                                className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground py-2"
-                                onClick={() => setMobileMenuOpen(false)}
-                            >
-                                Contact
-                            </a>
-                        </nav>
-                    </div>
-                )}
-            </header>
             {/* <main className="flex flex-1 flex-col items-center pt-6 sm:justify-center sm:pt-0"> */}
-                {/* <div className="w-full max-w-md overflow-hidden bg-white px-6 py-4 shadow-md sm:rounded-lg">
+            {/* <div className="w-full max-w-md overflow-hidden bg-white px-6 py-4 shadow-md sm:rounded-lg">
                     {children}
                 </div> */}
-                  {children}
+            {children}
             {/* </main> */}
-
 
             {/* footer */}
 
-             <footer id="contact" className="border-t border-border bg-card">
-            <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
-                <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
-                    <div>
-                        <Link href="/" className="flex items-center gap-2">
-                            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary">
-                                <Flame className="h-5 w-5 text-primary-foreground" />
-                            </div>
-                            <span className="text-xl font-bold text-foreground">MD Gas</span>
-                        </Link>
-                        <p className="mt-4 text-sm text-muted-foreground">
-                            Professional boiler services for homes across the region. Gas Safe registered and fully insured.
-                        </p>
-                    </div>
-
-                    <div>
-                        <h4 className="mb-4 font-semibold text-foreground">Services</h4>
-                        <ul className="space-y-2 text-sm text-muted-foreground">
-                            <li>
-                                <Link href="/book/repair" className="hover:text-foreground transition-colors">
-                                    Boiler Repair
-                                </Link>
-                            </li>
-                            <li>
-                                <Link href="/book/service" className="hover:text-foreground transition-colors">
-                                    Annual Servicing
-                                </Link>
-                            </li>
-                            <li>
-                                <Link href="/book/quote" className="hover:text-foreground transition-colors">
-                                    New Installations
-                                </Link>
-                            </li>
-                            <li>
-                                <Link href="/book/power-flush" className="hover:text-foreground transition-colors">
-                                    Power Flush
-                                </Link>
-                            </li>
-                        </ul>
-                    </div>
-
-                    <div>
-                        <h4 className="mb-4 font-semibold text-foreground">Contact</h4>
-                        <ul className="space-y-3 text-sm text-muted-foreground">
-                            <li className="flex items-center gap-2">
-                                <Phone className="h-4 w-4 text-primary" />
-                                0800 123 4567
-                            </li>
-                            <li className="flex items-center gap-2">
-                                <Mail className="h-4 w-4 text-primary" />
-                                info@mdgas.co.uk
-                            </li>
-                            <li className="flex items-center gap-2">
-                                <MapPin className="h-4 w-4 text-primary" />
-                                Greater London Area
-                            </li>
-                        </ul>
-                    </div>
-
-                    <div>
-                        <h4 className="mb-4 font-semibold text-foreground">Accreditations</h4>
-                        <div className="flex flex-col gap-4">
-                            <img
-                                src="/images/511-5113277-gas-safe-register-logo-symbol-gas-safe-logo.png"
-                                alt="Gas Safe Register"
-                                className="w-20 h-auto"
-                            />
-                            <div className="flex flex-wrap gap-2">
-                                <span className="rounded-full bg-primary/10 px-3 py-1 text-xs font-medium text-primary">OFTEC</span>
-                                <span className="rounded-full bg-primary/10 px-3 py-1 text-xs font-medium text-primary">
-                                    Which? Trusted
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div className="mt-8 border-t border-border pt-8">
-                    <div className="flex flex-col items-center justify-between gap-4 sm:flex-row">
-                        <p className="text-sm text-muted-foreground">© {new Date().getFullYear()} MD Gas. All rights reserved.</p>
-                        <div className="flex gap-6 text-sm text-muted-foreground">
-                            <Link href="/about" className="hover:text-foreground transition-colors">
-                                About Us
-                            </Link>
-                            <Link href="/privacy-policy" className="hover:text-foreground transition-colors">
-                                Privacy Policy
-                            </Link>
-                            <Link href="/terms-conditions" className="hover:text-foreground transition-colors">
-                                Terms & Conditions
-                            </Link>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </footer>
+            <Footer />
         </div>
     );
 }
-

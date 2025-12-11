@@ -17,11 +17,13 @@ Route::get('/health', function () {
 
 
 //Guest Routes
+
 Route::get('/', function () {
     return Inertia::render('Home');
 })->name('landing');
 
 Route::prefix('book')->name('book.')->group(function () {
+
     Route::get('/quote', function () {
         return Inertia::render('Book/QuotePage');
     })->name('quote');

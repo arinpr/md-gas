@@ -1,84 +1,266 @@
-"use client"
+import { Link } from "@inertiajs/react";
+import {
+    Card,
+    CardContent,
+    CardDescription,
+    CardHeader,
+    CardTitle,
+} from "@/components/ui/card";
+import { ArrowRight } from "lucide-react";
+import { FcGoogle } from "react-icons/fc";
+import { FaStar, FaStarHalfAlt } from "react-icons/fa";
 
-import { Link } from "@inertiajs/react"
-import { Button } from "@/components/ui/button"
-import { Flame, Shield, Clock, Phone, Menu, X } from "lucide-react"
-import { useState } from "react" 
-// import GuestLayout from "@/Layouts/GuestLayout"
+const services = [
+    {
+        id: "repair",
+        title: "Boiler Repair",
+        description: "Fast boiler repairs with fixed labour.",
+        image: "/images/product_boiler.png",
+        highlight: "From £75 Labour",
+        href: "/book/repair",
+        theme: {
+            hoverBg: "hover:bg-[#E5F1FF]",
+            hoverBorder: "hover:border-[#2358FF]",
+            labelBg: "bg-[#2358FF]",
+            rippleColor: "text-[#7190F5]",
+            arrowHoverBg: "group-hover:bg-[#2358FF]",
+        },
+    },
+    {
+        id: "service",
+        title: "Boiler Service",
+        description: "Annual service to keep your boiler safe.",
+        image: "/images/product_boiler.png",
+        highlight: "Yearly Service",
+        href: "/book/service",
+        theme: {
+            hoverBg: "hover:bg-[#FFECA9]",
+            hoverBorder: "hover:border-[#FFC727]",
+            labelBg: "bg-[#FFC727]",
+            rippleColor: "text-[#FFC727]",
+            arrowHoverBg: "group-hover:bg-[#2358FF]",
+        },
+    },
+    {
+        id: "quote",
+        title: "New Boiler Quote",
+        description: "Instant online quote for a new boiler.",
+        image: "/images/product_boiler.png",
+        highlight: "Instant Quote",
+        href: "/book/quote",
+        theme: {
+            hoverBg: "hover:bg-[#E6F9EC]",
+            hoverBorder: "hover:border-[#17A44A]",
+            labelBg: "bg-[#17A44A]",
+            rippleColor: "text-[#17A44A]",
+            arrowHoverBg: "group-hover:bg-[#2358FF]",
+        },
+    },
+    {
+        id: "powerflush",
+        title: "Power Flush",
+        description: "Deep clean for radiators and pipework.",
+        image: "/images/product_boiler.png",
+        highlight: "From £400",
+        href: "/book/power-flush",
+        theme: {
+            hoverBg: "hover:bg-[#F3E9FF]",
+            hoverBorder: "hover:border-[#8B4DFF]",
+            labelBg: "bg-[#8B4DFF]",
+            rippleColor: "text-[#8B4DFF]",
+            arrowHoverBg: "group-hover:bg-[#2358FF]",
+        },
+    },
+];
 
-
-// Home.layout = (page) => <GuestLayout children={page} />;
-export function HeroSection() {
-    const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
-
+// SVG ripple using currentColor so we can tint it per card
+function GlowRipple({ className }) {
     return (
-        <section className="relative overflow-hidden bg-gradient-to-b from-primary/5 to-background">
-        
-            <div className="relative z-10 mx-auto max-w-7xl px-4 py-16 sm:px-6 sm:py-20 lg:px-8 lg:py-24">
-                <div className="grid gap-12 lg:grid-cols-2 lg:gap-8 items-center">
-                    <div className="text-center lg:text-left">
-                        <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/10 px-4 py-1.5 text-sm font-medium text-primary">
-                            <Shield className="h-4 w-4" />
-                            Gas Safe Registered Engineers
-                        </div>
-                        <h1 className="text-balance text-4xl font-bold tracking-tight text-foreground sm:text-5xl lg:text-6xl">
-                            Expert Boiler Solutions for Every Home
-                        </h1>
-                        <p className="mx-auto lg:mx-0 mt-6 max-w-2xl text-pretty text-lg text-muted-foreground sm:text-xl">
-                            Professional boiler repairs, servicing, and installations. Fast response times with fixed pricing and no
-                            hidden costs.
-                        </p>
-                        <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row lg:justify-start">
-                            <Button size="lg" className="w-full gap-2 sm:w-auto" asChild>
-                                <Link href="/book/quote">
-                                    <Clock className="h-5 w-5" />
-                                    Get Instant Quote
-                                </Link>
-                            </Button>
-                            <Button size="lg" variant="outline" className="w-full sm:w-auto bg-transparent" asChild>
-                                <a href="/#services">View Our Services</a>
-                            </Button>
-                        </div>
+        <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="203"
+            height="205"
+            viewBox="0 0 243 225"
+            fill="none"
+            className={className}
+            aria-hidden="true"
+        >
+            <g opacity="0.2">
+                <ellipse
+                    cx="121.282"
+                    cy="112.153"
+                    rx="106.355"
+                    ry="98.3498"
+                    fill="currentColor"
+                    fillOpacity="0.4"
+                />
+                <ellipse
+                    cx="121.282"
+                    cy="112.153"
+                    rx="121.282"
+                    ry="112.153"
+                    fill="currentColor"
+                    fillOpacity="0.2"
+                />
+                <ellipse
+                    cx="121.283"
+                    cy="112.154"
+                    rx="94.0935"
+                    ry="87.0113"
+                    fill="currentColor"
+                    fillOpacity="0.4"
+                />
+                <ellipse
+                    cx="121.282"
+                    cy="112.154"
+                    rx="77.0341"
+                    ry="71.2358"
+                    fill="currentColor"
+                    fillOpacity="0.6"
+                />
+            </g>
+        </svg>
+    );
+}
 
-                        <div className="mt-12 grid grid-cols-2 gap-6 sm:grid-cols-4 lg:grid-cols-2 xl:grid-cols-4">
-                            {[
-                                { value: "15+", label: "Years Experience" },
-                                { value: "5000+", label: "Happy Customers" },
-                                { value: "24/7", label: "Emergency Service" },
-                                { value: "100%", label: "Satisfaction Rate" },
-                            ].map((stat) => (
-                                <div key={stat.label} className="text-center lg:text-left">
-                                    <div className="text-2xl font-bold text-primary sm:text-3xl">{stat.value}</div>
-                                    <div className="mt-1 text-sm text-muted-foreground">{stat.label}</div>
-                                </div>
-                            ))}
+export function HeroSection() {
+    return (
+        <section
+            id="services"
+            className="relative overflow-hidden py-20 rounded-b-[45px] bg-light-grey pt-40"
+        >
+            <div className="relative z-10 mx-auto max-w-[1320px] px-4 sm:px-6 lg:px-0">
+                <div className="relative mx-auto mb-6 text-center">
+                    {/* Background decorative element */}
+                    <div className="absolute top-0 left-5 -translate-x-1/2 w-20 h-20 rounded-full bg-gradient-to-br from-primary via-[#FFC727]/30 to-transparent blur-xl"></div>
+
+                    <div className="relative flex items-center justify-between">
+                        <h2 className="text-4xl sm:text-5xl lg:text-5xl font-bold tracking-tight text-slate-900 mb-6">
+                            <span className="relative">
+                                That&apos;s{" "}
+                                <span className="relative inline-block">
+                                    Not All
+                                    <svg
+                                        width="118"
+                                        height="14"
+                                        viewBox="0 0 118 14"
+                                        fill="none"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        class="absolute -bottom-[15px] left-0 w-full scale-110"
+                                    >
+                                        <path
+                                            d="M101.992 4.34893C93.4576 2.71542 84.7474 2.23937 76.0816 1.77516C75.1495 1.85756 74.2176 1.80286 73.2865 1.74821C72.2639 1.68819 71.2425 1.62823 70.2233 1.7501C68.9183 1.75842 67.6129 1.75643 66.3074 1.75444C63.7424 1.75053 61.1767 1.74663 58.612 1.82086C56.9659 2.02015 55.3079 2.06054 53.6514 2.0813C50.5664 2.18806 47.4891 2.43338 44.4118 2.6787C43.0887 2.78418 41.7656 2.88966 40.4418 2.98412C39.2747 3.19702 38.0955 3.28183 36.9167 3.36662C35.5818 3.46264 34.2472 3.55864 32.9308 3.8406C26.4858 4.5214 20.081 5.61998 13.7274 6.95662C13.1161 7.10891 12.5034 7.25847 11.8905 7.40812C8.24899 8.2971 4.59479 9.1892 1.12186 10.6759C1.09073 10.8399 1.02847 11.1681 0.99999 11.3324C1.61906 11.3569 2.24821 11.354 2.84503 11.1454C6.82619 10.2378 10.8101 9.36423 14.8236 8.6622C15.8594 8.3854 16.9156 8.2416 17.9718 8.09783C18.885 7.97351 19.7981 7.8492 20.6977 7.63894C21.6191 7.428 22.554 7.32028 23.4885 7.21261C24.4494 7.1019 25.4099 6.99124 26.355 6.76847C27.1118 6.59953 27.8795 6.53875 28.6474 6.47795C29.1613 6.43726 29.6754 6.39656 30.1864 6.32342C32.0012 6.00008 33.8308 5.8207 35.6609 5.64129C36.8302 5.52665 37.9997 5.412 39.1655 5.25977C40.3225 5.10525 41.4856 5.03639 42.6487 4.96753C44.0432 4.88497 45.4375 4.80242 46.8209 4.57225C47.9164 4.49158 49.0139 4.45141 50.1115 4.41125C51.2801 4.36848 52.4488 4.32571 53.6156 4.23403C55.3437 4.05603 57.0773 4.02745 58.8111 3.99887C60.1603 3.97664 61.5096 3.9544 62.8567 3.86174C63.5661 3.89715 64.275 3.87348 64.9834 3.84984C65.8921 3.8195 66.8001 3.78919 67.7079 3.88358C70.4209 3.74309 73.1333 3.85345 75.8461 3.96382C77.3711 4.02586 78.8962 4.08791 80.4216 4.10541C89.1913 4.6396 97.9759 5.43447 106.547 7.4573C106.917 7.54018 107.288 7.61901 107.66 7.69792C109.338 8.05399 111.024 8.41164 112.593 9.14988C111.841 9.19013 111.098 9.08707 110.357 8.98421C110.025 8.93815 109.693 8.89213 109.361 8.85902C108.739 8.7808 108.115 8.71942 107.491 8.65806C106.177 8.52893 104.865 8.39991 103.574 8.11428C98.014 7.56178 92.4394 7.16897 86.8657 6.83547C84.8069 6.8854 82.7468 6.80839 80.687 6.73139C77.7652 6.62217 74.8442 6.51297 71.9286 6.7662C66.6683 6.76123 61.4045 6.97886 56.1564 7.40929C54.5766 7.45132 53.0046 7.61475 51.4325 7.77818C50.023 7.9247 48.6134 8.07124 47.198 8.13033C45.9342 8.37195 44.6579 8.49962 43.3811 8.62734C42.098 8.75569 40.8145 8.88408 39.543 9.12821C38.6327 9.30628 37.7132 9.41469 36.7939 9.52309C35.6258 9.6608 34.458 9.7985 33.3093 10.079C27.0488 10.4818 28.1215 13.3945 31.0593 12.6571C31.4738 12.6309 34.7193 12.6043 35.1335 12.5777C37.6768 12.4145 37.3895 12.2449 39.9339 12.0748C40.3255 12.0486 40.7171 12.0225 41.1088 11.9963C42.8789 11.6575 44.6532 11.3412 46.4508 11.2277C48.6012 10.8611 50.7745 10.7411 52.9459 10.6213C53.6291 10.5835 54.312 10.5458 54.994 10.5005C57.6714 10.2037 60.3591 10.1387 63.0456 10.0738C64.1615 10.0468 65.2772 10.0198 66.3919 9.9762C67.2218 9.82877 68.0577 9.83236 68.8945 9.83595C69.4033 9.83813 69.9125 9.84032 70.4207 9.80855C73.5399 9.82847 76.6534 9.81693 79.767 9.80539C80.5892 9.67894 81.413 9.73055 82.2375 9.7822C82.7055 9.81153 83.1738 9.84086 83.6421 9.83764C85.0517 9.75476 86.4598 9.83448 87.8685 9.91423C88.9692 9.97654 90.0701 10.0389 91.1724 10.0237C95.1868 10.1238 99.1858 10.4622 103.185 10.8007C106.117 11.0488 109.05 11.297 111.989 11.4513C112.402 11.4069 112.835 11.4088 113.272 11.4107C114.481 11.4159 115.717 11.4212 116.614 10.4515C116.696 9.76089 116.474 9.06973 116.027 8.56462C114.507 7.31973 112.647 6.8384 110.804 6.36153C110.221 6.21055 109.639 6.06002 109.07 5.88585C107.634 5.36968 106.139 5.11425 104.644 4.85894C103.756 4.70715 102.867 4.5554 101.992 4.34893Z"
+                                            fill="#0067ff"
+                                            stroke="#0067ff"
+                                            stroke-width="1.53248"
+                                        ></path>
+                                    </svg>
+                                </span>
+                            </span>
+                        </h2>
+
+                        {/* <p className="text-lg text-slate-600 leading-relaxed max-w-2xl text-right px-4 ">
+                            Professional boiler service with transparent,
+                            competitive pricing.
+                        </p> */}
+                        <div className="p-3 border-[2px] border-dark rounded-full inline-flex items-center justify-center cursor-pointer group">
+                            <span className="transform rotate-45 transition-all duration-300 group-hover:rotate-0">
+                                <ArrowRight size={20} />
+                            </span>
                         </div>
                     </div>
+                </div>
+                {/* Cards */}
+                <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-4">
+                    {services.map((service) => (
+                        <Card
+                            key={service.id}
+                            className={`group relative flex flex-col justify-start items-start overflow-hidden rounded-[30px] border-[3px] border-[#EFEFEF] bg-white px-7 pt-7 pb-6 shadow-[0_18px_45px_rgba(15,23,42,0.06)] transition-all duration-300 hover:shadow-[0_24px_60px_rgba(15,23,42,0.14)] ${service.theme.hoverBg} ${service.theme.hoverBorder}`}
+                        >
+                            {/* label pill */}
+                            <div
+                                className={`inline-flex items-center rounded-full px-3 py-1 text-xs font-semibold text-white ${service.theme.labelBg}`}
+                            >
+                                {service.highlight}
+                            </div>
 
-                    <div className="relative flex items-center justify-center lg:justify-end">
-                        <div className="relative">
-                            <div className="absolute -inset-4 rounded-3xl bg-gradient-to-br from-primary/20 to-primary/5 blur-2xl" />
-                            <img
-                                src="/images/landing-20boiler.png"
-                                alt="Modern gas boiler"
-                                width={400}
-                                height={550}
-                                className="relative z-10 drop-shadow-2xl"
-                                priority
-                            />
-                            {/* Gas Safe badge overlay */}
-                            <div className="absolute -bottom-4 -left-4 z-20 rounded-xl bg-card p-3 shadow-lg border border-border">
+                            {/* image + ripple */}
+                            <div className="relative mt-1 flex h-44 w-full items-center justify-center">
+                                {/* ripple perfectly centered */}
+                                <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
+                                    <GlowRipple
+                                        className={`${service.theme.rippleColor}`}
+                                    />
+                                </div>
+
+                                {/* image perfectly centered */}
                                 <img
-                                    src="/images/511-5113277-gas-safe-register-logo-symbol-gas-safe-logo.png"
-                                    alt="Gas Safe Registered"
-                                    width={80}
-                                    height={80}
+                                    src={service.image}
+                                    alt={service.title}
+                                    className="relative z-10 max-h-32 object-contain mx-auto"
                                 />
+                            </div>
+
+                            {/* text + round arrow bottom-right */}
+                            <div className="flex items-end justify-between gap-4 mt-1">
+                                <div>
+                                    <CardHeader className="p-0">
+                                        <CardTitle className="text-[18px] font-semibold text-slate-900">
+                                            {service.title}
+                                        </CardTitle>
+                                    </CardHeader>
+                                    <CardContent className=" p-0">
+                                        <CardDescription className="text-[14px] leading-relaxed text-slate-600">
+                                            {service.description}
+                                        </CardDescription>
+                                    </CardContent>
+                                </div>
+
+                                <Link href={service.href} className="shrink-0">
+                                    <div
+                                        className={`flex h-11 w-11 items-center justify-center rounded-full bg-black text-white transition-all duration-300 group-hover:translate-x-1 ${service.theme.arrowHoverBg}`}
+                                    >
+                                        <ArrowRight className="h-5 w-5" />
+                                    </div>
+                                </Link>
+                            </div>
+                        </Card>
+                    ))}
+                </div>
+                <div className="mt-10 flex justify-center">
+                    <div className="inline-flex items-center gap-3 rounded-full border border-slate-200 bg-white/90 px-4 py-2 shadow-sm">
+                        {/* Google Icon */}
+                        <div className="flex h-9 w-9 items-center justify-center rounded-full bg-slate-100">
+                            <FcGoogle className="h-5 w-5" />
+                        </div>
+
+                        {/* Text + Rating */}
+                        <div className="flex flex-col items-start">
+                            <p className="text-[11px] uppercase tracking-[0.12em] text-slate-500">
+                                Google Reviews
+                            </p>
+
+                            <div className="flex items-center gap-2">
+                                <span className="text-sm font-semibold text-slate-900">
+                                    4.5 / 5
+                                </span>
+
+                                <span className="flex items-center gap-0.5 text-amber-400">
+                                    <FaStar className="h-4 w-4" />
+                                    <FaStar className="h-4 w-4" />
+                                    <FaStar className="h-4 w-4" />
+                                    <FaStar className="h-4 w-4" />
+                                    <FaStarHalfAlt className="h-4 w-4" />
+                                </span>
+
+                                <span className="text-[11px] text-slate-500">
+                                    120+ reviews
+                                </span>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
-    )
+    );
 }

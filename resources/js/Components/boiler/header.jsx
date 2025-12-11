@@ -1,94 +1,250 @@
-
-import { useState } from "react";
-import ApplicationLogo from "@/Components/ApplicationLogo";
+import { useState, useEffect } from "react";
 import { Link } from "@inertiajs/react";
+import { Flame, Menu, X, ArrowRight } from "lucide-react";
+import { AiOutlineWhatsApp } from "react-icons/ai";
+import { Button } from "@/Components/ui/button";
 
-// Icons (update based on your setup)
-import { Flame, Phone, Menu, X } from "lucide-react";
-import { Button } from "@/Components/ui/button"; // update if different
+// Content for each tab's mega section
+const MEGA_SECTIONS = {
+    services: [
+        {
+            title: "Boiler installation",
+            description:
+                "Efficient new boiler installations tailored to your home.",
+            href: "/#services",
+        },
+        {
+            title: "Boiler repair & servicing",
+            description:
+                "Fast, reliable repairs and annual servicing for peace of mind.",
+            href: "/#services",
+        },
+        {
+            title: "Gas safety certificates",
+            description:
+                "Landlord & homeowner gas safety checks and certificates.",
+            href: "/#services",
+        },
+    ],
+    about: [
+        {
+            title: "Why choose MD Gas?",
+            description:
+                "Experienced, friendly engineers with a focus on safety and quality.",
+            href: "/#about",
+        },
+        {
+            title: "Our qualifications",
+            description:
+                "Fully Gas Safe registered and compliant with UK regulations.",
+            href: "/#about",
+        },
+        {
+            title: "Our service areas",
+            description:
+                "Reliable boiler services across your local surrounding areas.",
+            href: "/#about",
+        },
+    ],
+    contact: [
+        {
+            title: "Request a call back",
+            description:
+                "Leave your details and we’ll get back to you as soon as possible.",
+            href: "/#contact",
+        },
+        {
+            title: "Emergency support",
+            description:
+                "24/7 emergency boiler breakdown and gas leak assistance.",
+            href: "/#contact",
+        },
+        {
+            title: "Free quote",
+            description:
+                "Tell us about your boiler needs and get a no-obligation quote.",
+            href: "/#contact",
+        },
+    ],
+};
 
-export default function Header({ children }) {
+// Pills in the centre of the header
+const NAV_ITEMS = [
+    { id: "services", label: "Services" },
+    { id: "about", label: "About" },
+    { id: "contact", label: "Contact" },
+];
+
+export default function Header() {
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+    const [openMenu, setOpenMenu] = useState(null); // "services" | "about" | "contact" | null
+
+    const isMegaOpen = !!openMenu;
+
+    const toggleMenu = (id) => {
+        setOpenMenu((prev) => (prev === id ? null : id));
+    };
+
+    const closeMega = () => setOpenMenu(null);
+
+    // Close mega with Escape key
+    useEffect(() => {
+        const handleKeyDown = (e) => {
+            if (e.key === "Escape") {
+                closeMega();
+            }
+        };
+        window.addEventListener("keydown", handleKeyDown);
+        return () => window.removeEventListener("keydown", handleKeyDown);
+    }, []);
+
+    const currentCards = openMenu ? MEGA_SECTIONS[openMenu] : [];
 
     return (
-        <div className="flex min-h-screen flex-col bg-gray-100">
-
-            <header className="relative z-20 border-b border-border/50 bg-card/80 backdrop-blur-sm">
-                <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 sm:px-6 lg:px-8">
-                    <Link href="/" className="flex items-center gap-2">
-                        <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary">
-                            <Flame className="h-6 w-6 text-primary-foreground" />
+        <header className="absolute top-4 w-full z-50">
+            <div className="relative">
+                {/* Top bar */}
+                <div className="mx-auto flex max-w-7xl items-center gap-6 px-4 py-4 sm:px-2 lg:px-6">
+                    {/* Logo */}
+                    <Link
+                        href="/"
+                        className="flex items-center gap-2"
+                        onClick={closeMega}
+                    >
+                        <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-dark">
+                            <Flame className="h-6 w-6 text-foreground" />
                         </div>
-                        <span className="text-2xl font-bold text-foreground">MD Gas</span>
+                        <span className="text-2xl font-semibold text-dark">
+                            MD Gas
+                        </span>
                     </Link>
 
-                    <nav className="hidden items-center gap-6 md:flex">
-                        <a
-                            href="/#services"
-                            className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
-                        >
-                            Services
-                        </a>
-                        <Link
-                            href="/about"
-                            className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
-                        >
-                            About
-                        </Link>
-                        <a
-                            href="/#contact"
-                            className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
-                        >
-                            Contact
-                        </a>
+                    {/* Centre nav (desktop) */}
+                    <nav className="hidden flex-1 items-center justify-center gap-3 md:flex z-50">
+                        {NAV_ITEMS.map((item) => {
+                            const active = openMenu === item.id;
+                            return (
+                                <button
+                                    key={item.id}
+                                    type="button"
+                                    onClick={() => toggleMenu(item.id)}
+                                    className={`rounded-full px-6 py-2 text-sm font-medium transition shadow-sm cursor-pointer
+                                        ${
+                                            active
+                                                ? "bg-black text-white shadow-md"
+                                                : "bg-white/80 text-slate-800 hover:bg-white"
+                                        }`}
+                                >
+                                    {item.label}
+                                </button>
+                            );
+                        })}
                     </nav>
 
-                    <div className="flex items-center gap-3">
+                    {/* Right side */}
+                    <div className="ml-auto flex items-center gap-4">
+                        {/* Gas Safe logo */}
                         <img
                             src="/images/511-5113277-gas-safe-register-logo-symbol-gas-safe-logo.png"
                             alt="Gas Safe Register"
-                            width={40}
-                            height={40}
+                            width={32}
+                            height={32}
                             className="hidden sm:block"
+                            onClick={closeMega}
                         />
 
-                        <Button size="sm" className="gap-2">
-                            <Phone className="h-4 w-4" />
-                            <span className="hidden sm:inline">Call Now</span>
+                        {/* Call button */}
+                        <Button
+                            size="md"
+                            className="hidden gap-2 rounded-full bg-dark px-4 py-2 text-sm font-medium cursor-pointer text-foreground hover:bg-dark/60 transition-colors duration-200 sm:flex"
+                            onClick={closeMega}
+                        >
+                            <AiOutlineWhatsApp className="h-4 w-4" />
+                            <span>Chat Now</span>
                         </Button>
 
+                        {/* Mobile menu toggle */}
                         <button
-                            className="md:hidden p-2 text-muted-foreground hover:text-foreground"
-                            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+                            className="md:hidden rounded-full p-2 text-slate-700 hover:bg-white/60"
+                            onClick={() => {
+                                setMobileMenuOpen((open) => !open);
+                                closeMega();
+                            }}
                         >
-                            {mobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+                            {mobileMenuOpen ? (
+                                <X className="h-6 w-6" />
+                            ) : (
+                                <Menu className="h-6 w-6" />
+                            )}
                         </button>
                     </div>
                 </div>
 
-                {/* Mobile menu */}
+                {/* ===== Dark overlay when ANY mega menu is open ===== */}
+                {isMegaOpen && (
+                    <div
+                        className="fixed inset-0 z-20 bg-black/60 backdrop-blur-[1px]"
+                        onClick={closeMega}
+                    />
+                )}
+
+                {/* Mega menu (desktop only) */}
+                {isMegaOpen && (
+                    <div className="pointer-events-auto hidden md:block">
+                        {/* absolute is relative to the .relative wrapper above */}
+                        <div className="absolute left-1/2 top-0 z-30 w-full max-w-3xl -translate-x-1/2 px-4 pb-6 sm:px-6 lg:px-8">
+                            <div className="mt-2 rounded-3xl bg-white shadow-xl">
+                                <div className="grid grid-cols-1 gap-6 p-6 md:grid-cols-3 md:p-8 !pt-20">
+                                    {currentCards.map((card) => (
+                                        <a
+                                            key={card.title}
+                                            href={card.href}
+                                            onClick={closeMega}
+                                            className="group flex flex-col justify-between rounded-2xl bg-slate-50 p-5 shadow-sm transition hover:-translate-y-1 hover:bg-slate-100 hover:shadow-md"
+                                        >
+                                            <div>
+                                                <h3 className="mb-2 text-base font-semibold text-slate-900">
+                                                    {card.title}
+                                                </h3>
+                                                <p className="text-sm text-slate-600">
+                                                    {card.description}
+                                                </p>
+                                            </div>
+
+                                            <div className="mt-4 flex justify-end">
+                                                <span className="flex h-9 w-9 items-center justify-center rounded-full bg-black text-white transition group-hover:translate-x-1">
+                                                    <ArrowRight className="h-4 w-4" />
+                                                </span>
+                                            </div>
+                                        </a>
+                                    ))}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                )}
+
+                {/* Mobile menu (simple, no mega) */}
                 {mobileMenuOpen && (
-                    <div className="md:hidden border-t border-border bg-card/95 backdrop-blur-sm">
-                        <nav className="flex flex-col px-4 py-4 space-y-3">
+                    <div className="md:hidden border-t border-slate-200 bg-white/95 backdrop-blur-sm">
+                        <nav className="flex flex-col space-y-2 px-4 py-4">
                             <a
                                 href="/#services"
-                                className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground py-2"
+                                className="rounded-lg px-2 py-2 text-sm font-medium text-slate-700 hover:bg-slate-100"
                                 onClick={() => setMobileMenuOpen(false)}
                             >
                                 Services
                             </a>
-
                             <Link
                                 href="/about"
-                                className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground py-2"
+                                className="rounded-lg px-2 py-2 text-sm font-medium text-slate-700 hover:bg-slate-100"
                                 onClick={() => setMobileMenuOpen(false)}
                             >
                                 About
                             </Link>
-
                             <a
                                 href="/#contact"
-                                className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground py-2"
+                                className="rounded-lg px-2 py-2 text-sm font-medium text-slate-700 hover:bg-slate-100"
                                 onClick={() => setMobileMenuOpen(false)}
                             >
                                 Contact
@@ -96,14 +252,7 @@ export default function Header({ children }) {
                         </nav>
                     </div>
                 )}
-            </header>
-            <main className="flex flex-1 flex-col items-center pt-6 sm:justify-center sm:pt-0">
-                <div className="w-full max-w-md overflow-hidden bg-white px-6 py-4 shadow-md sm:rounded-lg">
-                    {children}
-                </div>
-            </main>
-
-        </div>
+            </div>
+        </header>
     );
 }
-
