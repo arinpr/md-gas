@@ -4,6 +4,7 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
+use App\Http\Controllers\BookController;
 
 Route::get('/health', function () {
     return Inertia::render('Welcome', [
@@ -24,9 +25,11 @@ Route::get('/', function () {
 
 Route::prefix('book')->name('book.')->group(function () {
 
-    Route::get('/quote', function () {
-        return Inertia::render('Book/QuotePage');
-    })->name('quote');
+    Route::get('/', [BookController::class, 'index'])->name('home');
+
+    Route::get('/quote', [BookController::class, 'quote'])->name('quote');
+
+    Route::get('/quote/{id}', [BookController::class, 'getQuote'])->name('quote.get');
 
     Route::get('/repair', function () {
         return Inertia::render('Book/RepairPage');
