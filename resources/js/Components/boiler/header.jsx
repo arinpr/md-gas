@@ -75,7 +75,13 @@ const NAV_ITEMS = [
     { id: "contact", label: "Contact" },
 ];
 
-export default function Header() {
+export default function Header({
+    textColor = "text-slate-900",
+    buttonBg = "bg-dark",
+    buttonText = "text-white",
+    navInactive = "bg-white/80 text-slate-800",
+    navActive = "bg-black text-white"
+}) {
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
     const [openMenu, setOpenMenu] = useState(null); // "services" | "about" | "contact" | null
 
@@ -114,7 +120,7 @@ export default function Header() {
                         <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-dark">
                             <Flame className="h-6 w-6 text-foreground" />
                         </div>
-                        <span className="text-2xl font-semibold text-dark">
+                        <span className={`text-2xl font-semibold ${textColor}`}>
                             MD Gas
                         </span>
                     </Link>
@@ -128,12 +134,9 @@ export default function Header() {
                                     key={item.id}
                                     type="button"
                                     onClick={() => toggleMenu(item.id)}
-                                    className={`rounded-full px-6 py-2 text-sm font-medium transition shadow-sm cursor-pointer
-                                        ${
-                                            active
-                                                ? "bg-black text-white shadow-md"
-                                                : "bg-white/80 text-slate-800 hover:bg-white"
-                                        }`}
+                                    className={`rounded-full px-6 py-2 text-sm font-medium transition shadow-sm cursor-pointer ${active ? navActive : navInactive}
+                                        `}
+
                                 >
                                     {item.label}
                                 </button>
@@ -154,14 +157,17 @@ export default function Header() {
                         />
 
                         {/* Call button */}
-                        <Button
-                            size="md"
-                            className="hidden gap-2 rounded-full bg-dark px-4 py-2 text-sm font-medium cursor-pointer text-foreground hover:bg-dark/60 transition-colors duration-200 sm:flex"
-                            onClick={closeMega}
+                        <button
+                            type="button"
+                            onClick={() => {
+                                closeMega();
+                                // console.log("Chat Now clicked (native)");
+                            }}
+                            className={`hidden gap-2 items-center rounded-full px-4 py-2 text-sm font-medium cursor-pointer ${buttonBg} ${buttonText} hover:opacity-80 transition sm:flex`}
                         >
                             <AiOutlineWhatsApp className="h-4 w-4" />
                             <span>Chat Now</span>
-                        </Button>
+                        </button>
 
                         {/* Mobile menu toggle */}
                         <button
@@ -171,11 +177,7 @@ export default function Header() {
                                 closeMega();
                             }}
                         >
-                            {mobileMenuOpen ? (
-                                <X className="h-6 w-6" />
-                            ) : (
-                                <Menu className="h-6 w-6" />
-                            )}
+                            {mobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
                         </button>
                     </div>
                 </div>
