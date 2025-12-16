@@ -1,668 +1,494 @@
-import { useState, useMemo } from "react"
-import { Head } from "@inertiajs/react"
-import { PageHeader } from "@/components/ui/page-header"
-import { FormStepper } from "@/components/ui/form-stepper"
-import { Button } from "@/components/ui/button"
-import { FormField } from "@/components/ui/form-field"
-import { RadioGroupField } from "@/components/ui/radio-group-field"
-import { Label } from "@/components/ui/label"
-import { Input } from "@/components/ui/input"
-import { Card, CardContent } from "@/components/ui/card"
-import {
-  ArrowLeft,
-  ArrowRight,
-  FileText,
-  CheckCircle2,
-  Calculator,
-  Check
-} from "lucide-react"
+import React, { useEffect, useMemo, useState } from "react";
+import { Head, Link } from "@inertiajs/react";
+import { PageHeader } from "@/Components/ui/page-header";
 
-const steps = ["Boiler Type", "System Details", "Add-ons", "Your Details"]
+const pageTitle = "Get a Quote";
 
- const pageTitle = "Get a Quote "; 
+const SERVICE_KEYS = {
+    REPAIR: "repair",
+    NEW: "new",
+    POWERFLUSH: "powerflush",
+    SERVICE: "service",
+};
 
-const boilerTypes = [
-  {
-    value: "combi",
-    label: "Combi Boiler",
-    description: "Best for smaller homes with up to 20 radiators",
-    image: "/images/baxi-20-20any.webp",
-  },
-  {
-    value: "system",
-    label: "System Boiler",
-    description: "Great for larger homes with higher hot water demand",
-    image: "/images/ideal-20atlantic.webp",
-  },
-  {
-    value: "heat-only",
-    label: "Heat Only",
-    description: "Traditional setup with separate hot water cylinder",
-    image: "/images/ideal-20logic.png",
-  },
-]
+const SERVICE_CONTENT = {
+    [SERVICE_KEYS.REPAIR]: {
+        slug: SERVICE_KEYS.REPAIR,
+        heroTitle:
+            "Fast boiler repair — same-day engineers, transparent pricing.",
+        heroDesc:
+            "Emergency diagnosis and on-site fixes. Fixed labour rates, clear parts pricing — we prioritise safety and speed.",
+        badge: "Boiler Repair",
+        sampleJobLabel: "Boiler Repair • £250",
+        estimateLabel: "Typical fix",
+        labour: "£120",
+        parts: "£80",
+        gaugeLabel: "Repair success",
+        gaugeValueText: "82%",
+        cta: "Get your personalised quote",
+    },
 
-const addOnImages = {
-  verticalFlue: "/images/vertical-20flue-20option.png",
-  trv: "/images/trv-20upgrade.png",
-  smartThermostat: "/images/smart-20thermostat-20upgrade.jpg",
-  filter: "/images/standard-20included-20filter.webp",
+    [SERVICE_KEYS.NEW]: {
+        slug: SERVICE_KEYS.NEW,
+        heroTitle: "New boiler installations — efficient, tested, guaranteed.",
+        heroDesc:
+            "Supply & install modern, high-efficiency boilers. Full removal, install, commissioning and certificates included.",
+        badge: "New Boiler",
+        sampleJobLabel: "New Boiler • From £1,200",
+        estimateLabel: "Install estimate",
+        labour: "£600",
+        parts: "£600",
+        gaugeLabel: "Install success",
+        gaugeValueText: "95%",
+        cta: "Get installation quote",
+    },
+
+    [SERVICE_KEYS.POWERFLUSH]: {
+        slug: SERVICE_KEYS.POWERFLUSH,
+        heroTitle: "Power flush — deep clean for radiators & pipework.",
+        heroDesc:
+            "Remove sludge and improve circulation to restore performance and reduce breakdowns. Ideal when radiators are cold or noisy.",
+        badge: "Power Flush",
+        sampleJobLabel: "Power Flush • From £180",
+        estimateLabel: "System clean",
+        labour: "£120",
+        parts: "—",
+        gaugeLabel: "Flow restored",
+        gaugeValueText: "88%",
+        cta: "Book a power flush",
+    },
+
+    [SERVICE_KEYS.SERVICE]: {
+        slug: SERVICE_KEYS.SERVICE,
+        heroTitle: "Annual boiler service — safety checks & reliability.",
+        heroDesc:
+            "Annual safety inspection, combustion check and preventative maintenance to keep your system efficient and safe.",
+        badge: "Boiler Service",
+        sampleJobLabel: "Boiler Service • From £65",
+        estimateLabel: "Annual check",
+        labour: "£65",
+        parts: "—",
+        gaugeLabel: "Pass rate",
+        gaugeValueText: "99%",
+        cta: "Schedule service",
+    },
+};
+
+function getServiceFromUrl() {
+    try {
+        const params = new URLSearchParams(window.location.search);
+        const q = params.get("service");
+        if (q) return q.toLowerCase();
+        const hash = (window.location.hash || "").replace("#", "");
+        if (hash) return hash.toLowerCase();
+    } catch (e) {}
+    return SERVICE_KEYS.REPAIR;
 }
 
 export default function QuotePage() {
-  const [currentStep, setCurrentStep] = useState(0)
-  const [isSubmitted, setIsSubmitted] = useState(false)
+    const radius = 14;
 
-  const [formData, setFormData] = useState({
-    boilerType: "",
-    radiatorRange: "",
-    bathrooms: "",
-    flueType: "horizontal",
-    trvRequired: "no",
-    trvCount: 0,
-    thermostat: "basic",
-    name: "",
-    phone: "",
-    email: "",
-    postcode: "",
-  })
+    const [serviceKey, setServiceKey] = useState(() => {
+        const s = getServiceFromUrl();
+        return Object.values(SERVICE_KEYS).includes(s)
+            ? s
+            : SERVICE_KEYS.REPAIR;
+    });
 
-  const [errors, setErrors] = useState({})
+    useEffect(() => {
+        function handleChange() {
+            const s = getServiceFromUrl();
+            setServiceKey(
+                Object.values(SERVICE_KEYS).includes(s)
+                    ? s
+                    : SERVICE_KEYS.REPAIR
+            );
+        }
 
-  const updateField = (field, value) => {
-    setFormData((prev) => ({ ...prev, [field]: value }))
-    if (errors[field]) {
-      setErrors((prev) => ({ ...prev, [field]: null }))
-    }
-  }
+        window.addEventListener("popstate", handleChange);
+        window.addEventListener("hashchange", handleChange);
 
-  const radiatorOptions = useMemo(() => {
-    const baseOptions = [
-      { value: "up-to-6", label: "Up to 6" },
-      { value: "7-12", label: "7-12" },
-      { value: "13-20", label: "13-20" },
-    ]
-    if (formData.boilerType !== "combi") {
-      baseOptions.push({ value: "21-plus", label: "21+" })
-    }
-    return baseOptions
-  }, [formData.boilerType])
+        // in case SPA updates attributes without events
+        const observer = new MutationObserver(handleChange);
+        observer.observe(document.documentElement, {
+            attributes: true,
+            attributeFilter: ["data-page"],
+        });
 
-  const bathroomOptions = useMemo(() => {
-    const baseOptions = [
-      { value: "1", label: "1" },
-      { value: "1.5", label: "1.5" },
-      { value: "2", label: "2" },
-    ]
-    if (formData.boilerType !== "combi") {
-      baseOptions.push({ value: "3-plus", label: "3+" })
-    }
-    return baseOptions
-  }, [formData.boilerType])
+        return () => {
+            window.removeEventListener("popstate", handleChange);
+            window.removeEventListener("hashchange", handleChange);
+            observer.disconnect();
+        };
+    }, []);
 
-  const priceBreakdown = useMemo(() => {
-    const items = []
-    let total = 0
+    const content = useMemo(
+        () =>
+            SERVICE_CONTENT[serviceKey] || SERVICE_CONTENT[SERVICE_KEYS.REPAIR],
+        [serviceKey]
+    );
 
-    if (!formData.boilerType || !formData.radiatorRange) {
-      return { items: [], total: 0 }
-    }
+    const parseGaugePercent = (text) => {
+        const n = parseInt(String(text || "").replace("%", ""), 10);
+        return Number.isFinite(n) ? Math.max(0, Math.min(100, n)) / 100 : 0.7;
+    };
 
-    if (formData.boilerType === "combi") {
-      let basePrice = 2200
-      if (formData.radiatorRange === "7-12") basePrice = 2500
-      if (formData.radiatorRange === "13-20") basePrice = 2800
+    const gaugePercent = parseGaugePercent(content.gaugeValueText);
+    const circumference = 2 * Math.PI * radius;
+    const dash = circumference * gaugePercent;
+    const gap = Math.max(0, circumference - dash);
 
-      items.push({ label: `Combi Boiler (${formData.radiatorRange} rads)`, price: basePrice })
-      total = basePrice
-    } else {
-      const basePrice = 2750
-      items.push({
-        label: `${formData.boilerType === "system" ? "System" : "Heat Only"} Boiler`,
-        price: basePrice,
-      })
-      total = basePrice
-
-      if (formData.flueType === "vertical") {
-        items.push({ label: "Vertical Flue", price: 150 })
-        total += 150
-      }
-
-      if (formData.trvRequired === "yes" && formData.trvCount > 0) {
-        const trvCost = formData.trvCount * 25
-        items.push({ label: `TRVs x${formData.trvCount}`, price: trvCost })
-        total += trvCost
-      }
-
-      if (formData.thermostat === "smart") {
-        items.push({ label: "Smart Thermostat", price: 100 })
-        total += 100
-      }
-    }
-
-    return { items, total }
-  }, [formData])
-
-  const validateStep = (step) => {
-    const newErrors = {}
-
-    if (step === 0 && !formData.boilerType) newErrors.boilerType = "Please select a boiler type"
-    if (step === 1) {
-      if (!formData.radiatorRange) newErrors.radiatorRange = "Required"
-      if (!formData.bathrooms) newErrors.bathrooms = "Required"
-    }
-    if (step === 3) {
-      if (!formData.name) newErrors.name = "Required"
-      if (!formData.phone) newErrors.phone = "Required"
-      if (!formData.email) newErrors.email = "Required"
-      if (!formData.postcode) newErrors.postcode = "Required"
-    }
-
-    setErrors(newErrors)
-    return Object.keys(newErrors).length === 0
-  }
-
-  const nextStep = () => {
-    if (validateStep(currentStep)) {
-      if (currentStep === 1 && formData.boilerType === "combi") {
-        setCurrentStep(3)
-      } else {
-        setCurrentStep((prev) => prev + 1)
-      }
-      window.scrollTo({ top: 0, behavior: "smooth" })
-    }
-  }
-
-  const prevStep = () => {
-    if (currentStep === 3 && formData.boilerType === "combi") {
-      setCurrentStep(1)
-    } else {
-      setCurrentStep((prev) => Math.max(prev - 1, 0))
-    }
-    window.scrollTo({ top: 0, behavior: "smooth" })
-  }
-
-  const handleSubmit = () => {
-    if (validateStep(currentStep)) {
-      setIsSubmitted(true)
-      window.scrollTo({ top: 0, behavior: "smooth" })
-    }
-  }
-
-  // SUCCESS PAGE
-  if (isSubmitted) {
     return (
-      <>
-       <Head title="Quote Submitted" />
-     
-      <div className="min-h-screen bg-background pb-20">
-        <PageHeader title="Quote Submitted" />
+        <>
+            <Head title="Get a Quote" />
+            <div className="min-h-dvh bg-gradient-to-b from-slate-50 to-white text-slate-900">
+                <PageHeader title={pageTitle} />
 
-        <div className="mx-auto max-w-2xl px-4 py-16">
-          <Card className="text-center">
-            <CardContent className="pt-12 pb-8">
-              <div className="mx-auto mb-6 flex h-20 w-20 items-center justify-center rounded-full bg-green-100">
-                <CheckCircle2 className="h-10 w-10 text-green-600" />
-              </div>
+                <main className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-0 mt-16">
+                    {/* HERO */}
+                    <section className="grid grid-cols-1 md:grid-cols-12 gap-4 items-start">
+                        {/* LEFT: copy */}
+                        <div className="md:col-span-7">
+                            <div className="max-w-2xl md:mx-0 mx-auto text-center md:text-left">
+                                <div className="inline-flex items-center gap-2 bg-primary/10 text-dark px-3 py-1 rounded-full text-xs font-medium mb-4">
+                                    <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        className="w-4 h-4"
+                                        fill="none"
+                                        viewBox="0 0 24 24"
+                                        stroke="currentColor"
+                                        aria-hidden
+                                    >
+                                        <path
+                                            strokeWidth="1.5"
+                                            strokeLinecap="round"
+                                            strokeLinejoin="round"
+                                            d="M3 12h18"
+                                        />
+                                    </svg>
+                                    {content.badge} quote
+                                </div>
 
-              <h1 className="text-2xl font-bold mb-3">Quote Submitted!</h1>
+                                <h1 className="font-extrabold leading-tight tracking-tight text-4xl sm:text-5xl line-clamp-2">
+                                    {(() => {
+                                        const words =
+                                            content.heroTitle.split(" ");
+                                        const firstTwo = words
+                                            .slice(0, 2)
+                                            .join(" ");
+                                        const rest = words.slice(2).join(" ");
 
-              <div className="rounded-lg bg-primary/5 border-2 border-primary p-6 mb-8">
-                <p className="text-sm text-muted-foreground mb-1">Your Estimated Quote</p>
-                <p className="text-4xl font-bold text-primary">
-                  £{priceBreakdown.total.toLocaleString()}
-                </p>
-              </div>
+                                        return (
+                                            <>
+                                                <span className="text-primary">
+                                                    {firstTwo}
+                                                </span>{" "}
+                                                <span className="text-dark">
+                                                    {rest}
+                                                </span>
+                                            </>
+                                        );
+                                    })()}
+                                </h1>
 
-            </CardContent>
-          </Card>
-        </div>
-      </div>
-       </>
-    )
-  }
+                                <p className="mt-4 text-base text-slate-600 max-w-prose">
+                                    {content.heroDesc}
+                                </p>
 
-  // MAIN QUOTE PAGE
-return (
-          <>
-            <Head title={pageTitle} />
+                                <div className="mt-6 flex flex-col sm:flex-row sm:items-center sm:gap-4 gap-3 justify-center md:justify-start">
+                                    <Link
+                                        href={route(
+                                            `book.quote.${content.slug}`
+                                        )}
+                                        className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-primary via-primary/80 via-primary/70 via-primary/40 to-secondary/20 px-5 py-3 text-sm font-semibold text-foreground shadow-[0_8px_28px_rgba(23,42,68,0.12)] focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-200"
+                                        aria-label={content.cta}
+                                    >
+                                        <svg
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            className="w-4 h-4"
+                                            fill="none"
+                                            viewBox="0 0 24 24"
+                                            stroke="currentColor"
+                                            aria-hidden
+                                        >
+                                            <path
+                                                strokeWidth="2"
+                                                strokeLinecap="round"
+                                                strokeLinejoin="round"
+                                                d="M12 4v16m8-8H4"
+                                            />
+                                        </svg>
+                                        {content.cta}
+                                    </Link>
 
-  <div className="min-h-screen bg-background">
-      <PageHeader title={pageTitle} />
+                                    <a
+                                        href="#contact-expert"
+                                        className="inline-flex items-center justify-center rounded-full border border-dark/70 bg-white px-4 py-3 text-sm font-medium text-slate-900"
+                                    >
+                                        Book a technician
+                                    </a>
+                                </div>
 
-      <div className="mx-auto max-w-5xl px-4 py-8 sm:px-6 lg:px-8">
-        <div className="mb-8 text-center">
-          <div className="inline-flex items-center justify-center h-14 w-14 rounded-full bg-primary/10 mb-4">
-            <FileText className="h-7 w-7 text-primary" />
-          </div>
-          <h1 className="text-2xl font-bold text-foreground sm:text-3xl">Get Your Instant Quote</h1>
-          <p className="mt-2 text-muted-foreground">Competitive pricing with transparent breakdown</p>
-        </div>
+                                {/* ====== REPLACED: Review highlight + Trust features (was micro-stats) ====== */}
+                                <div className="mt-8 flex flex-col sm:flex-row sm:items-center sm:gap-6 gap-4">
+                                    {/* review highlight */}
 
-        <FormStepper steps={steps} currentStep={currentStep} className="mb-10" />
-
-        <div className="grid gap-6 lg:grid-cols-3">
-          <Card className="lg:col-span-2">
-            <CardContent className="p-6 sm:p-8">
-              
-              {/* STEP 0 */}
-              {currentStep === 0 && (
-                <div className="space-y-6">
-                  <div>
-                    <h2 className="text-lg font-semibold text-foreground mb-1">Select Boiler Type</h2>
-                    <p className="text-sm text-muted-foreground mb-6">Choose the type of boiler you need</p>
-                  </div>
-
-                  <div className="grid gap-4">
-                    {boilerTypes.map((type) => (
-                      <button
-                        key={type.value}
-                        type="button"
-                        onClick={() => {
-                          updateField("boilerType", type.value)
-                          updateField("radiatorRange", "")
-                          updateField("bathrooms", "")
-                        }}
-                        className={`flex items-center gap-4 rounded-xl border-2 p-4 text-left transition-all ${
-                          formData.boilerType === type.value
-                            ? "border-primary bg-primary/5"
-                            : "border-border hover:border-primary/50"
-                        }`}
-                      >
-                        {/* UPDATED FROM <Image> TO <img> */}
-                        <div className="shrink-0 w-20 h-20 rounded-lg bg-muted/50 overflow-hidden">
-                          <img
-                            src={type.image}
-                            alt={type.label}
-                            className="w-full h-full object-contain p-1"
-                          />
+                                    {/* trust / features — boiler specific (moved up) */}
+                                    <div className="flex-1 grid grid-cols-1 md:grid-cols-3 gap-5">
+                                        {[
+                                            {
+                                                title: "Gas Safe certified",
+                                                desc: "Qualified engineers for safe, compliant work.",
+                                            },
+                                            {
+                                                title: "Transparent invoices",
+                                                desc: "Clear breakdown of labour & parts.",
+                                            },
+                                            {
+                                                title: "Parts warranty",
+                                                desc: "Manufacturer-backed parts where applicable.",
+                                            },
+                                        ].map((f, i) => (
+                                            <div
+                                                key={i}
+                                                className="flex gap-3 items-start rounded-lg border border-dark/6  p-3"
+                                            >
+                                                <div className="h-9 w-9 flex-none rounded-md bg-primary grid place-items-center text-foreground">
+                                                    <svg
+                                                        xmlns="http://www.w3.org/2000/svg"
+                                                        className="w-5 h-5"
+                                                        viewBox="0 0 24 24"
+                                                        fill="none"
+                                                        stroke="currentColor"
+                                                        aria-hidden
+                                                    >
+                                                        <path
+                                                            strokeWidth="1.4"
+                                                            strokeLinecap="round"
+                                                            strokeLinejoin="round"
+                                                            d="M5 13l4 4L19 7"
+                                                        />
+                                                    </svg>
+                                                </div>
+                                                <div>
+                                                    <div className="text-sm font-semibold text-slate-900">
+                                                        {f.title}
+                                                    </div>
+                                                    <div className="text-xs text-slate-500 mt-1">
+                                                        {f.desc}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        ))}
+                                    </div>
+                                </div>
+                            </div>
                         </div>
 
-                        <div className="flex-1">
-                          <p className="font-semibold text-foreground">{type.label}</p>
-                          <p className="text-sm text-muted-foreground">{type.description}</p>
+                        {/* RIGHT: refined, lighter card */}
+                        <div className="md:col-span-5">
+                            <div className="rounded-2xl bg-white/60 backdrop-blur-sm border border-white/30 p-6 shadow-[0_18px_40px_rgba(6,34,20,0.06)]">
+                                {/* header */}
+                                <div className="flex items-start justify-between">
+                                    <div className="flex items-center gap-3">
+                                        <div className="rounded-md bg-primary/10 p-2">
+                                            <svg
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                className="w-5 h-5 text-primary"
+                                                fill="none"
+                                                viewBox="0 0 24 24"
+                                                stroke="currentColor"
+                                                aria-hidden
+                                            >
+                                                <path
+                                                    strokeWidth="1.6"
+                                                    strokeLinecap="round"
+                                                    strokeLinejoin="round"
+                                                    d="M3 12h18"
+                                                />
+                                            </svg>
+                                        </div>
+
+                                        <div>
+                                            <div className="text-xs text-dark/60">
+                                                {content.estimateLabel}
+                                            </div>
+                                            <div className="text-lg font-bold text-dark leading-tight">
+                                                {content.sampleJobLabel}
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div className="text-xs text-dark/60">
+                                        Demo • No obligation
+                                    </div>
+                                </div>
+
+                                {/* visual + gauge */}
+                                <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-4 items-center">
+                                    <div className="rounded-lg bg-white p-3 border border-white/30 flex items-center justify-center">
+                                        <svg
+                                            viewBox="0 0 220 140"
+                                            className="w-full h-24"
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            aria-hidden
+                                        >
+                                            <defs>
+                                                {/* Blue gradient */}
+                                                <linearGradient
+                                                    id="accentGrad2"
+                                                    x1="0"
+                                                    x2="1"
+                                                >
+                                                    <stop
+                                                        offset="0"
+                                                        stopColor="#0067ff"
+                                                        stopOpacity="0.85"
+                                                    />
+                                                    <stop
+                                                        offset="1"
+                                                        stopColor="#0067ff40"
+                                                        stopOpacity="0.65"
+                                                    />
+                                                </linearGradient>
+                                            </defs>
+
+                                            {/* White card */}
+                                            <rect
+                                                x="20"
+                                                y="62"
+                                                width="180"
+                                                height="44"
+                                                rx="8"
+                                                fill="#ffffff"
+                                                stroke="#d9e2f1"
+                                                strokeWidth="1"
+                                            />
+
+                                            {/* Top gradient shape */}
+                                            <path
+                                                d="M20 62 L110 20 L200 62 Z"
+                                                fill="url(#accentGrad2)"
+                                                opacity="0.95"
+                                                stroke="#c7d8f5"
+                                                strokeWidth="1"
+                                            />
+                                        </svg>
+                                    </div>
+
+                                    <div className="flex items-center justify-center sm:justify-end">
+                                        <div className="w-28 h-28 flex items-center justify-center rounded-full bg-white/60 border border-white/30 p-2">
+                                            <svg
+                                                width="84"
+                                                height="84"
+                                                viewBox="0 0 36 36"
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                aria-hidden
+                                            >
+                                                <circle
+                                                    cx="18"
+                                                    cy="18"
+                                                    r={radius}
+                                                    fill="none"
+                                                    stroke="#f6fdf8"
+                                                    strokeWidth="3"
+                                                />
+                                                <circle
+                                                    cx="18"
+                                                    cy="18"
+                                                    r={radius}
+                                                    fill="none"
+                                                    stroke="url(#g3)"
+                                                    strokeWidth="3"
+                                                    strokeLinecap="round"
+                                                    strokeDasharray={`${dash.toFixed(
+                                                        2
+                                                    )} ${gap.toFixed(2)}`}
+                                                    transform="rotate(-90 18 18)"
+                                                />
+                                                <defs>
+                                                    <linearGradient
+                                                        id="g3"
+                                                        x1="0"
+                                                        x2="1"
+                                                    >
+                                                        <stop
+                                                            offset="0"
+                                                            stopColor="#0067ff"
+                                                        />
+                                                        <stop
+                                                            offset="1"
+                                                            stopColor="#0067ff40"
+                                                        />
+                                                    </linearGradient>
+                                                </defs>
+
+                                                <text
+                                                    x="18"
+                                                    y="16.6"
+                                                    textAnchor="middle"
+                                                    fontSize="5"
+                                                    fill="#065f46"
+                                                    fontWeight="700"
+                                                >
+                                                    {content.gaugeValueText}
+                                                </text>
+                                                <text
+                                                    x="18"
+                                                    y="21.4"
+                                                    textAnchor="middle"
+                                                    fontSize="4"
+                                                    fill="#065f46"
+                                                >
+                                                    {content.gaugeLabel}
+                                                </text>
+                                            </svg>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                {/* cost row */}
+                                <div className="mt-4 grid grid-cols-2 gap-3">
+                                    <div className="rounded-md bg-white p-3 border border-gray-100 text-sm">
+                                        <div className="text-xs text-slate-500">
+                                            Labour
+                                        </div>
+                                        <div className="text-sm font-medium text-slate-900">
+                                            {content.labour}
+                                        </div>
+                                    </div>
+
+                                    <div className="rounded-md bg-white p-3 border border-gray-100 text-sm">
+                                        <div className="text-xs text-slate-500">
+                                            Parts
+                                        </div>
+                                        <div className="text-sm font-medium text-slate-900">
+                                            {content.parts}
+                                        </div>
+                                    </div>
+                                </div>
+
+                                {/* CTA */}
+                                <div className="mt-5">
+                                    <Link
+                                        href={route(
+                                            `book.quote.${content.slug}`
+                                        )}
+                                        className="w-full inline-flex items-center justify-center rounded-full bg-gradient-to-r from-primary via-primary/80 via-primary/70 via-primary/40 to-secondary/20 px-4 py-3 text-sm font-semibold text-white shadow-[0_8px_28px_rgba(23,42,68,0.12)] focus:outline-none "
+                                    >
+                                        {content.cta}
+                                    </Link>
+                                    <div className="mt-4 text-center text-xs text-slate-500">
+                                        No obligation — booking in 2 mins
+                                    </div>
+                                </div>
+                            </div>
                         </div>
+                    </section>
 
-                        <div
-                          className={`flex h-6 w-6 shrink-0 items-center justify-center rounded-full border-2 ${
-                            formData.boilerType === type.value
-                              ? "border-primary bg-primary"
-                              : "border-muted-foreground"
-                          }`}
-                        >
-                          {formData.boilerType === type.value && (
-                            <Check className="h-4 w-4 text-primary-foreground" />
-                          )}
-                        </div>
-                      </button>
-                    ))}
-                  </div>
-
-                  {errors.boilerType && (
-                    <p className="text-xs text-destructive">{errors.boilerType}</p>
-                  )}
-                </div>
-              )}
-
-              {/* STEP 1 */}
-              {currentStep === 1 && (
-                <div className="space-y-6">
-                  <div>
-                    <h2 className="text-lg font-semibold text-foreground mb-1">System Details</h2>
-                    <p className="text-sm text-muted-foreground mb-6">Tell us about your heating system</p>
-                  </div>
-
-                  <RadioGroupField
-                    label="Number of Radiators"
-                    name="radiatorRange"
-                    value={formData.radiatorRange}
-                    onChange={(v) => updateField("radiatorRange", v)}
-                    options={radiatorOptions}
-                    error={errors.radiatorRange}
-                    required
-                  />
-
-                  <RadioGroupField
-                    label="Number of Bathrooms"
-                    name="bathrooms"
-                    value={formData.bathrooms}
-                    onChange={(v) => updateField("bathrooms", v)}
-                    options={bathroomOptions}
-                    error={errors.bathrooms}
-                    required
-                  />
-                </div>
-              )}
-
-              {/* STEP 2 */}
-              {currentStep === 2 && formData.boilerType !== "combi" && (
-                <div className="space-y-6">
-                  <div>
-                    <h2 className="text-lg font-semibold text-foreground mb-1">Optional Add-ons</h2>
-                    <p className="text-sm text-muted-foreground mb-6">Customize your installation</p>
-                  </div>
-
-                  {/* FLUE TYPE */}
-                  <div className="space-y-3">
-                    <Label className="text-sm font-medium text-foreground">Flue Type</Label>
-                    <div className="grid gap-3 sm:grid-cols-2">
-
-                      {/* HORIZONTAL */}
-                      <button
-                        type="button"
-                        onClick={() => updateField("flueType", "horizontal")}
-                        className={`flex flex-col items-center gap-3 rounded-xl border-2 p-4 transition-all ${
-                          formData.flueType === "horizontal"
-                            ? "border-primary bg-primary/5"
-                            : "border-border hover:border-primary/50"
-                        }`}
-                      >
-                        <div className="w-16 h-16 rounded-lg bg-muted/50 flex items-center justify-center text-2xl">
-                          ↔
-                        </div>
-                        <div className="text-center">
-                          <p className="font-medium text-foreground">Horizontal</p>
-                          <p className="text-sm text-primary font-semibold">Included</p>
-                        </div>
-                      </button>
-
-                      {/* VERTICAL */}
-                      <button
-                        type="button"
-                        onClick={() => updateField("flueType", "vertical")}
-                        className={`flex flex-col items-center gap-3 rounded-xl border-2 p-4 transition-all ${
-                          formData.flueType === "vertical"
-                            ? "border-primary bg-primary/5"
-                            : "border-border hover:border-primary/50"
-                        }`}
-                      >
-                        <div className="w-16 h-16 rounded-lg bg-muted/50 overflow-hidden">
-                          <img
-                            src={addOnImages.verticalFlue}
-                            alt="Vertical Flue"
-                            className="w-full h-full object-contain"
-                          />
-                        </div>
-                        <div className="text-center">
-                          <p className="font-medium text-foreground">Vertical</p>
-                          <p className="text-sm text-primary font-semibold">+£150</p>
-                        </div>
-                      </button>
-
-                    </div>
-                  </div>
-
-                  {/* TRVs */}
-                  <div className="space-y-3">
-                    <Label className="text-sm font-medium text-foreground">TRVs Required?</Label>
-                    <div className="grid gap-3 sm:grid-cols-2">
-
-                      {/* NO TRV */}
-                      <button
-                        type="button"
-                        onClick={() => updateField("trvRequired", "no")}
-                        className={`flex flex-col items-center gap-3 rounded-xl border-2 p-4 transition-all ${
-                          formData.trvRequired === "no"
-                            ? "border-primary bg-primary/5"
-                            : "border-border hover:border-primary/50"
-                        }`}
-                      >
-                        <div className="w-16 h-16 rounded-lg bg-muted/50 flex items-center justify-center text-2xl">
-                          ✕
-                        </div>
-                        <div className="text-center">
-                          <p className="font-medium text-foreground">No TRVs</p>
-                          <p className="text-sm text-muted-foreground">Not required</p>
-                        </div>
-                      </button>
-
-                      {/* YES TRV */}
-                      <button
-                        type="button"
-                        onClick={() => updateField("trvRequired", "yes")}
-                        className={`flex flex-col items-center gap-3 rounded-xl border-2 p-4 transition-all ${
-                          formData.trvRequired === "yes"
-                            ? "border-primary bg-primary/5"
-                            : "border-border hover:border-primary/50"
-                        }`}
-                      >
-                        <div className="w-16 h-16 rounded-lg bg-muted/50 overflow-hidden">
-                          <img
-                            src={addOnImages.trv}
-                            alt="TRV Valve"
-                            className="w-full h-full object-contain"
-                          />
-                        </div>
-                        <div className="text-center">
-                          <p className="font-medium text-foreground">Yes, add TRVs</p>
-                          <p className="text-sm text-primary font-semibold">+£25 each</p>
-                        </div>
-                      </button>
-
-                    </div>
-                  </div>
-
-                  {formData.trvRequired === "yes" && (
-                    <div className="space-y-2 pl-4 border-l-2 border-primary/20">
-                      <Label className="text-sm font-medium text-foreground">
-                        Number of TRVs (1-13)
-                      </Label>
-                      <Input
-                        type="number"
-                        min={1}
-                        max={13}
-                        value={formData.trvCount || ""}
-                        onChange={(e) =>
-                          updateField(
-                            "trvCount",
-                            Math.min(13, Math.max(0, Number(e.target.value) || 0))
-                          )
-                        }
-                        className="w-32"
-                      />
-                    </div>
-                  )}
-
-                  {/* THERMOSTAT */}
-                  <div className="space-y-3">
-                    <Label className="text-sm font-medium text-foreground">Thermostat</Label>
-                    <div className="grid gap-3 sm:grid-cols-2">
-                      
-                      {/* BASIC */}
-                      <button
-                        type="button"
-                        onClick={() => updateField("thermostat", "basic")}
-                        className={`flex flex-col items-center gap-3 rounded-xl border-2 p-4 transition-all ${
-                          formData.thermostat === "basic"
-                            ? "border-primary bg-primary/5"
-                            : "border-border hover:border-primary/50"
-                        }`}
-                      >
-                        <div className="w-16 h-16 rounded-lg bg-muted/50 flex items-center justify-center text-2xl">
-                          🌡️
-                        </div>
-                        <div className="text-center">
-                          <p className="font-medium text-foreground">Basic</p>
-                          <p className="text-sm text-primary font-semibold">Included</p>
-                        </div>
-                      </button>
-
-                      {/* SMART */}
-                      <button
-                        type="button"
-                        onClick={() => updateField("thermostat", "smart")}
-                        className={`flex flex-col items-center gap-3 rounded-xl border-2 p-4 transition-all ${
-                          formData.thermostat === "smart"
-                            ? "border-primary bg-primary/5"
-                            : "border-border hover:border-primary/50"
-                        }`}
-                      >
-                        <div className="w-16 h-16 rounded-lg bg-muted/50 overflow-hidden">
-                          <img
-                            src={addOnImages.smartThermostat}
-                            alt="Smart Thermostat"
-                            className="w-full h-full object-cover"
-                          />
-                        </div>
-                        <div className="text-center">
-                          <p className="font-medium text-foreground">Smart</p>
-                          <p className="text-sm text-primary font-semibold">+£100</p>
-                        </div>
-                      </button>
-
-                    </div>
-                  </div>
-
-                </div>
-              )}
-
-              {/* STEP 3 */}
-              {currentStep === 3 && (
-                <div className="space-y-6">
-                  <div>
-                    <h2 className="text-lg font-semibold text-foreground mb-1">Your Details</h2>
-                    <p className="text-sm text-muted-foreground mb-6">How can we contact you?</p>
-                  </div>
-
-                  <FormField
-                    label="Full Name"
-                    name="name"
-                    value={formData.name}
-                    onChange={(e) => updateField("name", e.target.value)}
-                    placeholder="John Smith"
-                    error={errors.name}
-                    required
-                  />
-
-                  <div className="grid gap-4 sm:grid-cols-2">
-                    <FormField
-                      label="Phone"
-                      name="phone"
-                      type="tel"
-                      value={formData.phone}
-                      onChange={(e) => updateField("phone", e.target.value)}
-                      placeholder="07123 456789"
-                      error={errors.phone}
-                      required
-                    />
-
-                    <FormField
-                      label="Email"
-                      name="email"
-                      type="email"
-                      value={formData.email}
-                      onChange={(e) => updateField("email", e.target.value)}
-                      placeholder="john@example.com"
-                      error={errors.email}
-                      required
-                    />
-                  </div>
-
-                  <FormField
-                    label="Postcode"
-                    name="postcode"
-                    value={formData.postcode}
-                    onChange={(e) => updateField("postcode", e.target.value)}
-                    placeholder="SW1A 1AA"
-                    error={errors.postcode}
-                    required
-                  />
-
-                </div>
-              )}
-
-              {/* ACTION BUTTONS */}
-              <div className="mt-8 flex justify-between gap-4 pt-6 border-t border-border">
-                {currentStep > 0 ? (
-                  <Button variant="outline" onClick={prevStep} className="gap-2 bg-transparent">
-                    <ArrowLeft className="h-4 w-4" />
-                    Back
-                  </Button>
-                ) : (
-                  <div />
-                )}
-
-                {currentStep < steps.length - 1 ? (
-                  <Button onClick={nextStep} className="gap-2">
-                    Continue
-                    <ArrowRight className="h-4 w-4" />
-                  </Button>
-                ) : (
-                  <Button onClick={handleSubmit} size="lg">
-                    Submit Quote Request
-                  </Button>
-                )}
-              </div>
-
-            </CardContent>
-          </Card>
-
-          {/* PRICE BREAKDOWN */}
-          <div className="lg:sticky lg:top-24 lg:self-start">
-            <Card className="border-2 border-primary/20">
-              <CardContent className="p-5">
-                <div className="flex items-center gap-2 mb-4">
-                  <Calculator className="h-5 w-5 text-primary" />
-                  <h3 className="font-semibold text-foreground">Live Quote</h3>
-                </div>
-
-                {priceBreakdown.total > 0 ? (
-                  <>
-                    <div className="space-y-3 mb-4">
-                      {priceBreakdown.items.map((item, index) => (
-                        <div key={index} className="flex items-center justify-between text-sm">
-                          <span className="flex items-center gap-2 text-muted-foreground">
-                            <Check className="h-4 w-4 text-primary shrink-0" />
-                            <span>{item.label}</span>
-                          </span>
-                          <span className="font-medium text-foreground">
-                            £{item.price.toLocaleString()}
-                          </span>
-                        </div>
-                      ))}
-                    </div>
-
-                    <div className="border-t border-border pt-4">
-                      <div className="flex items-center justify-between">
-                        <span className="font-semibold text-foreground">Total</span>
-                        <span className="text-2xl font-bold text-primary">
-                          £{priceBreakdown.total.toLocaleString()}
-                        </span>
-                      </div>
-                    </div>
-
-                    <div className="mt-4 pt-4 border-t border-border">
-                      <p className="text-xs text-muted-foreground mb-3">
-                        Included with installation:
-                      </p>
-
-                      {/* FINAL UPDATED <img> */}
-                      <div className="flex items-center gap-3 p-2 rounded-lg bg-muted/50">
-                        <img
-                          src={addOnImages.filter}
-                          alt="MagnaClean Filter"
-                          className="w-10 h-10 rounded"
-                        />
-                        <div>
-                          <p className="text-xs font-medium text-foreground">MagnaClean Filter</p>
-                          <p className="text-xs text-muted-foreground">System protection included</p>
-                        </div>
-                      </div>
-                    </div>
-                  </>
-                ) : (
-                  <p className="text-sm text-muted-foreground">
-                    Select options to see your live quote
-                  </p>
-                )}
-              </CardContent>
-            </Card>
-          </div>
-
-        </div>
-      </div>
-  </div>
-  </>
-)
-
+                    {/* <GoogleReviews /> */}
+                </main>
+            </div>
+        </>
+    );
 }

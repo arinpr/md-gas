@@ -17,7 +17,7 @@ const services = [
         description: "Fast boiler repairs with fixed labour.",
         image: "/images/product_boiler.png",
         highlight: "From £75 Labour",
-        href: "/book/repair",
+        href: "/book/quote?service=repair",
         theme: {
             hoverBg: "hover:bg-[#E5F1FF]",
             hoverBorder: "hover:border-[#2358FF]",
@@ -32,7 +32,7 @@ const services = [
         description: "Annual service to keep your boiler safe.",
         image: "/images/product_boiler.png",
         highlight: "Yearly Service",
-        href: "/book/service",
+        href: "/book/quote?service=service",
         theme: {
             hoverBg: "hover:bg-[#FFECA9]",
             hoverBorder: "hover:border-[#FFC727]",
@@ -47,7 +47,7 @@ const services = [
         description: "Instant online quote for a new boiler.",
         image: "/images/product_boiler.png",
         highlight: "Instant Quote",
-        href: "/book/quote",
+        href: "/book/quote?service=new",
         theme: {
             hoverBg: "hover:bg-[#E6F9EC]",
             hoverBorder: "hover:border-[#17A44A]",
@@ -62,7 +62,7 @@ const services = [
         description: "Deep clean for radiators and pipework.",
         image: "/images/product_boiler.png",
         highlight: "From £400",
-        href: "/book/power-flush",
+        href: "/book/quote?service=powerflush",
         theme: {
             hoverBg: "hover:bg-[#F3E9FF]",
             hoverBorder: "hover:border-[#8B4DFF]",

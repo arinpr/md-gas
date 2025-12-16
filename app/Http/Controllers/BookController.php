@@ -18,9 +18,31 @@ class BookController extends Controller
         return Inertia::render('Book/QuotePage');
     }
 
-
-    public function getQuote($id){
-        return Inertia::render('Book/DynamicQuote', compact('id'));
+ // GET /book/quote/repair
+    public function repairStepper()
+    {
+        // renders resources/js/Pages/Book/RepairPage.jsx
+        return Inertia::render('Book/RepairPage');
     }
 
+    // GET /book/quote/new
+    public function newStepper()
+    {
+        // renders resources/js/Pages/Book/NewBoilerPage.jsx
+        return Inertia::render('Book/NewBoilerPage');
+    }
+
+    // GET /book/quote/powerflush
+    public function powerflushStepper()
+    {
+        // renders resources/js/Pages/Book/PowerFlushPage.jsx
+        return Inertia::render('Book/PowerFlushPage');
+    }
+
+    // GET /book/quote/service
+    public function serviceStepper()
+    {
+        // renders resources/js/Pages/Book/ServicePage.jsx
+        return Inertia::render('Book/ServicePage');
+    }
 }

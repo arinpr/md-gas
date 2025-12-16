@@ -24,28 +24,14 @@ Route::get('/', function () {
 })->name('landing');
 
 Route::prefix('book')->name('book.')->group(function () {
-
     Route::get('/', [BookController::class, 'index'])->name('home');
-
     Route::get('/quote', [BookController::class, 'quote'])->name('quote');
-
-    Route::get('/quote/{id}', [BookController::class, 'getQuote'])->name('quote.get');
-
-    Route::get('/repair', function () {
-        return Inertia::render('Book/RepairPage');
-    })->name('repair');
-    Route::get('/service', function () {
-        return Inertia::render('Book/ServicePage', [
-            'pageTitle' => 'Book a Service',
-        ]);
-    })->name('service');
-
-    Route::get('/power-flush', function () {
-        return Inertia::render('Book/PowerFlushPage', [
-            'pageTitle' => 'Book Power Flush',
-        ]);
-    })->name('powerflush');
+    Route::get('/quote/repair', [BookController::class, 'repairStepper'])->name('quote.repair');
+    Route::get('/quote/new', [BookController::class, 'newStepper'])->name('quote.new');
+    Route::get('/quote/powerflush', [BookController::class, 'powerflushStepper'])->name('quote.powerflush');
+    Route::get('/quote/service', [BookController::class, 'serviceStepper'])->name('quote.service');
 });
+
 
 Route::get('/about', function () {
     return Inertia::render('About/AboutPage', [

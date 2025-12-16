@@ -20,6 +20,8 @@
 
     /* for text-muted-foreground */
     --muted-foreground: #6b7c93;
+
+    --card-radius: 20px;
 }
 
 @theme inline {
@@ -108,4 +110,259 @@
         display: inline-block;
         animation: wordCycle 2.5s ease-in-out;
     }
+}
+/* privacy policy page css  */
+/* Thin modern scrollbar */
+.thin-scroll::-webkit-scrollbar {
+    width: 6px;
+}
+
+.thin-scroll::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.thin-scroll::-webkit-scrollbar-thumb {
+    background-color: #c5c5c5;
+    border-radius: 10px;
+}
+
+.thin-scroll::-webkit-scrollbar-thumb:hover {
+    background-color: #a8a8a8;
+}
+
+/* Firefox */
+.thin-scroll {
+    scrollbar-width: thin;
+    scrollbar-color: #c5c5c5 transparent;
+}
+
+/* book quote page css */
+
+/* base slim bar (no heavy changes) */
+.slim-bar {
+    transition: box-shadow 0.18s ease, transform 0.18s ease, border-color 0.18s;
+    align-items: center;
+}
+
+/* divider */
+.divider {
+    width: 1px;
+    height: 28px;
+    background: rgba(23, 42, 68, 0.06);
+    margin: 0 6px;
+}
+
+/* chevron microinteraction */
+.chev {
+    transition: transform 0.18s ease, color 0.18s ease;
+}
+.slim-bar:hover .chev,
+.slim-bar:focus .chev {
+    transform: translateX(2px);
+    color: var(--primary);
+}
+
+/* -------- ONLINE STATUS BLINK ---------- */
+/* small circular indicator positioned at right edge of the chat card */
+.status-blink {
+    position: absolute;
+    right: 2px; /* sits to the right inside anchor (increase pr on anchor as needed) */
+    top: 50%;
+    transform: translateY(-50%);
+    width: 10px;
+    height: 10px;
+    border-radius: 999px;
+    background: var(--primary);
+    box-shadow: 0 0 0 6px rgba(0, 103, 255, 0.12); /* soft ring */
+    display: inline-block;
+    z-index: 5;
+    animation: statusPulse 1.8s infinite ease-out;
+    will-change: transform, opacity;
+}
+
+/* gentle grow + fade pulse */
+@keyframes statusPulse {
+    0% {
+        transform: translateY(-50%) scale(0.92);
+        opacity: 1;
+    }
+    60% {
+        transform: translateY(-50%) scale(1.6);
+        opacity: 0.14;
+    }
+    100% {
+        transform: translateY(-50%) scale(1.6);
+        opacity: 0;
+    }
+}
+
+/* hide on very small screens to avoid crowding */
+@media (max-width: 480px) {
+    .status-blink {
+        display: none;
+    }
+    .slim-bar {
+        padding-left: 10px;
+        padding-right: 10px;
+        gap: 8px;
+    }
+    .divider {
+        display: none;
+    }
+    .slim-bar .chev {
+        display: none;
+    }
+    .slim-bar .icon-square {
+        height: 36px;
+        width: 36px;
+    } /* slightly larger tap target */
+    .slim-bar .text-xs {
+        display: none;
+    }
+}
+
+/* stepper ui design custom styles */
+/* SAME HEIGHT FIXED + DISABLED BUTTON + POLISHED UI */
+
+.btn-disabled {
+    opacity: 0.6 !important;
+    pointer-events: none !important;
+    filter: grayscale(35%);
+}
+
+/* Glass card surfaces */
+.glass-root {
+    background: linear-gradient(
+        180deg,
+        rgba(255, 255, 255, 0.96),
+        rgba(248, 249, 251, 0.96)
+    );
+    border-radius: var(--card-radius);
+    border: 1px solid rgba(15, 23, 42, 0.09);
+    box-shadow: 0 20px 48px rgba(17, 24, 39, 0.1);
+    backdrop-filter: blur(8px) saturate(110%);
+}
+
+.glass-dark {
+    background: linear-gradient(180deg, #071727, #0f2b42);
+    border-radius: var(--card-radius);
+    border: 1px solid rgba(255, 255, 255, 0.03);
+    color: var(--foreground);
+    box-shadow: 0 30px 60px rgba(2, 18, 43, 0.45);
+}
+
+/* Glossy primary */
+.btn-gloss {
+    background: linear-gradient(90deg, var(--primary), var(--secondary));
+    color: var(--light-background);
+    padding: 0.55rem 1.25rem;
+    border-radius: 999px;
+    box-shadow: 0 12px 36px rgba(0, 103, 255, 0.18),
+        inset 0 1px 0 rgba(255, 255, 255, 0.18);
+}
+
+/* pill */
+.btn-pill {
+    background: var(--light-background);
+    padding: 0.45rem 1rem;
+    border-radius: 999px;
+    border: 1px solid rgba(15, 23, 42, 0.06);
+    color: var(--dark);
+}
+
+/* Option cards */
+.option-card {
+    border-radius: 14px;
+    border: 1px solid rgba(15, 23, 42, 0.09);
+    transition: all 250ms ease;
+    box-shadow: 0 16px 34px rgba(0, 103, 255, 0.04);
+}
+
+.option-inactive {
+    background: var(--light-background);
+}
+
+.option-active {
+    background: linear-gradient(
+        180deg,
+        rgba(0, 103, 255, 0.08),
+        rgba(74, 144, 255, 0.06)
+    );
+    border: 1px solid rgba(0, 103, 255, 0.22);
+    box-shadow: 0 16px 34px rgba(0, 103, 255, 0.12);
+}
+
+/* icon box */
+.icon-wrap {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    display: grid;
+    place-items: center;
+    font-size: 18px;
+}
+
+.icon-active {
+    background: linear-gradient(180deg, var(--primary), var(--secondary));
+    color: white;
+}
+
+.icon-inactive {
+    background: var(--light-grey);
+    color: var(--dark);
+}
+
+/* sheen */
+.sheen::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+        120deg,
+        rgba(255, 255, 255, 0) 0%,
+        rgba(255, 255, 255, 0.2) 18%,
+        rgba(255, 255, 255, 0.06) 42%,
+        rgba(255, 255, 255, 0) 70%
+    );
+    transform: translateX(-28%) skewX(-10deg);
+    opacity: 0.9;
+    border-radius: inherit;
+    pointer-events: none;
+}
+
+/* radial accent */
+
+.radial-highlight {
+    position: absolute;
+    left: auto;
+    right: -120px;
+    top: -80px;
+
+    width: 420px;
+    height: 420px;
+
+    background: radial-gradient(
+        circle at 70% 30%,
+        rgba(67, 139, 255, 0.236),
+        rgba(0, 103, 255, 0.04),
+        transparent 60%
+    );
+
+    filter: blur(18px);
+    pointer-events: none;
+}
+
+/* Progress bar */
+
+.progress-track {
+    background: rgba(255, 255, 255, 0.15);
+    height: 10px;
+    border-radius: 10px;
+}
+
+.progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--foreground), var(--primary));
+    border-radius: inherit;
+    transition: width 320ms ease;
 }

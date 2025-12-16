@@ -1,211 +1,309 @@
-import { PageHeader } from "@/components/ui/page-header";
-// import { Footer } from "@/components/footer"
-import { usePage } from "@inertiajs/react";
+// TermsConditionsPage.jsx
+import { Footer } from "@/Components/boiler/footer";
+import Header from "@/Components/boiler/header";
+import { Head, usePage } from "@inertiajs/react";
+import React, { useState, useEffect } from "react";
+
+// Sections
+const SECTIONS = [
+    { id: "agreement", title: "1. Agreement to Terms" },
+    { id: "services", title: "2. Services" },
+    { id: "bookings", title: "3. Bookings & Appointments" },
+    { id: "pricing", title: "4. Pricing & Payment" },
+    { id: "warranties", title: "5. Warranties & Guarantees" },
+    { id: "liability", title: "6. Liability" },
+    { id: "safety", title: "7. Safety Requirements" },
+    { id: "complaints", title: "8. Complaints" },
+    { id: "changes", title: "9. Changes to Terms" },
+    { id: "contact", title: "10. Contact Information" },
+];
+
+const getActiveIdFromHash = () => {
+    if (typeof window !== "undefined" && window.location.hash) {
+        return window.location.hash.substring(1);
+    }
+    return null;
+};
 
 export default function TermsConditionsPage() {
     const { props } = usePage();
     const pageTitle = props.pageTitle ?? "Terms & Conditions";
+    const lastUpdated = "12 December 2025";
+
+    const [activeSectionId, setActiveSectionId] = useState(
+        getActiveIdFromHash()
+    );
+
+    useEffect(() => {
+        const handleHashChange = () => {
+            setActiveSectionId(getActiveIdFromHash());
+        };
+        window.addEventListener("hashchange", handleHashChange);
+        setActiveSectionId(getActiveIdFromHash());
+
+        return () => window.removeEventListener("hashchange", handleHashChange);
+    }, []);
 
     return (
-        <div className="min-h-screen bg-background">
-            <PageHeader title={pageTitle} />
+        <>
+            <Head title={pageTitle} />
 
-            <main className="mx-auto max-w-4xl px-4 py-12 sm:px-6 lg:px-8">
-                <h1 className="text-3xl font-bold text-foreground mb-2">
-                    Terms & Conditions
-                </h1>
-                <p className="text-muted-foreground mb-8">
-                    Last updated: November 2024
-                </p>
+            <div className="min-h-screen w-full bg-white text-gray-900 rounded-b-3xl">
+                <Header title={pageTitle} />
 
-                <div className="prose prose-gray max-w-none space-y-8">
-                    {/* Section 1 */}
-                    <section>
-                        <h2 className="text-xl font-semibold text-foreground mb-4">
-                            1. Agreement to Terms
-                        </h2>
-                        <p className="text-muted-foreground leading-relaxed">
-                            By accessing or using the services provided by MD
-                            Gas ("Company", "we", "our", or "us"), you agree to
-                            be bound by these Terms and Conditions. If you
-                            disagree with any part of these terms, you may not
-                            access our services.
-                        </p>
-                    </section>
-
-                    {/* Section 2 */}
-                    <section>
-                        <h2 className="text-xl font-semibold text-foreground mb-4">
-                            2. Services
-                        </h2>
-                        <p className="text-muted-foreground leading-relaxed mb-4">
-                            MD Gas provides boiler repair, servicing,
-                            installation, and power flush services. Our services
-                            include:
-                        </p>
-                        <ul className="list-disc pl-6 space-y-2 text-muted-foreground">
-                            <li>
-                                <strong className="text-foreground">
-                                    Boiler Repairs:
-                                </strong>{" "}
-                                Fixed £75 labour charge (parts extra).
-                            </li>
-                            <li>
-                                <strong className="text-foreground">
-                                    Servicing:
-                                </strong>{" "}
-                                Annual servicing from £75.
-                            </li>
-                            <li>
-                                <strong className="text-foreground">
-                                    Installations:
-                                </strong>{" "}
-                                Pricing varies depending on system.
-                            </li>
-                            <li>
-                                <strong className="text-foreground">
-                                    Power Flush:
-                                </strong>{" "}
-                                Price based on radiator count.
-                            </li>
-                        </ul>
-                    </section>
-
-                    {/* Section 3 */}
-                    <section>
-                        <h2 className="text-xl font-semibold text-foreground mb-4">
-                            3. Bookings & Appointments
-                        </h2>
-                        <ul className="list-disc pl-6 space-y-2 text-muted-foreground">
-                            <li>
-                                Provide accurate and complete booking
-                                information.
-                            </li>
-                            <li>
-                                An adult must be present during the appointment.
-                            </li>
-                            <li>
-                                You must ensure safe access to the
-                                boiler/system.
-                            </li>
-                            <li>
-                                Cancel at least 24 hours before to avoid fees.
-                            </li>
-                        </ul>
-                    </section>
-
-                    {/* Section 4 */}
-                    <section>
-                        <h2 className="text-xl font-semibold text-foreground mb-4">
-                            4. Pricing & Payment
-                        </h2>
-                        <ul className="list-disc pl-6 space-y-2 text-muted-foreground">
-                            <li>All prices include VAT (unless stated).</li>
-                            <li>
-                                Labour charges are fixed; parts quoted
-                                separately.
-                            </li>
-                            <li>
-                                Payment due upon completion unless otherwise
-                                agreed.
-                            </li>
-                            <li>We accept cash, card, and bank transfer.</li>
-                        </ul>
-                    </section>
-
-                    {/* Section 5 */}
-                    <section>
-                        <h2 className="text-xl font-semibold text-foreground mb-4">
-                            5. Warranties & Guarantees
-                        </h2>
-                        <ul className="list-disc pl-6 space-y-2 text-muted-foreground">
-                            <li>12-month workmanship guarantee.</li>
-                            <li>
-                                Manufacturer warranties apply to new boilers.
-                            </li>
-                            <li>Parts covered by manufacturer warranty.</li>
-                        </ul>
-                    </section>
-
-                    {/* Section 6 */}
-                    <section>
-                        <h2 className="text-xl font-semibold text-foreground mb-4">
-                            6. Liability
-                        </h2>
-                        <p className="text-muted-foreground leading-relaxed">
-                            We are fully insured and Gas Safe registered.
-                            Liability is limited to service cost. We are not
-                            liable for: pre-existing system faults, third-party
-                            damage, or issues caused by lack of maintenance.
-                        </p>
-                    </section>
-
-                    {/* Section 7 */}
-                    <section>
-                        <h2 className="text-xl font-semibold text-foreground mb-4">
-                            7. Safety Requirements
-                        </h2>
-                        <p className="text-muted-foreground leading-relaxed">
-                            All work follows Gas Safe regulations. If we find
-                            unsafe conditions, we may need to isolate the
-                            appliance as required by law.
-                        </p>
-                    </section>
-
-                    {/* Section 8 */}
-                    <section>
-                        <h2 className="text-xl font-semibold text-foreground mb-4">
-                            8. Complaints
-                        </h2>
-                        <p className="text-muted-foreground leading-relaxed">
-                            Contact us within 14 days if you’re unhappy. We
-                            respond within 2 working days and resolve complaints
-                            within 14 working days.
-                        </p>
-                    </section>
-
-                    {/* Section 9 */}
-                    <section>
-                        <h2 className="text-xl font-semibold text-foreground mb-4">
-                            9. Changes to Terms
-                        </h2>
-                        <p className="text-muted-foreground leading-relaxed">
-                            We may update these terms at any time. Updates are
-                            effective immediately once posted. Continued use of
-                            our services means acceptance of updated terms.
-                        </p>
-                    </section>
-
-                    {/* Section 10 */}
-                    <section>
-                        <h2 className="text-xl font-semibold text-foreground mb-4">
-                            10. Contact Information
-                        </h2>
-                        <div className="mt-4 rounded-lg bg-muted/50 p-4 text-muted-foreground">
-                            <p>
-                                <strong className="text-foreground">
-                                    Email:
-                                </strong>{" "}
-                                info@mdgas.co.uk
-                            </p>
-                            <p>
-                                <strong className="text-foreground">
-                                    Phone:
-                                </strong>{" "}
-                                0800 123 4567
-                            </p>
-                            <p>
-                                <strong className="text-foreground">
-                                    Address:
-                                </strong>{" "}
-                                MD Gas Ltd, Greater London
+                <main className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-0 py-16 pt-28">
+                    {/* Page Header */}
+                    <div className="mb-8 md:mb-16 mt-6 flex flex-col items-center justify-center md:flex-row md:justify-between md:items-center">
+                        <div className="">
+                            <h1 className="text-3xl sm:text-5xl font-extrabold leading-tight tracking-tighter text-center md:text-left">
+                                Terms &{" "}
+                                <span className="text-primary">Conditions</span>
+                            </h1>
+                            <p className="mt-3 text-lg sm:text-xl w-full max-w-84 text-gray-700 font-light text-center md:text-left">
+                                The terms that govern your use of MD Gas
+                                services.
                             </p>
                         </div>
-                    </section>
-                </div>
-            </main>
+                        <div className="text-center">
+                            <p className="mt-3 text-sm text-gray-400">
+                                Last updated: <br className="md:flex" />
+                                <span className="font-medium">
+                                    {lastUpdated}
+                                </span>
+                            </p>
+                        </div>
+                    </div>
 
-            {/* <Footer /> */}
-        </div>
+                    {/* ================= MOBILE: HORIZONTAL PILLS (NOT STICKY) ================= */}
+                    <div className="md:hidden mb-10">
+                        <div className="relative">
+                            <div className="flex gap-2 overflow-x-auto no-scrollbar px-1 pb-2">
+                                {SECTIONS.map((s) => {
+                                    const isActive = s.id === activeSectionId;
+                                    return (
+                                        <a
+                                            key={s.id}
+                                            href={`#${s.id}`}
+                                            className={`whitespace-nowrap rounded-full px-4 py-2 text-sm font-medium transition
+                                                ${
+                                                    isActive
+                                                        ? "bg-primary text-white shadow-sm"
+                                                        : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+                                                }`}
+                                        >
+                                            {s.title}
+                                        </a>
+                                    );
+                                })}
+                            </div>
+
+                            {/* fade edges */}
+                            <div className="pointer-events-none absolute inset-y-0 left-0 w-6 bg-gradient-to-r from-white to-transparent" />
+                            <div className="pointer-events-none absolute inset-y-0 right-0 w-6 bg-gradient-to-l from-white to-transparent" />
+                        </div>
+                    </div>
+                    {/* ================= END MOBILE PILLS ================= */}
+
+                    {/* Layout */}
+                    <div className="grid grid-cols-1 md:grid-cols-4 gap-12">
+                        {/* ================= DESKTOP SIDEBAR ================= */}
+                        <nav
+                            aria-label="Table of contents"
+                            className="hidden md:block md:col-span-1 md:sticky md:top-10 self-start"
+                        >
+                            <div className="rounded-xl bg-gray-50 border border-gray-200 p-6 shadow-md max-h-[calc(100vh-4rem)] overflow-y-auto">
+                                <h2 className="text-base font-bold text-gray-700 mb-4 border-b pb-2 border-gray-200">
+                                    Contents
+                                </h2>
+
+                                <ul className="space-y-2 text-base">
+                                    {SECTIONS.map((s) => {
+                                        const isActive =
+                                            s.id === activeSectionId;
+                                        return (
+                                            <li key={s.id}>
+                                                <a
+                                                    href={`#${s.id}`}
+                                                    className={`block px-3 py-1.5 transition-all border-l-4
+                                                        ${
+                                                            isActive
+                                                                ? "border-primary text-primary font-semibold"
+                                                                : "border-transparent text-gray-600 hover:text-primary hover:border-secondary/70"
+                                                        }`}
+                                                >
+                                                    {s.title}
+                                                </a>
+                                            </li>
+                                        );
+                                    })}
+                                </ul>
+                            </div>
+                        </nav>
+
+                        {/* ================= CONTENT ================= */}
+                        <article className="md:col-span-3 space-y-12 md:border-l md:border-gray-200 md:pl-8">
+                            <TermsSection
+                                id="agreement"
+                                title="1. Agreement to Terms"
+                                isActive={activeSectionId === "agreement"}
+                            >
+                                <p>
+                                    By accessing or using the services provided
+                                    by MD Gas ("Company", "we", "our", or "us"),
+                                    you agree to be bound by these Terms &
+                                    Conditions.
+                                </p>
+                            </TermsSection>
+
+                            <TermsSection
+                                id="services"
+                                title="2. Services"
+                                isActive={activeSectionId === "services"}
+                            >
+                                <ul className="list-disc pl-5 space-y-2">
+                                    <li>
+                                        <strong>Boiler Repairs:</strong> Fixed
+                                        £75 labour charge (parts extra).
+                                    </li>
+                                    <li>
+                                        <strong>Servicing:</strong> Annual
+                                        servicing from £75.
+                                    </li>
+                                    <li>
+                                        <strong>Installations:</strong> Pricing
+                                        varies.
+                                    </li>
+                                    <li>
+                                        <strong>Power Flush:</strong> Price
+                                        based on radiator count.
+                                    </li>
+                                </ul>
+                            </TermsSection>
+
+                            <TermsSection
+                                id="bookings"
+                                title="3. Bookings & Appointments"
+                                isActive={activeSectionId === "bookings"}
+                            >
+                                <ul className="list-disc pl-5 space-y-2">
+                                    <li>Provide accurate booking details.</li>
+                                    <li>An adult must be present.</li>
+                                    <li>Ensure safe access.</li>
+                                    <li>24h notice required.</li>
+                                </ul>
+                            </TermsSection>
+
+                            <TermsSection
+                                id="pricing"
+                                title="4. Pricing & Payment"
+                                isActive={activeSectionId === "pricing"}
+                            >
+                                <ul className="list-disc pl-5 space-y-2">
+                                    <li>Prices include VAT.</li>
+                                    <li>Labour fixed, parts extra.</li>
+                                    <li>Payment due on completion.</li>
+                                    <li>Cash, card, bank transfer accepted.</li>
+                                </ul>
+                            </TermsSection>
+
+                            <TermsSection
+                                id="warranties"
+                                title="5. Warranties & Guarantees"
+                                isActive={activeSectionId === "warranties"}
+                            >
+                                <ul className="list-disc pl-5 space-y-2">
+                                    <li>12-month workmanship guarantee.</li>
+                                    <li>Manufacturer warranties apply.</li>
+                                </ul>
+                            </TermsSection>
+
+                            <TermsSection
+                                id="liability"
+                                title="6. Liability"
+                                isActive={activeSectionId === "liability"}
+                            >
+                                <p>
+                                    Liability is limited to service cost and
+                                    excludes pre-existing faults.
+                                </p>
+                            </TermsSection>
+
+                            <TermsSection
+                                id="safety"
+                                title="7. Safety Requirements"
+                                isActive={activeSectionId === "safety"}
+                            >
+                                <p>
+                                    All work complies with Gas Safe regulations.
+                                </p>
+                            </TermsSection>
+
+                            <TermsSection
+                                id="complaints"
+                                title="8. Complaints"
+                                isActive={activeSectionId === "complaints"}
+                            >
+                                <p>
+                                    Contact us within 14 days if unhappy with
+                                    service.
+                                </p>
+                            </TermsSection>
+
+                            <TermsSection
+                                id="changes"
+                                title="9. Changes to Terms"
+                                isActive={activeSectionId === "changes"}
+                            >
+                                <p>Terms may be updated at any time.</p>
+                            </TermsSection>
+
+                            <TermsSection
+                                id="contact"
+                                title="10. Contact Information"
+                                isActive={activeSectionId === "contact"}
+                                isContact
+                            >
+                                <div className="mt-4 p-5 rounded-lg border border-primary/60 bg-primary-5 space-y-3">
+                                    <p>Email: info@mdgas.co.uk</p>
+                                    <p>Phone: 0800 123 4567</p>
+                                    <p>MD Gas Ltd, Greater London</p>
+                                </div>
+                            </TermsSection>
+                        </article>
+                    </div>
+                </main>
+            </div>
+
+            <Footer />
+        </>
     );
 }
+
+const TermsSection = ({
+    id,
+    title,
+    children,
+    isContact = false,
+    isActive = false,
+}) => (
+    <section id={id} className="relative">
+        {/* Timeline dot – desktop only */}
+        <div
+            className={`hidden md:block absolute -left-[37px] top-2 h-3 w-3 rounded-full border-2 ${
+                isActive
+                    ? "bg-primary border-secondary/60"
+                    : "bg-white border-light-grey"
+            }`}
+        />
+        <h3
+            className={`text-xl sm:text-2xl font-extrabold mb-4 ${
+                isContact || isActive ? "text-primary" : "text-gray-900"
+            }`}
+        >
+            {title}
+        </h3>
+        <div className="space-y-4 text-base text-gray-700 leading-relaxed">
+            {children}
+        </div>
+    </section>
+);
