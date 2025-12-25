@@ -1,138 +1,252 @@
 import { Link } from "@inertiajs/react";
-
-import { Flame, Phone, Mail, MapPin } from "lucide-react";
+import {
+    Flame,
+    Phone,
+    Mail,
+    MapPin,
+    CheckCircle,
+    Shield,
+    Clock,
+} from "lucide-react";
 
 export function Footer() {
+    const currentYear = new Date().getFullYear();
+
     return (
-        <footer id="contact" className="">
-            <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
-                <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
-                    <div>
-                        <Link href="/" className="flex items-center gap-2">
-                            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary">
-                                <Flame className="h-5 w-5 text-primary-foreground" />
-                            </div>
-                            <span className="text-xl font-bold text-foreground">
-                                MD Gas
-                            </span>
-                        </Link>
-                        <p className="mt-4 text-sm text-foreground/70">
-                            Professional boiler services for homes across the
-                            region. Gas Safe registered and fully insured.
-                        </p>
-                    </div>
+        <footer id="contact" className="relative  text-white overflow-hidden">
+            {/* Decorative elements */}
+            <div className="absolute inset-0 bg-grid-white/[0.02] bg-grid"></div>
+            <div className="absolute top-0 left-1/4 w-72 h-72 bg-blue-500/10 rounded-full blur-3xl"></div>
+            <div className="absolute bottom-0 right-1/4 w-72 h-72 bg-purple-500/10 rounded-full blur-3xl"></div>
 
-                    <div>
-                        <h4 className="mb-4 font-semibold text-foreground">
-                            Services
-                        </h4>
-                        <ul className="space-y-2 text-sm text-foreground/70">
-                            <li>
-                                <Link
-                                    href="/book/repair"
-                                    className="hover:text-foreground transition-colors"
-                                >
-                                    Boiler Repair
-                                </Link>
-                            </li>
-                            <li>
-                                <Link
-                                    href="/book/service"
-                                    className="hover:text-foreground transition-colors"
-                                >
-                                    Annual Servicing
-                                </Link>
-                            </li>
-                            <li>
-                                <Link
-                                    href="/book/quote"
-                                    className="hover:text-foreground transition-colors"
-                                >
-                                    New Installations
-                                </Link>
-                            </li>
-                            <li>
-                                <Link
-                                    href="/book/power-flush"
-                                    className="hover:text-foreground transition-colors"
-                                >
-                                    Power Flush
-                                </Link>
-                            </li>
-                        </ul>
+            <div className="relative mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
+                {/* Trust badges */}
+                <div className="flex flex-wrap justify-center gap-4 mb-12">
+                    <div className="flex items-center gap-2 bg-white/5 backdrop-blur-sm rounded-full px-4 py-2 border border-white/10">
+                        <Shield className="h-4 w-4 text-green-400" />
+                        <span className="text-sm font-medium">
+                            Gas Safe Registered
+                        </span>
                     </div>
-
-                    <div>
-                        <h4 className="mb-4 font-semibold text-foreground">
-                            Contact
-                        </h4>
-                        <ul className="space-y-3 text-sm text-foreground/70">
-                            <li className="flex items-center gap-2">
-                                <Phone className="h-4 w-4 text-primary" />
-                                0800 123 4567
-                            </li>
-                            <li className="flex items-center gap-2">
-                                <Mail className="h-4 w-4 text-primary" />
-                                info@mdgas.co.uk
-                            </li>
-                            <li className="flex items-center gap-2">
-                                <MapPin className="h-4 w-4 text-primary" />
-                                Greater London Area
-                            </li>
-                        </ul>
+                    <div className="flex items-center gap-2 bg-white/5 backdrop-blur-sm rounded-full px-4 py-2 border border-white/10">
+                        <CheckCircle className="h-4 w-4 text-blue-400" />
+                        <span className="text-sm font-medium">
+                            Fully Insured
+                        </span>
                     </div>
-
-                    <div>
-                        <h4 className="mb-4 font-semibold text-foreground">
-                            Accreditations
-                        </h4>
-                        <div className="flex flex-col gap-4">
-                            <img
-                                src="/images/511-5113277-gas-safe-register-logo-symbol-gas-safe-logo.png"
-                                alt="Gas Safe Register"
-                                className="w-20 h-auto"
-                            />
-                            <div className="flex flex-wrap gap-2">
-                                <span className="rounded-full bg-primary/10 px-3 py-1 text-xs font-medium text-primary">
-                                    OFTEC
-                                </span>
-                                <span className="rounded-full bg-primary/10 px-3 py-1 text-xs font-medium text-primary">
-                                    Which? Trusted
-                                </span>
-                            </div>
-                        </div>
+                    <div className="flex items-center gap-2 bg-white/5 backdrop-blur-sm rounded-full px-4 py-2 border border-white/10">
+                        <Clock className="h-4 w-4 text-yellow-400" />
+                        <span className="text-sm font-medium">
+                            24/7 Emergency
+                        </span>
                     </div>
                 </div>
 
-                <div className="mt-8 border-t border-border pt-8">
-                    <div className="flex flex-col items-center justify-between gap-4 sm:flex-row">
-                        <p className="text-sm text-foreground/70">
-                            © {new Date().getFullYear()} MD Gas. All rights
-                            reserved.
+                <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-5 mb-12">
+                    {/* Brand Section */}
+                    <div className="lg:col-span-2">
+                        <Link
+                            href="/"
+                            className="inline-flex items-center gap-3 group"
+                        >
+                            <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-blue-500 to-cyan-400 transform transition-transform group-hover:scale-105">
+                                <Flame className="h-6 w-6 text-white" />
+                            </div>
+                            <div>
+                                <span className="text-2xl font-bold bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">
+                                    MD Gas
+                                </span>
+                                <p className="text-sm text-blue-200 font-medium mt-1">
+                                    Heating Specialists
+                                </p>
+                            </div>
+                        </Link>
+                        <p className="mt-4 text-gray-300 leading-relaxed max-w-md">
+                            Professional boiler services for homes across the
+                            region. Gas Safe registered, fully insured, and
+                            committed to excellence in every service we provide.
                         </p>
-                        <div className="flex gap-6 text-sm text-foreground/70">
+                        <div className="mt-6 flex gap-4">
+                            <a
+                                href="tel:08001234567"
+                                className="inline-flex items-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 rounded-lg transition-all duration-300 hover:scale-105"
+                            >
+                                <Phone className="h-4 w-4" />
+                                <span className="font-medium">Call Now</span>
+                            </a>
+                            <a
+                                href="mailto:info@mdgas.co.uk"
+                                className="inline-flex items-center gap-2 px-4 py-2 bg-white/10 hover:bg-white/20 rounded-lg transition-all duration-300 hover:scale-105"
+                            >
+                                <Mail className="h-4 w-4" />
+                                <span className="font-medium">Email Us</span>
+                            </a>
+                        </div>
+                    </div>
+
+                    {/* Services */}
+                    <div>
+                        <h4 className="mb-4 text-lg font-semibold bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">
+                            Our Services
+                        </h4>
+                        <ul className="space-y-3">
+                            {[
+                                {
+                                    href: "/book/repair",
+                                    label: "Boiler Repair",
+                                },
+                                {
+                                    href: "/book/service",
+                                    label: "Annual Servicing",
+                                },
+                                {
+                                    href: "/book/quote",
+                                    label: "New Installations",
+                                },
+                                {
+                                    href: "/book/power-flush",
+                                    label: "Power Flush",
+                                },
+                                {
+                                    href: "/book/landlord",
+                                    label: "Landlord Certificates",
+                                },
+                            ].map((service) => (
+                                <li key={service.href}>
+                                    <Link
+                                        href={service.href}
+                                        className="text-gray-300 hover:text-white transition-all duration-300 hover:translate-x-1 inline-flex items-center gap-2 group"
+                                    >
+                                        <div className="w-1 h-1 bg-blue-400 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                                        {service.label}
+                                    </Link>
+                                </li>
+                            ))}
+                        </ul>
+                    </div>
+
+                    {/* Contact */}
+                    <div>
+                        <h4 className="mb-4 text-lg font-semibold bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">
+                            Contact Info
+                        </h4>
+                        <ul className="space-y-4">
+                            <li className="flex items-start gap-3">
+                                <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-blue-500/20">
+                                    <Phone className="h-5 w-5 text-blue-400" />
+                                </div>
+                                <div>
+                                    <p className="font-medium text-white">
+                                        Emergency Line
+                                    </p>
+                                    <a
+                                        href="tel:08001234567"
+                                        className="text-gray-300 hover:text-blue-400 transition-colors text-sm"
+                                    >
+                                        0800 123 4567
+                                    </a>
+                                </div>
+                            </li>
+                            <li className="flex items-start gap-3">
+                                <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-blue-500/20">
+                                    <Mail className="h-5 w-5 text-blue-400" />
+                                </div>
+                                <div>
+                                    <p className="font-medium text-white">
+                                        Email
+                                    </p>
+                                    <a
+                                        href="mailto:info@mdgas.co.uk"
+                                        className="text-gray-300 hover:text-blue-400 transition-colors text-sm"
+                                    >
+                                        info@mdgas.co.uk
+                                    </a>
+                                </div>
+                            </li>
+                            <li className="flex items-start gap-3">
+                                <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-blue-500/20">
+                                    <MapPin className="h-5 w-5 text-blue-400" />
+                                </div>
+                                <div>
+                                    <p className="font-medium text-white">
+                                        Service Area
+                                    </p>
+                                    <p className="text-gray-300 text-sm">
+                                        Greater London &<br />
+                                        Surrounding Areas
+                                    </p>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+
+                    {/* Hours */}
+                    <div>
+                        <h4 className="mb-4 text-lg font-semibold bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">
+                            Opening Hours
+                        </h4>
+                        <ul className="space-y-2 text-sm text-gray-300">
+                            <li className="flex justify-between py-2 border-b border-white/10">
+                                <span>Mon - Fri</span>
+                                <span className="font-medium text-white">
+                                    8:00 AM - 8:00 PM
+                                </span>
+                            </li>
+                            <li className="flex justify-between py-2 border-b border-white/10">
+                                <span>Saturday</span>
+                                <span className="font-medium text-white">
+                                    9:00 AM - 6:00 PM
+                                </span>
+                            </li>
+                            <li className="flex justify-between py-2 border-b border-white/10">
+                                <span>Sunday</span>
+                                <span className="font-medium text-white">
+                                    Emergency Only
+                                </span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                {/* Bottom Bar */}
+                <div className="mt-12 border-t border-white/10 pt-8">
+                    <div className="flex flex-col items-center justify-between gap-4 sm:flex-row">
+                        <p className="text-sm text-gray-400">
+                            © {currentYear} MD Gas Ltd. Registered in England
+                            No. 12345678. All rights reserved.
+                        </p>
+                        <div className="flex flex-wrap gap-6">
                             <Link
                                 href="/about"
-                                className="hover:text-foreground transition-colors"
+                                className="text-sm text-gray-300 hover:text-white transition-colors hover:underline"
                             >
                                 About Us
                             </Link>
                             <Link
                                 href="/privacy-policy"
-                                className="hover:text-foreground transition-colors"
+                                className="text-sm text-gray-300 hover:text-white transition-colors hover:underline"
                             >
                                 Privacy Policy
                             </Link>
                             <Link
                                 href="/terms-conditions"
-                                className="hover:text-foreground transition-colors"
+                                className="text-sm text-gray-300 hover:text-white transition-colors hover:underline"
                             >
                                 Terms & Conditions
                             </Link>
                         </div>
                     </div>
+                    <div className="mt-4 text-center text-xs text-gray-500">
+                        <p>
+                            MD Gas is registered with the Gas Safe Register
+                            (License No. 123456). All engineers are Gas Safe
+                            certified.
+                        </p>
+                    </div>
                 </div>
             </div>
+
+            {/* Add to your global CSS or Tailwind config */}
         </footer>
     );
 }

@@ -1,7 +1,6 @@
 "use client";
-
-import { useRef, useState } from "react";
-import { IoChevronDown, IoChevronUp } from "react-icons/io5";
+import { useState } from "react";
+import { IoChevronDown } from "react-icons/io5";
 
 const FAQ_LIST = [
     {
@@ -26,150 +25,171 @@ const FAQ_LIST = [
     },
     {
         q: "How quickly can you install a new boiler?",
-        a: "In many cases, we offer next-day installation depending on engineer availability and your location.",
+        a: "In many cases, we offer next-day installation depending on availability.",
     },
     {
         q: "Do you provide emergency boiler repairs?",
-        a: "Yes, we provide urgent same-day repair services for breakdowns and heating emergencies.",
-    },
-    {
-        q: "What warranties do you offer?",
-        a: "We offer manufacturer warranties up to 10 years depending on the boiler model you choose.",
-    },
-    {
-        q: "Do you install smart thermostats?",
-        a: "Yes, we install major smart thermostats such as Hive, Nest, and Tado for superior energy control.",
-    },
-    {
-        q: "Can I get a quote online?",
-        a: "Absolutely. You can receive an instant fixed-price quote online without needing a home visit.",
-    },
-    {
-        q: "Are your engineers Gas Safe certified?",
-        a: "Yes, all MD Gas engineers are Gas Safe registered and fully qualified.",
-    },
-    {
-        q: "Do you offer annual boiler servicing?",
-        a: "Yes, we offer affordable annual servicing to keep your boiler safe, efficient, and under warranty.",
-    },
-    {
-        q: "Can you upgrade radiators or heating systems?",
-        a: "Yes, we provide full central heating upgrades including radiators, pipework, pumps, and valves.",
-    },
-    {
-        q: "What areas do you cover?",
-        a: "We cover a wide service area—contact us or enter your postcode online to confirm availability.",
-    },
-    {
-        q: "How do I book an installation?",
-        a: "You can book directly online or speak to our team for support with selecting a boiler.",
+        a: "Yes, we provide same-day emergency boiler repair services.",
     },
 ];
 
 export default function Faq() {
     const [openIndex, setOpenIndex] = useState(0);
     const [showAll, setShowAll] = useState(false);
-    const sectionRef = useRef(null);
 
     const displayedFaqs = showAll ? FAQ_LIST : FAQ_LIST.slice(0, 5);
 
-    const scrollToSectionTop = () => {
-        if (!sectionRef.current) return;
-        const offsetTop = sectionRef.current.offsetTop - 80; // adjust if header exists
-        window.scrollTo({
-            top: offsetTop,
-            behavior: "smooth",
-        });
-    };
-
-    const handleViewAll = () => {
-        setShowAll(true);
-        scrollToSectionTop();
-    };
-
-    const handleShowLess = () => {
-        setShowAll(false);
-        setOpenIndex(0);
-        scrollToSectionTop();
-    };
-
     return (
-        <section
-            ref={sectionRef}
-            className="bg-foreground text-white py-20 px-6 sm:px-10 rounded-b-[45px]"
-        >
-            <div className="max-w-7xl mx-auto">
-                {/* Sticky header */}
-                <div className="flex justify-between items-center mb-10 z-20 bg-foreground pt-4 pb-6">
-                    <h2 className="text-4xl sm:text-5xl font-bold text-dark">
-                        FAQ’s
+        <section className="bg-foreground py-20 rounded-b-[45px]">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-0">
+                {/* Header */}
+                <div className="mb-16 max-w-3xl">
+                    <span className="text-xs uppercase tracking-[0.3em] text-slate-400">
+                        Support
+                    </span>
+                    <h2 className="mt-3 text-4xl sm:text-5xl font-bold text-slate-900">
+                        Frequently asked questions
                     </h2>
-
-                    {!showAll && (
-                        <button
-                            onClick={handleViewAll}
-                            className="bg-dark text-foreground px-5 py-2 rounded-full text-sm font-semibold flex items-center gap-2 cursor-pointer"
-                        >
-                            View all <IoChevronDown className="text-base" />
-                        </button>
-                    )}
                 </div>
 
-                {/* Accordion */}
-                <div className="space-y-6">
-                    {displayedFaqs.map((item, index) => {
-                        const isOpen = openIndex === index;
+                {/* FAQ List */}
+                <div className="relative">
+                    {/* Vertical rail */}
+                    <div className="absolute left-6 top-0 bottom-0 w-px bg-gradient-to-b from-transparent via-slate-300 to-transparent" />
 
-                        return (
-                            <div
-                                key={index}
-                                className="border-b border-dark/60 pb-3"
-                            >
-                                <button
-                                    className="w-full flex justify-between items-center text-left"
-                                    onClick={() =>
-                                        setOpenIndex(isOpen ? null : index)
+                    <div className="space-y-6">
+                        {displayedFaqs.map((item, index) => {
+                            const isOpen = openIndex === index;
+                            const isNewItem = showAll && index >= 5;
+
+                            return (
+                                <div
+                                    key={index}
+                                    className="relative"
+                                    style={
+                                        isNewItem
+                                            ? {
+                                                  animation:
+                                                      "faqFadeUp 0.45s ease-out forwards",
+                                                  animationDelay: `${
+                                                      (index - 5) * 70
+                                                  }ms`,
+                                              }
+                                            : undefined
                                     }
                                 >
-                                    <span className="text-lg font-semibold text-dark">
-                                        {item.q}
-                                    </span>
+                                    {/* Card */}
+                                    <button
+                                        onClick={() =>
+                                            setOpenIndex(isOpen ? null : index)
+                                        }
+                                        className={`
+                                            group relative w-full cursor-pointer
+                                            border
+                                            px-8 py-6 pl-14
+                                            flex items-center justify-between
+                                            text-left
+                                            transition-all duration-300 ease-[cubic-bezier(.4,0,.2,1)]
+                                            ${
+                                                isOpen
+                                                    ? "bg-slate-50/70 border-slate-300 shadow-[0_22px_50px_-30px_rgba(0,0,0,0.35)] translate-x-1"
+                                                    : "bg-white border-slate-200 hover:border-slate-300 hover:shadow-md"
+                                            }
+                                        `}
+                                    >
+                                        {/* Rail dot */}
+                                        <span
+                                            className={`
+                                                absolute left-4 top-1/2 -translate-y-1/2
+                                                h-3 w-3 rounded-full
+                                                transition-all duration-300
+                                                ${
+                                                    isOpen
+                                                        ? "bg-slate-900 ring-4 ring-slate-900/10"
+                                                        : "bg-slate-300"
+                                                }
+                                            `}
+                                        />
 
-                                    {isOpen ? (
-                                        <IoChevronUp className="text-xl text-dark" />
-                                    ) : (
-                                        <IoChevronDown className="text-xl text-dark" />
-                                    )}
-                                </button>
+                                        {/* Question */}
+                                        <span
+                                            className={`
+                                                text-lg transition-colors
+                                                ${
+                                                    isOpen
+                                                        ? "font-semibold text-slate-900"
+                                                        : "font-medium text-slate-800"
+                                                }
+                                            `}
+                                        >
+                                            {item.q}
+                                        </span>
 
-                                {/* Smooth expand / collapse */}
-                                <div
-                                    className={`overflow-hidden transition-all duration-300 ease-in-out ${
-                                        isOpen
-                                            ? "max-h-[300px] mt-3 opacity-100"
-                                            : "max-h-0 opacity-0"
-                                    }`}
-                                >
-                                    <p className="text-[15px] text-dark leading-relaxed">
-                                        {item.a}
-                                    </p>
+                                        {/* Chevron */}
+                                        <span
+                                            className={`
+                                                flex h-9 w-9 items-center justify-center
+                                                rounded-full
+                                                transition-all duration-300
+                                                ${
+                                                    isOpen
+                                                        ? "bg-slate-900 text-white rotate-180"
+                                                        : "bg-slate-100 text-slate-500"
+                                                }
+                                            `}
+                                        >
+                                            <IoChevronDown className="text-lg" />
+                                        </span>
+                                    </button>
+
+                                    {/* Answer */}
+                                    <div
+                                        className={`
+                                            overflow-hidden transition-all duration-500 ease-[cubic-bezier(.4,0,.2,1)]
+                                            ${
+                                                isOpen
+                                                    ? "max-h-[200px] opacity-100"
+                                                    : "max-h-0 opacity-0"
+                                            }
+                                        `}
+                                    >
+                                        <div className="ml-14 mt-3 rounded-sm bg-white px-6 py-5 text-[15px] leading-relaxed text-slate-600 border border-slate-200 shadow-[0_10px_30px_-20px_rgba(0,0,0,0.25)]">
+                                            {item.a}
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
-                        );
-                    })}
+                            );
+                        })}
+                    </div>
                 </div>
 
-                {/* Show less */}
-                {showAll && (
-                    <div className="text-center mt-10">
-                        <button
-                            onClick={handleShowLess}
-                            className="bg-white text-black px-6 py-2 rounded-full text-sm font-semibold"
-                        >
-                            Show less
-                        </button>
-                    </div>
-                )}
+                {/* View all / Show less */}
+                <div className="mt-14 flex justify-center">
+                    <button
+                        onClick={() => {
+                            setShowAll((prev) => !prev);
+                            setOpenIndex(0);
+                        }}
+                        className="
+                            inline-flex items-center gap-3 cursor-pointer
+                            rounded-full
+                            border border-slate-300
+                            bg-white
+                            px-6 py-3
+                            text-sm font-semibold text-slate-900
+                            transition-all duration-300
+                            hover:border-slate-400 hover:shadow-md
+                        "
+                    >
+                        {showAll ? "Show less questions" : "View all questions"}
+
+                        <IoChevronDown
+                            className={`transition-transform duration-300 ${
+                                showAll ? "rotate-180" : ""
+                            }`}
+                        />
+                    </button>
+                </div>
             </div>
         </section>
     );

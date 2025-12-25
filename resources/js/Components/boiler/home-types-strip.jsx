@@ -166,17 +166,17 @@ export function HomeTypesStrip() {
                                     <div className="flex h-full relative flex-col justify-between rounded-3xl bg-dark/60 p-6 sm:p-8 ">
                                         <div>
                                             {/* Top-right badge */}
-                                            <div className="absolute top-4 right-4 z-50 w-12 text-center h-12 inline-flex items-center justify-center rounded-full border border-primary/40 bg-primary/20 px-3 py-1 text-[8px] font-medium text-primary leading-2.5">
+                                            <div className="absolute top-4 right-4 z-50 w-12 text-center h-12 inline-flex items-center justify-center rounded-full border border-primary/40 bg-primary/20 px-3 py-1 text-[8px] font-medium text-foreground leading-2.5">
                                                 {type.tag}
                                             </div>
 
                                             <div className="mb-5 flex items-center gap-4">
                                                 {/* Icon wrapper – don't let it stretch */}
-                                                <div className="flex h-12 w-12 items-center justify-center rounded-full bg-primary/15 shrink-0">
-                                                    <type.icon className="h-6 w-6 text-primary" />
+                                                <div className="flex h-12 w-12 items-center justify-center rounded-full bg-primary/35 shrink-0">
+                                                    <type.icon className="h-6 w-6 text-foreground" />
                                                 </div>
 
-                                                <h3 className="text-2xl font-bold leading-7 text-light-background sm:text-3xl">
+                                                <h3 className="text-2xl font-bold leading-7 max-w-32 text-light-background sm:text-3xl">
                                                     {type.name} homes
                                                 </h3>
                                             </div>

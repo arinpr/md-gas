@@ -1,18 +1,14 @@
 import { Link } from "@inertiajs/react";
 import { Flame, MessageSquare, ChevronRight } from "lucide-react";
 
-/**
- * Slim, modern header using lucide-react icons.
- * - Logo left
- * - Slim contact bar right (MessageSquare icon + chevron)
- * - Online status blink on the right side of the chat element
- */
-export function PageHeader() {
-    const waHref = "https://wa.me/441234567890"; // replace with your number
+const STEPS = ["Choose", "Customise", "Book", "Complete"];
+
+export function PageHeader({ variant = "default", currentStep = 4 }) {
+    const waHref = "https://wa.me/441234567890";
     const waNumber = "0330 113 1333";
 
     return (
-        <header className="border border-b-dark/15">
+        <header className="border border-b-dark/15 bg-foreground">
             <div className="mx-auto max-w-7xl px-6 sm:px-8 lg:px-10">
                 <div className="flex h-[75px] items-center justify-between">
                     {/* Logo */}
@@ -34,6 +30,51 @@ export function PageHeader() {
                             </span>
                         </div>
                     </Link>
+
+                    {variant === "results" && (
+                        <div className="hidden md:flex items-center gap-3">
+                            {STEPS.map((label, i) => {
+                                const step = i + 1;
+                                const active = step === currentStep;
+                                const done = step < currentStep;
+
+                                return (
+                                    <div
+                                        key={label}
+                                        className="flex items-center gap-2"
+                                    >
+                                        <div
+                                            className={`h-6 w-6 rounded-full flex items-center justify-center text-xs font-bold
+                                                ${
+                                                    done
+                                                        ? "bg-primary text-white"
+                                                        : active
+                                                        ? "border-2 border-primary text-primary"
+                                                        : "border border-gray-300 text-gray-400"
+                                                }
+                                            `}
+                                        >
+                                            {step}
+                                        </div>
+
+                                        <span
+                                            className={`text-sm ${
+                                                active
+                                                    ? "font-semibold text-dark"
+                                                    : "text-gray-400"
+                                            }`}
+                                        >
+                                            {label}
+                                        </span>
+
+                                        {i !== STEPS.length - 1 && (
+                                            <ChevronRight className="h-4 w-4 text-gray-300 mx-1" />
+                                        )}
+                                    </div>
+                                );
+                            })}
+                        </div>
+                    )}
 
                     {/* Slim contact bar (relative so status-blink can be positioned) */}
                     <a

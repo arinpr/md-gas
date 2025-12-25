@@ -1,129 +1,6 @@
-// import { Link } from "@inertiajs/react";
-// import {
-//     Card,
-//     CardContent,
-//     CardDescription,
-//     CardHeader,
-//     CardTitle,
-// } from "@/components/ui/card";
 import { ArrowRight } from "lucide-react";
-// import { FcGoogle } from "react-icons/fc";
-// import { FaStar, FaStarHalfAlt } from "react-icons/fa";
 import { GoogleReview } from "../GoogleReview";
 import { HeroServices } from "../HeroService";
-
-// const services = [
-//     {
-//         id: "repair",
-//         title: "Boiler Repair",
-//         description: "Fast boiler repairs with fixed labour.",
-//         image: "/images/product_boiler.png",
-//         highlight: "From £75 Labour",
-//         href: "/book/quote?service=repair",
-//         theme: {
-//             hoverBg: "hover:bg-[#E5F1FF]",
-//             hoverBorder: "hover:border-[#2358FF]",
-//             labelBg: "bg-[#2358FF]",
-//             rippleColor: "text-[#7190F5]",
-//             arrowHoverBg: "group-hover:bg-[#2358FF]",
-//         },
-//     },
-//     {
-//         id: "service",
-//         title: "Boiler Service",
-//         description: "Annual service to keep your boiler safe.",
-//         image: "/images/product_boiler.png",
-//         highlight: "Yearly Service",
-//         href: "/book/quote?service=service",
-//         theme: {
-//             hoverBg: "hover:bg-[#FFECA9]",
-//             hoverBorder: "hover:border-[#FFC727]",
-//             labelBg: "bg-[#FFC727]",
-//             rippleColor: "text-[#FFC727]",
-//             arrowHoverBg: "group-hover:bg-[#2358FF]",
-//         },
-//     },
-//     {
-//         id: "quote",
-//         title: "New Boiler Quote",
-//         description: "Instant online quote for a new boiler.",
-//         image: "/images/product_boiler.png",
-//         highlight: "Instant Quote",
-//         href: "/book/quote?service=new",
-//         theme: {
-//             hoverBg: "hover:bg-[#E6F9EC]",
-//             hoverBorder: "hover:border-[#17A44A]",
-//             labelBg: "bg-[#17A44A]",
-//             rippleColor: "text-[#17A44A]",
-//             arrowHoverBg: "group-hover:bg-[#2358FF]",
-//         },
-//     },
-//     {
-//         id: "powerflush",
-//         title: "Power Flush",
-//         description: "Deep clean for radiators and pipework.",
-//         image: "/images/product_boiler.png",
-//         highlight: "From £400",
-//         href: "/book/quote?service=powerflush",
-//         theme: {
-//             hoverBg: "hover:bg-[#F3E9FF]",
-//             hoverBorder: "hover:border-[#8B4DFF]",
-//             labelBg: "bg-[#8B4DFF]",
-//             rippleColor: "text-[#8B4DFF]",
-//             arrowHoverBg: "group-hover:bg-[#2358FF]",
-//         },
-//     },
-// ];
-
-// SVG ripple using currentColor so we can tint it per card
-// function GlowRipple({ className }) {
-//     return (
-//         <svg
-//             xmlns="http://www.w3.org/2000/svg"
-//             width="203"
-//             height="205"
-//             viewBox="0 0 243 225"
-//             fill="none"
-//             className={className}
-//             aria-hidden="true"
-//         >
-//             <g opacity="0.2">
-//                 <ellipse
-//                     cx="121.282"
-//                     cy="112.153"
-//                     rx="106.355"
-//                     ry="98.3498"
-//                     fill="currentColor"
-//                     fillOpacity="0.4"
-//                 />
-//                 <ellipse
-//                     cx="121.282"
-//                     cy="112.153"
-//                     rx="121.282"
-//                     ry="112.153"
-//                     fill="currentColor"
-//                     fillOpacity="0.2"
-//                 />
-//                 <ellipse
-//                     cx="121.283"
-//                     cy="112.154"
-//                     rx="94.0935"
-//                     ry="87.0113"
-//                     fill="currentColor"
-//                     fillOpacity="0.4"
-//                 />
-//                 <ellipse
-//                     cx="121.282"
-//                     cy="112.154"
-//                     rx="77.0341"
-//                     ry="71.2358"
-//                     fill="currentColor"
-//                     fillOpacity="0.6"
-//                 />
-//             </g>
-//         </svg>
-//     );
-// }
 
 export function HeroSection() {
     return (
@@ -161,10 +38,6 @@ export function HeroSection() {
                             </span>
                         </h2>
 
-                        {/* <p className="text-lg text-slate-600 leading-relaxed max-w-2xl text-right px-4 ">
-                            Professional boiler service with transparent,
-                            competitive pricing.
-                        </p> */}
                         <div className="p-3 border-[2px] border-dark rounded-full inline-flex items-center justify-center cursor-pointer group">
                             <span className="transform rotate-45 transition-all duration-300 group-hover:rotate-0">
                                 <ArrowRight size={20} />
@@ -173,7 +46,7 @@ export function HeroSection() {
                     </div>
                 </div>
                 <HeroServices />
-                
+
                 <GoogleReview />
             </div>
         </section>

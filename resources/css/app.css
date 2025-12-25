@@ -1,9 +1,11 @@
 /* @tailwind base;
 @tailwind components;
 @tailwind utilities; */
-@import url("https://fonts.googleapis.com/css2?family=Marcellus&display=swap");
+
 @import "tailwindcss";
 @import "tw-animate-css";
+
+/* @custom-variant dark (&:is(.dark *)); */
 
 /* @custom-variant dark (&:is(.dark *)); */
 
@@ -20,7 +22,6 @@
 
     /* for text-muted-foreground */
     --muted-foreground: #6b7c93;
-
     --card-radius: 20px;
 }
 
@@ -43,7 +44,6 @@
         "Liberation Mono", "Courier New", monospace;
     --font-marcellus: "Marcellus", ui-serif, Georgia, serif;
 }
-
 @layer base {
     * {
         @apply border-neutral/20 outline-primary/30;
@@ -52,6 +52,7 @@
     body {
         @apply bg-background font-sans antialiased;
     }
+    @import url("https://fonts.googleapis.com/css2?family=Marcellus&display=swap");
 }
 
 /* 🔄 Rotating badge animation */
@@ -110,7 +111,18 @@
         display: inline-block;
         animation: wordCycle 2.5s ease-in-out;
     }
+    @keyframes faqFadeUp {
+        from {
+            opacity: 0;
+            transform: translateY(12px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
 }
+
 /* privacy policy page css  */
 /* Thin modern scrollbar */
 .thin-scroll::-webkit-scrollbar {
@@ -248,7 +260,7 @@
     border-radius: var(--card-radius);
     border: 1px solid rgba(255, 255, 255, 0.03);
     color: var(--foreground);
-    box-shadow: 0 30px 60px rgba(2, 18, 43, 0.45);
+    box-shadow: 0 30px 30px rgba(2, 18, 43, 0.45);
 }
 
 /* Glossy primary */
@@ -293,23 +305,45 @@
 }
 
 /* icon box */
-.icon-wrap {
-    width: 40px;
-    height: 40px;
-    border-radius: 10px;
+.radial-dot {
+    width: 22px;
+    height: 22px;
+    border-radius: 999px;
     display: grid;
     place-items: center;
-    font-size: 18px;
+    transition: all 0.25s ease;
 }
 
-.icon-active {
-    background: linear-gradient(180deg, var(--primary), var(--secondary));
-    color: white;
+/* Inner core */
+.radial-dot-core {
+    width: 8px;
+    height: 8px;
+    border-radius: 999px;
+    transition: all 0.25s ease;
 }
 
-.icon-inactive {
-    background: var(--light-grey);
-    color: var(--dark);
+/* ---------------- ACTIVE ---------------- */
+.radial-dot-active {
+    background: radial-gradient(
+        circle at 30% 30%,
+        var(--secondary),
+        var(--primary)
+    );
+    box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.15),
+        0 6px 18px rgba(59, 130, 246, 0.35);
+}
+
+.radial-dot-active .radial-dot-core {
+    background: white;
+}
+
+/* ---------------- INACTIVE ---------------- */
+.radial-dot-inactive {
+    background: #e5e7eb;
+}
+
+.radial-dot-inactive .radial-dot-core {
+    background: #9ca3af;
 }
 
 /* sheen */
@@ -365,4 +399,117 @@
     background: linear-gradient(90deg, var(--foreground), var(--primary));
     border-radius: inherit;
     transition: width 320ms ease;
+}
+
+/* calender css */
+
+/* ===== Dark calendar fix ===== */
+
+.dark-calendar {
+    --rdp-background-color: transparent;
+    --rdp-accent-color: #2563eb; /* blue */
+    --rdp-accent-color-dark: #2563eb;
+
+    --rdp-outline: none;
+
+    --rdp-text-color: #e5e7eb; /* slate-200 */
+    --rdp-muted-color: #94a3b8; /* slate-400 */
+
+    --rdp-day-hover-background-color: rgba(255, 255, 255, 0.08);
+}
+
+.dark-calendar .rdp-caption_label {
+    color: var(--dark); /* white */
+    font-weight: 600;
+}
+
+.dark-calendar .rdp-head_cell {
+    color: #94a3b8; /* weekday labels */
+    font-size: 0.75rem;
+}
+
+.dark-calendar .rdp-day {
+    color: var(--dark);
+}
+
+.dark-calendar .rdp-day_today[aria-selected="true"] {
+    border: none;
+}
+
+.dark-calendar .rdp-day_today {
+    border: 1px solid #2563eb;
+}
+
+.dark-calendar .rdp-day_disabled {
+    color: #475569; /* slate-600 */
+    text-decoration: line-through;
+}
+
+.bg-grid {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32' width='32' height='32' fill='none' stroke='rgb(255 255 255 / 0.05)'%3e%3cpath d='M0 .5H31.5V32'/%3e%3c/svg%3e");
+}
+
+/* popup css */
+
+.spinner {
+    width: 18px;
+    height: 18px;
+    border: 2px solid #cbd5e1;
+    border-top-color: #16a34a;
+    border-radius: 50%;
+    animation: spin 0.7s linear infinite;
+}
+
+.loader {
+    width: 18px;
+    height: 18px;
+    border: 2px solid #94a3b8;
+    border-top-color: #475569;
+    border-radius: 50%;
+    animation: spin 0.7s linear infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* result page css adjustments */
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+@keyframes slideFromRight {
+    from {
+        transform: translateX(100%);
+    }
+    to {
+        transform: translateX(0);
+    }
+}
+.animate-fadeIn {
+    animation: fadeIn 0.3s ease-out;
+}
+.animate-slideFromRight {
+    animation: slideFromRight 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+/* Custom scrollbar */
+aside::-webkit-scrollbar {
+    width: 6px;
+}
+aside::-webkit-scrollbar-track {
+    background: #f1f5f9;
+}
+aside::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 3px;
+}
+aside::-webkit-scrollbar-thumb:hover {
+    background: #94a3b8;
 }

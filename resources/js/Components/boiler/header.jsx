@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import { Link } from "@inertiajs/react";
 import { Flame, Menu, X, ArrowRight } from "lucide-react";
 import { AiOutlineWhatsApp } from "react-icons/ai";
-import { Button } from "@/Components/ui/button";
 
 // Content for each tab's mega section
 const MEGA_SECTIONS = {
@@ -31,19 +30,19 @@ const MEGA_SECTIONS = {
             title: "Why choose MD Gas?",
             description:
                 "Experienced, friendly engineers with a focus on safety and quality.",
-            href: "/#about",
+            href: "/about",
         },
         {
             title: "Our qualifications",
             description:
                 "Fully Gas Safe registered and compliant with UK regulations.",
-            href: "/#about",
+            href: "/about",
         },
         {
             title: "Our service areas",
             description:
                 "Reliable boiler services across your local surrounding areas.",
-            href: "/#about",
+            href: "/about",
         },
     ],
     contact: [
@@ -80,7 +79,7 @@ export default function Header({
     buttonBg = "bg-dark",
     buttonText = "text-white",
     navInactive = "bg-white/80 text-slate-800",
-    navActive = "bg-black text-white"
+    navActive = "bg-black text-white",
 }) {
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
     const [openMenu, setOpenMenu] = useState(null); // "services" | "about" | "contact" | null
@@ -134,9 +133,10 @@ export default function Header({
                                     key={item.id}
                                     type="button"
                                     onClick={() => toggleMenu(item.id)}
-                                    className={`rounded-full px-6 py-2 text-sm font-medium transition shadow-sm cursor-pointer ${active ? navActive : navInactive}
+                                    className={`rounded-full px-6 py-2 text-sm font-medium transition shadow-sm cursor-pointer ${
+                                        active ? navActive : navInactive
+                                    }
                                         `}
-
                                 >
                                     {item.label}
                                 </button>
@@ -177,7 +177,11 @@ export default function Header({
                                 closeMega();
                             }}
                         >
-                            {mobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+                            {mobileMenuOpen ? (
+                                <X className="h-6 w-6" />
+                            ) : (
+                                <Menu className="h-6 w-6" />
+                            )}
                         </button>
                     </div>
                 </div>
@@ -198,7 +202,7 @@ export default function Header({
                             <div className="mt-2 rounded-3xl bg-white shadow-xl">
                                 <div className="grid grid-cols-1 gap-6 p-6 md:grid-cols-3 md:p-8 !pt-20">
                                     {currentCards.map((card) => (
-                                        <a
+                                        <Link
                                             key={card.title}
                                             href={card.href}
                                             onClick={closeMega}
@@ -218,7 +222,7 @@ export default function Header({
                                                     <ArrowRight className="h-4 w-4" />
                                                 </span>
                                             </div>
-                                        </a>
+                                        </Link>
                                     ))}
                                 </div>
                             </div>

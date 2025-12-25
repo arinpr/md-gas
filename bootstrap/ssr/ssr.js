@@ -1,18 +1,17 @@
 import { jsx, jsxs, Fragment } from "react/jsx-runtime";
-import { Link, usePage, Head, useForm, router, createInertiaApp } from "@inertiajs/react";
+import { Link, usePage, Head, useForm, createInertiaApp } from "@inertiajs/react";
 import { useState, useEffect, forwardRef, useRef, useImperativeHandle, useMemo, createContext, useContext } from "react";
+import { Flame, X, Menu, ArrowRight, Phone, Mail, MapPin, Shield, Award, Users, Clock, MessageCircleMore, Touchpad, Hammer, CheckCircle2, MessageSquare, ChevronRight, ArrowLeft, Home as Home$2, Building2, Castle, Building } from "lucide-react";
+import { AiOutlineWhatsApp } from "react-icons/ai";
 import { Slot } from "@radix-ui/react-slot";
 import { cva } from "class-variance-authority";
 import { clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
-import { Flame, Phone, X, Menu, ArrowRight, Shield, Award, Users, Clock, CheckCircle2, Mail, MapPin, Check, Droplets, ArrowLeft, FileText, Calculator, ChevronDownIcon, CheckIcon, ChevronUpIcon, Wrench, Upload, Settings, Home as Home$1, Building2, Castle, Building, MessageCircleMore, Touchpad, Hammer } from "lucide-react";
-import * as LabelPrimitive from "@radix-ui/react-label";
-import * as SelectPrimitive from "@radix-ui/react-select";
-import { Transition, Dialog, TransitionChild, DialogPanel } from "@headlessui/react";
+import { FaGasPump, FaOilCan, FaCheckCircle, FaStar, FaStarHalfAlt } from "react-icons/fa";
 import { IoChevronDown, IoChevronUp } from "react-icons/io5";
+import { FiAward, FiHeart, FiTag, FiStar, FiShield, FiZap, FiRefreshCcw, FiHome, FiTool, FiClock, FiCheck, FiChevronLeft, FiChevronRight } from "react-icons/fi";
 import { FcGoogle } from "react-icons/fc";
-import { FaStar, FaStarHalfAlt } from "react-icons/fa";
-import { FiAward, FiHeart, FiTag, FiStar, FiShield, FiZap } from "react-icons/fi";
+import { Transition, Dialog, TransitionChild, DialogPanel } from "@headlessui/react";
 import createServer from "@inertiajs/server";
 import { renderToString } from "react-dom/server";
 function cn(...inputs) {
@@ -58,130 +57,6 @@ function Button({
     {
       "data-slot": "button",
       className: cn(buttonVariants({ variant, size, className })),
-      ...props
-    }
-  );
-}
-function PageHeader({ title }) {
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const navigation = [
-    { name: "Home", href: "/" },
-    { name: "About", href: "/about" },
-    { name: "Services", href: "/#services" },
-    { name: "Contact", href: "/#contact" }
-  ];
-  return /* @__PURE__ */ jsxs("header", { className: "sticky top-0 z-50 border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60", children: [
-    /* @__PURE__ */ jsxs("nav", { className: "mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8", children: [
-      /* @__PURE__ */ jsxs(Link, { href: "/", className: "flex items-center gap-2", children: [
-        /* @__PURE__ */ jsx("div", { className: "flex h-10 w-10 items-center justify-center rounded-lg bg-primary", children: /* @__PURE__ */ jsx(Flame, { className: "h-6 w-6 text-primary-foreground" }) }),
-        /* @__PURE__ */ jsx("span", { className: "text-xl font-bold text-foreground", children: "MD Gas" })
-      ] }),
-      /* @__PURE__ */ jsx("div", { className: "hidden items-center gap-8 md:flex", children: navigation.map((item) => /* @__PURE__ */ jsx(
-        Link,
-        {
-          href: item.href,
-          className: "text-sm font-medium text-muted-foreground transition-colors hover:text-foreground",
-          children: item.name
-        },
-        item.name
-      )) }),
-      /* @__PURE__ */ jsxs("div", { className: "hidden items-center gap-4 md:flex", children: [
-        /* @__PURE__ */ jsxs("a", { href: "tel:08001234567", className: "flex items-center gap-2 text-sm font-medium text-foreground", children: [
-          /* @__PURE__ */ jsx(Phone, { className: "h-4 w-4 text-primary" }),
-          "0800 123 4567"
-        ] }),
-        /* @__PURE__ */ jsx(Button, { asChild: true, children: /* @__PURE__ */ jsx(Link, { href: "/book/quote", children: "Get Quote" }) })
-      ] }),
-      /* @__PURE__ */ jsx(
-        "button",
-        {
-          type: "button",
-          className: "inline-flex items-center justify-center rounded-md p-2 text-muted-foreground md:hidden",
-          onClick: () => setMobileMenuOpen(!mobileMenuOpen),
-          children: mobileMenuOpen ? /* @__PURE__ */ jsx(X, { className: "h-6 w-6" }) : /* @__PURE__ */ jsx(Menu, { className: "h-6 w-6" })
-        }
-      )
-    ] }),
-    mobileMenuOpen && /* @__PURE__ */ jsx("div", { className: "border-t border-border bg-background md:hidden", children: /* @__PURE__ */ jsxs("div", { className: "space-y-1 px-4 py-4", children: [
-      navigation.map((item) => /* @__PURE__ */ jsx(
-        Link,
-        {
-          href: item.href,
-          className: "block rounded-md px-3 py-2 text-base font-medium text-muted-foreground hover:bg-muted hover:text-foreground",
-          onClick: () => setMobileMenuOpen(false),
-          children: item.name
-        },
-        item.name
-      )),
-      /* @__PURE__ */ jsxs("div", { className: "mt-4 border-t border-border pt-4", children: [
-        /* @__PURE__ */ jsxs(
-          "a",
-          {
-            href: "tel:08001234567",
-            className: "flex items-center gap-2 px-3 py-2 text-base font-medium text-foreground",
-            children: [
-              /* @__PURE__ */ jsx(Phone, { className: "h-5 w-5 text-primary" }),
-              "0800 123 4567"
-            ]
-          }
-        ),
-        /* @__PURE__ */ jsx(Button, { className: "mt-2 w-full", asChild: true, children: /* @__PURE__ */ jsx(Link, { href: "/book/quote", children: "Get Quote" }) })
-      ] })
-    ] }) })
-  ] });
-}
-function Card({ className, ...props }) {
-  return /* @__PURE__ */ jsx(
-    "div",
-    {
-      "data-slot": "card",
-      className: cn(
-        "bg-card text-card-foreground flex flex-col gap-3 rounded-xl border py-6 shadow-sm",
-        className
-      ),
-      ...props
-    }
-  );
-}
-function CardHeader({ className, ...props }) {
-  return /* @__PURE__ */ jsx(
-    "div",
-    {
-      "data-slot": "card-header",
-      className: cn(
-        "@container/card-header grid auto-rows-min grid-rows-[auto_auto] items-start px-6 has-data-[slot=card-action]:grid-cols-[1fr_auto] [.border-b]:pb-6",
-        className
-      ),
-      ...props
-    }
-  );
-}
-function CardTitle({ className, ...props }) {
-  return /* @__PURE__ */ jsx(
-    "div",
-    {
-      "data-slot": "card-title",
-      className: cn("leading-none font-semibold", className),
-      ...props
-    }
-  );
-}
-function CardDescription({ className, ...props }) {
-  return /* @__PURE__ */ jsx(
-    "div",
-    {
-      "data-slot": "card-description",
-      className: cn("text-muted-foreground text-sm", className),
-      ...props
-    }
-  );
-}
-function CardContent({ className, ...props }) {
-  return /* @__PURE__ */ jsx(
-    "div",
-    {
-      "data-slot": "card-content",
-      className: cn("px-6", className),
       ...props
     }
   );
@@ -244,7 +119,13 @@ const NAV_ITEMS = [
   { id: "about", label: "About" },
   { id: "contact", label: "Contact" }
 ];
-function Header() {
+function Header({
+  textColor = "text-slate-900",
+  buttonBg = "bg-dark",
+  buttonText = "text-white",
+  navInactive = "bg-white/80 text-slate-800",
+  navActive = "bg-black text-white"
+}) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [openMenu, setOpenMenu] = useState(null);
   const isMegaOpen = !!openMenu;
@@ -272,7 +153,7 @@ function Header() {
           onClick: closeMega,
           children: [
             /* @__PURE__ */ jsx("div", { className: "flex h-10 w-10 items-center justify-center rounded-lg bg-dark", children: /* @__PURE__ */ jsx(Flame, { className: "h-6 w-6 text-foreground" }) }),
-            /* @__PURE__ */ jsx("span", { className: "text-2xl font-semibold text-dark", children: "MD Gas" })
+            /* @__PURE__ */ jsx("span", { className: `text-2xl font-semibold ${textColor}`, children: "MD Gas" })
           ]
         }
       ),
@@ -283,8 +164,8 @@ function Header() {
           {
             type: "button",
             onClick: () => toggleMenu(item.id),
-            className: `rounded-full px-6 py-2 text-sm font-medium transition shadow-sm cursor-pointer
-                                        ${active ? "bg-black text-white shadow-md" : "bg-white/80 text-slate-800 hover:bg-white"}`,
+            className: `rounded-full px-6 py-2 text-sm font-medium transition shadow-sm cursor-pointer ${active ? navActive : navInactive}
+                                        `,
             children: item.label
           },
           item.id
@@ -303,14 +184,16 @@ function Header() {
           }
         ),
         /* @__PURE__ */ jsxs(
-          Button,
+          "button",
           {
-            size: "md",
-            className: "hidden gap-2 rounded-full bg-dark px-4 py-2 text-sm font-medium cursor-pointer text-foreground hover:bg-dark/60 transition-colors duration-200 sm:flex",
-            onClick: closeMega,
+            type: "button",
+            onClick: () => {
+              closeMega();
+            },
+            className: `hidden gap-2 items-center rounded-full px-4 py-2 text-sm font-medium cursor-pointer ${buttonBg} ${buttonText} hover:opacity-80 transition sm:flex`,
             children: [
-              /* @__PURE__ */ jsx(Phone, { className: "h-4 w-4" }),
-              /* @__PURE__ */ jsx("span", { children: "Call now" })
+              /* @__PURE__ */ jsx(AiOutlineWhatsApp, { className: "h-4 w-4" }),
+              /* @__PURE__ */ jsx("span", { children: "Chat Now" })
             ]
           }
         ),
@@ -381,218 +264,58 @@ function Header() {
     ] }) })
   ] }) });
 }
-const values = [
-  {
-    icon: Shield,
-    title: "Safety First",
-    description: "All our engineers are Gas Safe registered and undergo regular training to ensure the highest safety standards."
-  },
-  {
-    icon: Award,
-    title: "Quality Workmanship",
-    description: "We take pride in our work and guarantee all repairs and installations with comprehensive warranties."
-  },
-  {
-    icon: Users,
-    title: "Customer Focused",
-    description: "Your satisfaction is our priority. We provide clear communication and transparent pricing on every job."
-  },
-  {
-    icon: Clock,
-    title: "Reliable Service",
-    description: "We show up on time, every time. Our punctuality and professionalism set us apart from the competition."
-  }
-];
-const stats = [
-  { value: "15+", label: "Years in Business" },
-  { value: "5,000+", label: "Happy Customers" },
-  { value: "10,000+", label: "Jobs Completed" },
-  { value: "24/7", label: "Emergency Support" }
-];
-function AboutPage() {
-  const { props } = usePage();
-  const pageTitle2 = props.pageTitle ?? "About Us";
-  return /* @__PURE__ */ jsxs(Fragment, { children: [
-    /* @__PURE__ */ jsx(Head, { title: pageTitle2 }),
-    /* @__PURE__ */ jsxs("div", { className: "min-h-screen bg-background", children: [
-      /* @__PURE__ */ jsx(Header, { title: pageTitle2 }),
-      /* @__PURE__ */ jsxs("main", { children: [
-        /* @__PURE__ */ jsx("section", { className: "bg-gradient-to-b from-primary/5 to-background py-16 sm:py-24", children: /* @__PURE__ */ jsx("div", { className: "mx-auto max-w-7xl px-4 sm:px-6 lg:px-8", children: /* @__PURE__ */ jsxs("div", { className: "mx-auto max-w-3xl text-center", children: [
-          /* @__PURE__ */ jsx("h1", { className: "text-3xl font-bold tracking-tight text-foreground sm:text-4xl lg:text-5xl", children: "About MD Gas" }),
-          /* @__PURE__ */ jsx("p", { className: "mt-6 text-lg text-muted-foreground", children: "For over 15 years, MD Gas has been providing expert boiler services to homeowners across Greater London. Our team of Gas Safe registered engineers is committed to delivering safe, reliable, and affordable heating solutions." })
-        ] }) }) }),
-        /* @__PURE__ */ jsx("section", { className: "border-y border-border bg-card py-12", children: /* @__PURE__ */ jsx("div", { className: "mx-auto max-w-7xl px-4 sm:px-6 lg:px-8", children: /* @__PURE__ */ jsx("div", { className: "grid grid-cols-2 gap-8 sm:grid-cols-4", children: stats.map((stat) => /* @__PURE__ */ jsxs(
-          "div",
-          {
-            className: "text-center",
-            children: [
-              /* @__PURE__ */ jsx("div", { className: "text-3xl font-bold text-primary sm:text-4xl", children: stat.value }),
-              /* @__PURE__ */ jsx("div", { className: "mt-1 text-sm text-muted-foreground", children: stat.label })
-            ]
-          },
-          stat.label
-        )) }) }) }),
-        /* @__PURE__ */ jsx("section", { className: "py-16 sm:py-24", children: /* @__PURE__ */ jsx("div", { className: "mx-auto max-w-7xl px-4 sm:px-6 lg:px-8", children: /* @__PURE__ */ jsxs("div", { className: "grid gap-12 lg:grid-cols-2 lg:items-center", children: [
-          /* @__PURE__ */ jsxs("div", { children: [
-            /* @__PURE__ */ jsx("h2", { className: "text-2xl font-bold text-foreground sm:text-3xl", children: "Our Story" }),
-            /* @__PURE__ */ jsxs("div", { className: "mt-6 space-y-4 text-muted-foreground", children: [
-              /* @__PURE__ */ jsx("p", { children: "MD Gas was founded with a simple mission: to provide honest, reliable boiler services at fair prices. What started as a one-man operation has grown into a trusted team of skilled engineers serving thousands of homes across the Greater London area." }),
-              /* @__PURE__ */ jsx("p", { children: "Over the years, we've built our reputation on transparency, quality workmanship, and exceptional customer service. We believe in doing the job right the first time, and our fixed pricing means you'll never face unexpected costs." }),
-              /* @__PURE__ */ jsx("p", { children: "Today, MD Gas continues to grow while maintaining the personal touch and attention to detail that our customers have come to expect. Whether you need an emergency repair or a full boiler installation, we're here to help." })
-            ] })
-          ] }),
-          /* @__PURE__ */ jsxs("div", { className: "relative", children: [
-            /* @__PURE__ */ jsx("div", { className: "aspect-square overflow-hidden rounded-2xl bg-muted", children: /* @__PURE__ */ jsx(
-              "img",
-              {
-                src: "/professional-gas-engineer-working-on-boiler.jpg",
-                alt: "MD Gas engineer at work",
-                className: "h-full w-full object-cover"
-              }
-            ) }),
-            /* @__PURE__ */ jsxs("div", { className: "absolute -bottom-6 -left-6 rounded-xl bg-primary p-6 text-primary-foreground shadow-xl", children: [
-              /* @__PURE__ */ jsx("div", { className: "text-3xl font-bold", children: "15+" }),
-              /* @__PURE__ */ jsx("div", { className: "text-sm", children: "Years Experience" })
-            ] })
-          ] })
-        ] }) }) }),
-        /* @__PURE__ */ jsx("section", { className: "bg-muted/50 py-16 sm:py-24", children: /* @__PURE__ */ jsxs("div", { className: "mx-auto max-w-7xl px-4 sm:px-6 lg:px-8", children: [
-          /* @__PURE__ */ jsxs("div", { className: "mx-auto max-w-2xl text-center", children: [
-            /* @__PURE__ */ jsx("h2", { className: "text-2xl font-bold text-foreground sm:text-3xl", children: "Our Values" }),
-            /* @__PURE__ */ jsx("p", { className: "mt-4 text-muted-foreground", children: "The principles that guide everything we do" })
-          ] }),
-          /* @__PURE__ */ jsx("div", { className: "mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4", children: values.map((value) => /* @__PURE__ */ jsx(
-            Card,
-            {
-              className: "text-center",
-              children: /* @__PURE__ */ jsxs(CardContent, { className: "pt-8 pb-6", children: [
-                /* @__PURE__ */ jsx("div", { className: "mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-primary/10", children: /* @__PURE__ */ jsx(value.icon, { className: "h-7 w-7 text-primary" }) }),
-                /* @__PURE__ */ jsx("h3", { className: "font-semibold", children: value.title }),
-                /* @__PURE__ */ jsx("p", { className: "mt-2 text-sm text-muted-foreground", children: value.description })
-              ] })
-            },
-            value.title
-          )) })
-        ] }) }),
-        /* @__PURE__ */ jsx("section", { className: "py-16 sm:py-24", children: /* @__PURE__ */ jsxs("div", { className: "mx-auto max-w-7xl px-4 sm:px-6 lg:px-8", children: [
-          /* @__PURE__ */ jsxs("div", { className: "mx-auto max-w-2xl text-center", children: [
-            /* @__PURE__ */ jsx("h2", { className: "text-2xl font-bold", children: "Accreditations & Certifications" }),
-            /* @__PURE__ */ jsx("p", { className: "mt-4 text-muted-foreground", children: "We maintain the highest industry standards" })
-          ] }),
-          /* @__PURE__ */ jsx("div", { className: "mt-12 flex flex-wrap items-center justify-center gap-8", children: [
-            "Gas Safe Registered",
-            "OFTEC Certified",
-            "Which? Trusted Trader",
-            "Checkatrade Verified"
-          ].map((cert) => /* @__PURE__ */ jsxs(
-            "div",
-            {
-              className: "flex items-center gap-2 rounded-lg border border-border bg-card px-6 py-4",
-              children: [
-                /* @__PURE__ */ jsx(CheckCircle2, { className: "h-5 w-5 text-primary" }),
-                /* @__PURE__ */ jsx("span", { className: "font-medium", children: cert })
-              ]
-            },
-            cert
-          )) })
-        ] }) }),
-        /* @__PURE__ */ jsx("section", { className: "bg-primary py-16", children: /* @__PURE__ */ jsxs("div", { className: "mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 text-center", children: [
-          /* @__PURE__ */ jsx("h2", { className: "text-2xl font-bold text-primary-foreground sm:text-3xl", children: "Ready to Get Started?" }),
-          /* @__PURE__ */ jsx("p", { className: "mt-4 text-primary-foreground/80", children: "Contact us today for a free quote or to book a service" }),
-          /* @__PURE__ */ jsxs("div", { className: "mt-8 flex flex-col items-center justify-center gap-4 sm:flex-row", children: [
-            /* @__PURE__ */ jsx(Button, { size: "lg", variant: "secondary", asChild: true, children: /* @__PURE__ */ jsx(Link, { href: "/book/quote", children: "Get a Quote" }) }),
-            /* @__PURE__ */ jsxs(
-              Button,
-              {
-                size: "lg",
-                variant: "outline",
-                className: "gap-2 bg-transparent border-primary-foreground/20 text-primary-foreground hover:bg-primary-foreground/10",
-                children: [
-                  /* @__PURE__ */ jsx(Phone, { className: "h-5 w-5" }),
-                  "0800 123 4567"
-                ]
-              }
-            )
-          ] })
-        ] }) })
-      ] })
-    ] })
-  ] });
-}
-const __vite_glob_0_0 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
-  __proto__: null,
-  default: AboutPage
-}, Symbol.toStringTag, { value: "Module" }));
-function InputError({ message, className = "", ...props }) {
-  return message ? /* @__PURE__ */ jsx(
-    "p",
-    {
-      ...props,
-      className: "text-sm text-red-600 " + className,
-      children: message
-    }
-  ) : null;
-}
-function InputLabel({
-  value,
-  className = "",
-  children,
-  ...props
-}) {
+function Card({ className, ...props }) {
   return /* @__PURE__ */ jsx(
-    "label",
+    "div",
     {
-      ...props,
-      className: `block text-sm font-medium text-gray-700 ` + className,
-      children: value ? value : children
+      "data-slot": "card",
+      className: cn(
+        "bg-card text-card-foreground flex flex-col gap-3 rounded-xl border py-6 shadow-sm",
+        className
+      ),
+      ...props
     }
   );
 }
-function PrimaryButton({
-  className = "",
-  disabled,
-  children,
-  ...props
-}) {
+function CardHeader({ className, ...props }) {
   return /* @__PURE__ */ jsx(
-    "button",
+    "div",
     {
-      ...props,
-      className: `inline-flex items-center rounded-md border border-transparent bg-gray-800 px-4 py-2 text-xs font-semibold uppercase tracking-widest text-white transition duration-150 ease-in-out hover:bg-gray-700 focus:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 active:bg-gray-900 ${disabled && "opacity-25"} ` + className,
-      disabled,
-      children
+      "data-slot": "card-header",
+      className: cn(
+        "@container/card-header grid auto-rows-min grid-rows-[auto_auto] items-start px-6 has-data-[slot=card-action]:grid-cols-[1fr_auto] [.border-b]:pb-6",
+        className
+      ),
+      ...props
     }
   );
 }
-const TextInput = forwardRef(function TextInput2({ type = "text", className = "", isFocused = false, ...props }, ref) {
-  const localRef = useRef(null);
-  useImperativeHandle(ref, () => ({
-    focus: () => localRef.current?.focus()
-  }));
-  useEffect(() => {
-    if (isFocused) {
-      localRef.current?.focus();
-    }
-  }, [isFocused]);
+function CardTitle({ className, ...props }) {
   return /* @__PURE__ */ jsx(
-    "input",
+    "div",
     {
-      ...props,
-      type,
-      className: "rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 " + className,
-      ref: localRef
+      "data-slot": "card-title",
+      className: cn("leading-none font-semibold", className),
+      ...props
     }
   );
-});
-function ApplicationLogo({ className = "", alt = "Logo", ...props }) {
+}
+function CardDescription({ className, ...props }) {
   return /* @__PURE__ */ jsx(
-    "img",
+    "div",
     {
-      src: "/assets/logo.png",
-      alt,
-      className: `select-none ${className}`,
-      loading: "lazy",
-      decoding: "async",
+      "data-slot": "card-description",
+      className: cn("text-muted-foreground text-sm", className),
+      ...props
+    }
+  );
+}
+function CardContent({ className, ...props }) {
+  return /* @__PURE__ */ jsx(
+    "div",
+    {
+      "data-slot": "card-content",
+      className: cn("px-6", className),
       ...props
     }
   );
@@ -713,6 +436,636 @@ function Footer() {
       ] })
     ] }) })
   ] }) });
+}
+const VALUES = [
+  {
+    icon: Shield,
+    title: "Safety First",
+    description: "All engineers are Gas Safe registered and receive ongoing training to maintain the highest safety standards."
+  },
+  {
+    icon: Award,
+    title: "Quality Workmanship",
+    description: "We guarantee workmanship and back installations with manufacturer and labour warranties."
+  },
+  {
+    icon: Users,
+    title: "Customer Focused",
+    description: "Clear pricing, friendly engineers and proactive communication on every job."
+  },
+  {
+    icon: Clock,
+    title: "Reliable Service",
+    description: "On-time arrivals, rapid emergency response and dependable aftercare."
+  }
+];
+const STATS = [
+  { key: "years", value: 15, label: "Years in business" },
+  { key: "customers", value: 5e3, label: "Happy customers" },
+  { key: "jobs", value: 1e4, label: "Jobs completed" },
+  { key: "support", value: 24, label: "Emergency support (hrs)" }
+];
+function AboutPage() {
+  const { props } = usePage();
+  const pageTitle2 = props.pageTitle ?? "About Us";
+  const [counters, setCounters] = useState(
+    STATS.reduce((acc, s) => ({ ...acc, [s.key]: 0 }), {})
+  );
+  useEffect(() => {
+    let raf;
+    const duration = 900;
+    const start = performance.now();
+    const animate = (t) => {
+      const elapsed = Math.min(t - start, duration);
+      const progress = elapsed / duration;
+      const next = {};
+      STATS.forEach((s) => {
+        next[s.key] = Math.floor(s.value * progress);
+      });
+      setCounters(next);
+      if (elapsed < duration) raf = requestAnimationFrame(animate);
+      else {
+        const final = {};
+        STATS.forEach((s) => final[s.key] = s.value);
+        setCounters(final);
+      }
+    };
+    raf = requestAnimationFrame(animate);
+    return () => cancelAnimationFrame(raf);
+  }, []);
+  return /* @__PURE__ */ jsxs(Fragment, { children: [
+    /* @__PURE__ */ jsx(Head, { title: pageTitle2 }),
+    /* @__PURE__ */ jsxs("div", { className: "min-h-screen rounded-b-3xl bg-foreground text-gray-900", children: [
+      /* @__PURE__ */ jsx(Header, { title: pageTitle2 }),
+      /* @__PURE__ */ jsxs("main", { className: "w-full", children: [
+        /* @__PURE__ */ jsxs("section", { className: "relative pt-40 pb-14 px-4 sm:px-6 lg:px-0 overflow-hidden", children: [
+          /* @__PURE__ */ jsx("div", { className: "absolute inset-0 bg-gradient-to-br from-gray-50 via-white to-blue-50/30" }),
+          /* @__PURE__ */ jsx("div", { className: "absolute top-0 left-0 w-72 h-72 bg-indigo-100/10 rounded-full -translate-x-1/2 -translate-y-1/2 blur-3xl" }),
+          /* @__PURE__ */ jsx("div", { className: "absolute bottom-0 right-0 w-96 h-96 bg-blue-100/10 rounded-full translate-x-1/3 translate-y-1/3 blur-3xl" }),
+          /* @__PURE__ */ jsx("div", { className: "relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8", children: /* @__PURE__ */ jsxs("div", { className: "grid lg:grid-cols-2 gap-12 lg:gap-16 items-center", children: [
+            /* @__PURE__ */ jsxs("div", { className: "space-y-8", children: [
+              /* @__PURE__ */ jsxs("div", { className: "inline-flex items-center gap-2 bg-indigo-50 border border-indigo-100 text-indigo-700 px-4 py-2 rounded-full", children: [
+                /* @__PURE__ */ jsx("div", { className: "h-2 w-2 bg-indigo-500 rounded-full" }),
+                /* @__PURE__ */ jsx("span", { className: "text-sm font-medium", children: "Trusted Since 2012" })
+              ] }),
+              /* @__PURE__ */ jsxs("div", { className: "space-y-4", children: [
+                /* @__PURE__ */ jsxs("h1", { className: "text-4xl lg:text-5xl font-bold text-gray-900 tracking-tight", children: [
+                  "Reliable Heating",
+                  /* @__PURE__ */ jsx("span", { className: "block mt-2 text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-blue-600", children: "Solutions for London" })
+                ] }),
+                /* @__PURE__ */ jsx("div", { className: "h-1 w-16 bg-gradient-to-r from-indigo-500 to-blue-500 rounded-full" })
+              ] }),
+              /* @__PURE__ */ jsx("p", { className: "text-lg text-gray-600 leading-relaxed max-w-xl", children: "For over a decade, MD Gas has been providing professional boiler services across Greater London with transparent pricing and reliable engineering." }),
+              /* @__PURE__ */ jsx("div", { className: "space-y-3", children: [
+                "✓ Gas Safe Registered & Certified",
+                "✓ 24/7 Emergency Support Available",
+                "✓ Fixed Pricing - No Hidden Fees",
+                "✓ Same-Day Service When Needed"
+              ].map((item, index) => /* @__PURE__ */ jsxs(
+                "div",
+                {
+                  className: "flex items-center gap-3",
+                  children: [
+                    /* @__PURE__ */ jsx("span", { className: "text-green-600 font-semibold", children: "✓" }),
+                    /* @__PURE__ */ jsx("span", { className: "text-gray-700", children: item.split("✓ ")[1] })
+                  ]
+                },
+                index
+              )) }),
+              /* @__PURE__ */ jsx("div", { className: "space-y-6 pt-4", children: /* @__PURE__ */ jsxs("div", { className: "flex flex-col sm:flex-row gap-4", children: [
+                /* @__PURE__ */ jsx(
+                  Button,
+                  {
+                    asChild: true,
+                    size: "lg",
+                    className: "rounded-xl px-8 text-foreground bg-gradient-to-r from-dark via-dark/80 to-primary hover:from-gray-800 hover:to-gray-900 shadow-md hover:shadow-lg transition-all duration-300",
+                    children: /* @__PURE__ */ jsx(Link, { href: "/book/quote", children: /* @__PURE__ */ jsxs("span", { className: "flex items-center gap-2", children: [
+                      "Book a Service",
+                      /* @__PURE__ */ jsx(
+                        "svg",
+                        {
+                          className: "w-4 h-4",
+                          fill: "none",
+                          stroke: "currentColor",
+                          viewBox: "0 0 24 24",
+                          children: /* @__PURE__ */ jsx(
+                            "path",
+                            {
+                              strokeLinecap: "round",
+                              strokeLinejoin: "round",
+                              strokeWidth: 2,
+                              d: "M13 7l5 5m0 0l-5 5m5-5H6"
+                            }
+                          )
+                        }
+                      )
+                    ] }) })
+                  }
+                ),
+                /* @__PURE__ */ jsx(
+                  Button,
+                  {
+                    asChild: true,
+                    size: "lg",
+                    variant: "outline",
+                    className: "rounded-xl px-8 border-gray-300 bg-gray-50 hover:border-gray-400 transition-all",
+                    children: /* @__PURE__ */ jsx(Link, { href: "/services", children: /* @__PURE__ */ jsx("span", { className: "flex items-center gap-2", children: "View All Services" }) })
+                  }
+                )
+              ] }) })
+            ] }),
+            /* @__PURE__ */ jsxs("div", { className: "relative", children: [
+              /* @__PURE__ */ jsxs("div", { className: "relative overflow-hidden rounded-3xl shadow-xl", children: [
+                /* @__PURE__ */ jsx(
+                  "img",
+                  {
+                    src: "/professional-gas-engineer-working-on-boiler.jpg",
+                    alt: "Professional gas engineer servicing boiler",
+                    className: "w-full h-[420px] object-cover",
+                    loading: "lazy"
+                  }
+                ),
+                /* @__PURE__ */ jsxs("div", { className: "absolute top-6 right-6 bg-white/95 backdrop-blur-sm rounded-xl px-4 py-3 shadow-lg", children: [
+                  /* @__PURE__ */ jsx("p", { className: "text-xs text-gray-500 uppercase tracking-wider", children: "Experience" }),
+                  /* @__PURE__ */ jsx("p", { className: "text-2xl font-bold text-gray-900", children: "15+ Years" })
+                ] })
+              ] }),
+              /* @__PURE__ */ jsx("div", { className: "mt-8 bg-white rounded-2xl shadow-sm border border-gray-100 p-6", children: /* @__PURE__ */ jsx("div", { className: "grid grid-cols-4 divide-x divide-gray-200", children: STATS.map((s) => /* @__PURE__ */ jsxs(
+                "div",
+                {
+                  className: "px-4 text-center",
+                  children: [
+                    /* @__PURE__ */ jsx("div", { className: "text-2xl font-bold text-gray-900", children: s.key === "support" ? "24/7" : `${s.value}${s.value >= 1e3 ? "+" : ""}` }),
+                    /* @__PURE__ */ jsx("div", { className: "text-sm text-gray-600 mt-1", children: s.label })
+                  ]
+                },
+                s.key
+              )) }) })
+            ] })
+          ] }) })
+        ] }),
+        /* @__PURE__ */ jsxs("section", { className: "py-16 lg:py-5", children: [
+          /* @__PURE__ */ jsx("div", { className: "absolute inset-x-0 h-[600px] bg-gradient-to-b from-white via-gray-50/50 to-blue-50/30 -z-10" }),
+          /* @__PURE__ */ jsxs("div", { className: "max-w-7xl mx-auto px-4 sm:px-6 lg:px-8", children: [
+            /* @__PURE__ */ jsxs("div", { className: "max-w-3xl mx-auto text-center", children: [
+              /* @__PURE__ */ jsxs("div", { className: "inline-flex items-center gap-2 mb-4", children: [
+                /* @__PURE__ */ jsx("div", { className: "h-px w-8 bg-gradient-to-r from-indigo-500 to-blue-500" }),
+                /* @__PURE__ */ jsx("span", { className: "text-sm font-medium text-indigo-600 uppercase tracking-wider", children: "Our Foundation" })
+              ] }),
+              /* @__PURE__ */ jsx("h2", { className: "text-3xl lg:text-4xl font-bold text-gray-900 tracking-tight", children: "Built on Core Values" }),
+              /* @__PURE__ */ jsx("p", { className: "mt-4 text-lg text-gray-600 max-w-2xl mx-auto leading-relaxed", children: "Safety, quality and customers-first — the foundation of every job we complete in Greater London." })
+            ] }),
+            /* @__PURE__ */ jsx("div", { className: "mt-12 lg:mt-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8", children: VALUES.map((value) => /* @__PURE__ */ jsxs(
+              "div",
+              {
+                className: "group relative bg-white rounded-2xl border border-gray-100 p-6 lg:p-8 \n                   hover:shadow-lg hover:border-indigo-100 transition-all duration-300 \n                   hover:-translate-y-1",
+                children: [
+                  /* @__PURE__ */ jsx(
+                    "div",
+                    {
+                      className: "absolute inset-0 bg-gradient-to-br from-white to-indigo-50/30 opacity-0 \n                        group-hover:opacity-100 rounded-2xl transition-opacity duration-300 -z-10"
+                    }
+                  ),
+                  /* @__PURE__ */ jsx(
+                    "div",
+                    {
+                      className: "inline-flex items-center justify-center w-14 h-14 rounded-xl \n                        bg-gradient-to-br from-indigo-50 to-blue-50 border border-indigo-100 \n                        group-hover:from-indigo-100 group-hover:to-blue-100 transition-all",
+                      children: /* @__PURE__ */ jsx(value.icon, { className: "h-7 w-7 text-indigo-600" })
+                    }
+                  ),
+                  /* @__PURE__ */ jsxs("div", { className: "mt-6", children: [
+                    /* @__PURE__ */ jsx("h3", { className: "text-xl font-semibold text-gray-900 group-hover:text-indigo-700 transition-colors", children: value.title }),
+                    /* @__PURE__ */ jsx("p", { className: "mt-3 text-gray-600 leading-relaxed", children: value.description })
+                  ] }),
+                  /* @__PURE__ */ jsx("div", { className: "mt-6 pt-6 border-t border-gray-100", children: /* @__PURE__ */ jsxs("div", { className: "inline-flex items-center gap-2 text-sm text-gray-500", children: [
+                    /* @__PURE__ */ jsx("span", { className: "h-1.5 w-1.5 rounded-full bg-indigo-400 group-hover:bg-indigo-500 transition-colors" }),
+                    "Learn more"
+                  ] }) })
+                ]
+              },
+              value.title
+            )) }),
+            /* @__PURE__ */ jsx("div", { className: "mt-16 pt-8 border-t border-gray-200", children: /* @__PURE__ */ jsxs("div", { className: "flex flex-col sm:flex-row items-center justify-between gap-6", children: [
+              /* @__PURE__ */ jsxs("div", { children: [
+                /* @__PURE__ */ jsx("p", { className: "text-sm text-gray-500 uppercase tracking-wider", children: "Why it matters" }),
+                /* @__PURE__ */ jsx("h3", { className: "text-lg font-semibold text-gray-900 mt-1", children: "Your safety and satisfaction come first" })
+              ] }),
+              /* @__PURE__ */ jsx("div", { className: "flex flex-wrap gap-4", children: [
+                {
+                  value: "100%",
+                  label: "Gas Safe Compliance"
+                },
+                {
+                  value: "24/7",
+                  label: "Support Available"
+                },
+                {
+                  value: "0%",
+                  label: "Hidden Fees"
+                }
+              ].map((item, index) => /* @__PURE__ */ jsxs(
+                "div",
+                {
+                  className: "text-center",
+                  children: [
+                    /* @__PURE__ */ jsx("div", { className: "text-2xl font-bold text-gray-900", children: item.value }),
+                    /* @__PURE__ */ jsx("div", { className: "text-sm text-gray-600 mt-1", children: item.label })
+                  ]
+                },
+                index
+              )) })
+            ] }) })
+          ] })
+        ] }),
+        /* @__PURE__ */ jsxs("section", { className: "relative py-20 lg:py-24 overflow-hidden", children: [
+          /* @__PURE__ */ jsx("div", { className: "absolute inset-0 bg-gradient-to-br from-white via-gray-50/50 to-blue-50/20" }),
+          /* @__PURE__ */ jsx("div", { className: "absolute top-1/2 left-0 w-64 h-64 bg-indigo-100/30 rounded-full -translate-y-1/2 blur-3xl" }),
+          /* @__PURE__ */ jsx("div", { className: "absolute bottom-0 right-0 w-96 h-96 bg-blue-100/20 rounded-full blur-3xl" }),
+          /* @__PURE__ */ jsx("div", { className: "absolute inset-0 opacity-5", children: /* @__PURE__ */ jsx(
+            "div",
+            {
+              className: "h-full w-full",
+              style: {
+                backgroundImage: `linear-gradient(to right, #9ca3af 1px, transparent 1px),
+                        linear-gradient(to bottom, #9ca3af 1px, transparent 1px)`,
+                backgroundSize: "60px 60px"
+              }
+            }
+          ) }),
+          /* @__PURE__ */ jsxs("div", { className: "relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8", children: [
+            /* @__PURE__ */ jsxs("div", { className: "grid lg:grid-cols-2 gap-16 items-center", children: [
+              /* @__PURE__ */ jsxs("div", { className: "space-y-8", children: [
+                /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-3", children: [
+                  /* @__PURE__ */ jsx("div", { className: "h-px w-12 bg-gradient-to-r from-indigo-500 to-blue-500" }),
+                  /* @__PURE__ */ jsx("span", { className: "text-sm font-medium text-indigo-600 uppercase tracking-widest", children: "Our Journey" })
+                ] }),
+                /* @__PURE__ */ jsxs("h2", { className: "text-4xl lg:text-5xl font-bold text-gray-900 leading-tight", children: [
+                  "From a single van",
+                  /* @__PURE__ */ jsx("span", { className: "block mt-2 text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-blue-600", children: "To London's trusted name" })
+                ] }),
+                /* @__PURE__ */ jsxs("div", { className: "relative", children: [
+                  /* @__PURE__ */ jsx("div", { className: "absolute left-0 top-0 bottom-0 w-0.5 bg-gradient-to-b from-indigo-300 via-blue-300 to-transparent" }),
+                  /* @__PURE__ */ jsxs("div", { className: "space-y-8 pl-6", children: [
+                    /* @__PURE__ */ jsxs("div", { children: [
+                      /* @__PURE__ */ jsx("div", { className: "absolute left-[-3px] w-2 h-2 rounded-full bg-indigo-600" }),
+                      /* @__PURE__ */ jsx("p", { className: "text-gray-600 leading-relaxed", children: "Started in 2012 with a simple mission: provide honest, reliable heating services at fair prices to London homeowners." })
+                    ] }),
+                    /* @__PURE__ */ jsxs("div", { children: [
+                      /* @__PURE__ */ jsx("div", { className: "absolute left-[-3px] mt-2 w-2 h-2 rounded-full bg-blue-600" }),
+                      /* @__PURE__ */ jsx("p", { className: "text-gray-600 leading-relaxed", children: "Grew through word-of-mouth by consistently delivering quality workmanship and building lasting relationships." })
+                    ] }),
+                    /* @__PURE__ */ jsxs("div", { children: [
+                      /* @__PURE__ */ jsx("div", { className: "absolute left-[-3px] mt-2 w-2 h-2 rounded-full bg-indigo-500" }),
+                      /* @__PURE__ */ jsx("p", { className: "text-gray-600 leading-relaxed", children: "Today, we're a team of certified engineers using advanced diagnostic tools while maintaining our founding principles." })
+                    ] })
+                  ] })
+                ] })
+              ] }),
+              /* @__PURE__ */ jsxs("div", { className: "relative", children: [
+                /* @__PURE__ */ jsxs("div", { className: "relative", children: [
+                  /* @__PURE__ */ jsx("div", { className: "overflow-hidden rounded-2xl shadow-lg border border-gray-100", children: /* @__PURE__ */ jsx(
+                    "img",
+                    {
+                      src: "/images/engineers-image.jpg",
+                      alt: "MD Gas professional engineer team",
+                      className: "w-full h-[400px] object-cover",
+                      loading: "lazy"
+                    }
+                  ) }),
+                  /* @__PURE__ */ jsx("div", { className: "absolute top-6 right-6", children: /* @__PURE__ */ jsx("div", { className: "bg-gradient-to-r from-indigo-600 to-blue-600 text-white rounded-xl px-4 py-3 shadow-lg", children: /* @__PURE__ */ jsxs("div", { className: "text-center", children: [
+                    /* @__PURE__ */ jsx("p", { className: "text-sm font-medium", children: "Since" }),
+                    /* @__PURE__ */ jsx("p", { className: "text-2xl font-bold", children: "2012" })
+                  ] }) }) }),
+                  /* @__PURE__ */ jsx("div", { className: "absolute bottom-0 left-0 right-0 bg-gradient-to-r from-black/70 to-transparent p-6 rounded-b-2xl", children: /* @__PURE__ */ jsxs("div", { className: "flex items-center justify-between", children: [
+                    /* @__PURE__ */ jsxs("div", { children: [
+                      /* @__PURE__ */ jsx("p", { className: "text-white font-semibold", children: "MD Gas Engineers" }),
+                      /* @__PURE__ */ jsx("p", { className: "text-white/80 text-sm mt-1", children: "Gas Safe Certified • London" })
+                    ] }),
+                    /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-2 bg-white/20 backdrop-blur-sm rounded-lg px-3 py-2", children: [
+                      /* @__PURE__ */ jsx(
+                        "svg",
+                        {
+                          className: "w-4 h-4 text-white",
+                          fill: "none",
+                          stroke: "currentColor",
+                          viewBox: "0 0 24 24",
+                          children: /* @__PURE__ */ jsx(
+                            "path",
+                            {
+                              strokeLinecap: "round",
+                              strokeLinejoin: "round",
+                              strokeWidth: 2,
+                              d: "M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"
+                            }
+                          )
+                        }
+                      ),
+                      /* @__PURE__ */ jsx("span", { className: "text-white text-sm font-medium", children: "Certified" })
+                    ] })
+                  ] }) })
+                ] }),
+                /* @__PURE__ */ jsx("div", { className: "absolute -inset-4 bg-gradient-to-br from-blue-50 to-indigo-50 rounded-3xl -z-10" })
+              ] })
+            ] }),
+            /* @__PURE__ */ jsx("div", { className: "mt-24", children: /* @__PURE__ */ jsxs("div", { className: "relative overflow-hidden rounded-3xl bg-gradient-to-br from-white via-gray-50 to-indigo-50/30 border border-gray-100 shadow-xl", children: [
+              /* @__PURE__ */ jsxs("div", { className: "absolute top-0 left-0 w-full h-full opacity-5", children: [
+                /* @__PURE__ */ jsx("div", { className: "absolute top-0 left-0 w-64 h-64 border border-indigo-200 rounded-full -translate-x-1/2 -translate-y-1/2" }),
+                /* @__PURE__ */ jsx("div", { className: "absolute bottom-0 right-0 w-96 h-96 border border-blue-200 rounded-full translate-x-1/3 translate-y-1/3" })
+              ] }),
+              /* @__PURE__ */ jsxs("div", { className: "grid lg:grid-cols-2 gap-0", children: [
+                /* @__PURE__ */ jsxs("div", { className: "relative p-8 lg:p-12 bg-gradient-to-br from-indigo-600/10 to-blue-600/10", children: [
+                  /* @__PURE__ */ jsx("div", { className: "absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-indigo-600 to-blue-600" }),
+                  /* @__PURE__ */ jsxs("div", { className: "relative z-10", children: [
+                    /* @__PURE__ */ jsxs("div", { className: "inline-flex items-center gap-3 mb-8", children: [
+                      /* @__PURE__ */ jsx(
+                        "div",
+                        {
+                          className: "w-12 h-12 rounded-xl bg-gradient-to-br from-indigo-600 to-blue-600 \n                          flex items-center justify-center shadow-lg",
+                          children: /* @__PURE__ */ jsx(
+                            "svg",
+                            {
+                              className: "w-6 h-6 text-white",
+                              fill: "none",
+                              stroke: "currentColor",
+                              viewBox: "0 0 24 24",
+                              children: /* @__PURE__ */ jsx(
+                                "path",
+                                {
+                                  strokeLinecap: "round",
+                                  strokeLinejoin: "round",
+                                  strokeWidth: 2,
+                                  d: "M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"
+                                }
+                              )
+                            }
+                          )
+                        }
+                      ),
+                      /* @__PURE__ */ jsxs("div", { children: [
+                        /* @__PURE__ */ jsx("h3", { className: "text-2xl font-bold text-gray-900", children: "Our Promise" }),
+                        /* @__PURE__ */ jsx("p", { className: "text-gray-600 text-sm", children: "Unchanging since day one" })
+                      ] })
+                    ] }),
+                    /* @__PURE__ */ jsxs("div", { className: "space-y-6", children: [
+                      /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-4", children: [
+                        /* @__PURE__ */ jsx("div", { className: "w-3 h-3 rounded-full bg-indigo-600" }),
+                        /* @__PURE__ */ jsxs("div", { children: [
+                          /* @__PURE__ */ jsx("p", { className: "font-semibold text-gray-900", children: "Integrity First" }),
+                          /* @__PURE__ */ jsx("p", { className: "text-gray-600 text-sm", children: "Honest service, fair pricing" })
+                        ] })
+                      ] }),
+                      /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-4", children: [
+                        /* @__PURE__ */ jsx("div", { className: "w-3 h-3 rounded-full bg-blue-600" }),
+                        /* @__PURE__ */ jsxs("div", { children: [
+                          /* @__PURE__ */ jsx("p", { className: "font-semibold text-gray-900", children: "Quality Craftsmanship" }),
+                          /* @__PURE__ */ jsx("p", { className: "text-gray-600 text-sm", children: "Work that lasts" })
+                        ] })
+                      ] }),
+                      /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-4", children: [
+                        /* @__PURE__ */ jsx("div", { className: "w-3 h-3 rounded-full bg-indigo-500" }),
+                        /* @__PURE__ */ jsxs("div", { children: [
+                          /* @__PURE__ */ jsx("p", { className: "font-semibold text-gray-900", children: "Customer Care" }),
+                          /* @__PURE__ */ jsx("p", { className: "text-gray-600 text-sm", children: "Your peace of mind matters" })
+                        ] })
+                      ] })
+                    ] })
+                  ] })
+                ] }),
+                /* @__PURE__ */ jsxs("div", { className: "p-8 lg:p-12", children: [
+                  /* @__PURE__ */ jsxs("div", { className: "relative", children: [
+                    /* @__PURE__ */ jsx("div", { className: "absolute -top-2 -left-2 text-5xl text-indigo-100 font-serif", children: '"' }),
+                    /* @__PURE__ */ jsx("blockquote", { className: "text-xl lg:text-2xl text-gray-800 leading-relaxed font-light pl-6", children: "To deliver exceptional heating services with integrity, transparency, and craftsmanship that stands the test of time — ensuring every home we serve enjoys reliable warmth and peace of mind." }),
+                    /* @__PURE__ */ jsx("div", { className: "absolute -bottom-2 -right-2 text-5xl text-indigo-100 font-serif rotate-180", children: '"' })
+                  ] }),
+                  /* @__PURE__ */ jsx("div", { className: "mt-10 pt-8 border-t border-gray-100", children: /* @__PURE__ */ jsxs("div", { className: "flex items-center justify-between", children: [
+                    /* @__PURE__ */ jsxs("div", { children: [
+                      /* @__PURE__ */ jsx("p", { className: "font-semibold text-gray-900", children: "MD Gas Team" }),
+                      /* @__PURE__ */ jsx("p", { className: "text-sm text-gray-600", children: "Trusted since 2012" })
+                    ] }),
+                    /* @__PURE__ */ jsx("div", { className: "flex items-center gap-2", children: [1, 2, 3].map(
+                      (_, i) => /* @__PURE__ */ jsx(
+                        "div",
+                        {
+                          className: "w-2 h-2 rounded-full bg-indigo-400"
+                        },
+                        i
+                      )
+                    ) })
+                  ] }) })
+                ] })
+              ] }),
+              /* @__PURE__ */ jsx("div", { className: "absolute bottom-6 right-6", children: /* @__PURE__ */ jsx("div", { className: "w-8 h-8 border-r-2 border-b-2 border-indigo-300" }) })
+            ] }) })
+          ] })
+        ] }),
+        /* @__PURE__ */ jsx("section", { className: "py-16 lg:py-3", children: /* @__PURE__ */ jsxs("div", { className: "max-w-7xl mx-auto px-4 sm:px-6 lg:px-8", children: [
+          /* @__PURE__ */ jsxs("div", { className: "text-center mb-12 lg:mb-16", children: [
+            /* @__PURE__ */ jsxs("div", { className: "inline-flex items-center gap-3 mb-4", children: [
+              /* @__PURE__ */ jsx("div", { className: "h-px w-12 bg-gradient-to-r from-indigo-500 to-blue-500" }),
+              /* @__PURE__ */ jsx("span", { className: "text-sm font-medium text-indigo-600 uppercase tracking-widest", children: "Professional Accreditations" }),
+              /* @__PURE__ */ jsx("div", { className: "h-px w-12 bg-gradient-to-r from-blue-500 to-indigo-500" })
+            ] }),
+            /* @__PURE__ */ jsx("h2", { className: "text-3xl lg:text-4xl font-bold text-gray-900 mb-4", children: "Certified Excellence" }),
+            /* @__PURE__ */ jsx("p", { className: "text-lg text-gray-600 max-w-2xl mx-auto", children: "Our professional certifications ensure the highest standards of safety and quality." })
+          ] }),
+          /* @__PURE__ */ jsx("div", { className: "relative grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8", children: [
+            {
+              title: "Gas Safe Registered",
+              description: "Fully certified and compliant with all UK gas safety regulations",
+              icon: FaGasPump,
+              color: "from-blue-500 to-cyan-500"
+            },
+            {
+              title: "OFTEC Certified",
+              description: "Qualified for oil heating installations and servicing",
+              icon: FaOilCan,
+              color: "from-emerald-500 to-green-500"
+            },
+            {
+              title: "Which? Trusted Trader",
+              description: "Vetted and approved by the UK's leading consumer champion",
+              icon: FaCheckCircle,
+              color: "from-purple-500 to-indigo-500"
+            },
+            {
+              title: "Checkatrade Verified",
+              description: "Rated and reviewed by customers with proven track record",
+              icon: FaStar,
+              color: "from-amber-500 to-orange-500"
+            }
+          ].map((cert, index) => {
+            const IconComponent = cert.icon;
+            return /* @__PURE__ */ jsxs(
+              "div",
+              {
+                className: "group relative bg-white rounded-2xl p-6 lg:p-8 border border-gray-100 \n                     hover:border-indigo-200 hover:shadow-xl transition-all duration-300 \n                     hover:-translate-y-1",
+                children: [
+                  /* @__PURE__ */ jsx("div", { className: "absolute top-0 right-0 w-16 h-16 overflow-hidden", children: /* @__PURE__ */ jsx("div", { className: "absolute top-0 right-0 w-16 h-16 bg-gradient-to-br from-indigo-50 to-blue-50 transform rotate-45 translate-x-8 -translate-y-8" }) }),
+                  /* @__PURE__ */ jsx(
+                    "div",
+                    {
+                      className: "absolute -top-3 -left-3 w-8 h-8 rounded-full bg-gradient-to-r from-indigo-600 to-blue-600 \n                          text-white flex items-center justify-center text-sm font-bold shadow-md",
+                      children: index + 1
+                    }
+                  ),
+                  /* @__PURE__ */ jsx(
+                    "div",
+                    {
+                      className: `w-14 h-14 rounded-xl bg-gradient-to-br ${cert.color} 
+                          flex items-center justify-center mb-6 group-hover:scale-110 transition-transform shadow-md`,
+                      children: /* @__PURE__ */ jsx(IconComponent, { className: "h-7 w-7 text-white" })
+                    }
+                  ),
+                  /* @__PURE__ */ jsx("h3", { className: "text-xl font-semibold text-gray-900 mb-3", children: cert.title }),
+                  /* @__PURE__ */ jsx("p", { className: "text-gray-600 text-sm leading-relaxed", children: cert.description }),
+                  /* @__PURE__ */ jsxs("div", { className: "mt-6 pt-6 border-t border-gray-100 flex items-center justify-between", children: [
+                    /* @__PURE__ */ jsx("span", { className: "text-xs font-medium text-indigo-600", children: "Verified & Certified" }),
+                    /* @__PURE__ */ jsx(
+                      "svg",
+                      {
+                        className: "w-4 h-4 text-green-500",
+                        fill: "currentColor",
+                        viewBox: "0 0 20 20",
+                        children: /* @__PURE__ */ jsx(
+                          "path",
+                          {
+                            fillRule: "evenodd",
+                            d: "M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z",
+                            clipRule: "evenodd"
+                          }
+                        )
+                      }
+                    )
+                  ] })
+                ]
+              },
+              cert.title
+            );
+          }) })
+        ] }) }),
+        /* @__PURE__ */ jsxs("section", { className: "relative py-16 overflow-hidden rounded-b-3xl", children: [
+          /* @__PURE__ */ jsx("div", { className: "absolute inset-0 bg-primary" }),
+          /* @__PURE__ */ jsx("div", { className: "absolute -top-20 -right-20 w-64 h-64 rounded-full bg-white/10 blur-3xl" }),
+          /* @__PURE__ */ jsx("div", { className: "absolute -bottom-20 -left-20 w-64 h-64 rounded-full bg-white/10 blur-3xl" }),
+          /* @__PURE__ */ jsxs("div", { className: "relative max-w-3xl mx-auto px-4 text-center", children: [
+            /* @__PURE__ */ jsx("h2", { className: "text-3xl font-bold text-white", children: "Ready to get started?" }),
+            /* @__PURE__ */ jsx("p", { className: "mt-4 text-lg text-white/90", children: "Book a free quote or request emergency service — we’ll be there." }),
+            /* @__PURE__ */ jsxs("div", { className: "mt-8 flex flex-col sm:flex-row items-center justify-center gap-4", children: [
+              /* @__PURE__ */ jsx(
+                Button,
+                {
+                  asChild: true,
+                  size: "lg",
+                  className: "rounded-full bg-white text-indigo-600 hover:bg-gray-100 px-10 shadow-lg",
+                  children: /* @__PURE__ */ jsx(Link, { href: "/book/quote", children: "Get a Quote" })
+                }
+              ),
+              /* @__PURE__ */ jsx(
+                Button,
+                {
+                  asChild: true,
+                  variant: "outline",
+                  size: "lg",
+                  className: "rounded-full border-white text-white hover:bg-white/10 px-10",
+                  children: /* @__PURE__ */ jsxs(
+                    Link,
+                    {
+                      href: "tel:08001234567",
+                      className: "inline-flex items-center gap-2",
+                      children: [
+                        /* @__PURE__ */ jsx(Phone, { className: "h-5 w-5" }),
+                        "0800 123 4567"
+                      ]
+                    }
+                  )
+                }
+              )
+            ] }),
+            /* @__PURE__ */ jsx("p", { className: "mt-8 text-sm text-white/80", children: "Trusted by thousands of homeowners across London" })
+          ] })
+        ] })
+      ] })
+    ] }),
+    /* @__PURE__ */ jsx(Footer, {})
+  ] });
+}
+const __vite_glob_0_0 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
+  __proto__: null,
+  default: AboutPage
+}, Symbol.toStringTag, { value: "Module" }));
+function InputError({ message, className = "", ...props }) {
+  return message ? /* @__PURE__ */ jsx(
+    "p",
+    {
+      ...props,
+      className: "text-sm text-red-600 " + className,
+      children: message
+    }
+  ) : null;
+}
+function InputLabel({
+  value,
+  className = "",
+  children,
+  ...props
+}) {
+  return /* @__PURE__ */ jsx(
+    "label",
+    {
+      ...props,
+      className: `block text-sm font-medium text-gray-700 ` + className,
+      children: value ? value : children
+    }
+  );
+}
+function PrimaryButton({
+  className = "",
+  disabled,
+  children,
+  ...props
+}) {
+  return /* @__PURE__ */ jsx(
+    "button",
+    {
+      ...props,
+      className: `inline-flex items-center rounded-md border border-transparent bg-gray-800 px-4 py-2 text-xs font-semibold uppercase tracking-widest text-white transition duration-150 ease-in-out hover:bg-gray-700 focus:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 active:bg-gray-900 ${disabled && "opacity-25"} ` + className,
+      disabled,
+      children
+    }
+  );
+}
+const TextInput = forwardRef(function TextInput2({ type = "text", className = "", isFocused = false, ...props }, ref) {
+  const localRef = useRef(null);
+  useImperativeHandle(ref, () => ({
+    focus: () => localRef.current?.focus()
+  }));
+  useEffect(() => {
+    if (isFocused) {
+      localRef.current?.focus();
+    }
+  }, [isFocused]);
+  return /* @__PURE__ */ jsx(
+    "input",
+    {
+      ...props,
+      type,
+      className: "rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 " + className,
+      ref: localRef
+    }
+  );
+});
+function ApplicationLogo({ className = "", alt = "Logo", ...props }) {
+  return /* @__PURE__ */ jsx(
+    "img",
+    {
+      src: "/assets/logo.png",
+      alt,
+      className: `select-none ${className}`,
+      loading: "lazy",
+      decoding: "async",
+      ...props
+    }
+  );
 }
 function GuestLayout({ children }) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -1111,1856 +1464,1499 @@ const __vite_glob_0_6 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.def
   __proto__: null,
   default: VerifyEmail
 }, Symbol.toStringTag, { value: "Module" }));
-function FormStepper({ steps: steps2, currentStep, className }) {
-  return /* @__PURE__ */ jsxs("div", { className: cn("w-full", className), children: [
-    /* @__PURE__ */ jsx("div", { className: "hidden sm:block", children: /* @__PURE__ */ jsxs("div", { className: "relative", children: [
-      /* @__PURE__ */ jsx("div", { className: "absolute top-5 left-0 right-0 h-0.5 bg-border" }),
-      /* @__PURE__ */ jsx(
-        "div",
-        {
-          className: "absolute top-5 left-0 h-0.5 bg-primary transition-all duration-500 ease-out",
-          style: {
-            width: `${currentStep / (steps2.length - 1) * 100}%`
+const FAQ_LIST = [
+  {
+    q: "Who are MD Gas?",
+    a: "MD Gas is a trusted home heating specialist providing boiler installations, repairs, servicing, and energy-efficient heating solutions across the region."
+  },
+  {
+    q: "Do you offer finance options for boiler installations?",
+    a: "Yes, we offer flexible finance plans to help you spread the cost of your boiler installation easily and affordably."
+  },
+  {
+    q: "What services does MD Gas provide?",
+    a: "We provide boiler installation, servicing, repairs, central heating upgrades, smart thermostat setup, and emergency call-outs."
+  },
+  {
+    q: "Who carries out the installation?",
+    a: "All installations are completed by fully qualified Gas Safe registered engineers with years of professional experience."
+  },
+  {
+    q: "Are my payments and purchases protected?",
+    a: "Yes, all installations and products come with full protection, warranties, and transparent pricing."
+  },
+  {
+    q: "How quickly can you install a new boiler?",
+    a: "In many cases, we offer next-day installation depending on engineer availability and your location."
+  },
+  {
+    q: "Do you provide emergency boiler repairs?",
+    a: "Yes, we provide urgent same-day repair services for breakdowns and heating emergencies."
+  },
+  {
+    q: "What warranties do you offer?",
+    a: "We offer manufacturer warranties up to 10 years depending on the boiler model you choose."
+  },
+  {
+    q: "Do you install smart thermostats?",
+    a: "Yes, we install major smart thermostats such as Hive, Nest, and Tado for superior energy control."
+  },
+  {
+    q: "Can I get a quote online?",
+    a: "Absolutely. You can receive an instant fixed-price quote online without needing a home visit."
+  },
+  {
+    q: "Are your engineers Gas Safe certified?",
+    a: "Yes, all MD Gas engineers are Gas Safe registered and fully qualified."
+  },
+  {
+    q: "Do you offer annual boiler servicing?",
+    a: "Yes, we offer affordable annual servicing to keep your boiler safe, efficient, and under warranty."
+  },
+  {
+    q: "Can you upgrade radiators or heating systems?",
+    a: "Yes, we provide full central heating upgrades including radiators, pipework, pumps, and valves."
+  },
+  {
+    q: "What areas do you cover?",
+    a: "We cover a wide service area—contact us or enter your postcode online to confirm availability."
+  },
+  {
+    q: "How do I book an installation?",
+    a: "You can book directly online or speak to our team for support with selecting a boiler."
+  }
+];
+function Faq() {
+  const [openIndex, setOpenIndex] = useState(0);
+  const [showAll, setShowAll] = useState(false);
+  const sectionRef = useRef(null);
+  const displayedFaqs = showAll ? FAQ_LIST : FAQ_LIST.slice(0, 5);
+  const scrollToSectionTop = () => {
+    if (!sectionRef.current) return;
+    const offsetTop = sectionRef.current.offsetTop - 80;
+    window.scrollTo({
+      top: offsetTop,
+      behavior: "smooth"
+    });
+  };
+  const handleViewAll = () => {
+    setShowAll(true);
+    scrollToSectionTop();
+  };
+  const handleShowLess = () => {
+    setShowAll(false);
+    setOpenIndex(0);
+    scrollToSectionTop();
+  };
+  return /* @__PURE__ */ jsx(
+    "section",
+    {
+      ref: sectionRef,
+      className: "bg-foreground text-white py-20 px-6 sm:px-10 rounded-b-[45px]",
+      children: /* @__PURE__ */ jsxs("div", { className: "max-w-7xl mx-auto", children: [
+        /* @__PURE__ */ jsxs("div", { className: "flex justify-between items-center mb-10 z-20 bg-foreground pt-4 pb-6", children: [
+          /* @__PURE__ */ jsx("h2", { className: "text-4xl sm:text-5xl font-bold text-dark", children: "FAQ’s" }),
+          !showAll && /* @__PURE__ */ jsxs(
+            "button",
+            {
+              onClick: handleViewAll,
+              className: "bg-dark text-foreground px-5 py-2 rounded-full text-sm font-semibold flex items-center gap-2 cursor-pointer",
+              children: [
+                "View all ",
+                /* @__PURE__ */ jsx(IoChevronDown, { className: "text-base" })
+              ]
+            }
+          )
+        ] }),
+        /* @__PURE__ */ jsx("div", { className: "space-y-6", children: displayedFaqs.map((item, index) => {
+          const isOpen = openIndex === index;
+          return /* @__PURE__ */ jsxs(
+            "div",
+            {
+              className: "border-b border-dark/60 pb-3",
+              children: [
+                /* @__PURE__ */ jsxs(
+                  "button",
+                  {
+                    className: "w-full flex justify-between items-center text-left",
+                    onClick: () => setOpenIndex(isOpen ? null : index),
+                    children: [
+                      /* @__PURE__ */ jsx("span", { className: "text-lg font-semibold text-dark", children: item.q }),
+                      isOpen ? /* @__PURE__ */ jsx(IoChevronUp, { className: "text-xl text-dark" }) : /* @__PURE__ */ jsx(IoChevronDown, { className: "text-xl text-dark" })
+                    ]
+                  }
+                ),
+                /* @__PURE__ */ jsx(
+                  "div",
+                  {
+                    className: `overflow-hidden transition-all duration-300 ease-in-out ${isOpen ? "max-h-[300px] mt-3 opacity-100" : "max-h-0 opacity-0"}`,
+                    children: /* @__PURE__ */ jsx("p", { className: "text-[15px] text-dark leading-relaxed", children: item.a })
+                  }
+                )
+              ]
+            },
+            index
+          );
+        }) }),
+        showAll && /* @__PURE__ */ jsx("div", { className: "text-center mt-10", children: /* @__PURE__ */ jsx(
+          "button",
+          {
+            onClick: handleShowLess,
+            className: "bg-white text-black px-6 py-2 rounded-full text-sm font-semibold",
+            children: "Show less"
           }
-        }
-      ),
-      /* @__PURE__ */ jsx("div", { className: "relative flex justify-between", children: steps2.map((step, index) => {
-        const isCompleted = index < currentStep;
-        const isCurrent = index === currentStep;
-        return /* @__PURE__ */ jsxs("div", { className: "flex flex-col items-center", children: [
+        ) })
+      ] })
+    }
+  );
+}
+function ServiceCards() {
+  const steps = [
+    {
+      title: "You answer",
+      description: "Tell us a few simple details about your home and current boiler setup.",
+      icon: MessageCircleMore,
+      badge: "Start here",
+      step: "STEP 01"
+    },
+    {
+      title: "You pick",
+      description: "Choose your preferred boiler and package from fixed, transparent pricing.",
+      icon: Touchpad,
+      badge: "Choose",
+      step: "STEP 02"
+    },
+    {
+      title: "We fit",
+      description: "Your chosen boiler is installed by a trusted, local Gas Safe engineer.",
+      icon: Hammer,
+      badge: "Installation",
+      step: "STEP 03"
+    }
+  ];
+  return /* @__PURE__ */ jsxs("section", { className: "relative overflow-hidden rounded-t-[45px] bg-gradient-to-b from-[#F4F7FB] via-[#F3F6FB] to-[#EEF3FA] py-16 sm:py-24", children: [
+    /* @__PURE__ */ jsx("div", { className: "pointer-events-none absolute -left-32 top-0 h-64 w-64 rounded-full bg-primary/20 blur-3xl" }),
+    /* @__PURE__ */ jsx("div", { className: "pointer-events-none absolute -right-40 bottom-0 h-72 w-72 rounded-full bg-[#fde5cf] blur-3xl" }),
+    /* @__PURE__ */ jsx("div", { className: "relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-0", children: /* @__PURE__ */ jsxs("div", { className: "grid gap-10 lg:grid-cols-[minmax(0,1.4fr)_minmax(0,1fr)] lg:items-start", children: [
+      /* @__PURE__ */ jsxs("div", { className: "flex flex-col gap-5", children: [
+        /* @__PURE__ */ jsxs("div", { className: "max-w-3xl", children: [
+          /* @__PURE__ */ jsxs("h2", { className: "text-3xl sm:text-4xl font-[500] tracking-tight text-dark leading-10", children: [
+            "Get a",
+            " ",
+            /* @__PURE__ */ jsx("span", { className: "font-bold font-marcellus text-primary text-[42px]", children: "fixed online price" }),
+            ",",
+            /* @__PURE__ */ jsx("br", { className: "hidden sm:block" }),
+            /* @__PURE__ */ jsx("span", { className: "inline-block", children: "without a salesperson in sight." })
+          ] }),
+          /* @__PURE__ */ jsx("p", { className: "mt-3 text-lg text-dark/70", children: "Simple, transparent, and fully online — the way it should be." })
+        ] }),
+        /* @__PURE__ */ jsxs("div", { className: "relative mt-3", children: [
+          /* @__PURE__ */ jsx("div", { className: "pointer-events-none absolute left-0 right-0 top-1/2 hidden h-[1px] -translate-y-1/2 bg-primary/70 sm:block" }),
+          /* @__PURE__ */ jsx("div", { className: "relative grid gap-4 sm:grid-cols-3", children: steps.map((step) => {
+            const Icon = step.icon;
+            return /* @__PURE__ */ jsxs(
+              "article",
+              {
+                className: "relative z-[1] flex h-full flex-col rounded-[24px] border border-white/70 bg-white/90 px-4 py-5 sm:px-5 shadow-[0_18px_45px_rgba(15,23,42,0.08)] backdrop-blur-sm transition-colors duration-300 hover:border-primary/40 hover:bg-white",
+                children: [
+                  /* @__PURE__ */ jsxs("div", { className: "flex items-start justify-between gap-2", children: [
+                    /* @__PURE__ */ jsx("div", { className: "flex items-center gap-3", children: /* @__PURE__ */ jsx("div", { className: "flex h-11 w-11 items-center justify-center rounded-2xl bg-gradient-to-br from-slate-900 via-slate-900 to-slate-800 shadow-[0_14px_30px_rgba(15,23,42,0.55)]", children: /* @__PURE__ */ jsx(
+                      Icon,
+                      {
+                        className: "h-5 w-5 text-white",
+                        strokeWidth: 2.2
+                      }
+                    ) }) }),
+                    /* @__PURE__ */ jsx("span", { className: "inline-flex rounded-full bg-slate-50 px-3 py-1 text-[11px] font-medium text-slate-500", children: step.badge })
+                  ] }),
+                  /* @__PURE__ */ jsx("h3", { className: "mt-4 text-[18px] font-semibold text-dark", children: step.title }),
+                  /* @__PURE__ */ jsx("p", { className: "mt-1.5 text-[14px] leading-relaxed text-dark/70", children: step.description }),
+                  /* @__PURE__ */ jsxs("div", { className: "mt-4 flex items-center justify-start gap-3", children: [
+                    /* @__PURE__ */ jsx("span", { className: "inline-flex rounded-full border border-slate-200 bg-slate-50 px-3 py-[5px] text-[11px] font-medium tracking-[0.16em] text-slate-600 uppercase", children: step.step }),
+                    /* @__PURE__ */ jsx("span", { className: "h-[2px] w-16 rounded-full bg-gradient-to-r from-primary/50 via-primary/30 to-transparent" })
+                  ] })
+                ]
+              },
+              step.title
+            );
+          }) })
+        ] })
+      ] }),
+      /* @__PURE__ */ jsx("div", { className: "relative h-full", children: /* @__PURE__ */ jsxs("div", { className: "relative flex h-full flex-col rounded-[30px] border border-dashed border-slate-200/80 bg-white/90 p-6 sm:p-8 shadow-[0_22px_60px_rgba(15,23,42,0.12)] backdrop-blur-sm", children: [
+        /* @__PURE__ */ jsxs("div", { className: "absolute right-6 top-6 inline-flex items-center gap-2 rounded-full bg-slate-50 px-3 py-1 text-[11px] font-medium text-slate-500", children: [
+          /* @__PURE__ */ jsx(CheckCircle2, { className: "h-4 w-4 text-primary" }),
+          "Online, start to finish"
+        ] }),
+        /* @__PURE__ */ jsxs("div", { className: "mt-8 flex h-full flex-col gap-6", children: [
+          /* @__PURE__ */ jsxs("div", { className: "space-y-4", children: [
+            /* @__PURE__ */ jsx("h3", { className: "text-[15px] font-semibold uppercase tracking-[0.2em] text-dark/60", children: "Three simple steps" }),
+            /* @__PURE__ */ jsx("p", { className: "text-[17px] leading-relaxed text-dark", children: "From first click to a fully-installed boiler, everything happens online with clear pricing and no pushy home visit." }),
+            /* @__PURE__ */ jsxs("ul", { className: "mt-4 space-y-3 text-[16px] text-dark", children: [
+              /* @__PURE__ */ jsxs("li", { className: "flex gap-2", children: [
+                /* @__PURE__ */ jsx("span", { className: "mt-[7px] h-1.5 w-1.5 rounded-full bg-primary" }),
+                /* @__PURE__ */ jsx("span", { children: "Instant fixed-price quote." })
+              ] }),
+              /* @__PURE__ */ jsxs("li", { className: "flex gap-2", children: [
+                /* @__PURE__ */ jsx("span", { className: "mt-[7px] h-1.5 w-1.5 rounded-full bg-primary/80" }),
+                /* @__PURE__ */ jsx("span", { children: "Pick your boiler and date." })
+              ] }),
+              /* @__PURE__ */ jsxs("li", { className: "flex gap-2", children: [
+                /* @__PURE__ */ jsx("span", { className: "mt-[7px] h-1.5 w-1.5 rounded-full bg-primary/60" }),
+                /* @__PURE__ */ jsx("span", { children: "Gas Safe engineer fits it on-site." })
+              ] })
+            ] })
+          ] }),
+          /* @__PURE__ */ jsxs("div", { className: "flex flex-wrap gap-3 text-[15px] text-foreground", children: [
+            /* @__PURE__ */ jsx("span", { className: "rounded-full bg-dark px-3.5 py-1.5", children: "No sales visit" }),
+            /* @__PURE__ */ jsx("span", { className: "rounded-full bg-dark px-3.5 py-1.5", children: "Done in minutes" })
+          ] })
+        ] })
+      ] }) })
+    ] }) })
+  ] });
+}
+const BENEFITS = [
+  {
+    title: "Trusted installer.",
+    description: "Accredited by leading industry bodies so you know your installation is in safe hands.",
+    icon: FiAward,
+    iconColor: "text-sky-400"
+  },
+  {
+    title: "All-inclusive aftercare.",
+    description: "Every installation comes with our workmanship guarantee and dedicated support.",
+    icon: FiHeart,
+    iconColor: "text-blue-400"
+  },
+  {
+    title: "Price promise.",
+    description: "If you find a genuine like-for-like quote that’s cheaper, we’ll match it. Simple.",
+    icon: FiTag,
+    iconColor: "text-violet-400"
+  },
+  {
+    title: "5 star reviews.",
+    description: "Thousands of verified 5★ reviews across platforms like Trustpilot and Google.",
+    icon: FiStar,
+    iconColor: "text-emerald-400"
+  },
+  {
+    title: "We give back.",
+    description: "For every energy-saving installation, we donate to carefully chosen charities.",
+    icon: FiShield,
+    iconColor: "text-pink-400"
+  },
+  {
+    title: "A safe choice.",
+    description: "Gas Safe registered engineers and fully certified for boiler and heating work.",
+    icon: FiZap,
+    iconColor: "text-amber-400"
+  }
+];
+function WhyChooseUs() {
+  return /* @__PURE__ */ jsxs("section", { className: "relative bg-dark/90 py-16 sm:py-20", children: [
+    /* @__PURE__ */ jsx("div", { className: "pointer-events-none absolute inset-x-0 top-0 h-40 bg-gradient-to-b from-sky-500/10 via-transparent to-transparent" }),
+    /* @__PURE__ */ jsxs("div", { className: "relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-0", children: [
+      /* @__PURE__ */ jsxs("header", { className: "mx-auto max-w-3xl text-center", children: [
+        /* @__PURE__ */ jsxs("div", { className: "inline-flex items-center gap-2 rounded-full border border-primary bg-dark/30 px-3 py-1", children: [
+          /* @__PURE__ */ jsx("span", { className: "h-1.5 w-1.5 rounded-full bg-primary" }),
+          /* @__PURE__ */ jsx("span", { className: "text-[11px] font-semibold uppercase tracking-[0.22em] text-slate-200", children: "Why choose us" })
+        ] }),
+        /* @__PURE__ */ jsx("h2", { className: "mt-4 text-2xl sm:text-3xl md:text-4xl font-semibold text-white", children: "Benefits that come as standard" }),
+        /* @__PURE__ */ jsx("p", { className: "mt-2 text-sm sm:text-base text-slate-300/90", children: "Everything we do is built around peace of mind, clear pricing and long-term support." })
+      ] }),
+      /* @__PURE__ */ jsx("div", { className: "mt-14 grid gap-6 md:grid-cols-2 items-stretch", children: BENEFITS.map((item) => {
+        const Icon = item.icon;
+        return /* @__PURE__ */ jsxs(
+          "article",
+          {
+            className: "\r\n                                    relative flex h-full items-center gap-4 \r\n                                    rounded-2xl border border-slate-800/80 \r\n                                    bg-background/20\r\n                                    p-5 sm:p-6 \r\n                                    shadow-[0_10px_30px_rgba(0,0,0,0.4)] \r\n                                    backdrop-blur-md \r\n                                    transition-colors duration-300 \r\n                                    hover:border-primary\r\n                                ",
+            children: [
+              /* @__PURE__ */ jsx(
+                "span",
+                {
+                  className: "\r\n                                        pointer-events-none\r\n                                        absolute inset-y-2 left-0\r\n                                        w-[3px]\r\n                                        rounded-full \r\n                                        bg-primary\r\n                                        shadow-[0_0_8px_rgba(56,189,248,0.45)]\r\n                                    "
+                }
+              ),
+              /* @__PURE__ */ jsx("div", { className: "mt-1 flex h-14 w-14 items-center justify-center rounded-2xl bg-slate-900", children: /* @__PURE__ */ jsx("div", { className: "flex h-11 w-11 items-center justify-center rounded-xl bg-slate-950", children: /* @__PURE__ */ jsx(
+                Icon,
+                {
+                  className: `h-6 w-6 ${item.iconColor}`
+                }
+              ) }) }),
+              /* @__PURE__ */ jsxs("div", { className: "flex flex-col flex-1", children: [
+                /* @__PURE__ */ jsx("h3", { className: "text-sm sm:text-[15px] font-semibold text-white", children: item.title }),
+                /* @__PURE__ */ jsx("p", { className: "mt-1 text-[13px] sm:text-sm leading-relaxed text-slate-300/90", children: item.description }),
+                /* @__PURE__ */ jsx("div", { className: "flex-1" })
+              ] })
+            ]
+          },
+          item.title
+        );
+      }) }),
+      /* @__PURE__ */ jsx("p", { className: "mt-10 text-center text-xl text-foreground/80", children: "…so, why wouldn't you choose us?" })
+    ] })
+  ] });
+}
+const services = [
+  {
+    id: "repair",
+    title: "Boiler Repair",
+    description: "Fast boiler repairs with fixed labour.",
+    image: "/images/product_boiler.png",
+    highlight: "From £75 Labour",
+    href: "/book/quote?service=repair",
+    theme: {
+      hoverBg: "hover:bg-[#E5F1FF]",
+      hoverBorder: "hover:border-[#2358FF]",
+      labelBg: "bg-[#2358FF]",
+      rippleColor: "text-[#7190F5]",
+      arrowHoverBg: "group-hover:bg-[#2358FF]"
+    }
+  },
+  {
+    id: "service",
+    title: "Boiler Service",
+    description: "Annual service to keep your boiler safe.",
+    image: "/images/product_boiler.png",
+    highlight: "Yearly Service",
+    href: "/book/quote?service=service",
+    theme: {
+      hoverBg: "hover:bg-[#FFECA9]",
+      hoverBorder: "hover:border-[#FFC727]",
+      labelBg: "bg-[#FFC727]",
+      rippleColor: "text-[#FFC727]",
+      arrowHoverBg: "group-hover:bg-[#2358FF]"
+    }
+  },
+  {
+    id: "quote",
+    title: "New Boiler Quote",
+    description: "Instant online quote for a new boiler.",
+    image: "/images/product_boiler.png",
+    highlight: "Instant Quote",
+    href: "/book",
+    theme: {
+      hoverBg: "hover:bg-[#E6F9EC]",
+      hoverBorder: "hover:border-[#17A44A]",
+      labelBg: "bg-[#17A44A]",
+      rippleColor: "text-[#17A44A]",
+      arrowHoverBg: "group-hover:bg-[#2358FF]"
+    }
+  },
+  {
+    id: "powerflush",
+    title: "Power Flush",
+    description: "Deep clean for radiators and pipework.",
+    image: "/images/product_boiler.png",
+    highlight: "From £400",
+    href: "/book/quote?service=powerflush",
+    theme: {
+      hoverBg: "hover:bg-[#F3E9FF]",
+      hoverBorder: "hover:border-[#8B4DFF]",
+      labelBg: "bg-[#8B4DFF]",
+      rippleColor: "text-[#8B4DFF]",
+      arrowHoverBg: "group-hover:bg-[#2358FF]"
+    }
+  }
+];
+function GlowRipple({ className }) {
+  return /* @__PURE__ */ jsx(
+    "svg",
+    {
+      xmlns: "http://www.w3.org/2000/svg",
+      width: "203",
+      height: "205",
+      viewBox: "0 0 243 225",
+      fill: "none",
+      className,
+      "aria-hidden": "true",
+      children: /* @__PURE__ */ jsxs("g", { opacity: "0.2", children: [
+        /* @__PURE__ */ jsx(
+          "ellipse",
+          {
+            cx: "121.282",
+            cy: "112.153",
+            rx: "106.355",
+            ry: "98.3498",
+            fill: "currentColor",
+            fillOpacity: "0.4"
+          }
+        ),
+        /* @__PURE__ */ jsx(
+          "ellipse",
+          {
+            cx: "121.282",
+            cy: "112.153",
+            rx: "121.282",
+            ry: "112.153",
+            fill: "currentColor",
+            fillOpacity: "0.2"
+          }
+        ),
+        /* @__PURE__ */ jsx(
+          "ellipse",
+          {
+            cx: "121.283",
+            cy: "112.154",
+            rx: "94.0935",
+            ry: "87.0113",
+            fill: "currentColor",
+            fillOpacity: "0.4"
+          }
+        ),
+        /* @__PURE__ */ jsx(
+          "ellipse",
+          {
+            cx: "121.282",
+            cy: "112.154",
+            rx: "77.0341",
+            ry: "71.2358",
+            fill: "currentColor",
+            fillOpacity: "0.6"
+          }
+        )
+      ] })
+    }
+  );
+}
+function HeroServices() {
+  return /* @__PURE__ */ jsx("div", { className: "grid gap-5 md:grid-cols-2 xl:grid-cols-4", children: services.map((service) => /* @__PURE__ */ jsxs(
+    Card,
+    {
+      className: `group relative flex flex-col justify-start items-start overflow-hidden rounded-[30px] border-[3px] border-[#EFEFEF] bg-white px-7 pt-7 pb-6 shadow-[0_18px_45px_rgba(15,23,42,0.06)] transition-all duration-300 hover:shadow-[0_24px_60px_rgba(15,23,42,0.14)] ${service.theme.hoverBg} ${service.theme.hoverBorder}`,
+      children: [
+        /* @__PURE__ */ jsx(
+          "div",
+          {
+            className: `inline-flex items-center rounded-full px-3 py-1 text-xs font-semibold text-white ${service.theme.labelBg}`,
+            children: service.highlight
+          }
+        ),
+        /* @__PURE__ */ jsxs("div", { className: "relative mt-1 flex h-44 w-full items-center justify-center", children: [
+          /* @__PURE__ */ jsx("div", { className: "absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2", children: /* @__PURE__ */ jsx(
+            GlowRipple,
+            {
+              className: `${service.theme.rippleColor}`
+            }
+          ) }),
+          /* @__PURE__ */ jsx(
+            "img",
+            {
+              src: service.image,
+              alt: service.title,
+              className: "relative z-10 max-h-32 object-contain mx-auto"
+            }
+          )
+        ] }),
+        /* @__PURE__ */ jsxs("div", { className: "flex items-end justify-between gap-4 mt-1", children: [
+          /* @__PURE__ */ jsxs("div", { children: [
+            /* @__PURE__ */ jsx(CardHeader, { className: "p-0", children: /* @__PURE__ */ jsx(CardTitle, { className: "text-[18px] font-semibold text-slate-900", children: service.title }) }),
+            /* @__PURE__ */ jsx(CardContent, { className: " p-0", children: /* @__PURE__ */ jsx(CardDescription, { className: "text-[14px] leading-relaxed text-slate-600", children: service.description }) })
+          ] }),
+          /* @__PURE__ */ jsx(Link, { href: service.href, className: "shrink-0", children: /* @__PURE__ */ jsx(
+            "div",
+            {
+              className: `flex h-11 w-11 items-center justify-center rounded-full bg-black text-white transition-all duration-300 group-hover:translate-x-1 ${service.theme.arrowHoverBg}`,
+              children: /* @__PURE__ */ jsx(ArrowRight, { className: "h-5 w-5" })
+            }
+          ) })
+        ] })
+      ]
+    },
+    service.id
+  )) });
+}
+function Home$1() {
+  return /* @__PURE__ */ jsxs(Fragment, { children: [
+    /* @__PURE__ */ jsx(
+      Header,
+      {}
+    ),
+    /* @__PURE__ */ jsxs("section", { className: "relative min-h-screen flex items-center justify-center bg-gradient-to-b from-slate-50 to-white py-20 px-4 rounded-b-[45px] overflow-hidden", children: [
+      /* @__PURE__ */ jsx("div", { className: "absolute inset-0 bg-[linear-gradient(45deg,transparent_98%,#f1f5f9_98%)] bg-[length:40px_40px] opacity-50" }),
+      /* @__PURE__ */ jsx("div", { className: "relative max-w-7xl mx-auto w-full", children: /* @__PURE__ */ jsxs("div", { className: "grid lg:grid-cols-2 gap-16 items-center", children: [
+        /* @__PURE__ */ jsxs("div", { className: "space-y-8", children: [
+          /* @__PURE__ */ jsxs("h1", { className: "text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight", children: [
+            /* @__PURE__ */ jsx("span", { className: "block text-dark", children: "Upgrade Your" }),
+            /* @__PURE__ */ jsx("span", { className: "block text-dark mt-2", children: "Boiler &" }),
+            /* @__PURE__ */ jsx("span", { className: "block bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent mt-2", children: "Win £5,000" })
+          ] }),
+          /* @__PURE__ */ jsx("p", { className: "text-xl text-slate-600 leading-relaxed max-w-lg", children: "Book your installation before 19th December for automatic entry into our festive prize draw. No hidden fees, fixed pricing." })
+        ] }),
+        /* @__PURE__ */ jsxs("div", { className: "relative", children: [
+          /* @__PURE__ */ jsx("div", { className: "absolute -inset-4 bg-gradient-to-r from-blue-400/20 to-cyan-400/20 rounded-3xl blur-2xl opacity-50" }),
+          /* @__PURE__ */ jsxs("div", { className: "relative bg-white rounded-2xl border border-slate-200 shadow-2xl shadow-blue-100/50 p-8 md:p-10", children: [
+            /* @__PURE__ */ jsxs("div", { className: "text-center mb-8", children: [
+              /* @__PURE__ */ jsx("h2", { className: "text-2xl md:text-3xl font-bold text-dark mb-3", children: "Get Your Instant Quote" }),
+              /* @__PURE__ */ jsx("p", { className: "text-slate-500", children: "Enter your postcode for an immediate price estimate" })
+            ] }),
+            /* @__PURE__ */ jsxs("div", { className: "space-y-6", children: [
+              /* @__PURE__ */ jsxs("div", { className: "relative", children: [
+                /* @__PURE__ */ jsx("div", { className: "absolute -top-2 left-4 px-2 bg-white text-xs font-medium text-slate-500", children: "Postcode" }),
+                /* @__PURE__ */ jsx(
+                  "input",
+                  {
+                    type: "text",
+                    placeholder: "e.g. SW1A 1AA",
+                    className: "w-full px-5 py-4 rounded-xl border border-slate-300 text-dark placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 bg-white"
+                  }
+                )
+              ] }),
+              /* @__PURE__ */ jsx(
+                "a",
+                {
+                  href: "/book/quote?service=new",
+                  className: "w-full flex justify-center items-center px-7 py-3.5 rounded-full font-semibold bg-gradient-to-r from-[var(--primary)] to-[var(--secondary)] hover:opacity-90 shadow-lg shadow-[var(--primary)]/20",
+                  children: "Get quote →"
+                }
+              )
+            ] }),
+            /* @__PURE__ */ jsx("div", { className: "mt-8 pt-6 border-t border-slate-100", children: /* @__PURE__ */ jsxs("div", { className: "flex items-center justify-center gap-6 text-sm text-slate-500", children: [
+              /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-2", children: [
+                /* @__PURE__ */ jsx("div", { className: "w-2 h-2 rounded-full bg-green-400" }),
+                /* @__PURE__ */ jsx("span", { children: "No obligation" })
+              ] }),
+              /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-2", children: [
+                /* @__PURE__ */ jsx("div", { className: "w-2 h-2 rounded-full bg-green-400" }),
+                /* @__PURE__ */ jsx("span", { children: "Instant quote" })
+              ] }),
+              /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-2", children: [
+                /* @__PURE__ */ jsx("div", { className: "w-2 h-2 rounded-full bg-green-400" }),
+                /* @__PURE__ */ jsx("span", { children: "Prize entry" })
+              ] })
+            ] }) })
+          ] }),
+          /* @__PURE__ */ jsx("div", { className: "absolute -bottom-4 -right-4 w-24 h-24 bg-gradient-to-br from-blue-500/10 to-cyan-500/10 rounded-2xl blur-xl" })
+        ] })
+      ] }) }),
+      /* @__PURE__ */ jsx("div", { className: "absolute bottom-10 left-10 w-32 h-32 rounded-full bg-blue-500/5 blur-3xl" }),
+      /* @__PURE__ */ jsx("div", { className: "absolute top-10 right-10 w-40 h-40 rounded-full bg-cyan-500/5 blur-3xl" })
+    ] }),
+    /* @__PURE__ */ jsx("div", { className: "relative z-10 mx-auto w-full px-4 sm:px-6 lg:px-0 p-15 py-20 rounded-[45px]", children: /* @__PURE__ */ jsx("div", { className: "max-w-7xl mx-auto", children: /* @__PURE__ */ jsx(HeroServices, {}) }) }),
+    /* @__PURE__ */ jsx(WhyChooseUs, {}),
+    /* @__PURE__ */ jsx(ServiceCards, {}),
+    /* @__PURE__ */ jsx(Faq, {}),
+    /* @__PURE__ */ jsx(Footer, {})
+  ] });
+}
+const __vite_glob_0_7 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
+  __proto__: null,
+  default: Home$1
+}, Symbol.toStringTag, { value: "Module" }));
+function PageHeader() {
+  const waHref = "https://wa.me/441234567890";
+  const waNumber = "0330 113 1333";
+  return /* @__PURE__ */ jsx("header", { className: "border border-b-dark/15", children: /* @__PURE__ */ jsx("div", { className: "mx-auto max-w-7xl px-6 sm:px-8 lg:px-10", children: /* @__PURE__ */ jsxs("div", { className: "flex h-[75px] items-center justify-between", children: [
+    /* @__PURE__ */ jsxs(
+      Link,
+      {
+        href: "/",
+        className: "flex items-center gap-3",
+        "aria-label": "MD Gas home",
+        children: [
           /* @__PURE__ */ jsx(
             "div",
             {
-              className: cn(
-                "flex h-10 w-10 items-center justify-center rounded-full border-2 transition-all duration-300",
-                isCompleted ? "border-primary bg-primary text-primary-foreground" : isCurrent ? "border-primary bg-background text-primary shadow-md shadow-primary/20" : "border-border bg-background text-muted-foreground"
-              ),
-              children: isCompleted ? /* @__PURE__ */ jsx(Check, { className: "h-5 w-5" }) : /* @__PURE__ */ jsx("span", { className: "text-sm font-semibold", children: index + 1 })
+              className: "h-10 w-10 rounded-md flex items-center justify-center shadow-sm",
+              style: { backgroundColor: "var(--primary)" },
+              children: /* @__PURE__ */ jsx(Flame, { className: "h-5 w-5 text-light-background" })
+            }
+          ),
+          /* @__PURE__ */ jsx("div", { children: /* @__PURE__ */ jsx("span", { className: "text-sm font-semibold text-dark leading-none", children: "MD Gas" }) })
+        ]
+      }
+    ),
+    /* @__PURE__ */ jsxs(
+      "a",
+      {
+        href: waHref,
+        target: "_blank",
+        rel: "noopener noreferrer",
+        className: "slim-bar relative inline-flex items-center rounded-md px-3 pr-8 py-1.5 gap-3 focus:outline-none focus-visible:ring-2 focus-visible:ring-[rgba(0,103,255,0.16)]",
+        "aria-label": `Chat on WhatsApp ${waNumber}`,
+        children: [
+          /* @__PURE__ */ jsx(
+            "span",
+            {
+              className: "icon-square inline-flex items-center justify-center h-8 w-8 rounded-sm",
+              style: {
+                background: "rgba(0,103,255,0.06)",
+                border: "1px solid rgba(0,103,255,0.06)"
+              },
+              children: /* @__PURE__ */ jsx(MessageSquare, { className: "h-4 w-4 text-primary" })
+            }
+          ),
+          /* @__PURE__ */ jsx("span", { className: "divider hidden sm:block", "aria-hidden": true }),
+          /* @__PURE__ */ jsx("span", { className: "hidden sm:block text-xs text-dark", children: "Chat" }),
+          /* @__PURE__ */ jsx("span", { className: "text-sm font-bold text-dark", children: waNumber }),
+          /* @__PURE__ */ jsx(
+            "span",
+            {
+              className: "chev hidden sm:inline-flex items-center justify-center h-6 w-6 rounded-sm",
+              "aria-hidden": true,
+              children: /* @__PURE__ */ jsx(ChevronRight, { className: "h-4 w-4 text-dark" })
             }
           ),
           /* @__PURE__ */ jsx(
             "span",
             {
-              className: cn(
-                "mt-2 text-xs font-medium transition-colors duration-300",
-                isCompleted || isCurrent ? "text-foreground" : "text-muted-foreground"
-              ),
-              children: step
+              className: "status-blink",
+              "aria-hidden": "true",
+              title: "Online"
             }
           )
-        ] }, step);
-      }) })
-    ] }) }),
-    /* @__PURE__ */ jsxs("div", { className: "sm:hidden", children: [
-      /* @__PURE__ */ jsxs("div", { className: "flex items-center justify-between mb-2", children: [
-        /* @__PURE__ */ jsxs("span", { className: "text-sm font-medium text-foreground", children: [
-          "Step ",
-          currentStep + 1,
-          " of ",
-          steps2.length
-        ] }),
-        /* @__PURE__ */ jsx("span", { className: "text-sm font-medium text-primary", children: steps2[currentStep] })
-      ] }),
-      /* @__PURE__ */ jsx("div", { className: "h-2 w-full rounded-full bg-muted overflow-hidden", children: /* @__PURE__ */ jsx(
-        "div",
-        {
-          className: "h-full rounded-full bg-primary transition-all duration-500 ease-out",
-          style: {
-            width: `${(currentStep + 1) / steps2.length * 100}%`
-          }
-        }
-      ) }),
-      /* @__PURE__ */ jsx("div", { className: "mt-2 flex justify-between text-xs text-muted-foreground", children: steps2.map((step, index) => /* @__PURE__ */ jsx(
-        "span",
-        {
-          className: cn("transition-colors duration-300", index <= currentStep && "text-primary font-medium"),
-          children: index + 1
-        },
-        step
-      )) })
-    ] })
-  ] });
+        ]
+      }
+    )
+  ] }) }) });
 }
-function Input({ className, type, ...props }) {
-  return /* @__PURE__ */ jsx(
-    "input",
-    {
-      type,
-      "data-slot": "input",
-      className: cn(
-        "file:text-foreground placeholder:text-muted-foreground selection:bg-primary selection:text-primary-foreground dark:bg-input/30 border-input h-9 w-full min-w-0 rounded-md border bg-transparent px-3 py-1 text-base shadow-xs transition-[color,box-shadow] outline-none file:inline-flex file:h-7 file:border-0 file:bg-transparent file:text-sm file:font-medium disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50 md:text-sm",
-        "focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px]",
-        "aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive",
-        className
-      ),
-      ...props
-    }
-  );
-}
-function Label({
-  className,
-  ...props
+function Stepper({
+  title = "Boiler Repair Quote",
+  steps = [],
+  basePrice = 0,
+  currency = "£",
+  onSubmit
 }) {
-  return /* @__PURE__ */ jsx(
-    LabelPrimitive.Root,
-    {
-      "data-slot": "label",
-      className: cn(
-        "flex items-center gap-2 text-sm leading-none font-medium select-none group-data-[disabled=true]:pointer-events-none group-data-[disabled=true]:opacity-50 peer-disabled:cursor-not-allowed peer-disabled:opacity-50",
-        className
-      ),
-      ...props
-    }
+  const [index, setIndex] = useState(0);
+  const [answers, setAnswers] = useState({});
+  const current = steps[index] || null;
+  const displayOptions = useMemo(() => {
+    if (!current?.options) return [];
+    return current.options.map(
+      (opt) => typeof opt === "string" ? { label: opt, price: 0 } : { label: opt.label, price: opt.price || 0 }
+    );
+  }, [current]);
+  const answeredCount = Object.keys(answers).length;
+  const progress = Math.round(
+    answeredCount / Math.max(1, steps.length) * 100
   );
-}
-function Textarea({ className, ...props }) {
-  return /* @__PURE__ */ jsx(
-    "textarea",
-    {
-      "data-slot": "textarea",
-      className: cn(
-        "border-input placeholder:text-muted-foreground focus-visible:border-ring focus-visible:ring-ring/50 aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive dark:bg-input/30 flex field-sizing-content min-h-16 w-full rounded-md border bg-transparent px-3 py-2 text-base shadow-xs transition-[color,box-shadow] outline-none focus-visible:ring-[3px] disabled:cursor-not-allowed disabled:opacity-50 md:text-sm",
-        className
-      ),
-      ...props
-    }
-  );
-}
-function FormField({
-  label,
-  name,
-  type = "text",
-  value,
-  onChange,
-  placeholder,
-  error,
-  required,
-  className,
-  ...props
-}) {
-  return /* @__PURE__ */ jsxs("div", { className: cn("space-y-2", className), children: [
-    /* @__PURE__ */ jsxs(Label, { htmlFor: name, className: "text-sm font-medium text-foreground", children: [
-      label,
-      required && /* @__PURE__ */ jsx("span", { className: "text-destructive ml-1", children: "*" })
-    ] }),
-    /* @__PURE__ */ jsx(
-      Input,
-      {
-        id: name,
-        name,
-        type,
-        value,
-        onChange,
-        placeholder,
-        className: cn(error && "border-destructive focus-visible:ring-destructive"),
-        ...props
-      }
-    ),
-    error && /* @__PURE__ */ jsx("p", { className: "text-xs text-destructive", children: error })
-  ] });
-}
-function FormTextarea({
-  label,
-  name,
-  value,
-  onChange,
-  placeholder,
-  error,
-  required,
-  rows = 3,
-  className,
-  ...props
-}) {
-  return /* @__PURE__ */ jsxs("div", { className: cn("space-y-2", className), children: [
-    /* @__PURE__ */ jsxs(Label, { htmlFor: name, className: "text-sm font-medium text-foreground", children: [
-      label,
-      required && /* @__PURE__ */ jsx("span", { className: "text-destructive ml-1", children: "*" })
-    ] }),
-    /* @__PURE__ */ jsx(
-      Textarea,
-      {
-        id: name,
-        name,
-        value,
-        onChange,
-        placeholder,
-        rows,
-        className: cn(error && "border-destructive focus-visible:ring-destructive"),
-        ...props
-      }
-    ),
-    error && /* @__PURE__ */ jsx("p", { className: "text-xs text-destructive", children: error })
-  ] });
-}
-function RadioGroupField({ label, name, value, onChange, options, error, required, className }) {
-  return /* @__PURE__ */ jsxs("div", { className: cn("space-y-3", className), children: [
-    /* @__PURE__ */ jsxs(Label, { className: "text-sm font-medium text-foreground", children: [
-      label,
-      required && /* @__PURE__ */ jsx("span", { className: "text-destructive ml-1", children: "*" })
-    ] }),
-    /* @__PURE__ */ jsx("div", { className: "flex flex-wrap gap-2", children: options.map((option) => /* @__PURE__ */ jsx(
-      "button",
-      {
-        type: "button",
-        onClick: () => onChange(option.value),
-        className: cn(
-          "rounded-lg border-2 px-4 py-2.5 text-sm font-medium transition-all",
-          value === option.value ? "border-primary bg-primary/10 text-primary" : "border-border bg-background text-foreground hover:border-primary/50 hover:bg-muted/50"
-        ),
-        children: option.label
-      },
-      option.value
-    )) }),
-    error && /* @__PURE__ */ jsx("p", { className: "text-xs text-destructive", children: error })
-  ] });
-}
-const steps$3 = ["Radiator Count", "System Info", "Your Details", "Schedule"];
-const radiatorOptions = [
-  { value: "5-or-less", label: "≤5 radiators", price: 400 },
-  { value: "6-8", label: "6-8 radiators", price: 500 },
-  { value: "9-12", label: "9-12 radiators", price: 600 },
-  { value: "13-15", label: "13-15 radiators", price: 700 },
-  { value: "16-20", label: "16-20 radiators", price: 800 },
-  { value: "21-plus", label: "21+ radiators", price: 900 }
-];
-const systemTypes = [
-  { value: "combi", label: "Combi" },
-  { value: "system", label: "System" },
-  { value: "heat-only", label: "Heat Only" }
-];
-const flushHistory = [
-  { value: "never", label: "Never" },
-  { value: "1-3-years", label: "1-3 years ago" },
-  { value: "3-5-years", label: "3-5 years ago" },
-  { value: "5-plus-years", label: "5+ years ago" }
-];
-const accessOptions$1 = [
-  { value: "easy", label: "Easy access" },
-  { value: "tight", label: "Tight space" },
-  { value: "loft", label: "Loft" }
-];
-function PowerFlushPage() {
-  const { props } = usePage();
-  const pageTitle2 = props.pageTitle ?? "Book Power Flush";
-  const [currentStep, setCurrentStep] = useState(0);
-  const [isSubmitted, setIsSubmitted] = useState(false);
-  const [formData, setFormData] = useState({
-    radiatorCount: "",
-    systemType: "",
-    coldSpots: "",
-    sludgeWater: "",
-    previousFlush: "",
-    leaksPresent: "",
-    accessType: "",
-    name: "",
-    phone: "",
-    email: "",
-    postcode: "",
-    preferredDate: ""
-  });
-  const [errors, setErrors] = useState({});
-  const updateField = (field, value) => {
-    setFormData((prev) => ({ ...prev, [field]: value }));
-    if (errors[field]) setErrors((prev) => ({ ...prev, [field]: null }));
-  };
-  const selectedPrice = useMemo(() => {
-    const option = radiatorOptions.find((opt) => opt.value === formData.radiatorCount);
-    return option ? option.price : null;
-  }, [formData.radiatorCount]);
-  const validateStep = (step) => {
-    const newErrors = {};
-    if (step === 0 && !formData.radiatorCount)
-      newErrors.radiatorCount = "Please select radiator count";
-    if (step === 1) {
-      if (!formData.systemType) newErrors.systemType = "Please select system type";
-      if (!formData.coldSpots) newErrors.coldSpots = "This field is required";
-      if (!formData.sludgeWater) newErrors.sludgeWater = "This field is required";
-      if (!formData.previousFlush) newErrors.previousFlush = "Please select an option";
-      if (!formData.leaksPresent) newErrors.leaksPresent = "This field is required";
-      if (!formData.accessType) newErrors.accessType = "Select access type";
-    }
-    if (step === 2) {
-      if (!formData.name) newErrors.name = "Enter name";
-      if (!formData.phone) newErrors.phone = "Enter phone";
-      if (!formData.email) newErrors.email = "Enter email";
-      if (!formData.postcode) newErrors.postcode = "Enter postcode";
-    }
-    if (step === 3 && !formData.preferredDate)
-      newErrors.preferredDate = "Choose a date";
-    setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
-  };
-  const nextStep = () => {
-    if (validateStep(currentStep)) {
-      setCurrentStep((prev) => prev + 1);
-      window.scrollTo({ top: 0, behavior: "smooth" });
-    }
-  };
-  const prevStep = () => {
-    setCurrentStep((prev) => prev - 1);
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  };
-  const handleSubmit = () => {
-    if (!validateStep(currentStep)) return;
-    console.log("Power flush form submitted:", formData, "Price:", selectedPrice);
-    setIsSubmitted(true);
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  };
-  if (isSubmitted) {
-    return /* @__PURE__ */ jsxs("div", { className: "min-h-screen bg-background", children: [
-      /* @__PURE__ */ jsx(PageHeader, { title: "Booking Confirmed" }),
-      /* @__PURE__ */ jsx("div", { className: "mx-auto max-w-2xl px-4 py-16", children: /* @__PURE__ */ jsx(Card, { className: "text-center", children: /* @__PURE__ */ jsxs(CardContent, { className: "pt-12 pb-8", children: [
-        /* @__PURE__ */ jsx("div", { className: "mx-auto mb-6 flex h-20 w-20 items-center justify-center rounded-full bg-green-100", children: /* @__PURE__ */ jsx(CheckCircle2, { className: "h-10 w-10 text-green-600" }) }),
-        /* @__PURE__ */ jsx("h1", { className: "text-2xl font-bold mb-3", children: "Power Flush Booked!" }),
-        /* @__PURE__ */ jsx("p", { className: "text-muted-foreground mb-8", children: "We will contact you shortly to confirm your appointment." }),
-        /* @__PURE__ */ jsxs("div", { className: "rounded-lg bg-muted/50 p-4 mb-8 text-left", children: [
-          /* @__PURE__ */ jsx("h3", { className: "font-semibold mb-2", children: "Booking Summary" }),
-          /* @__PURE__ */ jsxs("p", { children: [
-            /* @__PURE__ */ jsx("strong", { children: "Service:" }),
-            " Power Flush"
-          ] }),
-          /* @__PURE__ */ jsxs("p", { children: [
-            /* @__PURE__ */ jsx("strong", { children: "Date:" }),
-            " ",
-            formData.preferredDate
-          ] }),
-          /* @__PURE__ */ jsxs("p", { children: [
-            /* @__PURE__ */ jsx("strong", { children: "Cost:" }),
-            " £",
-            selectedPrice,
-            formData.radiatorCount === "21-plus" ? "+" : ""
-          ] })
-        ] }),
-        /* @__PURE__ */ jsx(Button, { onClick: () => router.visit("/"), className: "gap-2", children: "Return Home" })
-      ] }) }) })
-    ] });
+  const ICONS = [FiHome, FiTool, FiClock, FiStar];
+  function choose(option) {
+    if (!current) return;
+    setAnswers((s) => ({ ...s, [current.id]: option }));
   }
-  return /* @__PURE__ */ jsxs("div", { className: "min-h-screen bg-background", children: [
-    /* @__PURE__ */ jsx(PageHeader, { title: pageTitle2 }),
-    /* @__PURE__ */ jsxs("div", { className: "mx-auto max-w-3xl px-4 py-8", children: [
-      /* @__PURE__ */ jsxs("div", { className: "mb-8 text-center", children: [
-        /* @__PURE__ */ jsx("div", { className: "inline-flex h-14 w-14 items-center justify-center rounded-full bg-primary/10 mb-4", children: /* @__PURE__ */ jsx(Droplets, { className: "h-7 w-7 text-primary" }) }),
-        /* @__PURE__ */ jsx("h1", { className: "text-2xl font-bold", children: "Book a Power Flush" }),
-        /* @__PURE__ */ jsx("p", { className: "text-muted-foreground", children: "Restore system efficiency" })
-      ] }),
-      /* @__PURE__ */ jsx(FormStepper, { steps: steps$3, currentStep, className: "mb-10" }),
-      /* @__PURE__ */ jsx(Card, { children: /* @__PURE__ */ jsxs(CardContent, { className: "p-6 sm:p-8", children: [
-        currentStep === 0 && /* @__PURE__ */ jsxs("div", { className: "space-y-6", children: [
-          /* @__PURE__ */ jsx("h2", { className: "text-lg font-semibold", children: "Select Radiator Count" }),
-          /* @__PURE__ */ jsx("div", { className: "grid grid-cols-2 gap-3 sm:grid-cols-3", children: radiatorOptions.map((option) => /* @__PURE__ */ jsxs(
-            "button",
-            {
-              type: "button",
-              onClick: () => updateField("radiatorCount", option.value),
-              className: `rounded-xl border-2 p-4 transition-all ${formData.radiatorCount === option.value ? "border-primary bg-primary/5 shadow-md" : "border-border hover:border-primary/50"}`,
-              children: [
-                /* @__PURE__ */ jsx("div", { className: "text-sm font-medium", children: option.label }),
-                /* @__PURE__ */ jsxs("div", { className: "mt-2 text-xl font-bold text-primary", children: [
-                  "£",
-                  option.price,
-                  option.value === "21-plus" && "+"
-                ] })
-              ]
-            },
-            option.value
-          )) }),
-          selectedPrice && /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-4 rounded-xl bg-primary/10 p-5", children: [
-            /* @__PURE__ */ jsx(Droplets, { className: "h-10 w-10 text-primary" }),
-            /* @__PURE__ */ jsxs("div", { children: [
-              /* @__PURE__ */ jsx("p", { className: "text-sm text-muted-foreground", children: "Your Price" }),
-              /* @__PURE__ */ jsxs("p", { className: "text-2xl font-bold text-primary", children: [
-                "£",
-                selectedPrice,
-                formData.radiatorCount === "21-plus" && "+"
-              ] })
-            ] })
-          ] })
-        ] }),
-        currentStep === 1 && /* @__PURE__ */ jsxs("div", { className: "space-y-6", children: [
-          /* @__PURE__ */ jsx("h2", { className: "text-lg font-semibold", children: "System Information" }),
-          /* @__PURE__ */ jsx(
-            RadioGroupField,
-            {
-              label: "System Type",
-              name: "systemType",
-              value: formData.systemType,
-              onChange: (v) => updateField("systemType", v),
-              options: systemTypes,
-              error: errors.systemType,
-              required: true
-            }
-          ),
-          /* @__PURE__ */ jsx(
-            RadioGroupField,
-            {
-              label: "Cold spots in radiators?",
-              name: "coldSpots",
-              value: formData.coldSpots,
-              onChange: (v) => updateField("coldSpots", v),
-              options: [
-                { value: "yes", label: "Yes" },
-                { value: "no", label: "No" }
-              ],
-              error: errors.coldSpots,
-              required: true
-            }
-          ),
-          /* @__PURE__ */ jsx(
-            RadioGroupField,
-            {
-              label: "Sludge/dirty water?",
-              name: "sludgeWater",
-              value: formData.sludgeWater,
-              onChange: (v) => updateField("sludgeWater", v),
-              options: [
-                { value: "yes", label: "Yes" },
-                { value: "no", label: "No" }
-              ],
-              error: errors.sludgeWater,
-              required: true
-            }
-          ),
-          /* @__PURE__ */ jsx(
-            RadioGroupField,
-            {
-              label: "Previous Flush",
-              name: "previousFlush",
-              value: formData.previousFlush,
-              onChange: (v) => updateField("previousFlush", v),
-              options: flushHistory,
-              error: errors.previousFlush,
-              required: true
-            }
-          ),
-          /* @__PURE__ */ jsx(
-            RadioGroupField,
-            {
-              label: "Any leaks present?",
-              name: "leaksPresent",
-              value: formData.leaksPresent,
-              onChange: (v) => updateField("leaksPresent", v),
-              options: [
-                { value: "yes", label: "Yes" },
-                { value: "no", label: "No" }
-              ],
-              error: errors.leaksPresent,
-              required: true
-            }
-          ),
-          /* @__PURE__ */ jsx(
-            RadioGroupField,
-            {
-              label: "Access Type",
-              name: "accessType",
-              value: formData.accessType,
-              onChange: (v) => updateField("accessType", v),
-              options: accessOptions$1,
-              error: errors.accessType,
-              required: true
-            }
-          )
-        ] }),
-        currentStep === 2 && /* @__PURE__ */ jsxs("div", { className: "space-y-6", children: [
-          /* @__PURE__ */ jsx("h2", { className: "text-lg font-semibold", children: "Your Details" }),
-          /* @__PURE__ */ jsx(
-            FormField,
-            {
-              label: "Full Name",
-              value: formData.name,
-              onChange: (e) => updateField("name", e.target.value),
-              error: errors.name,
-              required: true
-            }
-          ),
-          /* @__PURE__ */ jsxs("div", { className: "grid gap-4 sm:grid-cols-2", children: [
-            /* @__PURE__ */ jsx(
-              FormField,
-              {
-                label: "Phone",
-                value: formData.phone,
-                onChange: (e) => updateField("phone", e.target.value),
-                error: errors.phone,
-                required: true
-              }
-            ),
-            /* @__PURE__ */ jsx(
-              FormField,
-              {
-                label: "Email",
-                value: formData.email,
-                onChange: (e) => updateField("email", e.target.value),
-                error: errors.email,
-                required: true
-              }
-            )
-          ] }),
-          /* @__PURE__ */ jsx(
-            FormField,
-            {
-              label: "Postcode",
-              value: formData.postcode,
-              onChange: (e) => updateField("postcode", e.target.value),
-              error: errors.postcode,
-              required: true
-            }
-          )
-        ] }),
-        currentStep === 3 && /* @__PURE__ */ jsxs("div", { className: "space-y-6", children: [
-          /* @__PURE__ */ jsx("h2", { className: "text-lg font-semibold", children: "Schedule Your Visit" }),
-          /* @__PURE__ */ jsx(Label, { children: "Preferred Date *" }),
-          /* @__PURE__ */ jsx(
-            Input,
-            {
-              type: "date",
-              value: formData.preferredDate,
-              onChange: (e) => updateField("preferredDate", e.target.value),
-              min: (/* @__PURE__ */ new Date()).toISOString().split("T")[0],
-              className: errors.preferredDate ? "border-destructive" : ""
-            }
-          ),
-          errors.preferredDate && /* @__PURE__ */ jsx("p", { className: "text-xs text-destructive", children: errors.preferredDate }),
-          /* @__PURE__ */ jsxs("div", { className: "rounded-xl border border-primary p-6 bg-primary/5", children: [
-            /* @__PURE__ */ jsx("h4", { className: "font-semibold", children: "Estimated Cost" }),
-            /* @__PURE__ */ jsxs("p", { className: "mt-2 text-3xl font-bold text-primary", children: [
-              "£",
-              selectedPrice,
-              formData.radiatorCount === "21-plus" && "+"
-            ] })
-          ] })
-        ] }),
-        /* @__PURE__ */ jsxs("div", { className: "mt-8 flex justify-between gap-4 pt-6 border-t", children: [
-          currentStep > 0 ? /* @__PURE__ */ jsxs(Button, { variant: "outline", onClick: prevStep, children: [
-            /* @__PURE__ */ jsx(ArrowLeft, { className: "h-4 w-4" }),
-            "Back"
-          ] }) : /* @__PURE__ */ jsx("div", {}),
-          currentStep < steps$3.length - 1 ? /* @__PURE__ */ jsxs(Button, { onClick: nextStep, children: [
-            "Continue",
-            /* @__PURE__ */ jsx(ArrowRight, { className: "h-4 w-4" })
-          ] }) : /* @__PURE__ */ jsx(Button, { size: "lg", onClick: handleSubmit, children: "Submit Booking" })
-        ] })
-      ] }) })
-    ] })
-  ] });
-}
-const __vite_glob_0_7 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
-  __proto__: null,
-  default: PowerFlushPage
-}, Symbol.toStringTag, { value: "Module" }));
-const steps$2 = ["Boiler Type", "System Details", "Add-ons", "Your Details"];
-const pageTitle = "Get a Quote ";
-const boilerTypes$2 = [
-  {
-    value: "combi",
-    label: "Combi Boiler",
-    description: "Best for smaller homes with up to 20 radiators",
-    image: "/images/baxi-20-20any.webp"
-  },
-  {
-    value: "system",
-    label: "System Boiler",
-    description: "Great for larger homes with higher hot water demand",
-    image: "/images/ideal-20atlantic.webp"
-  },
-  {
-    value: "heat-only",
-    label: "Heat Only",
-    description: "Traditional setup with separate hot water cylinder",
-    image: "/images/ideal-20logic.png"
+  function next() {
+    if (!answers[current?.id]) return;
+    setIndex((i) => Math.min(steps.length - 1, i + 1));
   }
-];
-const addOnImages = {
-  verticalFlue: "/images/vertical-20flue-20option.png",
-  trv: "/images/trv-20upgrade.png",
-  smartThermostat: "/images/smart-20thermostat-20upgrade.jpg",
-  filter: "/images/standard-20included-20filter.webp"
-};
-function QuotePage() {
-  const [currentStep, setCurrentStep] = useState(0);
-  const [isSubmitted, setIsSubmitted] = useState(false);
-  const [formData, setFormData] = useState({
-    boilerType: "",
-    radiatorRange: "",
-    bathrooms: "",
-    flueType: "horizontal",
-    trvRequired: "no",
-    trvCount: 0,
-    thermostat: "basic",
-    name: "",
-    phone: "",
-    email: "",
-    postcode: ""
-  });
-  const [errors, setErrors] = useState({});
-  const updateField = (field, value) => {
-    setFormData((prev) => ({ ...prev, [field]: value }));
-    if (errors[field]) {
-      setErrors((prev) => ({ ...prev, [field]: null }));
-    }
-  };
-  const radiatorOptions2 = useMemo(() => {
-    const baseOptions = [
-      { value: "up-to-6", label: "Up to 6" },
-      { value: "7-12", label: "7-12" },
-      { value: "13-20", label: "13-20" }
-    ];
-    if (formData.boilerType !== "combi") {
-      baseOptions.push({ value: "21-plus", label: "21+" });
-    }
-    return baseOptions;
-  }, [formData.boilerType]);
-  const bathroomOptions = useMemo(() => {
-    const baseOptions = [
-      { value: "1", label: "1" },
-      { value: "1.5", label: "1.5" },
-      { value: "2", label: "2" }
-    ];
-    if (formData.boilerType !== "combi") {
-      baseOptions.push({ value: "3-plus", label: "3+" });
-    }
-    return baseOptions;
-  }, [formData.boilerType]);
-  const priceBreakdown = useMemo(() => {
-    const items = [];
-    let total = 0;
-    if (!formData.boilerType || !formData.radiatorRange) {
-      return { items: [], total: 0 };
-    }
-    if (formData.boilerType === "combi") {
-      let basePrice = 2200;
-      if (formData.radiatorRange === "7-12") basePrice = 2500;
-      if (formData.radiatorRange === "13-20") basePrice = 2800;
-      items.push({ label: `Combi Boiler (${formData.radiatorRange} rads)`, price: basePrice });
-      total = basePrice;
-    } else {
-      const basePrice = 2750;
-      items.push({
-        label: `${formData.boilerType === "system" ? "System" : "Heat Only"} Boiler`,
-        price: basePrice
-      });
-      total = basePrice;
-      if (formData.flueType === "vertical") {
-        items.push({ label: "Vertical Flue", price: 150 });
-        total += 150;
-      }
-      if (formData.trvRequired === "yes" && formData.trvCount > 0) {
-        const trvCost = formData.trvCount * 25;
-        items.push({ label: `TRVs x${formData.trvCount}`, price: trvCost });
-        total += trvCost;
-      }
-      if (formData.thermostat === "smart") {
-        items.push({ label: "Smart Thermostat", price: 100 });
-        total += 100;
-      }
-    }
-    return { items, total };
-  }, [formData]);
-  const validateStep = (step) => {
-    const newErrors = {};
-    if (step === 0 && !formData.boilerType) newErrors.boilerType = "Please select a boiler type";
-    if (step === 1) {
-      if (!formData.radiatorRange) newErrors.radiatorRange = "Required";
-      if (!formData.bathrooms) newErrors.bathrooms = "Required";
-    }
-    if (step === 3) {
-      if (!formData.name) newErrors.name = "Required";
-      if (!formData.phone) newErrors.phone = "Required";
-      if (!formData.email) newErrors.email = "Required";
-      if (!formData.postcode) newErrors.postcode = "Required";
-    }
-    setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
-  };
-  const nextStep = () => {
-    if (validateStep(currentStep)) {
-      if (currentStep === 1 && formData.boilerType === "combi") {
-        setCurrentStep(3);
-      } else {
-        setCurrentStep((prev) => prev + 1);
-      }
-      window.scrollTo({ top: 0, behavior: "smooth" });
-    }
-  };
-  const prevStep = () => {
-    if (currentStep === 3 && formData.boilerType === "combi") {
-      setCurrentStep(1);
-    } else {
-      setCurrentStep((prev) => Math.max(prev - 1, 0));
-    }
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  };
-  const handleSubmit = () => {
-    if (validateStep(currentStep)) {
-      setIsSubmitted(true);
-      window.scrollTo({ top: 0, behavior: "smooth" });
-    }
-  };
-  if (isSubmitted) {
-    return /* @__PURE__ */ jsxs(Fragment, { children: [
-      /* @__PURE__ */ jsx(Head, { title: "Quote Submitted" }),
-      /* @__PURE__ */ jsxs("div", { className: "min-h-screen bg-background pb-20", children: [
-        /* @__PURE__ */ jsx(PageHeader, { title: "Quote Submitted" }),
-        /* @__PURE__ */ jsx("div", { className: "mx-auto max-w-2xl px-4 py-16", children: /* @__PURE__ */ jsx(Card, { className: "text-center", children: /* @__PURE__ */ jsxs(CardContent, { className: "pt-12 pb-8", children: [
-          /* @__PURE__ */ jsx("div", { className: "mx-auto mb-6 flex h-20 w-20 items-center justify-center rounded-full bg-green-100", children: /* @__PURE__ */ jsx(CheckCircle2, { className: "h-10 w-10 text-green-600" }) }),
-          /* @__PURE__ */ jsx("h1", { className: "text-2xl font-bold mb-3", children: "Quote Submitted!" }),
-          /* @__PURE__ */ jsxs("div", { className: "rounded-lg bg-primary/5 border-2 border-primary p-6 mb-8", children: [
-            /* @__PURE__ */ jsx("p", { className: "text-sm text-muted-foreground mb-1", children: "Your Estimated Quote" }),
-            /* @__PURE__ */ jsxs("p", { className: "text-4xl font-bold text-primary", children: [
-              "£",
-              priceBreakdown.total.toLocaleString()
-            ] })
-          ] })
-        ] }) }) })
-      ] })
-    ] });
+  function back() {
+    setIndex((i) => Math.max(0, i - 1));
   }
+  function restart() {
+    setIndex(0);
+    setAnswers({});
+  }
+  const pricing = useMemo(() => {
+    let extras = 0;
+    Object.values(answers).forEach((opt) => {
+      if (opt?.price) extras += opt.price;
+    });
+    return {
+      base: basePrice,
+      extras,
+      total: basePrice + extras
+    };
+  }, [answers, basePrice]);
   return /* @__PURE__ */ jsxs(Fragment, { children: [
-    /* @__PURE__ */ jsx(Head, { title: pageTitle }),
-    /* @__PURE__ */ jsxs("div", { className: "min-h-screen bg-background", children: [
-      /* @__PURE__ */ jsx(PageHeader, { title: pageTitle }),
-      /* @__PURE__ */ jsxs("div", { className: "mx-auto max-w-5xl px-4 py-8 sm:px-6 lg:px-8", children: [
-        /* @__PURE__ */ jsxs("div", { className: "mb-8 text-center", children: [
-          /* @__PURE__ */ jsx("div", { className: "inline-flex items-center justify-center h-14 w-14 rounded-full bg-primary/10 mb-4", children: /* @__PURE__ */ jsx(FileText, { className: "h-7 w-7 text-primary" }) }),
-          /* @__PURE__ */ jsx("h1", { className: "text-2xl font-bold text-foreground sm:text-3xl", children: "Get Your Instant Quote" }),
-          /* @__PURE__ */ jsx("p", { className: "mt-2 text-muted-foreground", children: "Competitive pricing with transparent breakdown" })
+    /* @__PURE__ */ jsx("div", { className: "fixed inset-0 bg-light-grey -z-10" }),
+    /* @__PURE__ */ jsxs("div", { className: "min-h-screen bg-light-grey", children: [
+      /* @__PURE__ */ jsx(PageHeader, {}),
+      /* @__PURE__ */ jsxs("div", { className: "max-w-7xl mx-auto space-y-10 py-16 px-4 sm:px-6 lg:px-0", children: [
+        /* @__PURE__ */ jsxs("div", { className: "relative flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6", children: [
+          /* @__PURE__ */ jsxs("div", { children: [
+            /* @__PURE__ */ jsx("h1", { className: "text-4xl font-extrabold text-dark tracking-tight", children: title }),
+            /* @__PURE__ */ jsx("p", { className: "mt-2 max-w-xl text-sm text-muted-foreground", children: "Answer a few quick questions to get a clear, fixed-price estimate." })
+          ] }),
+          /* @__PURE__ */ jsxs("div", { className: "group relative flex items-center gap-4 px-5 py-3 rounded-2xl bg-white border border-primary/50 shadow-sm overflow-hidden", children: [
+            /* @__PURE__ */ jsx("span", { className: "absolute left-0 top-0 h-full w-[3px] bg-gradient-to-b from-primary to-dark/90" }),
+            /* @__PURE__ */ jsx("div", { className: "flex items-center justify-center w-9 h-9 rounded-lg bg-primary/80 text-foreground shrink-0", children: /* @__PURE__ */ jsxs(
+              "svg",
+              {
+                width: "18",
+                height: "18",
+                viewBox: "0 0 24 24",
+                fill: "none",
+                stroke: "currentColor",
+                strokeWidth: "2",
+                children: [
+                  /* @__PURE__ */ jsx("path", { d: "M12 2l7 4v6c0 5-3.5 9-7 10-3.5-1-7-5-7-10V6l7-4z" }),
+                  /* @__PURE__ */ jsx("path", { d: "M9 12l2 2 4-4" })
+                ]
+              }
+            ) }),
+            /* @__PURE__ */ jsxs("div", { className: "leading-tight", children: [
+              /* @__PURE__ */ jsx("p", { className: "text-[11px] uppercase tracking-wide text-muted-foreground", children: "Certified Engineers" }),
+              /* @__PURE__ */ jsx("p", { className: "text-sm font-semibold text-dark", children: "Gas Safe Registered" })
+            ] })
+          ] })
         ] }),
-        /* @__PURE__ */ jsx(FormStepper, { steps: steps$2, currentStep, className: "mb-10" }),
-        /* @__PURE__ */ jsxs("div", { className: "grid gap-6 lg:grid-cols-3", children: [
-          /* @__PURE__ */ jsx(Card, { className: "lg:col-span-2", children: /* @__PURE__ */ jsxs(CardContent, { className: "p-6 sm:p-8", children: [
-            currentStep === 0 && /* @__PURE__ */ jsxs("div", { className: "space-y-6", children: [
-              /* @__PURE__ */ jsxs("div", { children: [
-                /* @__PURE__ */ jsx("h2", { className: "text-lg font-semibold text-foreground mb-1", children: "Select Boiler Type" }),
-                /* @__PURE__ */ jsx("p", { className: "text-sm text-muted-foreground mb-6", children: "Choose the type of boiler you need" })
-              ] }),
-              /* @__PURE__ */ jsx("div", { className: "grid gap-4", children: boilerTypes$2.map((type) => /* @__PURE__ */ jsxs(
+        /* @__PURE__ */ jsxs("div", { className: "grid grid-cols-1 md:grid-cols-12 gap-6 items-stretch", children: [
+          /* @__PURE__ */ jsxs("aside", { className: "md:col-span-4 glass-dark p-8 rounded-3xl overflow-hidden h-full flex flex-col relative", children: [
+            /* @__PURE__ */ jsx("div", { className: "sheen absolute inset-0 pointer-events-none rounded-3xl" }),
+            /* @__PURE__ */ jsxs("div", { className: "flex items-center justify-between mb-6", children: [
+              /* @__PURE__ */ jsx("h3", { className: "text-2xl font-bold text-primary", children: "Why choose us" }),
+              /* @__PURE__ */ jsxs(
                 "button",
                 {
-                  type: "button",
-                  onClick: () => {
-                    updateField("boilerType", type.value);
-                    updateField("radiatorRange", "");
-                    updateField("bathrooms", "");
-                  },
-                  className: `flex items-center gap-4 rounded-xl border-2 p-4 text-left transition-all ${formData.boilerType === type.value ? "border-primary bg-primary/5" : "border-border hover:border-primary/50"}`,
+                  onClick: restart,
+                  className: "inline-flex items-center gap-2 cursor-pointer text-xs bg-foreground text-dark px-3 py-1.5 rounded-full",
                   children: [
-                    /* @__PURE__ */ jsx("div", { className: "shrink-0 w-20 h-20 rounded-lg bg-muted/50 overflow-hidden", children: /* @__PURE__ */ jsx(
-                      "img",
-                      {
-                        src: type.image,
-                        alt: type.label,
-                        className: "w-full h-full object-contain p-1"
-                      }
-                    ) }),
-                    /* @__PURE__ */ jsxs("div", { className: "flex-1", children: [
-                      /* @__PURE__ */ jsx("p", { className: "font-semibold text-foreground", children: type.label }),
-                      /* @__PURE__ */ jsx("p", { className: "text-sm text-muted-foreground", children: type.description })
-                    ] }),
-                    /* @__PURE__ */ jsx(
-                      "div",
-                      {
-                        className: `flex h-6 w-6 shrink-0 items-center justify-center rounded-full border-2 ${formData.boilerType === type.value ? "border-primary bg-primary" : "border-muted-foreground"}`,
-                        children: formData.boilerType === type.value && /* @__PURE__ */ jsx(Check, { className: "h-4 w-4 text-primary-foreground" })
-                      }
-                    )
+                    /* @__PURE__ */ jsx(FiRefreshCcw, {}),
+                    " Reset"
                   ]
-                },
-                type.value
-              )) }),
-              errors.boilerType && /* @__PURE__ */ jsx("p", { className: "text-xs text-destructive", children: errors.boilerType })
-            ] }),
-            currentStep === 1 && /* @__PURE__ */ jsxs("div", { className: "space-y-6", children: [
-              /* @__PURE__ */ jsxs("div", { children: [
-                /* @__PURE__ */ jsx("h2", { className: "text-lg font-semibold text-foreground mb-1", children: "System Details" }),
-                /* @__PURE__ */ jsx("p", { className: "text-sm text-muted-foreground mb-6", children: "Tell us about your heating system" })
-              ] }),
-              /* @__PURE__ */ jsx(
-                RadioGroupField,
-                {
-                  label: "Number of Radiators",
-                  name: "radiatorRange",
-                  value: formData.radiatorRange,
-                  onChange: (v) => updateField("radiatorRange", v),
-                  options: radiatorOptions2,
-                  error: errors.radiatorRange,
-                  required: true
-                }
-              ),
-              /* @__PURE__ */ jsx(
-                RadioGroupField,
-                {
-                  label: "Number of Bathrooms",
-                  name: "bathrooms",
-                  value: formData.bathrooms,
-                  onChange: (v) => updateField("bathrooms", v),
-                  options: bathroomOptions,
-                  error: errors.bathrooms,
-                  required: true
                 }
               )
             ] }),
-            currentStep === 2 && formData.boilerType !== "combi" && /* @__PURE__ */ jsxs("div", { className: "space-y-6", children: [
-              /* @__PURE__ */ jsxs("div", { children: [
-                /* @__PURE__ */ jsx("h2", { className: "text-lg font-semibold text-foreground mb-1", children: "Optional Add-ons" }),
-                /* @__PURE__ */ jsx("p", { className: "text-sm text-muted-foreground mb-6", children: "Customize your installation" })
+            /* @__PURE__ */ jsxs("ul", { className: "space-y-5 text-sm leading-relaxed text-foreground/90", children: [
+              /* @__PURE__ */ jsx("li", { children: "✓ Certified & trusted engineers" }),
+              /* @__PURE__ */ jsx("li", { children: "✓ Transparent pricing" }),
+              /* @__PURE__ */ jsx("li", { children: "✓ Warranty included" })
+            ] }),
+            /* @__PURE__ */ jsxs("div", { className: "mt-8 rounded-2xl bg-foreground p-4", children: [
+              /* @__PURE__ */ jsx("p", { className: "text-xs uppercase tracking-wide text-muted-foreground", children: "Your price" }),
+              /* @__PURE__ */ jsxs("p", { className: "mt-1 text-3xl font-extrabold text-dark", children: [
+                currency,
+                pricing.total
               ] }),
-              /* @__PURE__ */ jsxs("div", { className: "space-y-3", children: [
-                /* @__PURE__ */ jsx(Label, { className: "text-sm font-medium text-foreground", children: "Flue Type" }),
-                /* @__PURE__ */ jsxs("div", { className: "grid gap-3 sm:grid-cols-2", children: [
-                  /* @__PURE__ */ jsxs(
-                    "button",
-                    {
-                      type: "button",
-                      onClick: () => updateField("flueType", "horizontal"),
-                      className: `flex flex-col items-center gap-3 rounded-xl border-2 p-4 transition-all ${formData.flueType === "horizontal" ? "border-primary bg-primary/5" : "border-border hover:border-primary/50"}`,
-                      children: [
-                        /* @__PURE__ */ jsx("div", { className: "w-16 h-16 rounded-lg bg-muted/50 flex items-center justify-center text-2xl", children: "↔" }),
-                        /* @__PURE__ */ jsxs("div", { className: "text-center", children: [
-                          /* @__PURE__ */ jsx("p", { className: "font-medium text-foreground", children: "Horizontal" }),
-                          /* @__PURE__ */ jsx("p", { className: "text-sm text-primary font-semibold", children: "Included" })
-                        ] })
-                      ]
-                    }
-                  ),
-                  /* @__PURE__ */ jsxs(
-                    "button",
-                    {
-                      type: "button",
-                      onClick: () => updateField("flueType", "vertical"),
-                      className: `flex flex-col items-center gap-3 rounded-xl border-2 p-4 transition-all ${formData.flueType === "vertical" ? "border-primary bg-primary/5" : "border-border hover:border-primary/50"}`,
-                      children: [
-                        /* @__PURE__ */ jsx("div", { className: "w-16 h-16 rounded-lg bg-muted/50 overflow-hidden", children: /* @__PURE__ */ jsx(
-                          "img",
-                          {
-                            src: addOnImages.verticalFlue,
-                            alt: "Vertical Flue",
-                            className: "w-full h-full object-contain"
-                          }
-                        ) }),
-                        /* @__PURE__ */ jsxs("div", { className: "text-center", children: [
-                          /* @__PURE__ */ jsx("p", { className: "font-medium text-foreground", children: "Vertical" }),
-                          /* @__PURE__ */ jsx("p", { className: "text-sm text-primary font-semibold", children: "+£150" })
-                        ] })
-                      ]
-                    }
-                  )
-                ] })
-              ] }),
-              /* @__PURE__ */ jsxs("div", { className: "space-y-3", children: [
-                /* @__PURE__ */ jsx(Label, { className: "text-sm font-medium text-foreground", children: "TRVs Required?" }),
-                /* @__PURE__ */ jsxs("div", { className: "grid gap-3 sm:grid-cols-2", children: [
-                  /* @__PURE__ */ jsxs(
-                    "button",
-                    {
-                      type: "button",
-                      onClick: () => updateField("trvRequired", "no"),
-                      className: `flex flex-col items-center gap-3 rounded-xl border-2 p-4 transition-all ${formData.trvRequired === "no" ? "border-primary bg-primary/5" : "border-border hover:border-primary/50"}`,
-                      children: [
-                        /* @__PURE__ */ jsx("div", { className: "w-16 h-16 rounded-lg bg-muted/50 flex items-center justify-center text-2xl", children: "✕" }),
-                        /* @__PURE__ */ jsxs("div", { className: "text-center", children: [
-                          /* @__PURE__ */ jsx("p", { className: "font-medium text-foreground", children: "No TRVs" }),
-                          /* @__PURE__ */ jsx("p", { className: "text-sm text-muted-foreground", children: "Not required" })
-                        ] })
-                      ]
-                    }
-                  ),
-                  /* @__PURE__ */ jsxs(
-                    "button",
-                    {
-                      type: "button",
-                      onClick: () => updateField("trvRequired", "yes"),
-                      className: `flex flex-col items-center gap-3 rounded-xl border-2 p-4 transition-all ${formData.trvRequired === "yes" ? "border-primary bg-primary/5" : "border-border hover:border-primary/50"}`,
-                      children: [
-                        /* @__PURE__ */ jsx("div", { className: "w-16 h-16 rounded-lg bg-muted/50 overflow-hidden", children: /* @__PURE__ */ jsx(
-                          "img",
-                          {
-                            src: addOnImages.trv,
-                            alt: "TRV Valve",
-                            className: "w-full h-full object-contain"
-                          }
-                        ) }),
-                        /* @__PURE__ */ jsxs("div", { className: "text-center", children: [
-                          /* @__PURE__ */ jsx("p", { className: "font-medium text-foreground", children: "Yes, add TRVs" }),
-                          /* @__PURE__ */ jsx("p", { className: "text-sm text-primary font-semibold", children: "+£25 each" })
-                        ] })
-                      ]
-                    }
-                  )
-                ] })
-              ] }),
-              formData.trvRequired === "yes" && /* @__PURE__ */ jsxs("div", { className: "space-y-2 pl-4 border-l-2 border-primary/20", children: [
-                /* @__PURE__ */ jsx(Label, { className: "text-sm font-medium text-foreground", children: "Number of TRVs (1-13)" }),
-                /* @__PURE__ */ jsx(
-                  Input,
-                  {
-                    type: "number",
-                    min: 1,
-                    max: 13,
-                    value: formData.trvCount || "",
-                    onChange: (e) => updateField(
-                      "trvCount",
-                      Math.min(13, Math.max(0, Number(e.target.value) || 0))
-                    ),
-                    className: "w-32"
-                  }
-                )
-              ] }),
-              /* @__PURE__ */ jsxs("div", { className: "space-y-3", children: [
-                /* @__PURE__ */ jsx(Label, { className: "text-sm font-medium text-foreground", children: "Thermostat" }),
-                /* @__PURE__ */ jsxs("div", { className: "grid gap-3 sm:grid-cols-2", children: [
-                  /* @__PURE__ */ jsxs(
-                    "button",
-                    {
-                      type: "button",
-                      onClick: () => updateField("thermostat", "basic"),
-                      className: `flex flex-col items-center gap-3 rounded-xl border-2 p-4 transition-all ${formData.thermostat === "basic" ? "border-primary bg-primary/5" : "border-border hover:border-primary/50"}`,
-                      children: [
-                        /* @__PURE__ */ jsx("div", { className: "w-16 h-16 rounded-lg bg-muted/50 flex items-center justify-center text-2xl", children: "🌡️" }),
-                        /* @__PURE__ */ jsxs("div", { className: "text-center", children: [
-                          /* @__PURE__ */ jsx("p", { className: "font-medium text-foreground", children: "Basic" }),
-                          /* @__PURE__ */ jsx("p", { className: "text-sm text-primary font-semibold", children: "Included" })
-                        ] })
-                      ]
-                    }
-                  ),
-                  /* @__PURE__ */ jsxs(
-                    "button",
-                    {
-                      type: "button",
-                      onClick: () => updateField("thermostat", "smart"),
-                      className: `flex flex-col items-center gap-3 rounded-xl border-2 p-4 transition-all ${formData.thermostat === "smart" ? "border-primary bg-primary/5" : "border-border hover:border-primary/50"}`,
-                      children: [
-                        /* @__PURE__ */ jsx("div", { className: "w-16 h-16 rounded-lg bg-muted/50 overflow-hidden", children: /* @__PURE__ */ jsx(
-                          "img",
-                          {
-                            src: addOnImages.smartThermostat,
-                            alt: "Smart Thermostat",
-                            className: "w-full h-full object-cover"
-                          }
-                        ) }),
-                        /* @__PURE__ */ jsxs("div", { className: "text-center", children: [
-                          /* @__PURE__ */ jsx("p", { className: "font-medium text-foreground", children: "Smart" }),
-                          /* @__PURE__ */ jsx("p", { className: "text-sm text-primary font-semibold", children: "+£100" })
-                        ] })
-                      ]
-                    }
-                  )
+              /* @__PURE__ */ jsxs("p", { className: "mt-2 text-xs text-muted-foreground", children: [
+                "Base ",
+                currency,
+                pricing.base,
+                pricing.extras > 0 && /* @__PURE__ */ jsxs(Fragment, { children: [
+                  " ",
+                  "• Extras +",
+                  currency,
+                  pricing.extras
                 ] })
               ] })
             ] }),
-            currentStep === 3 && /* @__PURE__ */ jsxs("div", { className: "space-y-6", children: [
-              /* @__PURE__ */ jsxs("div", { children: [
-                /* @__PURE__ */ jsx("h2", { className: "text-lg font-semibold text-foreground mb-1", children: "Your Details" }),
-                /* @__PURE__ */ jsx("p", { className: "text-sm text-muted-foreground mb-6", children: "How can we contact you?" })
-              ] }),
-              /* @__PURE__ */ jsx(
-                FormField,
+            /* @__PURE__ */ jsxs("div", { className: "mt-auto pt-8", children: [
+              /* @__PURE__ */ jsx("div", { className: "text-xs text-foreground/70 mb-2", children: "Progress" }),
+              /* @__PURE__ */ jsx("div", { className: "progress-track w-full rounded-full", children: /* @__PURE__ */ jsx(
+                "div",
                 {
-                  label: "Full Name",
-                  name: "name",
-                  value: formData.name,
-                  onChange: (e) => updateField("name", e.target.value),
-                  placeholder: "John Smith",
-                  error: errors.name,
-                  required: true
+                  className: "progress-fill",
+                  style: { width: `${progress}%` }
                 }
-              ),
-              /* @__PURE__ */ jsxs("div", { className: "grid gap-4 sm:grid-cols-2", children: [
-                /* @__PURE__ */ jsx(
-                  FormField,
+              ) }),
+              /* @__PURE__ */ jsxs("div", { className: "mt-2 text-xs text-foreground/60", children: [
+                answeredCount,
+                "/",
+                steps.length,
+                " answered •",
+                " ",
+                progress,
+                "%"
+              ] })
+            ] })
+          ] }),
+          /* @__PURE__ */ jsx("section", { className: "md:col-span-8 h-full flex", children: /* @__PURE__ */ jsxs("div", { className: "glass-root p-8 rounded-3xl w-full flex flex-col relative", children: [
+            /* @__PURE__ */ jsx("div", { className: "radial-highlight absolute inset-0 pointer-events-none" }),
+            /* @__PURE__ */ jsxs("div", { className: "mb-4 flex items-center justify-between", children: [
+              /* @__PURE__ */ jsx("p", { className: "text-sm text-muted-foreground", children: "Question" }),
+              /* @__PURE__ */ jsxs("p", { className: "text-xs text-muted-foreground", children: [
+                "Step ",
+                index + 1,
+                " of ",
+                steps.length
+              ] })
+            ] }),
+            /* @__PURE__ */ jsx("h2", { className: "text-2xl font-extrabold text-center text-dark mb-8", children: current?.question }),
+            /* @__PURE__ */ jsx("div", { className: "grid grid-cols-1 sm:grid-cols-2 gap-6 max-w-3xl mx-auto w-full", children: displayOptions.map((opt, i) => {
+              const active = answers[current?.id]?.label === opt.label;
+              const Icon = ICONS[i % ICONS.length];
+              return /* @__PURE__ */ jsx(
+                "div",
+                {
+                  className: `option-card ${active ? "option-active sheen" : "option-inactive"}`,
+                  children: /* @__PURE__ */ jsx(
+                    "button",
+                    {
+                      type: "button",
+                      className: "p-4 rounded-2xl w-full cursor-pointer",
+                      onClick: () => choose(opt),
+                      children: /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-6", children: [
+                        /* @__PURE__ */ jsx(
+                          "div",
+                          {
+                            className: `icon-wrap ${active ? "icon-active" : "icon-inactive"}`,
+                            children: /* @__PURE__ */ jsx(Icon, {})
+                          }
+                        ),
+                        /* @__PURE__ */ jsxs("div", { className: "flex-1 flex flex-col items-start", children: [
+                          /* @__PURE__ */ jsx("p", { className: "font-semibold text-dark", children: opt.label }),
+                          /* @__PURE__ */ jsx("p", { className: "text-xs text-muted-foreground mt-0.5", children: active ? "Best choice for quick fix" : "Tap to select" })
+                        ] }),
+                        opt.price > 0 && /* @__PURE__ */ jsxs("span", { className: "text-xs text-muted-foreground", children: [
+                          "+",
+                          currency,
+                          opt.price
+                        ] }),
+                        active && /* @__PURE__ */ jsx(FiCheck, { className: "text-primary text-lg" })
+                      ] })
+                    }
+                  )
+                },
+                opt.label
+              );
+            }) }),
+            /* @__PURE__ */ jsxs("div", { className: "mt-auto pt-10 flex items-center justify-between", children: [
+              /* @__PURE__ */ jsx("p", { className: "text-sm text-muted-foreground", children: answers[current?.id] ? `You chose: ${answers[current.id].label}` : "Please choose an option" }),
+              /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-3", children: [
+                /* @__PURE__ */ jsxs(
+                  "button",
                   {
-                    label: "Phone",
-                    name: "phone",
-                    type: "tel",
-                    value: formData.phone,
-                    onChange: (e) => updateField("phone", e.target.value),
-                    placeholder: "07123 456789",
-                    error: errors.phone,
-                    required: true
+                    onClick: back,
+                    disabled: index === 0,
+                    className: `btn-pill flex gap-1 items-center cursor-pointer ${index === 0 ? "btn-disabled" : ""}`,
+                    children: [
+                      /* @__PURE__ */ jsx(FiChevronLeft, {}),
+                      " Back"
+                    ]
                   }
                 ),
-                /* @__PURE__ */ jsx(
-                  FormField,
+                index < steps.length - 1 ? /* @__PURE__ */ jsxs(
+                  "button",
                   {
-                    label: "Email",
-                    name: "email",
-                    type: "email",
-                    value: formData.email,
-                    onChange: (e) => updateField("email", e.target.value),
-                    placeholder: "john@example.com",
-                    error: errors.email,
-                    required: true
+                    onClick: next,
+                    disabled: !answers[current?.id],
+                    className: `btn-gloss flex gap-1 items-center cursor-pointer ${!answers[current?.id] ? "btn-disabled" : ""}`,
+                    children: [
+                      "Next ",
+                      /* @__PURE__ */ jsx(FiChevronRight, {})
+                    ]
                   }
-                )
-              ] }),
-              /* @__PURE__ */ jsx(
-                FormField,
-                {
-                  label: "Postcode",
-                  name: "postcode",
-                  value: formData.postcode,
-                  onChange: (e) => updateField("postcode", e.target.value),
-                  placeholder: "SW1A 1AA",
-                  error: errors.postcode,
-                  required: true
-                }
-              )
-            ] }),
-            /* @__PURE__ */ jsxs("div", { className: "mt-8 flex justify-between gap-4 pt-6 border-t border-border", children: [
-              currentStep > 0 ? /* @__PURE__ */ jsxs(Button, { variant: "outline", onClick: prevStep, className: "gap-2 bg-transparent", children: [
-                /* @__PURE__ */ jsx(ArrowLeft, { className: "h-4 w-4" }),
-                "Back"
-              ] }) : /* @__PURE__ */ jsx("div", {}),
-              currentStep < steps$2.length - 1 ? /* @__PURE__ */ jsxs(Button, { onClick: nextStep, className: "gap-2", children: [
-                "Continue",
-                /* @__PURE__ */ jsx(ArrowRight, { className: "h-4 w-4" })
-              ] }) : /* @__PURE__ */ jsx(Button, { onClick: handleSubmit, size: "lg", children: "Submit Quote Request" })
-            ] })
-          ] }) }),
-          /* @__PURE__ */ jsx("div", { className: "lg:sticky lg:top-24 lg:self-start", children: /* @__PURE__ */ jsx(Card, { className: "border-2 border-primary/20", children: /* @__PURE__ */ jsxs(CardContent, { className: "p-5", children: [
-            /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-2 mb-4", children: [
-              /* @__PURE__ */ jsx(Calculator, { className: "h-5 w-5 text-primary" }),
-              /* @__PURE__ */ jsx("h3", { className: "font-semibold text-foreground", children: "Live Quote" })
-            ] }),
-            priceBreakdown.total > 0 ? /* @__PURE__ */ jsxs(Fragment, { children: [
-              /* @__PURE__ */ jsx("div", { className: "space-y-3 mb-4", children: priceBreakdown.items.map((item, index) => /* @__PURE__ */ jsxs("div", { className: "flex items-center justify-between text-sm", children: [
-                /* @__PURE__ */ jsxs("span", { className: "flex items-center gap-2 text-muted-foreground", children: [
-                  /* @__PURE__ */ jsx(Check, { className: "h-4 w-4 text-primary shrink-0" }),
-                  /* @__PURE__ */ jsx("span", { children: item.label })
-                ] }),
-                /* @__PURE__ */ jsxs("span", { className: "font-medium text-foreground", children: [
-                  "£",
-                  item.price.toLocaleString()
-                ] })
-              ] }, index)) }),
-              /* @__PURE__ */ jsx("div", { className: "border-t border-border pt-4", children: /* @__PURE__ */ jsxs("div", { className: "flex items-center justify-between", children: [
-                /* @__PURE__ */ jsx("span", { className: "font-semibold text-foreground", children: "Total" }),
-                /* @__PURE__ */ jsxs("span", { className: "text-2xl font-bold text-primary", children: [
-                  "£",
-                  priceBreakdown.total.toLocaleString()
-                ] })
-              ] }) }),
-              /* @__PURE__ */ jsxs("div", { className: "mt-4 pt-4 border-t border-border", children: [
-                /* @__PURE__ */ jsx("p", { className: "text-xs text-muted-foreground mb-3", children: "Included with installation:" }),
-                /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-3 p-2 rounded-lg bg-muted/50", children: [
-                  /* @__PURE__ */ jsx(
-                    "img",
-                    {
-                      src: addOnImages.filter,
-                      alt: "MagnaClean Filter",
-                      className: "w-10 h-10 rounded"
-                    }
-                  ),
-                  /* @__PURE__ */ jsxs("div", { children: [
-                    /* @__PURE__ */ jsx("p", { className: "text-xs font-medium text-foreground", children: "MagnaClean Filter" }),
-                    /* @__PURE__ */ jsx("p", { className: "text-xs text-muted-foreground", children: "System protection included" })
-                  ] })
+                ) : /* @__PURE__ */ jsxs("button", { className: "btn-gloss flex gap-1 items-center cursor-pointer", children: [
+                  "Get Estimate ",
+                  /* @__PURE__ */ jsx(FiCheck, {})
                 ] })
               ] })
-            ] }) : /* @__PURE__ */ jsx("p", { className: "text-sm text-muted-foreground", children: "Select options to see your live quote" })
-          ] }) }) })
+            ] })
+          ] }) })
         ] })
       ] })
     ] })
   ] });
+}
+const STEPS$3 = [
+  {
+    id: "property_type",
+    question: "What type of property is the new boiler for?",
+    options: ["Flat", "House (2–3 bed)", "House (4+ bed)", "Commercial"]
+  },
+  {
+    id: "fuel",
+    question: "Preferred fuel type?",
+    options: ["Mains Gas", "LPG / Propane", "Electric", "Oil"]
+  },
+  {
+    id: "heat_requirements",
+    question: "Do you need central heating + hot water or hot water only?",
+    options: ["Heating + Hot Water", "Hot Water only"]
+  },
+  {
+    id: "budget",
+    question: "Estimated budget for installation?",
+    options: ["Under £1k", "£1k–£2.5k", "£2.5k+"]
+  }
+];
+function NewBoilerQuote() {
+  return /* @__PURE__ */ jsx(Stepper, { title: "New Boiler Quote", steps: STEPS$3 });
 }
 const __vite_glob_0_8 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
   __proto__: null,
-  default: QuotePage
+  default: NewBoilerQuote
 }, Symbol.toStringTag, { value: "Module" }));
-function Select({
-  ...props
-}) {
-  return /* @__PURE__ */ jsx(SelectPrimitive.Root, { "data-slot": "select", ...props });
-}
-function SelectValue({
-  ...props
-}) {
-  return /* @__PURE__ */ jsx(SelectPrimitive.Value, { "data-slot": "select-value", ...props });
-}
-function SelectTrigger({
-  className,
-  size = "default",
-  children,
-  ...props
-}) {
-  return /* @__PURE__ */ jsxs(
-    SelectPrimitive.Trigger,
-    {
-      "data-slot": "select-trigger",
-      "data-size": size,
-      className: cn(
-        "border-input data-[placeholder]:text-muted-foreground [&_svg:not([class*='text-'])]:text-muted-foreground focus-visible:border-ring focus-visible:ring-ring/50 aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive dark:bg-input/30 dark:hover:bg-input/50 flex w-fit items-center justify-between gap-2 rounded-md border bg-transparent px-3 py-2 text-sm whitespace-nowrap shadow-xs transition-[color,box-shadow] outline-none focus-visible:ring-[3px] disabled:cursor-not-allowed disabled:opacity-50 data-[size=default]:h-9 data-[size=sm]:h-8 *:data-[slot=select-value]:line-clamp-1 *:data-[slot=select-value]:flex *:data-[slot=select-value]:items-center *:data-[slot=select-value]:gap-2 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
-        className
-      ),
-      ...props,
-      children: [
-        children,
-        /* @__PURE__ */ jsx(SelectPrimitive.Icon, { asChild: true, children: /* @__PURE__ */ jsx(ChevronDownIcon, { className: "size-4 opacity-50" }) })
-      ]
-    }
-  );
-}
-function SelectContent({
-  className,
-  children,
-  position = "popper",
-  ...props
-}) {
-  return /* @__PURE__ */ jsx(SelectPrimitive.Portal, { children: /* @__PURE__ */ jsxs(
-    SelectPrimitive.Content,
-    {
-      "data-slot": "select-content",
-      className: cn(
-        "bg-popover text-popover-foreground data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 relative z-50 max-h-(--radix-select-content-available-height) min-w-[8rem] origin-(--radix-select-content-transform-origin) overflow-x-hidden overflow-y-auto rounded-md border shadow-md",
-        position === "popper" && "data-[side=bottom]:translate-y-1 data-[side=left]:-translate-x-1 data-[side=right]:translate-x-1 data-[side=top]:-translate-y-1",
-        className
-      ),
-      position,
-      ...props,
-      children: [
-        /* @__PURE__ */ jsx(SelectScrollUpButton, {}),
-        /* @__PURE__ */ jsx(
-          SelectPrimitive.Viewport,
-          {
-            className: cn(
-              "p-1",
-              position === "popper" && "h-[var(--radix-select-trigger-height)] w-full min-w-[var(--radix-select-trigger-width)] scroll-my-1"
-            ),
-            children
-          }
-        ),
-        /* @__PURE__ */ jsx(SelectScrollDownButton, {})
-      ]
-    }
-  ) });
-}
-function SelectItem({
-  className,
-  children,
-  ...props
-}) {
-  return /* @__PURE__ */ jsxs(
-    SelectPrimitive.Item,
-    {
-      "data-slot": "select-item",
-      className: cn(
-        "focus:bg-accent focus:text-accent-foreground [&_svg:not([class*='text-'])]:text-muted-foreground relative flex w-full cursor-default items-center gap-2 rounded-sm py-1.5 pr-8 pl-2 text-sm outline-hidden select-none data-[disabled]:pointer-events-none data-[disabled]:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4 *:[span]:last:flex *:[span]:last:items-center *:[span]:last:gap-2",
-        className
-      ),
-      ...props,
-      children: [
-        /* @__PURE__ */ jsx("span", { className: "absolute right-2 flex size-3.5 items-center justify-center", children: /* @__PURE__ */ jsx(SelectPrimitive.ItemIndicator, { children: /* @__PURE__ */ jsx(CheckIcon, { className: "size-4" }) }) }),
-        /* @__PURE__ */ jsx(SelectPrimitive.ItemText, { children })
-      ]
-    }
-  );
-}
-function SelectScrollUpButton({
-  className,
-  ...props
-}) {
-  return /* @__PURE__ */ jsx(
-    SelectPrimitive.ScrollUpButton,
-    {
-      "data-slot": "select-scroll-up-button",
-      className: cn(
-        "flex cursor-default items-center justify-center py-1",
-        className
-      ),
-      ...props,
-      children: /* @__PURE__ */ jsx(ChevronUpIcon, { className: "size-4" })
-    }
-  );
-}
-function SelectScrollDownButton({
-  className,
-  ...props
-}) {
-  return /* @__PURE__ */ jsx(
-    SelectPrimitive.ScrollDownButton,
-    {
-      "data-slot": "select-scroll-down-button",
-      className: cn(
-        "flex cursor-default items-center justify-center py-1",
-        className
-      ),
-      ...props,
-      children: /* @__PURE__ */ jsx(ChevronDownIcon, { className: "size-4" })
-    }
-  );
-}
-const steps$1 = ["Boiler Info", "Issue Details", "Your Details", "Schedule"];
-const boilerTypes$1 = [
-  { value: "combi", label: "Combi" },
-  { value: "system", label: "System" },
-  { value: "heat-only", label: "Heat Only" }
-];
-const ageOptions$1 = [
-  { value: "under-5", label: "<5 years" },
-  { value: "5-10", label: "5-10 years" },
-  { value: "10-15", label: "10-15 years" },
-  { value: "15-plus", label: "15+ years" }
-];
-const faultCategories = [
-  { value: "no-heating", label: "No heating" },
-  { value: "no-hot-water", label: "No hot water" },
-  { value: "both", label: "Both heating and hot water" },
-  { value: "leaking", label: "Leaking" },
-  { value: "error-code", label: "Error code" },
-  { value: "strange-noise", label: "Strange noise" },
-  { value: "low-pressure", label: "Low pressure" },
-  { value: "other", label: "Other" }
-];
-const issueStarted = [
-  { value: "today", label: "Today" },
-  { value: "1-3-days", label: "1-3 days ago" },
-  { value: "1-2-weeks", label: "1-2 weeks ago" },
-  { value: "2-plus-weeks", label: "More than 2 weeks ago" }
-];
-const accessTypes = [
-  { value: "easy", label: "Easy access" },
-  { value: "cupboard", label: "Cupboard/boxed in" },
-  { value: "loft", label: "Loft" },
-  { value: "other", label: "Other" }
-];
-const timeSlots = [
-  { value: "am", label: "AM (8am-12pm)" },
-  { value: "pm", label: "PM (12pm-5pm)" }
-];
-function RepairPage() {
-  const [currentStep, setCurrentStep] = useState(0);
-  const [isSubmitted, setIsSubmitted] = useState(false);
-  const [formData, setFormData] = useState({
-    boilerType: "",
-    brand: "",
-    model: "",
-    age: "",
-    faultCategory: "",
-    errorCode: "",
-    otherDescription: "",
-    issueStarted: "",
-    priorWork: "",
-    priorWorkDetails: "",
-    files: [],
-    accessType: "",
-    name: "",
-    phone: "",
-    email: "",
-    postcode: "",
-    address: "",
-    preferredDate: "",
-    timeSlot: ""
-  });
-  const [errors, setErrors] = useState({});
-  const updateField = (field, value) => {
-    setFormData((prev) => ({ ...prev, [field]: value }));
-    if (errors[field]) {
-      setErrors((prev) => ({ ...prev, [field]: null }));
-    }
-  };
-  const handleFileChange = (e) => {
-    const uploaded = Array.from(e.target.files);
-    setFormData((prev) => ({
-      ...prev,
-      files: [...prev.files, ...uploaded].slice(0, 5)
-    }));
-  };
-  const removeFile = (index) => {
-    setFormData((prev) => ({
-      ...prev,
-      files: prev.files.filter((_, i) => i !== index)
-    }));
-  };
-  const validateStep = (step) => {
-    const newErrors = {};
-    if (step === 0) {
-      if (!formData.boilerType) newErrors.boilerType = "Required";
-      if (!formData.brand) newErrors.brand = "Required";
-      if (!formData.age) newErrors.age = "Required";
-    }
-    if (step === 1) {
-      if (!formData.faultCategory) newErrors.faultCategory = "Required";
-      if (formData.faultCategory === "error-code" && !formData.errorCode)
-        newErrors.errorCode = "Required";
-      if (formData.faultCategory === "other" && !formData.otherDescription)
-        newErrors.otherDescription = "Required";
-      if (!formData.issueStarted) newErrors.issueStarted = "Required";
-      if (!formData.accessType) newErrors.accessType = "Required";
-    }
-    if (step === 2) {
-      if (!formData.name) newErrors.name = "Required";
-      if (!formData.phone) newErrors.phone = "Required";
-      if (!formData.email) newErrors.email = "Required";
-      if (!formData.postcode) newErrors.postcode = "Required";
-    }
-    if (step === 3) {
-      if (!formData.preferredDate) newErrors.preferredDate = "Required";
-      if (!formData.timeSlot) newErrors.timeSlot = "Required";
-    }
-    setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
-  };
-  const nextStep = () => {
-    if (validateStep(currentStep)) {
-      setCurrentStep((prev) => prev + 1);
-      window.scrollTo({ top: 0 });
-    }
-  };
-  const prevStep = () => {
-    setCurrentStep((prev) => prev - 1);
-    window.scrollTo({ top: 0 });
-  };
-  const handleSubmit = () => {
-    if (!validateStep(3)) return;
-    const payload = new FormData();
-    Object.entries(formData).forEach(([key, value]) => {
-      if (key === "files") {
-        value.forEach((file) => payload.append("files[]", file));
-      } else {
-        payload.append(key, value);
-      }
-    });
-    router.post("/repair/submit", payload, {
-      onSuccess: () => setIsSubmitted(true)
-    });
-  };
-  const pageTitle2 = "Book a Boiler Repair";
-  if (isSubmitted) {
-    return /* @__PURE__ */ jsxs("div", { className: "min-h-screen bg-background", children: [
-      /* @__PURE__ */ jsx(PageHeader, { title: "Booking Confirmed" }),
-      /* @__PURE__ */ jsx("div", { className: "mx-auto max-w-2xl px-4 py-16", children: /* @__PURE__ */ jsx(Card, { className: "text-center", children: /* @__PURE__ */ jsxs(CardContent, { className: "pt-12 pb-8", children: [
-        /* @__PURE__ */ jsx("div", { className: "mx-auto mb-6 flex h-20 w-20 items-center justify-center rounded-full bg-green-100", children: /* @__PURE__ */ jsx(CheckCircle2, { className: "h-10 w-10 text-green-600" }) }),
-        /* @__PURE__ */ jsx("h1", { className: "text-2xl font-bold", children: "Booking Submitted!" }),
-        /* @__PURE__ */ jsx("p", { className: "text-muted-foreground my-4", children: "We’ll contact you shortly to confirm your boiler repair appointment." }),
-        /* @__PURE__ */ jsx(Button, { asChild: true, children: /* @__PURE__ */ jsx(Link, { href: "/", children: "Return to Home" }) })
-      ] }) }) })
-    ] });
+const STEPS$2 = [
+  {
+    id: "radiators",
+    question: "Are your radiators cold at the bottom?",
+    options: ["Yes", "No"]
+  },
+  {
+    id: "noisy",
+    question: "Do your radiators make noise?",
+    options: ["Yes", "No"]
+  },
+  {
+    id: "system_size",
+    question: "How many radiators roughly?",
+    options: ["1–5", "6–10", "10+"]
   }
-  return /* @__PURE__ */ jsxs(Fragment, { children: [
-    /* @__PURE__ */ jsx(Head, { title: pageTitle2 }),
-    /* @__PURE__ */ jsxs("div", { className: "min-h-screen bg-background", children: [
-      /* @__PURE__ */ jsx(PageHeader, { title: pageTitle2 }),
-      /* @__PURE__ */ jsxs("div", { className: "mx-auto max-w-3xl px-4 py-10", children: [
-        /* @__PURE__ */ jsxs("div", { className: "mb-8 text-center", children: [
-          /* @__PURE__ */ jsx("div", { className: "h-14 w-14 mx-auto rounded-full bg-primary/10 flex items-center justify-center mb-4", children: /* @__PURE__ */ jsx(Wrench, { className: "h-7 w-7 text-primary" }) }),
-          /* @__PURE__ */ jsx("h1", { className: "text-2xl font-bold", children: "Book a Boiler Repair" }),
-          /* @__PURE__ */ jsx("p", { className: "text-muted-foreground mt-2", children: "Fixed £75 labour charge" })
-        ] }),
-        /* @__PURE__ */ jsx(FormStepper, { steps: steps$1, currentStep, className: "mb-10" }),
-        /* @__PURE__ */ jsx(Card, { children: /* @__PURE__ */ jsxs(CardContent, { className: "p-6 sm:p-8", children: [
-          currentStep === 0 && /* @__PURE__ */ jsxs("div", { className: "space-y-6", children: [
-            /* @__PURE__ */ jsx("h2", { className: "font-bold text-lg", children: "Boiler Information" }),
-            /* @__PURE__ */ jsx(
-              RadioGroupField,
-              {
-                label: "Boiler Type",
-                name: "boilerType",
-                value: formData.boilerType,
-                onChange: (v) => updateField("boilerType", v),
-                options: boilerTypes$1,
-                error: errors.boilerType,
-                required: true
-              }
-            ),
-            /* @__PURE__ */ jsxs("div", { className: "grid sm:grid-cols-2 gap-4", children: [
-              /* @__PURE__ */ jsx(
-                FormField,
-                {
-                  label: "Brand",
-                  value: formData.brand,
-                  onChange: (e) => updateField("brand", e.target.value),
-                  error: errors.brand,
-                  required: true
-                }
-              ),
-              /* @__PURE__ */ jsx(
-                FormField,
-                {
-                  label: "Model",
-                  value: formData.model,
-                  onChange: (e) => updateField("model", e.target.value)
-                }
-              )
-            ] }),
-            /* @__PURE__ */ jsx(
-              RadioGroupField,
-              {
-                label: "Boiler Age",
-                value: formData.age,
-                onChange: (v) => updateField("age", v),
-                options: ageOptions$1,
-                error: errors.age,
-                required: true
-              }
-            )
-          ] }),
-          currentStep === 1 && /* @__PURE__ */ jsxs("div", { className: "space-y-6", children: [
-            /* @__PURE__ */ jsx("h2", { className: "font-bold text-lg", children: "Issue Details" }),
-            /* @__PURE__ */ jsxs("div", { className: "space-y-2", children: [
-              /* @__PURE__ */ jsx(Label, { children: "Fault Category *" }),
-              /* @__PURE__ */ jsxs(
-                Select,
-                {
-                  value: formData.faultCategory,
-                  onValueChange: (v) => updateField("faultCategory", v),
-                  children: [
-                    /* @__PURE__ */ jsx(SelectTrigger, { className: errors.faultCategory ? "border-destructive" : "", children: /* @__PURE__ */ jsx(SelectValue, { placeholder: "Select" }) }),
-                    /* @__PURE__ */ jsx(SelectContent, { children: faultCategories.map((item) => /* @__PURE__ */ jsx(SelectItem, { value: item.value, children: item.label }, item.value)) })
-                  ]
-                }
-              ),
-              errors.faultCategory && /* @__PURE__ */ jsx("p", { className: "text-xs text-destructive", children: errors.faultCategory })
-            ] }),
-            formData.faultCategory === "error-code" && /* @__PURE__ */ jsx(
-              FormField,
-              {
-                label: "Error Code",
-                value: formData.errorCode,
-                onChange: (e) => updateField("errorCode", e.target.value),
-                error: errors.errorCode,
-                required: true
-              }
-            ),
-            formData.faultCategory === "other" && /* @__PURE__ */ jsx(
-              FormTextarea,
-              {
-                label: "Describe the issue",
-                value: formData.otherDescription,
-                onChange: (e) => updateField("otherDescription", e.target.value),
-                error: errors.otherDescription
-              }
-            ),
-            /* @__PURE__ */ jsx(
-              RadioGroupField,
-              {
-                label: "When did the issue start?",
-                value: formData.issueStarted,
-                onChange: (v) => updateField("issueStarted", v),
-                options: issueStarted,
-                error: errors.issueStarted,
-                required: true
-              }
-            ),
-            /* @__PURE__ */ jsx(
-              RadioGroupField,
-              {
-                label: "Access Type",
-                value: formData.accessType,
-                onChange: (v) => updateField("accessType", v),
-                options: accessTypes,
-                error: errors.accessType,
-                required: true
-              }
-            ),
-            /* @__PURE__ */ jsxs("div", { className: "space-y-3", children: [
-              /* @__PURE__ */ jsx(Label, { children: "Upload Photos (optional)" }),
-              /* @__PURE__ */ jsxs("div", { className: "border border-dashed p-5 rounded-xl text-center", children: [
-                /* @__PURE__ */ jsx(
-                  "input",
-                  {
-                    type: "file",
-                    id: "file-upload",
-                    multiple: true,
-                    className: "hidden",
-                    accept: "image/*,video/*",
-                    onChange: handleFileChange
-                  }
-                ),
-                /* @__PURE__ */ jsxs("label", { htmlFor: "file-upload", className: "cursor-pointer", children: [
-                  /* @__PURE__ */ jsx(Upload, { className: "h-8 w-8 mx-auto text-muted-foreground" }),
-                  /* @__PURE__ */ jsx("p", { className: "mt-2 text-sm", children: "Click to upload" })
-                ] })
-              ] }),
-              formData.files.length > 0 && /* @__PURE__ */ jsx("div", { className: "flex flex-wrap gap-2", children: formData.files.map((file, index) => /* @__PURE__ */ jsxs(
-                "div",
-                {
-                  className: "flex items-center gap-2 bg-muted px-3 py-2 rounded-lg",
-                  children: [
-                    /* @__PURE__ */ jsx("span", { className: "truncate max-w-[120px]", children: file.name }),
-                    /* @__PURE__ */ jsx("button", { onClick: () => removeFile(index), children: /* @__PURE__ */ jsx(X, { className: "h-4 w-4 text-destructive" }) })
-                  ]
-                },
-                index
-              )) })
-            ] })
-          ] }),
-          currentStep === 2 && /* @__PURE__ */ jsxs("div", { className: "space-y-6", children: [
-            /* @__PURE__ */ jsx("h2", { className: "font-bold text-lg", children: "Your Details" }),
-            /* @__PURE__ */ jsx(
-              FormField,
-              {
-                label: "Full Name",
-                value: formData.name,
-                onChange: (e) => updateField("name", e.target.value),
-                error: errors.name,
-                required: true
-              }
-            ),
-            /* @__PURE__ */ jsxs("div", { className: "grid sm:grid-cols-2 gap-4", children: [
-              /* @__PURE__ */ jsx(
-                FormField,
-                {
-                  label: "Phone",
-                  value: formData.phone,
-                  onChange: (e) => updateField("phone", e.target.value),
-                  error: errors.phone,
-                  required: true
-                }
-              ),
-              /* @__PURE__ */ jsx(
-                FormField,
-                {
-                  label: "Email",
-                  value: formData.email,
-                  onChange: (e) => updateField("email", e.target.value),
-                  error: errors.email,
-                  required: true
-                }
-              )
-            ] }),
-            /* @__PURE__ */ jsx(
-              FormField,
-              {
-                label: "Postcode",
-                value: formData.postcode,
-                onChange: (e) => updateField("postcode", e.target.value),
-                error: errors.postcode,
-                required: true
-              }
-            ),
-            /* @__PURE__ */ jsx(
-              FormTextarea,
-              {
-                label: "Address (optional)",
-                value: formData.address,
-                onChange: (e) => updateField("address", e.target.value)
-              }
-            )
-          ] }),
-          currentStep === 3 && /* @__PURE__ */ jsxs("div", { className: "space-y-6", children: [
-            /* @__PURE__ */ jsx("h2", { className: "font-bold text-lg", children: "Schedule" }),
-            /* @__PURE__ */ jsxs("div", { className: "space-y-2", children: [
-              /* @__PURE__ */ jsx(Label, { children: "Date *" }),
-              /* @__PURE__ */ jsx(
-                Input,
-                {
-                  type: "date",
-                  value: formData.preferredDate,
-                  min: (/* @__PURE__ */ new Date()).toISOString().split("T")[0],
-                  onChange: (e) => updateField("preferredDate", e.target.value),
-                  className: errors.preferredDate ? "border-destructive" : ""
-                }
-              ),
-              errors.preferredDate && /* @__PURE__ */ jsx("p", { className: "text-xs text-destructive", children: errors.preferredDate })
-            ] }),
-            /* @__PURE__ */ jsx(
-              RadioGroupField,
-              {
-                label: "Preferred Time",
-                value: formData.timeSlot,
-                onChange: (v) => updateField("timeSlot", v),
-                options: timeSlots,
-                error: errors.timeSlot,
-                required: true
-              }
-            ),
-            /* @__PURE__ */ jsxs("div", { className: "p-4 rounded-xl border bg-primary/5 border-primary", children: [
-              /* @__PURE__ */ jsx("h3", { className: "font-bold", children: "Repair Cost" }),
-              /* @__PURE__ */ jsx("p", { className: "text-3xl font-bold text-primary mt-2", children: "£75" }),
-              /* @__PURE__ */ jsx("p", { className: "text-muted-foreground text-sm", children: "Labour only, parts extra" })
-            ] })
-          ] }),
-          /* @__PURE__ */ jsxs("div", { className: "mt-8 flex justify-between border-t pt-6", children: [
-            currentStep > 0 ? /* @__PURE__ */ jsxs(Button, { variant: "outline", onClick: prevStep, children: [
-              /* @__PURE__ */ jsx(ArrowLeft, { className: "h-4 w-4 mr-2" }),
-              " Back"
-            ] }) : /* @__PURE__ */ jsx("div", {}),
-            currentStep < steps$1.length - 1 ? /* @__PURE__ */ jsxs(Button, { onClick: nextStep, children: [
-              "Continue ",
-              /* @__PURE__ */ jsx(ArrowRight, { className: "h-4 w-4 ml-2" })
-            ] }) : /* @__PURE__ */ jsx(Button, { size: "lg", onClick: handleSubmit, children: "Submit Booking" })
-          ] })
-        ] }) })
-      ] })
-    ] })
-  ] });
+];
+function PowerflushQuote() {
+  return /* @__PURE__ */ jsx(Stepper, { title: "Power Flush", basePrice: 180, steps: STEPS$2 });
 }
 const __vite_glob_0_9 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
   __proto__: null,
-  default: RepairPage
+  default: PowerflushQuote
 }, Symbol.toStringTag, { value: "Module" }));
-const steps = ["Boiler Info", "Access & Issues", "Your Details", "Schedule"];
-const boilerTypes = [
-  { value: "combi", label: "Combi" },
-  { value: "system", label: "System" },
-  { value: "heat-only", label: "Heat Only" }
-];
-const ageOptions = [
-  { value: "under-5", label: "<5 years" },
-  { value: "5-10", label: "5-10 years" },
-  { value: "10-15", label: "10-15 years" },
-  { value: "15-plus", label: "15+ years" }
-];
-const accessOptions = [
-  { value: "easy", label: "Easy access" },
-  { value: "tight", label: "Tight cupboard" },
-  { value: "loft", label: "Loft" }
-];
-function ServicePage() {
-  const { props } = usePage();
-  const pageTitle2 = props.pageTitle ?? "Book a Service";
-  const [currentStep, setCurrentStep] = useState(0);
-  const [isSubmitted, setIsSubmitted] = useState(false);
-  const [formData, setFormData] = useState({
-    boilerType: "",
-    brand: "",
-    model: "",
-    age: "",
-    accessSituation: "",
-    knownIssues: "",
-    issueDetails: "",
-    name: "",
-    phone: "",
-    email: "",
-    postcode: "",
-    preferredDate: ""
-  });
-  const [errors, setErrors] = useState({});
-  const updateField = (field, value) => {
-    setFormData((prev) => ({ ...prev, [field]: value }));
-    if (errors[field]) setErrors((prev) => ({ ...prev, [field]: null }));
-  };
-  const validateStep = (step) => {
-    const newErrors = {};
-    if (step === 0) {
-      if (!formData.boilerType) newErrors.boilerType = "Please select a boiler type";
-      if (!formData.brand) newErrors.brand = "Please enter the brand";
-      if (!formData.age) newErrors.age = "Please select boiler age";
-    }
-    if (step === 1) {
-      if (!formData.accessSituation) newErrors.accessSituation = "Please select access";
-    }
-    if (step === 2) {
-      if (!formData.name) newErrors.name = "Enter name";
-      if (!formData.phone) newErrors.phone = "Enter phone";
-      if (!formData.email) newErrors.email = "Enter email";
-      if (!formData.postcode) newErrors.postcode = "Enter postcode";
-    }
-    if (step === 3) {
-      if (!formData.preferredDate) newErrors.preferredDate = "Select date";
-    }
-    setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
-  };
-  const nextStep = () => {
-    if (validateStep(currentStep)) {
-      setCurrentStep((prev) => prev + 1);
-      window.scrollTo({ top: 0, behavior: "smooth" });
-    }
-  };
-  const prevStep = () => {
-    setCurrentStep((prev) => prev - 1);
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  };
-  const handleSubmit = () => {
-    if (validateStep(currentStep)) {
-      console.log("Service Submitted:", formData);
-      setIsSubmitted(true);
-      window.scrollTo({ top: 0, behavior: "smooth" });
-    }
-  };
-  if (isSubmitted) {
-    return /* @__PURE__ */ jsxs(Fragment, { children: [
-      /* @__PURE__ */ jsx(Head, { title: "Service Booked!" }),
-      /* @__PURE__ */ jsxs("div", { className: "min-h-screen bg-background", children: [
-        /* @__PURE__ */ jsx(PageHeader, { title: "Booking Confirmed" }),
-        /* @__PURE__ */ jsx("div", { className: "mx-auto max-w-2xl px-4 py-16", children: /* @__PURE__ */ jsx(Card, { className: "text-center", children: /* @__PURE__ */ jsxs(CardContent, { className: "pt-12 pb-8", children: [
-          /* @__PURE__ */ jsx("div", { className: "mx-auto mb-6 flex h-20 w-20 items-center justify-center rounded-full bg-green-100", children: /* @__PURE__ */ jsx(CheckCircle2, { className: "h-10 w-10 text-green-600" }) }),
-          /* @__PURE__ */ jsx("h1", { className: "text-2xl font-bold mb-3", children: "Service Booked!" }),
-          /* @__PURE__ */ jsx("p", { className: "text-muted-foreground mb-8", children: "We will contact you shortly to confirm your appointment." }),
-          /* @__PURE__ */ jsx(Button, { onClick: () => router.visit("/"), className: "gap-2", children: "Return Home" })
-        ] }) }) })
-      ] })
-    ] });
-  }
-  return /* @__PURE__ */ jsxs(Fragment, { children: [
-    /* @__PURE__ */ jsx(Head, { title: pageTitle2 }),
-    /* @__PURE__ */ jsxs("div", { className: "min-h-screen bg-background", children: [
-      /* @__PURE__ */ jsx(PageHeader, { title: pageTitle2 }),
-      /* @__PURE__ */ jsxs("div", { className: "mx-auto max-w-3xl px-4 py-8", children: [
-        /* @__PURE__ */ jsxs("div", { className: "mb-8 text-center", children: [
-          /* @__PURE__ */ jsx("div", { className: "inline-flex h-14 w-14 items-center justify-center rounded-full bg-primary/10 mb-4", children: /* @__PURE__ */ jsx(Settings, { className: "h-7 w-7 text-primary" }) }),
-          /* @__PURE__ */ jsx("h1", { className: "text-2xl font-bold", children: "Book a Boiler Service" }),
-          /* @__PURE__ */ jsx("p", { className: "text-muted-foreground", children: "Annual service from £75" })
+function GoogleReview() {
+  return /* @__PURE__ */ jsx("div", { className: "mt-10 flex justify-center", children: /* @__PURE__ */ jsxs("div", { className: "inline-flex items-center gap-3 rounded-full border border-slate-200 bg-white/90 px-4 py-2 shadow-sm", children: [
+    /* @__PURE__ */ jsx("div", { className: "flex h-9 w-9 items-center justify-center rounded-full bg-slate-100", children: /* @__PURE__ */ jsx(FcGoogle, { className: "h-5 w-5" }) }),
+    /* @__PURE__ */ jsxs("div", { className: "flex flex-col items-start", children: [
+      /* @__PURE__ */ jsx("p", { className: "text-[11px] uppercase tracking-[0.12em] text-slate-500", children: "Google Reviews" }),
+      /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-2", children: [
+        /* @__PURE__ */ jsx("span", { className: "text-sm font-semibold text-slate-900", children: "4.5 / 5" }),
+        /* @__PURE__ */ jsxs("span", { className: "flex items-center gap-0.5 text-amber-400", children: [
+          /* @__PURE__ */ jsx(FaStar, { className: "h-4 w-4" }),
+          /* @__PURE__ */ jsx(FaStar, { className: "h-4 w-4" }),
+          /* @__PURE__ */ jsx(FaStar, { className: "h-4 w-4" }),
+          /* @__PURE__ */ jsx(FaStar, { className: "h-4 w-4" }),
+          /* @__PURE__ */ jsx(FaStarHalfAlt, { className: "h-4 w-4" })
         ] }),
-        /* @__PURE__ */ jsx(FormStepper, { steps, currentStep, className: "mb-10" }),
-        /* @__PURE__ */ jsx(Card, { children: /* @__PURE__ */ jsxs(CardContent, { className: "p-6 sm:p-8", children: [
-          currentStep === 0 && /* @__PURE__ */ jsxs("div", { className: "space-y-6", children: [
-            /* @__PURE__ */ jsx("h2", { className: "text-lg font-semibold", children: "Boiler Information" }),
-            /* @__PURE__ */ jsx(
-              RadioGroupField,
-              {
-                label: "Boiler Type",
-                name: "boilerType",
-                value: formData.boilerType,
-                onChange: (v) => updateField("boilerType", v),
-                options: boilerTypes,
-                error: errors.boilerType,
-                required: true
-              }
-            ),
-            /* @__PURE__ */ jsxs("div", { className: "grid gap-4 sm:grid-cols-2", children: [
+        /* @__PURE__ */ jsx("span", { className: "text-[11px] text-slate-500", children: "120+ reviews" })
+      ] })
+    ] })
+  ] }) });
+}
+const pageTitle = "Get a Quote";
+const SERVICE_KEYS = {
+  REPAIR: "repair",
+  NEW: "new",
+  POWERFLUSH: "powerflush",
+  SERVICE: "service"
+};
+const SERVICE_CONTENT = {
+  [SERVICE_KEYS.REPAIR]: {
+    slug: SERVICE_KEYS.REPAIR,
+    heroTitle: "Fast boiler repair — same-day engineers, transparent pricing.",
+    heroDesc: "Emergency diagnosis and on-site fixes. Fixed labour rates, clear parts pricing — we prioritise safety and speed.",
+    badge: "Boiler Repair",
+    sampleJobLabel: "Boiler Repair • £250",
+    estimateLabel: "Typical fix",
+    labour: "£120",
+    parts: "£80",
+    gaugeLabel: "Repair success",
+    gaugeValueText: "82%",
+    cta: "Get your personalised quote"
+  },
+  [SERVICE_KEYS.NEW]: {
+    slug: SERVICE_KEYS.NEW,
+    heroTitle: "New boiler installations — efficient, tested, guaranteed.",
+    heroDesc: "Supply & install modern, high-efficiency boilers. Full removal, install, commissioning and certificates included.",
+    badge: "New Boiler",
+    sampleJobLabel: "New Boiler • From £1,200",
+    estimateLabel: "Install estimate",
+    labour: "£600",
+    parts: "£600",
+    gaugeLabel: "Install success",
+    gaugeValueText: "95%",
+    cta: "Get installation quote"
+  },
+  [SERVICE_KEYS.POWERFLUSH]: {
+    slug: SERVICE_KEYS.POWERFLUSH,
+    heroTitle: "Power flush — deep clean for radiators & pipework.",
+    heroDesc: "Remove sludge and improve circulation to restore performance and reduce breakdowns. Ideal when radiators are cold or noisy.",
+    badge: "Power Flush",
+    sampleJobLabel: "Power Flush • From £180",
+    estimateLabel: "System clean",
+    labour: "£120",
+    parts: "—",
+    gaugeLabel: "Flow restored",
+    gaugeValueText: "88%",
+    cta: "Book a power flush"
+  },
+  [SERVICE_KEYS.SERVICE]: {
+    slug: SERVICE_KEYS.SERVICE,
+    heroTitle: "Annual boiler service — safety checks & reliability.",
+    heroDesc: "Annual safety inspection, combustion check and preventative maintenance to keep your system efficient and safe.",
+    badge: "Boiler Service",
+    sampleJobLabel: "Boiler Service • From £65",
+    estimateLabel: "Annual check",
+    labour: "£65",
+    parts: "—",
+    gaugeLabel: "Pass rate",
+    gaugeValueText: "99%",
+    cta: "Schedule service"
+  }
+};
+function getServiceFromUrl() {
+  try {
+    const params = new URLSearchParams(window.location.search);
+    const q = params.get("service");
+    if (q) return q.toLowerCase();
+    const hash = (window.location.hash || "").replace("#", "");
+    if (hash) return hash.toLowerCase();
+  } catch (e) {
+  }
+  return SERVICE_KEYS.REPAIR;
+}
+function QuotePage() {
+  const radius = 14;
+  const [serviceKey, setServiceKey] = useState(() => {
+    const s = getServiceFromUrl();
+    return Object.values(SERVICE_KEYS).includes(s) ? s : SERVICE_KEYS.REPAIR;
+  });
+  useEffect(() => {
+    function handleChange() {
+      const s = getServiceFromUrl();
+      setServiceKey(
+        Object.values(SERVICE_KEYS).includes(s) ? s : SERVICE_KEYS.REPAIR
+      );
+    }
+    window.addEventListener("popstate", handleChange);
+    window.addEventListener("hashchange", handleChange);
+    const observer = new MutationObserver(handleChange);
+    observer.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ["data-page"]
+    });
+    return () => {
+      window.removeEventListener("popstate", handleChange);
+      window.removeEventListener("hashchange", handleChange);
+      observer.disconnect();
+    };
+  }, []);
+  const content = useMemo(
+    () => SERVICE_CONTENT[serviceKey] || SERVICE_CONTENT[SERVICE_KEYS.REPAIR],
+    [serviceKey]
+  );
+  const parseGaugePercent = (text) => {
+    const n = parseInt(String(text || "").replace("%", ""), 10);
+    return Number.isFinite(n) ? Math.max(0, Math.min(100, n)) / 100 : 0.7;
+  };
+  const gaugePercent = parseGaugePercent(content.gaugeValueText);
+  const circumference = 2 * Math.PI * radius;
+  const dash = circumference * gaugePercent;
+  const gap = Math.max(0, circumference - dash);
+  return /* @__PURE__ */ jsxs(Fragment, { children: [
+    /* @__PURE__ */ jsx(Head, { title: "Get a Quote" }),
+    /* @__PURE__ */ jsxs("div", { className: "min-h-dvh bg-gradient-to-b from-slate-50 to-white text-slate-900", children: [
+      /* @__PURE__ */ jsx(PageHeader, { title: pageTitle }),
+      /* @__PURE__ */ jsxs("main", { className: "mx-auto max-w-7xl px-4 sm:px-6 lg:px-0 mt-16", children: [
+        /* @__PURE__ */ jsxs("section", { className: "grid grid-cols-1 md:grid-cols-12 gap-4 items-start", children: [
+          /* @__PURE__ */ jsx("div", { className: "md:col-span-7", children: /* @__PURE__ */ jsxs("div", { className: "max-w-2xl md:mx-0 mx-auto text-center md:text-left", children: [
+            /* @__PURE__ */ jsxs("div", { className: "inline-flex items-center gap-2 bg-primary/10 text-dark px-3 py-1 rounded-full text-xs font-medium mb-4", children: [
               /* @__PURE__ */ jsx(
-                FormField,
+                "svg",
                 {
-                  label: "Brand",
-                  value: formData.brand,
-                  onChange: (e) => updateField("brand", e.target.value),
-                  error: errors.brand,
-                  required: true
+                  xmlns: "http://www.w3.org/2000/svg",
+                  className: "w-4 h-4",
+                  fill: "none",
+                  viewBox: "0 0 24 24",
+                  stroke: "currentColor",
+                  "aria-hidden": true,
+                  children: /* @__PURE__ */ jsx(
+                    "path",
+                    {
+                      strokeWidth: "1.5",
+                      strokeLinecap: "round",
+                      strokeLinejoin: "round",
+                      d: "M3 12h18"
+                    }
+                  )
+                }
+              ),
+              content.badge,
+              " quote"
+            ] }),
+            /* @__PURE__ */ jsx("h1", { className: "font-extrabold leading-tight tracking-tight text-4xl sm:text-5xl line-clamp-2", children: (() => {
+              const words = content.heroTitle.split(" ");
+              const firstTwo = words.slice(0, 2).join(" ");
+              const rest = words.slice(2).join(" ");
+              return /* @__PURE__ */ jsxs(Fragment, { children: [
+                /* @__PURE__ */ jsx("span", { className: "text-primary", children: firstTwo }),
+                " ",
+                /* @__PURE__ */ jsx("span", { className: "text-dark", children: rest })
+              ] });
+            })() }),
+            /* @__PURE__ */ jsx("p", { className: "mt-4 text-base text-slate-600 max-w-prose", children: content.heroDesc }),
+            /* @__PURE__ */ jsxs("div", { className: "mt-6 flex flex-col sm:flex-row sm:items-center sm:gap-4 gap-3 justify-center md:justify-start", children: [
+              /* @__PURE__ */ jsxs(
+                Link,
+                {
+                  href: route(
+                    `book.quote.${content.slug}`
+                  ),
+                  className: "inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-primary via-primary/80 via-primary/70 via-primary/40 to-secondary/20 px-5 py-3 text-sm font-semibold text-foreground shadow-[0_8px_28px_rgba(23,42,68,0.12)] focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-200",
+                  "aria-label": content.cta,
+                  children: [
+                    /* @__PURE__ */ jsx(
+                      "svg",
+                      {
+                        xmlns: "http://www.w3.org/2000/svg",
+                        className: "w-4 h-4",
+                        fill: "none",
+                        viewBox: "0 0 24 24",
+                        stroke: "currentColor",
+                        "aria-hidden": true,
+                        children: /* @__PURE__ */ jsx(
+                          "path",
+                          {
+                            strokeWidth: "2",
+                            strokeLinecap: "round",
+                            strokeLinejoin: "round",
+                            d: "M12 4v16m8-8H4"
+                          }
+                        )
+                      }
+                    ),
+                    content.cta
+                  ]
                 }
               ),
               /* @__PURE__ */ jsx(
-                FormField,
+                "a",
                 {
-                  label: "Model",
-                  value: formData.model,
-                  onChange: (e) => updateField("model", e.target.value)
+                  href: "#contact-expert",
+                  className: "inline-flex items-center justify-center rounded-full border border-dark/70 bg-white px-4 py-3 text-sm font-medium text-slate-900",
+                  children: "Book a technician"
                 }
               )
             ] }),
-            /* @__PURE__ */ jsx(
-              RadioGroupField,
+            /* @__PURE__ */ jsx("div", { className: "mt-8 flex flex-col sm:flex-row sm:items-center sm:gap-6 gap-4", children: /* @__PURE__ */ jsx("div", { className: "flex-1 grid grid-cols-1 md:grid-cols-3 gap-5", children: [
               {
-                label: "Boiler Age",
-                name: "age",
-                value: formData.age,
-                onChange: (v) => updateField("age", v),
-                options: ageOptions,
-                error: errors.age,
-                required: true
+                title: "Gas Safe certified",
+                desc: "Qualified engineers for safe, compliant work."
+              },
+              {
+                title: "Transparent invoices",
+                desc: "Clear breakdown of labour & parts."
+              },
+              {
+                title: "Parts warranty",
+                desc: "Manufacturer-backed parts where applicable."
               }
-            )
-          ] }),
-          currentStep === 1 && /* @__PURE__ */ jsxs("div", { className: "space-y-6", children: [
-            /* @__PURE__ */ jsx("h2", { className: "text-lg font-semibold", children: "Access & Known Issues" }),
-            /* @__PURE__ */ jsx(
-              RadioGroupField,
+            ].map((f, i) => /* @__PURE__ */ jsxs(
+              "div",
               {
-                label: "Access Situation",
-                name: "accessSituation",
-                value: formData.accessSituation,
-                onChange: (v) => updateField("accessSituation", v),
-                options: accessOptions,
-                error: errors.accessSituation,
-                required: true
-              }
-            ),
-            /* @__PURE__ */ jsx(
-              RadioGroupField,
-              {
-                label: "Any Known Issues?",
-                name: "knownIssues",
-                value: formData.knownIssues,
-                onChange: (v) => updateField("knownIssues", v),
-                options: [
-                  { value: "yes", label: "Yes" },
-                  { value: "no", label: "No" }
+                className: "flex gap-3 items-start rounded-lg border border-dark/6  p-3",
+                children: [
+                  /* @__PURE__ */ jsx("div", { className: "h-9 w-9 flex-none rounded-md bg-primary grid place-items-center text-foreground", children: /* @__PURE__ */ jsx(
+                    "svg",
+                    {
+                      xmlns: "http://www.w3.org/2000/svg",
+                      className: "w-5 h-5",
+                      viewBox: "0 0 24 24",
+                      fill: "none",
+                      stroke: "currentColor",
+                      "aria-hidden": true,
+                      children: /* @__PURE__ */ jsx(
+                        "path",
+                        {
+                          strokeWidth: "1.4",
+                          strokeLinecap: "round",
+                          strokeLinejoin: "round",
+                          d: "M5 13l4 4L19 7"
+                        }
+                      )
+                    }
+                  ) }),
+                  /* @__PURE__ */ jsxs("div", { children: [
+                    /* @__PURE__ */ jsx("div", { className: "text-sm font-semibold text-slate-900", children: f.title }),
+                    /* @__PURE__ */ jsx("div", { className: "text-xs text-slate-500 mt-1", children: f.desc })
+                  ] })
                 ]
-              }
-            ),
-            formData.knownIssues === "yes" && /* @__PURE__ */ jsx(
-              FormTextarea,
-              {
-                label: "Describe Issues",
-                value: formData.issueDetails,
-                onChange: (e) => updateField("issueDetails", e.target.value)
-              }
-            )
-          ] }),
-          currentStep === 2 && /* @__PURE__ */ jsxs("div", { className: "space-y-6", children: [
-            /* @__PURE__ */ jsx("h2", { className: "text-lg font-semibold", children: "Your Details" }),
-            /* @__PURE__ */ jsx(
-              FormField,
-              {
-                label: "Full Name",
-                value: formData.name,
-                onChange: (e) => updateField("name", e.target.value),
-                error: errors.name,
-                required: true
-              }
-            ),
-            /* @__PURE__ */ jsxs("div", { className: "grid gap-4 sm:grid-cols-2", children: [
-              /* @__PURE__ */ jsx(
-                FormField,
+              },
+              i
+            )) }) })
+          ] }) }),
+          /* @__PURE__ */ jsx("div", { className: "md:col-span-5", children: /* @__PURE__ */ jsxs("div", { className: "rounded-2xl bg-white/60 backdrop-blur-sm border border-white/30 p-6 shadow-[0_18px_40px_rgba(6,34,20,0.06)]", children: [
+            /* @__PURE__ */ jsxs("div", { className: "flex items-start justify-between", children: [
+              /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-3", children: [
+                /* @__PURE__ */ jsx("div", { className: "rounded-md bg-primary/10 p-2", children: /* @__PURE__ */ jsx(
+                  "svg",
+                  {
+                    xmlns: "http://www.w3.org/2000/svg",
+                    className: "w-5 h-5 text-primary",
+                    fill: "none",
+                    viewBox: "0 0 24 24",
+                    stroke: "currentColor",
+                    "aria-hidden": true,
+                    children: /* @__PURE__ */ jsx(
+                      "path",
+                      {
+                        strokeWidth: "1.6",
+                        strokeLinecap: "round",
+                        strokeLinejoin: "round",
+                        d: "M3 12h18"
+                      }
+                    )
+                  }
+                ) }),
+                /* @__PURE__ */ jsxs("div", { children: [
+                  /* @__PURE__ */ jsx("div", { className: "text-xs text-dark/60", children: content.estimateLabel }),
+                  /* @__PURE__ */ jsx("div", { className: "text-lg font-bold text-dark leading-tight", children: content.sampleJobLabel })
+                ] })
+              ] }),
+              /* @__PURE__ */ jsx("div", { className: "text-xs text-dark/60", children: "Demo • No obligation" })
+            ] }),
+            /* @__PURE__ */ jsxs("div", { className: "mt-4 grid grid-cols-1 sm:grid-cols-2 gap-4 items-center", children: [
+              /* @__PURE__ */ jsx("div", { className: "rounded-lg bg-white p-3 border border-white/30 flex items-center justify-center", children: /* @__PURE__ */ jsxs(
+                "svg",
                 {
-                  label: "Phone",
-                  value: formData.phone,
-                  onChange: (e) => updateField("phone", e.target.value),
-                  error: errors.phone,
-                  required: true
+                  viewBox: "0 0 220 140",
+                  className: "w-full h-24",
+                  xmlns: "http://www.w3.org/2000/svg",
+                  "aria-hidden": true,
+                  children: [
+                    /* @__PURE__ */ jsx("defs", { children: /* @__PURE__ */ jsxs(
+                      "linearGradient",
+                      {
+                        id: "accentGrad2",
+                        x1: "0",
+                        x2: "1",
+                        children: [
+                          /* @__PURE__ */ jsx(
+                            "stop",
+                            {
+                              offset: "0",
+                              stopColor: "#0067ff",
+                              stopOpacity: "0.85"
+                            }
+                          ),
+                          /* @__PURE__ */ jsx(
+                            "stop",
+                            {
+                              offset: "1",
+                              stopColor: "#0067ff40",
+                              stopOpacity: "0.65"
+                            }
+                          )
+                        ]
+                      }
+                    ) }),
+                    /* @__PURE__ */ jsx(
+                      "rect",
+                      {
+                        x: "20",
+                        y: "62",
+                        width: "180",
+                        height: "44",
+                        rx: "8",
+                        fill: "#ffffff",
+                        stroke: "#d9e2f1",
+                        strokeWidth: "1"
+                      }
+                    ),
+                    /* @__PURE__ */ jsx(
+                      "path",
+                      {
+                        d: "M20 62 L110 20 L200 62 Z",
+                        fill: "url(#accentGrad2)",
+                        opacity: "0.95",
+                        stroke: "#c7d8f5",
+                        strokeWidth: "1"
+                      }
+                    )
+                  ]
+                }
+              ) }),
+              /* @__PURE__ */ jsx("div", { className: "flex items-center justify-center sm:justify-end", children: /* @__PURE__ */ jsx("div", { className: "w-28 h-28 flex items-center justify-center rounded-full bg-white/60 border border-white/30 p-2", children: /* @__PURE__ */ jsxs(
+                "svg",
+                {
+                  width: "84",
+                  height: "84",
+                  viewBox: "0 0 36 36",
+                  xmlns: "http://www.w3.org/2000/svg",
+                  "aria-hidden": true,
+                  children: [
+                    /* @__PURE__ */ jsx(
+                      "circle",
+                      {
+                        cx: "18",
+                        cy: "18",
+                        r: radius,
+                        fill: "none",
+                        stroke: "#f6fdf8",
+                        strokeWidth: "3"
+                      }
+                    ),
+                    /* @__PURE__ */ jsx(
+                      "circle",
+                      {
+                        cx: "18",
+                        cy: "18",
+                        r: radius,
+                        fill: "none",
+                        stroke: "url(#g3)",
+                        strokeWidth: "3",
+                        strokeLinecap: "round",
+                        strokeDasharray: `${dash.toFixed(
+                          2
+                        )} ${gap.toFixed(2)}`,
+                        transform: "rotate(-90 18 18)"
+                      }
+                    ),
+                    /* @__PURE__ */ jsx("defs", { children: /* @__PURE__ */ jsxs(
+                      "linearGradient",
+                      {
+                        id: "g3",
+                        x1: "0",
+                        x2: "1",
+                        children: [
+                          /* @__PURE__ */ jsx(
+                            "stop",
+                            {
+                              offset: "0",
+                              stopColor: "#0067ff"
+                            }
+                          ),
+                          /* @__PURE__ */ jsx(
+                            "stop",
+                            {
+                              offset: "1",
+                              stopColor: "#0067ff40"
+                            }
+                          )
+                        ]
+                      }
+                    ) }),
+                    /* @__PURE__ */ jsx(
+                      "text",
+                      {
+                        x: "18",
+                        y: "16.6",
+                        textAnchor: "middle",
+                        fontSize: "5",
+                        fill: "#065f46",
+                        fontWeight: "700",
+                        children: content.gaugeValueText
+                      }
+                    ),
+                    /* @__PURE__ */ jsx(
+                      "text",
+                      {
+                        x: "18",
+                        y: "21.4",
+                        textAnchor: "middle",
+                        fontSize: "4",
+                        fill: "#065f46",
+                        children: content.gaugeLabel
+                      }
+                    )
+                  ]
+                }
+              ) }) })
+            ] }),
+            /* @__PURE__ */ jsxs("div", { className: "mt-4 grid grid-cols-2 gap-3", children: [
+              /* @__PURE__ */ jsxs("div", { className: "rounded-md bg-white p-3 border border-gray-100 text-sm", children: [
+                /* @__PURE__ */ jsx("div", { className: "text-xs text-slate-500", children: "Labour" }),
+                /* @__PURE__ */ jsx("div", { className: "text-sm font-medium text-slate-900", children: content.labour })
+              ] }),
+              /* @__PURE__ */ jsxs("div", { className: "rounded-md bg-white p-3 border border-gray-100 text-sm", children: [
+                /* @__PURE__ */ jsx("div", { className: "text-xs text-slate-500", children: "Parts" }),
+                /* @__PURE__ */ jsx("div", { className: "text-sm font-medium text-slate-900", children: content.parts })
+              ] })
+            ] }),
+            /* @__PURE__ */ jsxs("div", { className: "mt-5", children: [
+              /* @__PURE__ */ jsx(
+                Link,
+                {
+                  href: route(
+                    `book.quote.${content.slug}`
+                  ),
+                  className: "w-full inline-flex items-center justify-center rounded-full bg-gradient-to-r from-primary via-primary/80 via-primary/70 via-primary/40 to-secondary/20 px-4 py-3 text-sm font-semibold text-white shadow-[0_8px_28px_rgba(23,42,68,0.12)] focus:outline-none ",
+                  children: content.cta
                 }
               ),
-              /* @__PURE__ */ jsx(
-                FormField,
-                {
-                  label: "Email",
-                  value: formData.email,
-                  onChange: (e) => updateField("email", e.target.value),
-                  error: errors.email,
-                  required: true
-                }
-              )
-            ] }),
-            /* @__PURE__ */ jsx(
-              FormField,
-              {
-                label: "Postcode",
-                value: formData.postcode,
-                onChange: (e) => updateField("postcode", e.target.value),
-                error: errors.postcode,
-                required: true
-              }
-            )
-          ] }),
-          currentStep === 3 && /* @__PURE__ */ jsxs("div", { className: "space-y-6", children: [
-            /* @__PURE__ */ jsx("h2", { className: "text-lg font-semibold", children: "Schedule Your Service" }),
-            /* @__PURE__ */ jsxs("div", { className: "space-y-2", children: [
-              /* @__PURE__ */ jsx(Label, { children: "Preferred Date *" }),
-              /* @__PURE__ */ jsx(
-                Input,
-                {
-                  type: "date",
-                  value: formData.preferredDate,
-                  onChange: (e) => updateField("preferredDate", e.target.value),
-                  min: (/* @__PURE__ */ new Date()).toISOString().split("T")[0],
-                  className: errors.preferredDate ? "border-destructive" : ""
-                }
-              ),
-              errors.preferredDate && /* @__PURE__ */ jsx("p", { className: "text-xs text-destructive", children: errors.preferredDate })
-            ] }),
-            /* @__PURE__ */ jsxs("div", { className: "rounded-xl border-2 border-primary bg-primary/5 p-6", children: [
-              /* @__PURE__ */ jsx("h4", { className: "font-semibold", children: "Service Cost" }),
-              /* @__PURE__ */ jsx("p", { className: "mt-2 text-3xl font-bold text-primary", children: "From £75" })
+              /* @__PURE__ */ jsx("div", { className: "mt-4 text-center text-xs text-slate-500", children: "No obligation — booking in 2 mins" })
             ] })
-          ] }),
-          /* @__PURE__ */ jsxs("div", { className: "mt-8 flex justify-between gap-4 pt-6 border-t", children: [
-            currentStep > 0 ? /* @__PURE__ */ jsxs(Button, { variant: "outline", onClick: prevStep, children: [
-              /* @__PURE__ */ jsx(ArrowLeft, { className: "h-4 w-4" }),
-              "Back"
-            ] }) : /* @__PURE__ */ jsx("div", {}),
-            currentStep < steps.length - 1 ? /* @__PURE__ */ jsxs(Button, { onClick: nextStep, children: [
-              "Continue",
-              /* @__PURE__ */ jsx(ArrowRight, { className: "h-4 w-4" })
-            ] }) : /* @__PURE__ */ jsx(Button, { size: "lg", onClick: handleSubmit, children: "Submit Booking" })
-          ] })
-        ] }) })
+          ] }) })
+        ] }),
+        /* @__PURE__ */ jsx(GoogleReview, {})
       ] })
     ] })
   ] });
 }
 const __vite_glob_0_10 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
   __proto__: null,
-  default: ServicePage
+  default: QuotePage
+}, Symbol.toStringTag, { value: "Module" }));
+const STEPS$1 = [
+  {
+    id: "boiler_type",
+    question: "What type of boiler do you have?",
+    options: ["Combi", "System", "Heat Only"]
+  },
+  {
+    id: "fault_type",
+    question: "What issue are you experiencing?",
+    options: [
+      { label: "No heating", price: 0 },
+      { label: "Leaking", price: 25 },
+      { label: "Error code showing", price: 15 },
+      { label: "Other", price: 0 }
+    ]
+  },
+  {
+    id: "boiler_age",
+    question: "How old is your boiler?",
+    options: [
+      "Under 5 years",
+      "5–10 years",
+      "10–15 years",
+      "15+ years / Not sure"
+    ]
+  },
+  {
+    id: "issue_start",
+    question: "When did this problem start?",
+    options: [
+      "Today",
+      "1–3 days ago",
+      "1–2 weeks ago",
+      "More than 2 weeks ago"
+    ]
+  },
+  {
+    id: "previous_work",
+    question: "Has anyone worked on the boiler recently?",
+    options: ["Yes", "No"]
+  },
+  {
+    id: "access",
+    question: "Where is your boiler located?",
+    options: ["Easy access", "Inside a cupboard", "Loft", "Other"]
+  }
+];
+function RepairQuote() {
+  return /* @__PURE__ */ jsxs(Fragment, { children: [
+    /* @__PURE__ */ jsx(Stepper, { title: "Boiler Repair Quote", basePrice: 75, steps: STEPS$1 }),
+    ";"
+  ] });
+}
+const __vite_glob_0_11 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
+  __proto__: null,
+  default: RepairQuote
+}, Symbol.toStringTag, { value: "Module" }));
+const STEPS = [
+  {
+    id: "boiler_type",
+    question: "What type of boiler do you have?",
+    options: ["Combi", "System", "Heat Only"]
+  },
+  {
+    id: "boiler_age",
+    question: "How old is your boiler?",
+    options: ["Under 5 years", "5–10 years", "10–15 years", "15+ years"]
+  },
+  {
+    id: "access",
+    question: "How easy is it to access your boiler?",
+    options: ["Easy access", "Tight cupboard", "Loft"]
+  },
+  {
+    id: "known_issues",
+    question: "Are you aware of any issues with the boiler?",
+    options: ["No issues", "Yes — something isn’t right"]
+  }
+];
+function ServiceQuote() {
+  return /* @__PURE__ */ jsx(Fragment, { children: /* @__PURE__ */ jsx(
+    Stepper,
+    {
+      title: "Annual Boiler Service",
+      basePrice: 65,
+      steps: STEPS
+    }
+  ) });
+}
+const __vite_glob_0_12 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
+  __proto__: null,
+  default: ServiceQuote
 }, Symbol.toStringTag, { value: "Module" }));
 const DropDownContext = createContext();
 const Dropdown = ({ children }) => {
@@ -3227,285 +3223,17 @@ function Dashboard() {
     }
   );
 }
-const __vite_glob_0_11 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
+const __vite_glob_0_13 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
   __proto__: null,
   default: Dashboard
 }, Symbol.toStringTag, { value: "Module" }));
-const FAQ_LIST = [
-  {
-    q: "Who are MD Gas?",
-    a: "MD Gas is a trusted home heating specialist providing boiler installations, repairs, servicing, and energy-efficient heating solutions across the region."
-  },
-  {
-    q: "Do you offer finance options for boiler installations?",
-    a: "Yes, we offer flexible finance plans to help you spread the cost of your boiler installation easily and affordably."
-  },
-  {
-    q: "What services does MD Gas provide?",
-    a: "We provide boiler installation, servicing, repairs, central heating upgrades, smart thermostat setup, and emergency call-outs."
-  },
-  {
-    q: "Who carries out the installation?",
-    a: "All installations are completed by fully qualified Gas Safe registered engineers with years of professional experience."
-  },
-  {
-    q: "Are my payments and purchases protected?",
-    a: "Yes, all installations and products come with full protection, warranties, and transparent pricing."
-  },
-  {
-    q: "How quickly can you install a new boiler?",
-    a: "In many cases, we offer next-day installation depending on engineer availability and your location."
-  },
-  {
-    q: "Do you provide emergency boiler repairs?",
-    a: "Yes, we provide urgent same-day repair services for breakdowns and heating emergencies."
-  },
-  {
-    q: "What warranties do you offer?",
-    a: "We offer manufacturer warranties up to 10 years depending on the boiler model you choose."
-  },
-  {
-    q: "Do you install smart thermostats?",
-    a: "Yes, we install major smart thermostats such as Hive, Nest, and Tado for superior energy control."
-  },
-  {
-    q: "Can I get a quote online?",
-    a: "Absolutely. You can receive an instant fixed-price quote online without needing a home visit."
-  },
-  {
-    q: "Are your engineers Gas Safe certified?",
-    a: "Yes, all MD Gas engineers are Gas Safe registered and fully qualified."
-  },
-  {
-    q: "Do you offer annual boiler servicing?",
-    a: "Yes, we offer affordable annual servicing to keep your boiler safe, efficient, and under warranty."
-  },
-  {
-    q: "Can you upgrade radiators or heating systems?",
-    a: "Yes, we provide full central heating upgrades including radiators, pipework, pumps, and valves."
-  },
-  {
-    q: "What areas do you cover?",
-    a: "We cover a wide service area—contact us or enter your postcode online to confirm availability."
-  },
-  {
-    q: "How do I book an installation?",
-    a: "You can book directly online or speak to our team for support with selecting a boiler."
-  }
-];
-function Faq() {
-  const [openIndex, setOpenIndex] = useState(0);
-  const [showAll, setShowAll] = useState(false);
-  const sectionRef = useRef(null);
-  const displayedFaqs = showAll ? FAQ_LIST : FAQ_LIST.slice(0, 5);
-  const scrollToSectionTop = () => {
-    if (!sectionRef.current) return;
-    const offsetTop = sectionRef.current.offsetTop - 80;
-    window.scrollTo({
-      top: offsetTop,
-      behavior: "smooth"
-    });
-  };
-  const handleViewAll = () => {
-    setShowAll(true);
-    scrollToSectionTop();
-  };
-  const handleShowLess = () => {
-    setShowAll(false);
-    setOpenIndex(0);
-    scrollToSectionTop();
-  };
-  return /* @__PURE__ */ jsx(
-    "section",
-    {
-      ref: sectionRef,
-      className: "bg-foreground text-white py-20 px-6 sm:px-10 rounded-b-[45px]",
-      children: /* @__PURE__ */ jsxs("div", { className: "max-w-7xl mx-auto", children: [
-        /* @__PURE__ */ jsxs("div", { className: "flex justify-between items-center mb-10 z-20 bg-foreground pt-4 pb-6", children: [
-          /* @__PURE__ */ jsx("h2", { className: "text-4xl sm:text-5xl font-bold text-dark", children: "FAQ’s" }),
-          !showAll && /* @__PURE__ */ jsxs(
-            "button",
-            {
-              onClick: handleViewAll,
-              className: "bg-dark text-foreground px-5 py-2 rounded-full text-sm font-semibold flex items-center gap-2 cursor-pointer",
-              children: [
-                "View all ",
-                /* @__PURE__ */ jsx(IoChevronDown, { className: "text-base" })
-              ]
-            }
-          )
-        ] }),
-        /* @__PURE__ */ jsx("div", { className: "space-y-6", children: displayedFaqs.map((item, index) => {
-          const isOpen = openIndex === index;
-          return /* @__PURE__ */ jsxs(
-            "div",
-            {
-              className: "border-b border-dark/60 pb-3",
-              children: [
-                /* @__PURE__ */ jsxs(
-                  "button",
-                  {
-                    className: "w-full flex justify-between items-center text-left",
-                    onClick: () => setOpenIndex(isOpen ? null : index),
-                    children: [
-                      /* @__PURE__ */ jsx("span", { className: "text-lg font-semibold text-dark", children: item.q }),
-                      isOpen ? /* @__PURE__ */ jsx(IoChevronUp, { className: "text-xl text-dark" }) : /* @__PURE__ */ jsx(IoChevronDown, { className: "text-xl text-dark" })
-                    ]
-                  }
-                ),
-                /* @__PURE__ */ jsx(
-                  "div",
-                  {
-                    className: `overflow-hidden transition-all duration-300 ease-in-out ${isOpen ? "max-h-[300px] mt-3 opacity-100" : "max-h-0 opacity-0"}`,
-                    children: /* @__PURE__ */ jsx("p", { className: "text-[15px] text-dark leading-relaxed", children: item.a })
-                  }
-                )
-              ]
-            },
-            index
-          );
-        }) }),
-        showAll && /* @__PURE__ */ jsx("div", { className: "text-center mt-10", children: /* @__PURE__ */ jsx(
-          "button",
-          {
-            onClick: handleShowLess,
-            className: "bg-white text-black px-6 py-2 rounded-full text-sm font-semibold",
-            children: "Show less"
-          }
-        ) })
-      ] })
-    }
-  );
-}
-const services = [
-  {
-    id: "repair",
-    title: "Boiler Repair",
-    description: "Fast boiler repairs with fixed labour.",
-    image: "/images/product_boiler.png",
-    highlight: "From £75 Labour",
-    href: "/book/repair",
-    theme: {
-      hoverBg: "hover:bg-[#E5F1FF]",
-      hoverBorder: "hover:border-[#2358FF]",
-      labelBg: "bg-[#2358FF]",
-      rippleColor: "text-[#7190F5]",
-      arrowHoverBg: "group-hover:bg-[#2358FF]"
-    }
-  },
-  {
-    id: "service",
-    title: "Boiler Service",
-    description: "Annual service to keep your boiler safe.",
-    image: "/images/product_boiler.png",
-    highlight: "Yearly Service",
-    href: "/book/service",
-    theme: {
-      hoverBg: "hover:bg-[#FFECA9]",
-      hoverBorder: "hover:border-[#FFC727]",
-      labelBg: "bg-[#FFC727]",
-      rippleColor: "text-[#FFC727]",
-      arrowHoverBg: "group-hover:bg-[#2358FF]"
-    }
-  },
-  {
-    id: "quote",
-    title: "New Boiler Quote",
-    description: "Instant online quote for a new boiler.",
-    image: "/images/product_boiler.png",
-    highlight: "Instant Quote",
-    href: "/book/quote",
-    theme: {
-      hoverBg: "hover:bg-[#E6F9EC]",
-      hoverBorder: "hover:border-[#17A44A]",
-      labelBg: "bg-[#17A44A]",
-      rippleColor: "text-[#17A44A]",
-      arrowHoverBg: "group-hover:bg-[#2358FF]"
-    }
-  },
-  {
-    id: "powerflush",
-    title: "Power Flush",
-    description: "Deep clean for radiators and pipework.",
-    image: "/images/product_boiler.png",
-    highlight: "From £400",
-    href: "/book/power-flush",
-    theme: {
-      hoverBg: "hover:bg-[#F3E9FF]",
-      hoverBorder: "hover:border-[#8B4DFF]",
-      labelBg: "bg-[#8B4DFF]",
-      rippleColor: "text-[#8B4DFF]",
-      arrowHoverBg: "group-hover:bg-[#2358FF]"
-    }
-  }
-];
-function GlowRipple({ className }) {
-  return /* @__PURE__ */ jsx(
-    "svg",
-    {
-      xmlns: "http://www.w3.org/2000/svg",
-      width: "203",
-      height: "205",
-      viewBox: "0 0 243 225",
-      fill: "none",
-      className,
-      "aria-hidden": "true",
-      children: /* @__PURE__ */ jsxs("g", { opacity: "0.2", children: [
-        /* @__PURE__ */ jsx(
-          "ellipse",
-          {
-            cx: "121.282",
-            cy: "112.153",
-            rx: "106.355",
-            ry: "98.3498",
-            fill: "currentColor",
-            fillOpacity: "0.4"
-          }
-        ),
-        /* @__PURE__ */ jsx(
-          "ellipse",
-          {
-            cx: "121.282",
-            cy: "112.153",
-            rx: "121.282",
-            ry: "112.153",
-            fill: "currentColor",
-            fillOpacity: "0.2"
-          }
-        ),
-        /* @__PURE__ */ jsx(
-          "ellipse",
-          {
-            cx: "121.283",
-            cy: "112.154",
-            rx: "94.0935",
-            ry: "87.0113",
-            fill: "currentColor",
-            fillOpacity: "0.4"
-          }
-        ),
-        /* @__PURE__ */ jsx(
-          "ellipse",
-          {
-            cx: "121.282",
-            cy: "112.154",
-            rx: "77.0341",
-            ry: "71.2358",
-            fill: "currentColor",
-            fillOpacity: "0.6"
-          }
-        )
-      ] })
-    }
-  );
-}
 function HeroSection() {
   return /* @__PURE__ */ jsx(
     "section",
     {
       id: "services",
       className: "relative overflow-hidden py-20 rounded-b-[45px] bg-light-grey pt-40",
-      children: /* @__PURE__ */ jsxs("div", { className: "relative z-10 mx-auto max-w-[1320px] px-4 sm:px-6 lg:px-8", children: [
+      children: /* @__PURE__ */ jsxs("div", { className: "relative z-10 mx-auto max-w-[1320px] px-4 sm:px-6 lg:px-0", children: [
         /* @__PURE__ */ jsxs("div", { className: "relative mx-auto mb-6 text-center", children: [
           /* @__PURE__ */ jsx("div", { className: "absolute top-0 left-5 -translate-x-1/2 w-20 h-20 rounded-full bg-gradient-to-br from-primary via-[#FFC727]/30 to-transparent blur-xl" }),
           /* @__PURE__ */ jsxs("div", { className: "relative flex items-center justify-between", children: [
@@ -3539,68 +3267,8 @@ function HeroSection() {
             /* @__PURE__ */ jsx("div", { className: "p-3 border-[2px] border-dark rounded-full inline-flex items-center justify-center cursor-pointer group", children: /* @__PURE__ */ jsx("span", { className: "transform rotate-45 transition-all duration-300 group-hover:rotate-0", children: /* @__PURE__ */ jsx(ArrowRight, { size: 20 }) }) })
           ] })
         ] }),
-        /* @__PURE__ */ jsx("div", { className: "grid gap-5 md:grid-cols-2 xl:grid-cols-4", children: services.map((service) => /* @__PURE__ */ jsxs(
-          Card,
-          {
-            className: `group relative flex flex-col justify-start items-start overflow-hidden rounded-[30px] border-[3px] border-[#EFEFEF] bg-white px-7 pt-7 pb-6 shadow-[0_18px_45px_rgba(15,23,42,0.06)] transition-all duration-300 hover:shadow-[0_24px_60px_rgba(15,23,42,0.14)] ${service.theme.hoverBg} ${service.theme.hoverBorder}`,
-            children: [
-              /* @__PURE__ */ jsx(
-                "div",
-                {
-                  className: `inline-flex items-center rounded-full px-3 py-1 text-xs font-semibold text-white ${service.theme.labelBg}`,
-                  children: service.highlight
-                }
-              ),
-              /* @__PURE__ */ jsxs("div", { className: "relative mt-1 flex h-44 w-full items-center justify-center", children: [
-                /* @__PURE__ */ jsx("div", { className: "absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2", children: /* @__PURE__ */ jsx(
-                  GlowRipple,
-                  {
-                    className: `${service.theme.rippleColor}`
-                  }
-                ) }),
-                /* @__PURE__ */ jsx(
-                  "img",
-                  {
-                    src: service.image,
-                    alt: service.title,
-                    className: "relative z-10 max-h-32 object-contain mx-auto"
-                  }
-                )
-              ] }),
-              /* @__PURE__ */ jsxs("div", { className: "flex items-end justify-between gap-4 mt-1", children: [
-                /* @__PURE__ */ jsxs("div", { children: [
-                  /* @__PURE__ */ jsx(CardHeader, { className: "p-0", children: /* @__PURE__ */ jsx(CardTitle, { className: "text-[18px] font-semibold text-slate-900", children: service.title }) }),
-                  /* @__PURE__ */ jsx(CardContent, { className: " p-0", children: /* @__PURE__ */ jsx(CardDescription, { className: "text-[14px] leading-relaxed text-slate-600", children: service.description }) })
-                ] }),
-                /* @__PURE__ */ jsx(Link, { href: service.href, className: "shrink-0", children: /* @__PURE__ */ jsx(
-                  "div",
-                  {
-                    className: `flex h-11 w-11 items-center justify-center rounded-full bg-black text-white transition-all duration-300 group-hover:translate-x-1 ${service.theme.arrowHoverBg}`,
-                    children: /* @__PURE__ */ jsx(ArrowRight, { className: "h-5 w-5" })
-                  }
-                ) })
-              ] })
-            ]
-          },
-          service.id
-        )) }),
-        /* @__PURE__ */ jsx("div", { className: "mt-10 flex justify-center", children: /* @__PURE__ */ jsxs("div", { className: "inline-flex items-center gap-3 rounded-full border border-slate-200 bg-white/90 px-4 py-2 shadow-sm", children: [
-          /* @__PURE__ */ jsx("div", { className: "flex h-9 w-9 items-center justify-center rounded-full bg-slate-100", children: /* @__PURE__ */ jsx(FcGoogle, { className: "h-5 w-5" }) }),
-          /* @__PURE__ */ jsxs("div", { className: "flex flex-col items-start", children: [
-            /* @__PURE__ */ jsx("p", { className: "text-[11px] uppercase tracking-[0.12em] text-slate-500", children: "Google Reviews" }),
-            /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-2", children: [
-              /* @__PURE__ */ jsx("span", { className: "text-sm font-semibold text-slate-900", children: "4.5 / 5" }),
-              /* @__PURE__ */ jsxs("span", { className: "flex items-center gap-0.5 text-amber-400", children: [
-                /* @__PURE__ */ jsx(FaStar, { className: "h-4 w-4" }),
-                /* @__PURE__ */ jsx(FaStar, { className: "h-4 w-4" }),
-                /* @__PURE__ */ jsx(FaStar, { className: "h-4 w-4" }),
-                /* @__PURE__ */ jsx(FaStar, { className: "h-4 w-4" }),
-                /* @__PURE__ */ jsx(FaStarHalfAlt, { className: "h-4 w-4" })
-              ] }),
-              /* @__PURE__ */ jsx("span", { className: "text-[11px] text-slate-500", children: "120+ reviews" })
-            ] })
-          ] })
-        ] }) })
+        /* @__PURE__ */ jsx(HeroServices, {}),
+        /* @__PURE__ */ jsx(GoogleReview, {})
       ] })
     }
   );
@@ -3608,7 +3276,7 @@ function HeroSection() {
 const homeTypes = [
   {
     name: "Terrace",
-    icon: Home$1,
+    icon: Home$2,
     tag: "Home type",
     description: "Compact heating solutions designed for smaller terraces."
   },
@@ -3674,7 +3342,7 @@ function HomeTypesStrip() {
     window.addEventListener("mouseup", end);
     return () => window.removeEventListener("mouseup", end);
   }, []);
-  return /* @__PURE__ */ jsx("section", { className: "py-20", children: /* @__PURE__ */ jsxs("div", { className: "mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 lg:flex lg:items-center lg:gap-16", children: [
+  return /* @__PURE__ */ jsx("section", { className: "py-20", children: /* @__PURE__ */ jsxs("div", { className: "mx-auto max-w-7xl px-4 sm:px-6 lg:px-0 lg:flex lg:items-center lg:gap-16", children: [
     /* @__PURE__ */ jsxs("div", { className: "w-full lg:w-[40%] flex flex-col justify-between gap-10 mb-12 lg:mb-0", children: [
       /* @__PURE__ */ jsxs("div", { children: [
         /* @__PURE__ */ jsx("p", { className: "mb-4 text-sm font-semibold tracking-wide text-primary", children: "We service all home types" }),
@@ -3735,131 +3403,6 @@ function HomeTypesStrip() {
     ) }) })
   ] }) });
 }
-function ServiceCards() {
-  const steps2 = [
-    {
-      title: "You answer",
-      description: "Tell us a few simple details about your home and current boiler setup.",
-      icon: MessageCircleMore
-    },
-    {
-      title: "You pick",
-      description: "Choose your preferred boiler and package from fixed, transparent pricing.",
-      icon: Touchpad
-    },
-    {
-      title: "We fit",
-      description: "Your chosen boiler is installed by a trusted, local Gas Safe engineer.",
-      icon: Hammer
-    }
-  ];
-  return /* @__PURE__ */ jsx("section", { className: "bg-[#F3F5F7] py-20 sm:py-28 rounded-t-[45px] mt-10", children: /* @__PURE__ */ jsxs("div", { className: "mx-auto max-w-6xl px-4 sm:px-6 lg:px-8", children: [
-    /* @__PURE__ */ jsxs("div", { className: "text-center mb-4", children: [
-      /* @__PURE__ */ jsxs("h2", { className: "text-3xl sm:text-4xl font-[500] tracking-tight text-dark leading-snug", children: [
-        "Get a",
-        " ",
-        /* @__PURE__ */ jsx("span", { className: "font-bold", children: "fixed online price" }),
-        ",",
-        /* @__PURE__ */ jsx("br", { className: "hidden sm:block" }),
-        /* @__PURE__ */ jsx("span", { className: "inline-block", children: "without a salesperson in sight." })
-      ] }),
-      /* @__PURE__ */ jsx("p", { className: "text-dark/70 text-lg", children: "Simple, transparent, and fully online — the way it should be." })
-    ] }),
-    /* @__PURE__ */ jsx("div", { className: "mt-16 grid gap-12 sm:grid-cols-3", children: steps2.map((step) => {
-      const Icon = step.icon;
-      return /* @__PURE__ */ jsxs(
-        "div",
-        {
-          className: "flex flex-col items-center text-center group",
-          children: [
-            /* @__PURE__ */ jsxs("div", { className: "mb-6 inline-flex h-24 w-24 items-center justify-center rounded-3xl bg-white shadow-[0_15px_40px_rgba(15,23,42,0.12)] relative overflow-hidden transition-all duration-300 group-hover:scale-105 group-hover:shadow-[0_20px_50px_rgba(15,23,42,0.18)]", children: [
-              /* @__PURE__ */ jsx("div", { className: "absolute inset-0 bg-gradient-to-br from-primary/10 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-300" }),
-              /* @__PURE__ */ jsx(
-                Icon,
-                {
-                  className: "h-12 w-12 text-dark",
-                  strokeWidth: 2.2
-                }
-              )
-            ] }),
-            /* @__PURE__ */ jsx("h3", { className: "text-[20px] font-semibold text-dark", children: step.title }),
-            /* @__PURE__ */ jsx("p", { className: "mt-3 text-[15px] leading-relaxed text-dark/70 max-w-xs", children: step.description })
-          ]
-        },
-        step.title
-      );
-    }) })
-  ] }) });
-}
-const BENEFITS = [
-  {
-    title: "Trusted installer.",
-    description: "Accredited by leading industry bodies so you know your installation is in safe hands.",
-    icon: FiAward,
-    iconColor: "text-sky-600"
-  },
-  {
-    title: "All-inclusive aftercare.",
-    description: "Every installation comes with our workmanship guarantee and dedicated support.",
-    icon: FiHeart,
-    iconColor: "text-blue-600"
-  },
-  {
-    title: "Price promise.",
-    description: "If you find a genuine like-for-like quote that’s cheaper, we’ll match it. Simple.",
-    icon: FiTag,
-    iconColor: "text-violet-600"
-  },
-  {
-    title: "5 star reviews.",
-    description: "Thousands of verified 5★ reviews across platforms like Trustpilot and Google.",
-    icon: FiStar,
-    iconColor: "text-emerald-600"
-  },
-  {
-    title: "We give back.",
-    description: "For every energy-saving installation, we donate to carefully chosen charities.",
-    icon: FiShield,
-    iconColor: "text-fuchsia-600"
-  },
-  {
-    title: "A safe choice.",
-    description: "Gas Safe registered engineers and fully certified for boiler and heating work.",
-    icon: FiZap,
-    iconColor: "text-amber-500"
-  }
-];
-function WhyChooseUs() {
-  return /* @__PURE__ */ jsx("section", { className: "bg-primary/20 py-16 sm:py-20", children: /* @__PURE__ */ jsxs("div", { className: "mx-auto max-w-7xl px-4 sm:px-6 lg:px-8", children: [
-    /* @__PURE__ */ jsxs("div", { className: "mb-10 text-center", children: [
-      /* @__PURE__ */ jsx("p", { className: "text-xs font-semibold tracking-[0.18em] text uppercase text-foreground", children: "Why choose us" }),
-      /* @__PURE__ */ jsx("h2", { className: "mt-2 text-2xl sm:text-3xl font-semibold text-foreground/70", children: "Benefits that come as standard" })
-    ] }),
-    /* @__PURE__ */ jsx("div", { className: "grid gap-x-16 gap-y-12 md:grid-cols-2", children: BENEFITS.map((item) => {
-      const Icon = item.icon;
-      return /* @__PURE__ */ jsxs(
-        "div",
-        {
-          className: "flex items-start gap-4",
-          children: [
-            /* @__PURE__ */ jsx("div", { className: "flex h-16 w-16 items-center justify-center rounded-2xl bg-white shadow-sm", children: /* @__PURE__ */ jsx(
-              Icon,
-              {
-                className: `h-7 w-7 ${item.iconColor}`
-              }
-            ) }),
-            /* @__PURE__ */ jsxs("div", { children: [
-              /* @__PURE__ */ jsx("h3", { className: "text-sm font-semibold text-light-grey", children: item.title }),
-              /* @__PURE__ */ jsx("p", { className: "mt-1 text-sm leading-relaxed text-light-grey", children: item.description })
-            ] })
-          ]
-        },
-        item.title
-      );
-    }) }),
-    /* @__PURE__ */ jsx("p", { className: "mt-12 text-center text-xs text-foreground/70", children: "…so, why wouldn’t you choose us?" })
-  ] }) });
-}
 function Home() {
   return /* @__PURE__ */ jsx("main", { className: "min-h-screen", children: /* @__PURE__ */ jsxs(GuestLayout, { children: [
     /* @__PURE__ */ jsx(HeroSection, {}),
@@ -3869,111 +3412,348 @@ function Home() {
     /* @__PURE__ */ jsx(Faq, {})
   ] }) });
 }
-const __vite_glob_0_12 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
+const __vite_glob_0_14 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
   __proto__: null,
   default: Home
 }, Symbol.toStringTag, { value: "Module" }));
+const SECTIONS$1 = [
+  { id: "overview", title: "Overview" },
+  { id: "who-we-are", title: "1. Who we are" },
+  { id: "contacting-us", title: "2. Contacting us" },
+  { id: "what-we-collect", title: "3. What information we collect" },
+  { id: "how-we-use", title: "4. How we use your information" },
+  { id: "sharing", title: "5. Information sharing" },
+  { id: "security", title: "6. Data security" },
+  { id: "retention", title: "7. Data retention" },
+  { id: "rights", title: "8. Your rights" },
+  { id: "cookies", title: "9. Cookies" },
+  { id: "children", title: "10. Children" },
+  { id: "third-party", title: "11. Third-party services" },
+  { id: "changes", title: "12. Changes to this policy" },
+  { id: "contact", title: "Contact us" }
+];
+const getActiveIdFromHash$1 = () => {
+  if (typeof window !== "undefined" && window.location.hash) {
+    return window.location.hash.substring(1);
+  }
+  return null;
+};
 function PrivacyPolicyPage() {
   const { props } = usePage();
   const pageTitle2 = props.pageTitle ?? "Privacy Policy";
+  const lastUpdated = "12 December 2025";
+  const [activeSectionId, setActiveSectionId] = useState(
+    getActiveIdFromHash$1()
+  );
+  useEffect(() => {
+    const handleHashChange = () => {
+      setActiveSectionId(getActiveIdFromHash$1());
+    };
+    window.addEventListener("hashchange", handleHashChange);
+    return () => window.removeEventListener("hashchange", handleHashChange);
+  }, []);
   return /* @__PURE__ */ jsxs(Fragment, { children: [
     /* @__PURE__ */ jsx(Head, { title: pageTitle2 }),
-    /* @__PURE__ */ jsxs("div", { className: "min-h-screen bg-background", children: [
-      /* @__PURE__ */ jsx(PageHeader, { title: pageTitle2 }),
-      /* @__PURE__ */ jsxs("main", { className: "mx-auto max-w-4xl px-4 py-12 sm:px-6 lg:px-8", children: [
-        /* @__PURE__ */ jsx("h1", { className: "text-3xl font-bold text-foreground mb-2", children: "Privacy Policy" }),
-        /* @__PURE__ */ jsx("p", { className: "text-muted-foreground mb-8", children: "Last updated: November 2024" }),
-        /* @__PURE__ */ jsxs("div", { className: "prose prose-gray max-w-none space-y-8", children: [
-          /* @__PURE__ */ jsxs("section", { children: [
-            /* @__PURE__ */ jsx("h2", { className: "text-xl font-semibold text-foreground mb-4", children: "1. Introduction" }),
-            /* @__PURE__ */ jsx("p", { className: "text-muted-foreground leading-relaxed", children: 'MD Gas ("we", "our", or "us") is committed to protecting your privacy. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you use our website and services.' })
+    /* @__PURE__ */ jsxs("div", { className: "min-h-screen w-full bg-white text-gray-900 rounded-b-3xl", children: [
+      /* @__PURE__ */ jsx(Header, { title: pageTitle2 }),
+      /* @__PURE__ */ jsxs("main", { className: "mx-auto max-w-7xl px-4 sm:px-6 lg:px-0 py-16 pt-28 md:pt-32", children: [
+        /* @__PURE__ */ jsxs("div", { className: "mb-8 md:mb-16 mt-6 flex flex-col items-center justify-center md:flex-row md:justify-between md:items-center gap-6", children: [
+          /* @__PURE__ */ jsxs("div", { children: [
+            /* @__PURE__ */ jsxs("h1", { className: "text-3xl sm:text-5xl font-extrabold leading-tight tracking-tighter text-center md:text-left", children: [
+              "Data ",
+              /* @__PURE__ */ jsx("span", { className: "text-primary", children: "Trust" }),
+              " ",
+              "Policy"
+            ] }),
+            /* @__PURE__ */ jsx("p", { className: "mt-3 text-lg sm:text-xl w-full max-w-84 text-gray-700 font-light text-center md:text-left", children: "Everything you need to know about your personal data security." })
           ] }),
-          /* @__PURE__ */ jsxs("section", { children: [
-            /* @__PURE__ */ jsx("h2", { className: "text-xl font-semibold text-foreground mb-4", children: "2. Information We Collect" }),
-            /* @__PURE__ */ jsx("p", { className: "text-muted-foreground leading-relaxed mb-4", children: "We may collect information about you in a variety of ways, including:" }),
-            /* @__PURE__ */ jsxs("ul", { className: "list-disc pl-6 space-y-2 text-muted-foreground", children: [
-              /* @__PURE__ */ jsxs("li", { children: [
-                /* @__PURE__ */ jsx("strong", { className: "text-foreground", children: "Personal Data:" }),
-                " ",
-                "Name, email, phone number, address, and postcode."
-              ] }),
-              /* @__PURE__ */ jsxs("li", { children: [
-                /* @__PURE__ */ jsx("strong", { className: "text-foreground", children: "Property Information:" }),
-                " ",
-                "Details about your boiler system."
-              ] }),
-              /* @__PURE__ */ jsxs("li", { children: [
-                /* @__PURE__ */ jsx("strong", { className: "text-foreground", children: "Payment Information:" }),
-                " ",
-                "Securely processed via our payment provider."
-              ] }),
-              /* @__PURE__ */ jsxs("li", { children: [
-                /* @__PURE__ */ jsx("strong", { className: "text-foreground", children: "Usage Data:" }),
-                " ",
-                "IP address, browser type, and site interaction data."
-              ] })
-            ] })
-          ] }),
-          /* @__PURE__ */ jsxs("section", { children: [
-            /* @__PURE__ */ jsx("h2", { className: "text-xl font-semibold text-foreground mb-4", children: "3. How We Use Your Information" }),
-            /* @__PURE__ */ jsx("p", { className: "text-muted-foreground leading-relaxed mb-4", children: "We use your information for:" }),
-            /* @__PURE__ */ jsxs("ul", { className: "list-disc pl-6 space-y-2 text-muted-foreground", children: [
-              /* @__PURE__ */ jsx("li", { children: "Providing and improving our services" }),
-              /* @__PURE__ */ jsx("li", { children: "Processing bookings" }),
-              /* @__PURE__ */ jsx("li", { children: "Communicating about appointments" }),
-              /* @__PURE__ */ jsx("li", { children: "Sending promotional updates (with consent)" }),
-              /* @__PURE__ */ jsx("li", { children: "Complying with legal obligations" })
-            ] })
-          ] }),
-          /* @__PURE__ */ jsxs("section", { children: [
-            /* @__PURE__ */ jsx("h2", { className: "text-xl font-semibold text-foreground mb-4", children: "4. Information Sharing" }),
-            /* @__PURE__ */ jsx("p", { className: "text-muted-foreground leading-relaxed", children: "We do not sell or rent your data. We only share your information with trusted service providers who assist us in delivering our services." })
-          ] }),
-          /* @__PURE__ */ jsxs("section", { children: [
-            /* @__PURE__ */ jsx("h2", { className: "text-xl font-semibold text-foreground mb-4", children: "5. Data Security" }),
-            /* @__PURE__ */ jsx("p", { className: "text-muted-foreground leading-relaxed", children: "We use security measures to protect your information, but no online transmission is 100% secure." })
-          ] }),
-          /* @__PURE__ */ jsxs("section", { children: [
-            /* @__PURE__ */ jsx("h2", { className: "text-xl font-semibold text-foreground mb-4", children: "6. Your Rights" }),
-            /* @__PURE__ */ jsxs("ul", { className: "list-disc pl-6 space-y-2 text-muted-foreground", children: [
-              /* @__PURE__ */ jsx("li", { children: "Right to access your data" }),
-              /* @__PURE__ */ jsx("li", { children: "Right to correct inaccuracies" }),
-              /* @__PURE__ */ jsx("li", { children: "Right to deletion" }),
-              /* @__PURE__ */ jsx("li", { children: "Right to restrict processing" }),
-              /* @__PURE__ */ jsx("li", { children: "Right to data portability" }),
-              /* @__PURE__ */ jsx("li", { children: "Right to object to processing" })
-            ] })
-          ] }),
-          /* @__PURE__ */ jsxs("section", { children: [
-            /* @__PURE__ */ jsx("h2", { className: "text-xl font-semibold text-foreground mb-4", children: "7. Cookies" }),
-            /* @__PURE__ */ jsx("p", { className: "text-muted-foreground leading-relaxed", children: "Our website uses cookies to improve user experience. You may disable cookies in your browser settings." })
-          ] }),
-          /* @__PURE__ */ jsxs("section", { children: [
-            /* @__PURE__ */ jsx("h2", { className: "text-xl font-semibold text-foreground mb-4", children: "8. Contact Us" }),
-            /* @__PURE__ */ jsxs("div", { className: "mt-4 rounded-lg bg-muted/50 p-4 text-muted-foreground", children: [
-              /* @__PURE__ */ jsxs("p", { children: [
-                /* @__PURE__ */ jsx("strong", { className: "text-foreground", children: "Email:" }),
-                " ",
-                "privacy@mdgas.co.uk"
-              ] }),
-              /* @__PURE__ */ jsxs("p", { children: [
-                /* @__PURE__ */ jsx("strong", { className: "text-foreground", children: "Phone:" }),
-                " ",
-                "0800 123 4567"
-              ] }),
-              /* @__PURE__ */ jsxs("p", { children: [
-                /* @__PURE__ */ jsx("strong", { className: "text-foreground", children: "Address:" }),
-                " ",
-                "MD Gas Ltd, Greater London"
-              ] })
-            ] })
+          /* @__PURE__ */ jsx("div", { className: "text-center", children: /* @__PURE__ */ jsxs("p", { className: "text-sm text-gray-400", children: [
+            "Last updated:",
+            /* @__PURE__ */ jsx("br", { className: "md:flex" }),
+            /* @__PURE__ */ jsx("span", { className: "font-medium", children: lastUpdated })
+          ] }) })
+        ] }),
+        /* @__PURE__ */ jsxs("div", { className: "grid grid-cols-1 md:grid-cols-4 gap-0 md:gap-4", children: [
+          /* @__PURE__ */ jsxs(
+            "nav",
+            {
+              "aria-label": "Table of contents",
+              className: "md:col-span-1",
+              children: [
+                /* @__PURE__ */ jsx("div", { className: "md:hidden mb-4", children: /* @__PURE__ */ jsxs("div", { className: "relative", children: [
+                  /* @__PURE__ */ jsx("div", { className: "flex gap-2 overflow-x-auto no-scrollbar px-1 pb-2", children: SECTIONS$1.map((s) => {
+                    const isActive = s.id === activeSectionId;
+                    return /* @__PURE__ */ jsx(
+                      "a",
+                      {
+                        href: `#${s.id}`,
+                        className: `whitespace-nowrap rounded-full px-4 py-2 text-sm font-medium transition
+                                ${isActive ? "bg-primary text-white shadow-sm" : "bg-light-grey/80 text-dark hover:bg-light-grey"}`,
+                        children: s.title
+                      },
+                      s.id
+                    );
+                  }) }),
+                  /* @__PURE__ */ jsx("div", { className: "pointer-events-none absolute inset-y-0 left-0 w-6 bg-gradient-to-r from-white to-transparent" }),
+                  /* @__PURE__ */ jsx("div", { className: "pointer-events-none absolute inset-y-0 right-0 w-6 bg-gradient-to-l from-white to-transparent" })
+                ] }) }),
+                /* @__PURE__ */ jsx("div", { className: "hidden md:block md:sticky md:top-10 self-start", children: /* @__PURE__ */ jsxs("div", { className: "rounded-xl bg-gray-50 border border-gray-200 p-5 shadow-md md:max-h-[calc(100vh-4rem)] md:overflow-y-auto", children: [
+                  /* @__PURE__ */ jsx("h2", { className: "text-base font-bold text-gray-700 mb-4 border-b pb-2 border-gray-200", children: "Navigation" }),
+                  /* @__PURE__ */ jsx("ul", { className: "space-y-2 text-base", children: SECTIONS$1.map((s) => {
+                    const isActive = s.id === activeSectionId;
+                    return /* @__PURE__ */ jsx("li", { children: /* @__PURE__ */ jsx(
+                      "a",
+                      {
+                        href: `#${s.id}`,
+                        className: `block px-3 py-1.5 transition-all border-l-4
+                                    ${isActive ? "border-primary text-primary font-bold" : "border-transparent text-gray-600 hover:text-primary hover:border-secondary/70"}`,
+                        children: s.title
+                      }
+                    ) }, s.id);
+                  }) })
+                ] }) })
+              ]
+            }
+          ),
+          /* @__PURE__ */ jsxs("article", { className: "md:col-span-3 space-y-8 md:space-y-12 md:border-l md:border-gray-200 md:pl-8", children: [
+            /* @__PURE__ */ jsx(
+              PolicyTimelineSection,
+              {
+                id: "overview",
+                title: "Overview",
+                isActive: activeSectionId === "overview",
+                children: /* @__PURE__ */ jsxs("p", { children: [
+                  "Our priority at ",
+                  /* @__PURE__ */ jsx("strong", { children: "MD Gas" }),
+                  " is keeping your data secure and treating it with respect. We aim to handle your data fairly and lawfully at all times. This statement explains how we collect, use, transfer and store personal data and outlines your rights under UK GDPR."
+                ] })
+              }
+            ),
+            /* @__PURE__ */ jsx(
+              PolicyTimelineSection,
+              {
+                id: "who-we-are",
+                title: "1. Who we are",
+                isActive: activeSectionId === "who-we-are",
+                children: /* @__PURE__ */ jsx("p", { children: "MD Gas Limited (Glebe Business Park, Widnes, Cheshire, WA8 5SQ) is the data controller. We comply with the UK Data Protection Act 2018 and UK GDPR." })
+              }
+            ),
+            /* @__PURE__ */ jsx(
+              PolicyTimelineSection,
+              {
+                id: "contacting-us",
+                title: "2. Contacting us",
+                isActive: activeSectionId === "contacting-us",
+                children: /* @__PURE__ */ jsx("p", { children: "You can reach our Data Protection Officer or customer support via the details provided in the **Contact us** section at the bottom of this policy." })
+              }
+            ),
+            /* @__PURE__ */ jsxs(
+              PolicyTimelineSection,
+              {
+                id: "what-we-collect",
+                title: "3. What information we collect",
+                isActive: activeSectionId === "what-we-collect",
+                children: [
+                  /* @__PURE__ */ jsxs("ul", { className: "list-disc pl-5 space-y-3 text-gray-700", children: [
+                    /* @__PURE__ */ jsxs("li", { children: [
+                      /* @__PURE__ */ jsx("strong", { className: "text-primary", children: "Personal data:" }),
+                      " ",
+                      "Name, address, email, phone, and date of birth."
+                    ] }),
+                    /* @__PURE__ */ jsxs("li", { children: [
+                      /* @__PURE__ */ jsx("strong", { className: "text-primary", children: "Vulnerability info:" }),
+                      " ",
+                      "Health or disability information you choose to provide us for service accommodation."
+                    ] }),
+                    /* @__PURE__ */ jsxs("li", { children: [
+                      /* @__PURE__ */ jsx("strong", { className: "text-primary", children: "Financial info:" }),
+                      " ",
+                      "Payment details and finance application history."
+                    ] }),
+                    /* @__PURE__ */ jsxs("li", { children: [
+                      /* @__PURE__ */ jsx("strong", { className: "text-primary", children: "Property info:" }),
+                      " ",
+                      "House details and energy systems (boiler type, size) from quoting tools."
+                    ] }),
+                    /* @__PURE__ */ jsxs("li", { children: [
+                      /* @__PURE__ */ jsx("strong", { className: "text-primary", children: "Communications:" }),
+                      " ",
+                      "Call recordings, emails, and webchat transcripts for quality and training purposes."
+                    ] })
+                  ] }),
+                  /* @__PURE__ */ jsx("p", { className: "mt-4 border-l-4 border-gray-200 pl-4 text-sm text-gray-500 italic", children: "We do not store complete credit card details; they are processed securely by a PCI DSS compliant third-party payment provider." })
+                ]
+              }
+            ),
+            /* @__PURE__ */ jsxs(
+              PolicyTimelineSection,
+              {
+                id: "how-we-use",
+                title: "4. How we use your information",
+                isActive: activeSectionId === "how-we-use",
+                children: [
+                  /* @__PURE__ */ jsx("p", { className: "text-base text-gray-700", children: "We use data to: deliver requested services (installation/repair), provide accurate quotes, manage orders, register products for warranty, process secure payments, improve services, and send relevant marketing communications where consent has been given." }),
+                  /* @__PURE__ */ jsxs("div", { className: "mt-4 border-l-4 border-secondary bg-secondary/5 p-4 text-base text-primary rounded-r-lg", children: [
+                    /* @__PURE__ */ jsx("strong", { children: "Legal Basis:" }),
+                    " Our primary legal basis for processing is the performance of a contract and legitimate interests."
+                  ] })
+                ]
+              }
+            ),
+            /* @__PURE__ */ jsx(
+              PolicyTimelineSection,
+              {
+                id: "sharing",
+                title: "5. Information sharing",
+                isActive: activeSectionId === "sharing",
+                children: /* @__PURE__ */ jsx("p", { children: "We do not sell or rent your data. Sharing occurs only with trusted providers strictly as required to fulfill services or legal duties." })
+              }
+            ),
+            /* @__PURE__ */ jsxs(
+              PolicyTimelineSection,
+              {
+                id: "security",
+                title: "6. Data security",
+                isActive: activeSectionId === "security",
+                children: [
+                  /* @__PURE__ */ jsx("p", { children: "We maintain robust technical and organisational security measures including encryption, access controls, and staff training." }),
+                  /* @__PURE__ */ jsxs("div", { className: "mt-4 border-l-4 border-yellow-500 bg-yellow-50 p-4 text-base text-yellow-800 rounded-r-lg", children: [
+                    /* @__PURE__ */ jsx("strong", { children: "Security Note:" }),
+                    " If you suspect a security issue, contact our DPO immediately."
+                  ] })
+                ]
+              }
+            ),
+            /* @__PURE__ */ jsxs(
+              PolicyTimelineSection,
+              {
+                id: "retention",
+                title: "7. Data retention",
+                isActive: activeSectionId === "retention",
+                children: [
+                  /* @__PURE__ */ jsx("p", { children: "Data is only kept as long as necessary." }),
+                  /* @__PURE__ */ jsxs("ul", { className: "list-disc pl-5 space-y-2 text-gray-700", children: [
+                    /* @__PURE__ */ jsxs("li", { children: [
+                      /* @__PURE__ */ jsx("strong", { className: "text-primary", children: "Service records:" }),
+                      " ",
+                      "up to 6 years."
+                    ] }),
+                    /* @__PURE__ */ jsxs("li", { children: [
+                      /* @__PURE__ */ jsx("strong", { className: "text-primary", children: "Financial records:" }),
+                      " ",
+                      "up to 7 years."
+                    ] }),
+                    /* @__PURE__ */ jsxs("li", { children: [
+                      /* @__PURE__ */ jsx("strong", { className: "text-primary", children: "Usage data:" }),
+                      " ",
+                      "12–24 months."
+                    ] })
+                  ] })
+                ]
+              }
+            ),
+            /* @__PURE__ */ jsx(
+              PolicyTimelineSection,
+              {
+                id: "rights",
+                title: "8. Your rights",
+                isActive: activeSectionId === "rights",
+                children: /* @__PURE__ */ jsx("p", { children: "Under GDPR, you have rights to access, correct, erase, restrict, port, and object to processing of your data." })
+              }
+            ),
+            /* @__PURE__ */ jsx(
+              PolicyTimelineSection,
+              {
+                id: "cookies",
+                title: "9. Cookies",
+                isActive: activeSectionId === "cookies",
+                children: /* @__PURE__ */ jsx("p", { children: "We use cookies for functionality, analytics, and marketing. Details are available in our **Cookie Policy**." })
+              }
+            ),
+            /* @__PURE__ */ jsx(
+              PolicyTimelineSection,
+              {
+                id: "children",
+                title: "10. Children",
+                isActive: activeSectionId === "children",
+                children: /* @__PURE__ */ jsx("p", { children: "Our services are not designed for children under 16." })
+              }
+            ),
+            /* @__PURE__ */ jsx(
+              PolicyTimelineSection,
+              {
+                id: "third-party",
+                title: "11. Third-party services",
+                isActive: activeSectionId === "third-party",
+                children: /* @__PURE__ */ jsx("p", { children: "We are not responsible for third-party privacy practices." })
+              }
+            ),
+            /* @__PURE__ */ jsx(
+              PolicyTimelineSection,
+              {
+                id: "changes",
+                title: "12. Changes to this policy",
+                isActive: activeSectionId === "changes",
+                children: /* @__PURE__ */ jsx("p", { children: "This policy is reviewed annually or as required by law." })
+              }
+            ),
+            /* @__PURE__ */ jsx(
+              PolicyTimelineSection,
+              {
+                id: "contact",
+                title: "Contact us",
+                isContact: true,
+                isActive: activeSectionId === "contact",
+                children: /* @__PURE__ */ jsxs("div", { className: "mt-4 p-5 rounded-lg border border-primary/60 bg-primary/5 space-y-3", children: [
+                  /* @__PURE__ */ jsxs("p", { children: [
+                    /* @__PURE__ */ jsx("strong", { children: "Email:" }),
+                    " hello@MD Gas.co.uk"
+                  ] }),
+                  /* @__PURE__ */ jsxs("p", { children: [
+                    /* @__PURE__ */ jsx("strong", { children: "DPO:" }),
+                    " privacy@MD Gas.co.uk"
+                  ] }),
+                  /* @__PURE__ */ jsxs("p", { children: [
+                    /* @__PURE__ */ jsx("strong", { children: "Phone:" }),
+                    " 0330 113 1333"
+                  ] }),
+                  /* @__PURE__ */ jsxs("p", { children: [
+                    /* @__PURE__ */ jsx("strong", { children: "Address:" }),
+                    " MD Gas Limited, Glebe Business Park, Widnes, Cheshire, WA8 5SQ"
+                  ] })
+                ] })
+              }
+            )
           ] })
         ] })
       ] })
-    ] })
+    ] }),
+    /* @__PURE__ */ jsx(Footer, {})
   ] });
 }
-const __vite_glob_0_13 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
+const PolicyTimelineSection = ({
+  id,
+  title,
+  children,
+  isContact = false,
+  isActive = false
+}) => /* @__PURE__ */ jsxs("section", { id, className: "relative", children: [
+  /* @__PURE__ */ jsx(
+    "div",
+    {
+      className: `hidden md:block absolute -left-[37px] top-2 h-3 w-3 rounded-full border-2 ${isActive ? "bg-primary border-secondary/60" : "bg-white border-gray-300"}`
+    }
+  ),
+  /* @__PURE__ */ jsx(
+    "h3",
+    {
+      className: `text-xl sm:text-2xl font-extrabold mb-4 ${isContact || isActive ? "text-primary" : "text-gray-900"}`,
+      children: title
+    }
+  ),
+  /* @__PURE__ */ jsx("div", { className: "space-y-4 text-base text-gray-700 leading-relaxed", children })
+] });
+const __vite_glob_0_15 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
   __proto__: null,
   default: PrivacyPolicyPage
 }, Symbol.toStringTag, { value: "Module" }));
@@ -4151,7 +3931,7 @@ function DeleteUserForm({ className = "" }) {
     ] }) })
   ] });
 }
-const __vite_glob_0_15 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
+const __vite_glob_0_17 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
   __proto__: null,
   default: DeleteUserForm
 }, Symbol.toStringTag, { value: "Module" }));
@@ -4282,7 +4062,7 @@ function UpdatePasswordForm({ className = "" }) {
     ] })
   ] });
 }
-const __vite_glob_0_16 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
+const __vite_glob_0_18 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
   __proto__: null,
   default: UpdatePasswordForm
 }, Symbol.toStringTag, { value: "Module" }));
@@ -4371,7 +4151,7 @@ function UpdateProfileInformation({
     ] })
   ] });
 }
-const __vite_glob_0_17 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
+const __vite_glob_0_19 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
   __proto__: null,
   default: UpdateProfileInformation
 }, Symbol.toStringTag, { value: "Module" }));
@@ -4398,116 +4178,259 @@ function Edit({ mustVerifyEmail, status }) {
     }
   );
 }
-const __vite_glob_0_14 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
+const __vite_glob_0_16 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
   __proto__: null,
   default: Edit
 }, Symbol.toStringTag, { value: "Module" }));
+const SECTIONS = [
+  { id: "agreement", title: "1. Agreement to Terms" },
+  { id: "services", title: "2. Services" },
+  { id: "bookings", title: "3. Bookings & Appointments" },
+  { id: "pricing", title: "4. Pricing & Payment" },
+  { id: "warranties", title: "5. Warranties & Guarantees" },
+  { id: "liability", title: "6. Liability" },
+  { id: "safety", title: "7. Safety Requirements" },
+  { id: "complaints", title: "8. Complaints" },
+  { id: "changes", title: "9. Changes to Terms" },
+  { id: "contact", title: "10. Contact Information" }
+];
+const getActiveIdFromHash = () => {
+  if (typeof window !== "undefined" && window.location.hash) {
+    return window.location.hash.substring(1);
+  }
+  return null;
+};
 function TermsConditionsPage() {
   const { props } = usePage();
   const pageTitle2 = props.pageTitle ?? "Terms & Conditions";
-  return /* @__PURE__ */ jsxs("div", { className: "min-h-screen bg-background", children: [
-    /* @__PURE__ */ jsx(PageHeader, { title: pageTitle2 }),
-    /* @__PURE__ */ jsxs("main", { className: "mx-auto max-w-4xl px-4 py-12 sm:px-6 lg:px-8", children: [
-      /* @__PURE__ */ jsx("h1", { className: "text-3xl font-bold text-foreground mb-2", children: "Terms & Conditions" }),
-      /* @__PURE__ */ jsx("p", { className: "text-muted-foreground mb-8", children: "Last updated: November 2024" }),
-      /* @__PURE__ */ jsxs("div", { className: "prose prose-gray max-w-none space-y-8", children: [
-        /* @__PURE__ */ jsxs("section", { children: [
-          /* @__PURE__ */ jsx("h2", { className: "text-xl font-semibold text-foreground mb-4", children: "1. Agreement to Terms" }),
-          /* @__PURE__ */ jsx("p", { className: "text-muted-foreground leading-relaxed", children: 'By accessing or using the services provided by MD Gas ("Company", "we", "our", or "us"), you agree to be bound by these Terms and Conditions. If you disagree with any part of these terms, you may not access our services.' })
-        ] }),
-        /* @__PURE__ */ jsxs("section", { children: [
-          /* @__PURE__ */ jsx("h2", { className: "text-xl font-semibold text-foreground mb-4", children: "2. Services" }),
-          /* @__PURE__ */ jsx("p", { className: "text-muted-foreground leading-relaxed mb-4", children: "MD Gas provides boiler repair, servicing, installation, and power flush services. Our services include:" }),
-          /* @__PURE__ */ jsxs("ul", { className: "list-disc pl-6 space-y-2 text-muted-foreground", children: [
-            /* @__PURE__ */ jsxs("li", { children: [
-              /* @__PURE__ */ jsx("strong", { className: "text-foreground", children: "Boiler Repairs:" }),
+  const lastUpdated = "12 December 2025";
+  const [activeSectionId, setActiveSectionId] = useState(
+    getActiveIdFromHash()
+  );
+  useEffect(() => {
+    const handleHashChange = () => {
+      setActiveSectionId(getActiveIdFromHash());
+    };
+    window.addEventListener("hashchange", handleHashChange);
+    setActiveSectionId(getActiveIdFromHash());
+    return () => window.removeEventListener("hashchange", handleHashChange);
+  }, []);
+  return /* @__PURE__ */ jsxs(Fragment, { children: [
+    /* @__PURE__ */ jsx(Head, { title: pageTitle2 }),
+    /* @__PURE__ */ jsxs("div", { className: "min-h-screen w-full bg-white text-gray-900 rounded-b-3xl", children: [
+      /* @__PURE__ */ jsx(Header, { title: pageTitle2 }),
+      /* @__PURE__ */ jsxs("main", { className: "mx-auto max-w-7xl px-4 sm:px-6 lg:px-0 py-16 pt-28", children: [
+        /* @__PURE__ */ jsxs("div", { className: "mb-8 md:mb-16 mt-6 flex flex-col items-center justify-center md:flex-row md:justify-between md:items-center", children: [
+          /* @__PURE__ */ jsxs("div", { className: "", children: [
+            /* @__PURE__ */ jsxs("h1", { className: "text-3xl sm:text-5xl font-extrabold leading-tight tracking-tighter text-center md:text-left", children: [
+              "Terms &",
               " ",
-              "Fixed £75 labour charge (parts extra)."
+              /* @__PURE__ */ jsx("span", { className: "text-primary", children: "Conditions" })
             ] }),
-            /* @__PURE__ */ jsxs("li", { children: [
-              /* @__PURE__ */ jsx("strong", { className: "text-foreground", children: "Servicing:" }),
-              " ",
-              "Annual servicing from £75."
-            ] }),
-            /* @__PURE__ */ jsxs("li", { children: [
-              /* @__PURE__ */ jsx("strong", { className: "text-foreground", children: "Installations:" }),
-              " ",
-              "Pricing varies depending on system."
-            ] }),
-            /* @__PURE__ */ jsxs("li", { children: [
-              /* @__PURE__ */ jsx("strong", { className: "text-foreground", children: "Power Flush:" }),
-              " ",
-              "Price based on radiator count."
-            ] })
-          ] })
+            /* @__PURE__ */ jsx("p", { className: "mt-3 text-lg sm:text-xl w-full max-w-84 text-gray-700 font-light text-center md:text-left", children: "The terms that govern your use of MD Gas services." })
+          ] }),
+          /* @__PURE__ */ jsx("div", { className: "text-center", children: /* @__PURE__ */ jsxs("p", { className: "mt-3 text-sm text-gray-400", children: [
+            "Last updated: ",
+            /* @__PURE__ */ jsx("br", { className: "md:flex" }),
+            /* @__PURE__ */ jsx("span", { className: "font-medium", children: lastUpdated })
+          ] }) })
         ] }),
-        /* @__PURE__ */ jsxs("section", { children: [
-          /* @__PURE__ */ jsx("h2", { className: "text-xl font-semibold text-foreground mb-4", children: "3. Bookings & Appointments" }),
-          /* @__PURE__ */ jsxs("ul", { className: "list-disc pl-6 space-y-2 text-muted-foreground", children: [
-            /* @__PURE__ */ jsx("li", { children: "Provide accurate and complete booking information." }),
-            /* @__PURE__ */ jsx("li", { children: "An adult must be present during the appointment." }),
-            /* @__PURE__ */ jsx("li", { children: "You must ensure safe access to the boiler/system." }),
-            /* @__PURE__ */ jsx("li", { children: "Cancel at least 24 hours before to avoid fees." })
-          ] })
-        ] }),
-        /* @__PURE__ */ jsxs("section", { children: [
-          /* @__PURE__ */ jsx("h2", { className: "text-xl font-semibold text-foreground mb-4", children: "4. Pricing & Payment" }),
-          /* @__PURE__ */ jsxs("ul", { className: "list-disc pl-6 space-y-2 text-muted-foreground", children: [
-            /* @__PURE__ */ jsx("li", { children: "All prices include VAT (unless stated)." }),
-            /* @__PURE__ */ jsx("li", { children: "Labour charges are fixed; parts quoted separately." }),
-            /* @__PURE__ */ jsx("li", { children: "Payment due upon completion unless otherwise agreed." }),
-            /* @__PURE__ */ jsx("li", { children: "We accept cash, card, and bank transfer." })
-          ] })
-        ] }),
-        /* @__PURE__ */ jsxs("section", { children: [
-          /* @__PURE__ */ jsx("h2", { className: "text-xl font-semibold text-foreground mb-4", children: "5. Warranties & Guarantees" }),
-          /* @__PURE__ */ jsxs("ul", { className: "list-disc pl-6 space-y-2 text-muted-foreground", children: [
-            /* @__PURE__ */ jsx("li", { children: "12-month workmanship guarantee." }),
-            /* @__PURE__ */ jsx("li", { children: "Manufacturer warranties apply to new boilers." }),
-            /* @__PURE__ */ jsx("li", { children: "Parts covered by manufacturer warranty." })
-          ] })
-        ] }),
-        /* @__PURE__ */ jsxs("section", { children: [
-          /* @__PURE__ */ jsx("h2", { className: "text-xl font-semibold text-foreground mb-4", children: "6. Liability" }),
-          /* @__PURE__ */ jsx("p", { className: "text-muted-foreground leading-relaxed", children: "We are fully insured and Gas Safe registered. Liability is limited to service cost. We are not liable for: pre-existing system faults, third-party damage, or issues caused by lack of maintenance." })
-        ] }),
-        /* @__PURE__ */ jsxs("section", { children: [
-          /* @__PURE__ */ jsx("h2", { className: "text-xl font-semibold text-foreground mb-4", children: "7. Safety Requirements" }),
-          /* @__PURE__ */ jsx("p", { className: "text-muted-foreground leading-relaxed", children: "All work follows Gas Safe regulations. If we find unsafe conditions, we may need to isolate the appliance as required by law." })
-        ] }),
-        /* @__PURE__ */ jsxs("section", { children: [
-          /* @__PURE__ */ jsx("h2", { className: "text-xl font-semibold text-foreground mb-4", children: "8. Complaints" }),
-          /* @__PURE__ */ jsx("p", { className: "text-muted-foreground leading-relaxed", children: "Contact us within 14 days if you’re unhappy. We respond within 2 working days and resolve complaints within 14 working days." })
-        ] }),
-        /* @__PURE__ */ jsxs("section", { children: [
-          /* @__PURE__ */ jsx("h2", { className: "text-xl font-semibold text-foreground mb-4", children: "9. Changes to Terms" }),
-          /* @__PURE__ */ jsx("p", { className: "text-muted-foreground leading-relaxed", children: "We may update these terms at any time. Updates are effective immediately once posted. Continued use of our services means acceptance of updated terms." })
-        ] }),
-        /* @__PURE__ */ jsxs("section", { children: [
-          /* @__PURE__ */ jsx("h2", { className: "text-xl font-semibold text-foreground mb-4", children: "10. Contact Information" }),
-          /* @__PURE__ */ jsxs("div", { className: "mt-4 rounded-lg bg-muted/50 p-4 text-muted-foreground", children: [
-            /* @__PURE__ */ jsxs("p", { children: [
-              /* @__PURE__ */ jsx("strong", { className: "text-foreground", children: "Email:" }),
-              " ",
-              "info@mdgas.co.uk"
-            ] }),
-            /* @__PURE__ */ jsxs("p", { children: [
-              /* @__PURE__ */ jsx("strong", { className: "text-foreground", children: "Phone:" }),
-              " ",
-              "0800 123 4567"
-            ] }),
-            /* @__PURE__ */ jsxs("p", { children: [
-              /* @__PURE__ */ jsx("strong", { className: "text-foreground", children: "Address:" }),
-              " ",
-              "MD Gas Ltd, Greater London"
-            ] })
+        /* @__PURE__ */ jsx("div", { className: "md:hidden mb-10", children: /* @__PURE__ */ jsxs("div", { className: "relative", children: [
+          /* @__PURE__ */ jsx("div", { className: "flex gap-2 overflow-x-auto no-scrollbar px-1 pb-2", children: SECTIONS.map((s) => {
+            const isActive = s.id === activeSectionId;
+            return /* @__PURE__ */ jsx(
+              "a",
+              {
+                href: `#${s.id}`,
+                className: `whitespace-nowrap rounded-full px-4 py-2 text-sm font-medium transition
+                                                ${isActive ? "bg-primary text-white shadow-sm" : "bg-gray-100 text-gray-700 hover:bg-gray-200"}`,
+                children: s.title
+              },
+              s.id
+            );
+          }) }),
+          /* @__PURE__ */ jsx("div", { className: "pointer-events-none absolute inset-y-0 left-0 w-6 bg-gradient-to-r from-white to-transparent" }),
+          /* @__PURE__ */ jsx("div", { className: "pointer-events-none absolute inset-y-0 right-0 w-6 bg-gradient-to-l from-white to-transparent" })
+        ] }) }),
+        /* @__PURE__ */ jsxs("div", { className: "grid grid-cols-1 md:grid-cols-4 gap-12", children: [
+          /* @__PURE__ */ jsx(
+            "nav",
+            {
+              "aria-label": "Table of contents",
+              className: "hidden md:block md:col-span-1 md:sticky md:top-10 self-start",
+              children: /* @__PURE__ */ jsxs("div", { className: "rounded-xl bg-gray-50 border border-gray-200 p-6 shadow-md max-h-[calc(100vh-4rem)] overflow-y-auto", children: [
+                /* @__PURE__ */ jsx("h2", { className: "text-base font-bold text-gray-700 mb-4 border-b pb-2 border-gray-200", children: "Contents" }),
+                /* @__PURE__ */ jsx("ul", { className: "space-y-2 text-base", children: SECTIONS.map((s) => {
+                  const isActive = s.id === activeSectionId;
+                  return /* @__PURE__ */ jsx("li", { children: /* @__PURE__ */ jsx(
+                    "a",
+                    {
+                      href: `#${s.id}`,
+                      className: `block px-3 py-1.5 transition-all border-l-4
+                                                        ${isActive ? "border-primary text-primary font-semibold" : "border-transparent text-gray-600 hover:text-primary hover:border-secondary/70"}`,
+                      children: s.title
+                    }
+                  ) }, s.id);
+                }) })
+              ] })
+            }
+          ),
+          /* @__PURE__ */ jsxs("article", { className: "md:col-span-3 space-y-12 md:border-l md:border-gray-200 md:pl-8", children: [
+            /* @__PURE__ */ jsx(
+              TermsSection,
+              {
+                id: "agreement",
+                title: "1. Agreement to Terms",
+                isActive: activeSectionId === "agreement",
+                children: /* @__PURE__ */ jsx("p", { children: 'By accessing or using the services provided by MD Gas ("Company", "we", "our", or "us"), you agree to be bound by these Terms & Conditions.' })
+              }
+            ),
+            /* @__PURE__ */ jsx(
+              TermsSection,
+              {
+                id: "services",
+                title: "2. Services",
+                isActive: activeSectionId === "services",
+                children: /* @__PURE__ */ jsxs("ul", { className: "list-disc pl-5 space-y-2", children: [
+                  /* @__PURE__ */ jsxs("li", { children: [
+                    /* @__PURE__ */ jsx("strong", { children: "Boiler Repairs:" }),
+                    " Fixed £75 labour charge (parts extra)."
+                  ] }),
+                  /* @__PURE__ */ jsxs("li", { children: [
+                    /* @__PURE__ */ jsx("strong", { children: "Servicing:" }),
+                    " Annual servicing from £75."
+                  ] }),
+                  /* @__PURE__ */ jsxs("li", { children: [
+                    /* @__PURE__ */ jsx("strong", { children: "Installations:" }),
+                    " Pricing varies."
+                  ] }),
+                  /* @__PURE__ */ jsxs("li", { children: [
+                    /* @__PURE__ */ jsx("strong", { children: "Power Flush:" }),
+                    " Price based on radiator count."
+                  ] })
+                ] })
+              }
+            ),
+            /* @__PURE__ */ jsx(
+              TermsSection,
+              {
+                id: "bookings",
+                title: "3. Bookings & Appointments",
+                isActive: activeSectionId === "bookings",
+                children: /* @__PURE__ */ jsxs("ul", { className: "list-disc pl-5 space-y-2", children: [
+                  /* @__PURE__ */ jsx("li", { children: "Provide accurate booking details." }),
+                  /* @__PURE__ */ jsx("li", { children: "An adult must be present." }),
+                  /* @__PURE__ */ jsx("li", { children: "Ensure safe access." }),
+                  /* @__PURE__ */ jsx("li", { children: "24h notice required." })
+                ] })
+              }
+            ),
+            /* @__PURE__ */ jsx(
+              TermsSection,
+              {
+                id: "pricing",
+                title: "4. Pricing & Payment",
+                isActive: activeSectionId === "pricing",
+                children: /* @__PURE__ */ jsxs("ul", { className: "list-disc pl-5 space-y-2", children: [
+                  /* @__PURE__ */ jsx("li", { children: "Prices include VAT." }),
+                  /* @__PURE__ */ jsx("li", { children: "Labour fixed, parts extra." }),
+                  /* @__PURE__ */ jsx("li", { children: "Payment due on completion." }),
+                  /* @__PURE__ */ jsx("li", { children: "Cash, card, bank transfer accepted." })
+                ] })
+              }
+            ),
+            /* @__PURE__ */ jsx(
+              TermsSection,
+              {
+                id: "warranties",
+                title: "5. Warranties & Guarantees",
+                isActive: activeSectionId === "warranties",
+                children: /* @__PURE__ */ jsxs("ul", { className: "list-disc pl-5 space-y-2", children: [
+                  /* @__PURE__ */ jsx("li", { children: "12-month workmanship guarantee." }),
+                  /* @__PURE__ */ jsx("li", { children: "Manufacturer warranties apply." })
+                ] })
+              }
+            ),
+            /* @__PURE__ */ jsx(
+              TermsSection,
+              {
+                id: "liability",
+                title: "6. Liability",
+                isActive: activeSectionId === "liability",
+                children: /* @__PURE__ */ jsx("p", { children: "Liability is limited to service cost and excludes pre-existing faults." })
+              }
+            ),
+            /* @__PURE__ */ jsx(
+              TermsSection,
+              {
+                id: "safety",
+                title: "7. Safety Requirements",
+                isActive: activeSectionId === "safety",
+                children: /* @__PURE__ */ jsx("p", { children: "All work complies with Gas Safe regulations." })
+              }
+            ),
+            /* @__PURE__ */ jsx(
+              TermsSection,
+              {
+                id: "complaints",
+                title: "8. Complaints",
+                isActive: activeSectionId === "complaints",
+                children: /* @__PURE__ */ jsx("p", { children: "Contact us within 14 days if unhappy with service." })
+              }
+            ),
+            /* @__PURE__ */ jsx(
+              TermsSection,
+              {
+                id: "changes",
+                title: "9. Changes to Terms",
+                isActive: activeSectionId === "changes",
+                children: /* @__PURE__ */ jsx("p", { children: "Terms may be updated at any time." })
+              }
+            ),
+            /* @__PURE__ */ jsx(
+              TermsSection,
+              {
+                id: "contact",
+                title: "10. Contact Information",
+                isActive: activeSectionId === "contact",
+                isContact: true,
+                children: /* @__PURE__ */ jsxs("div", { className: "mt-4 p-5 rounded-lg border border-primary/60 bg-primary-5 space-y-3", children: [
+                  /* @__PURE__ */ jsx("p", { children: "Email: info@mdgas.co.uk" }),
+                  /* @__PURE__ */ jsx("p", { children: "Phone: 0800 123 4567" }),
+                  /* @__PURE__ */ jsx("p", { children: "MD Gas Ltd, Greater London" })
+                ] })
+              }
+            )
           ] })
         ] })
       ] })
-    ] })
+    ] }),
+    /* @__PURE__ */ jsx(Footer, {})
   ] });
 }
-const __vite_glob_0_18 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
+const TermsSection = ({
+  id,
+  title,
+  children,
+  isContact = false,
+  isActive = false
+}) => /* @__PURE__ */ jsxs("section", { id, className: "relative", children: [
+  /* @__PURE__ */ jsx(
+    "div",
+    {
+      className: `hidden md:block absolute -left-[37px] top-2 h-3 w-3 rounded-full border-2 ${isActive ? "bg-primary border-secondary/60" : "bg-white border-light-grey"}`
+    }
+  ),
+  /* @__PURE__ */ jsx(
+    "h3",
+    {
+      className: `text-xl sm:text-2xl font-extrabold mb-4 ${isContact || isActive ? "text-primary" : "text-gray-900"}`,
+      children: title
+    }
+  ),
+  /* @__PURE__ */ jsx("div", { className: "space-y-4 text-base text-gray-700 leading-relaxed", children })
+] });
+const __vite_glob_0_20 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
   __proto__: null,
   default: TermsConditionsPage
 }, Symbol.toStringTag, { value: "Module" }));
@@ -4896,7 +4819,7 @@ function Welcome({ auth, laravelVersion, phpVersion }) {
     ] })
   ] });
 }
-const __vite_glob_0_19 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
+const __vite_glob_0_21 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
   __proto__: null,
   default: Welcome
 }, Symbol.toStringTag, { value: "Module" }));
@@ -4905,7 +4828,7 @@ createServer(
     page,
     render: renderToString,
     resolve: (name) => {
-      const pages = /* @__PURE__ */ Object.assign({ "./Pages/About/AboutPage.jsx": __vite_glob_0_0, "./Pages/Auth/ConfirmPassword.jsx": __vite_glob_0_1, "./Pages/Auth/ForgotPassword.jsx": __vite_glob_0_2, "./Pages/Auth/Login.jsx": __vite_glob_0_3, "./Pages/Auth/Register.jsx": __vite_glob_0_4, "./Pages/Auth/ResetPassword.jsx": __vite_glob_0_5, "./Pages/Auth/VerifyEmail.jsx": __vite_glob_0_6, "./Pages/Book/PowerFlushPage.jsx": __vite_glob_0_7, "./Pages/Book/QuotePage.jsx": __vite_glob_0_8, "./Pages/Book/RepairPage.jsx": __vite_glob_0_9, "./Pages/Book/ServicePage.jsx": __vite_glob_0_10, "./Pages/Dashboard.jsx": __vite_glob_0_11, "./Pages/Home.jsx": __vite_glob_0_12, "./Pages/PrivacyPolicyPage.jsx": __vite_glob_0_13, "./Pages/Profile/Edit.jsx": __vite_glob_0_14, "./Pages/Profile/Partials/DeleteUserForm.jsx": __vite_glob_0_15, "./Pages/Profile/Partials/UpdatePasswordForm.jsx": __vite_glob_0_16, "./Pages/Profile/Partials/UpdateProfileInformationForm.jsx": __vite_glob_0_17, "./Pages/TermsConditionsPage.jsx": __vite_glob_0_18, "./Pages/Welcome.jsx": __vite_glob_0_19 });
+      const pages = /* @__PURE__ */ Object.assign({ "./Pages/About/AboutPage.jsx": __vite_glob_0_0, "./Pages/Auth/ConfirmPassword.jsx": __vite_glob_0_1, "./Pages/Auth/ForgotPassword.jsx": __vite_glob_0_2, "./Pages/Auth/Login.jsx": __vite_glob_0_3, "./Pages/Auth/Register.jsx": __vite_glob_0_4, "./Pages/Auth/ResetPassword.jsx": __vite_glob_0_5, "./Pages/Auth/VerifyEmail.jsx": __vite_glob_0_6, "./Pages/Book/Home.jsx": __vite_glob_0_7, "./Pages/Book/NewBoilerPage.jsx": __vite_glob_0_8, "./Pages/Book/PowerFlushPage.jsx": __vite_glob_0_9, "./Pages/Book/QuotePage.jsx": __vite_glob_0_10, "./Pages/Book/RepairPage.jsx": __vite_glob_0_11, "./Pages/Book/ServicePage.jsx": __vite_glob_0_12, "./Pages/Dashboard.jsx": __vite_glob_0_13, "./Pages/Home.jsx": __vite_glob_0_14, "./Pages/PrivacyPolicyPage.jsx": __vite_glob_0_15, "./Pages/Profile/Edit.jsx": __vite_glob_0_16, "./Pages/Profile/Partials/DeleteUserForm.jsx": __vite_glob_0_17, "./Pages/Profile/Partials/UpdatePasswordForm.jsx": __vite_glob_0_18, "./Pages/Profile/Partials/UpdateProfileInformationForm.jsx": __vite_glob_0_19, "./Pages/TermsConditionsPage.jsx": __vite_glob_0_20, "./Pages/Welcome.jsx": __vite_glob_0_21 });
       return pages[`./Pages/${name}.jsx`];
     },
     setup: ({ App, props }) => /* @__PURE__ */ jsx(App, { ...props })

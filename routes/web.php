@@ -30,6 +30,11 @@ Route::prefix('book')->name('book.')->group(function () {
     Route::get('/quote/new', [BookController::class, 'newStepper'])->name('quote.new');
     Route::get('/quote/powerflush', [BookController::class, 'powerflushStepper'])->name('quote.powerflush');
     Route::get('/quote/service', [BookController::class, 'serviceStepper'])->name('quote.service');
+    Route::get('/quote/new/results', [BookController::class, 'serviceResults'])
+    ->name('quote.new.results');
+
+    Route::get('/install', [BookController::class, 'install'])
+        ->name('install');
 });
 
 

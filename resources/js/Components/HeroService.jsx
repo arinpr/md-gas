@@ -8,7 +8,6 @@ import {
 } from "@/components/ui/card";
 import { ArrowRight } from "lucide-react";
 
-
 const services = [
     {
         id: "repair",
@@ -46,7 +45,7 @@ const services = [
         description: "Instant online quote for a new boiler.",
         image: "/images/product_boiler.png",
         highlight: "Instant Quote",
-        href: "/book/quote?service=new",
+        href: "/book",
         theme: {
             hoverBg: "hover:bg-[#E6F9EC]",
             hoverBorder: "hover:border-[#17A44A]",
@@ -122,66 +121,63 @@ function GlowRipple({ className }) {
     );
 }
 
-
-
-
 export function HeroServices() {
     return (
-           <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-4">
-                               {services.map((service) => (
-                                   <Card
-                                       key={service.id}
-                                       className={`group relative flex flex-col justify-start items-start overflow-hidden rounded-[30px] border-[3px] border-[#EFEFEF] bg-white px-7 pt-7 pb-6 shadow-[0_18px_45px_rgba(15,23,42,0.06)] transition-all duration-300 hover:shadow-[0_24px_60px_rgba(15,23,42,0.14)] ${service.theme.hoverBg} ${service.theme.hoverBorder}`}
-                                   >
-                                       {/* label pill */}
-                                       <div
-                                           className={`inline-flex items-center rounded-full px-3 py-1 text-xs font-semibold text-white ${service.theme.labelBg}`}
-                                       >
-                                           {service.highlight}
-                                       </div>
-           
-                                       {/* image + ripple */}
-                                       <div className="relative mt-1 flex h-44 w-full items-center justify-center">
-                                           {/* ripple perfectly centered */}
-                                           <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
-                                               <GlowRipple
-                                                   className={`${service.theme.rippleColor}`}
-                                               />
-                                           </div>
-           
-                                           {/* image perfectly centered */}
-                                           <img
-                                               src={service.image}
-                                               alt={service.title}
-                                               className="relative z-10 max-h-32 object-contain mx-auto"
-                                           />
-                                       </div>
-           
-                                       {/* text + round arrow bottom-right */}
-                                       <div className="flex items-end justify-between gap-4 mt-1">
-                                           <div>
-                                               <CardHeader className="p-0">
-                                                   <CardTitle className="text-[18px] font-semibold text-slate-900">
-                                                       {service.title}
-                                                   </CardTitle>
-                                               </CardHeader>
-                                               <CardContent className=" p-0">
-                                                   <CardDescription className="text-[14px] leading-relaxed text-slate-600">
-                                                       {service.description}
-                                                   </CardDescription>
-                                               </CardContent>
-                                           </div>
-           
-                                           <Link href={service.href} className="shrink-0">
-                                               <div
-                                                   className={`flex h-11 w-11 items-center justify-center rounded-full bg-black text-white transition-all duration-300 group-hover:translate-x-1 ${service.theme.arrowHoverBg}`}
-                                               >
-                                                   <ArrowRight className="h-5 w-5" />
-                                               </div>
-                                           </Link>
-                                       </div>
-                                   </Card>
-                               ))}
-                           </div>
+        <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-4">
+            {services.map((service) => (
+                <Card
+                    key={service.id}
+                    className={`group relative flex flex-col justify-start items-start overflow-hidden rounded-[30px] border-[3px] border-[#EFEFEF] bg-white px-7 pt-7 pb-6 shadow-[0_18px_45px_rgba(15,23,42,0.06)] transition-all duration-300 hover:shadow-[0_24px_60px_rgba(15,23,42,0.14)] ${service.theme.hoverBg} ${service.theme.hoverBorder}`}
+                >
+                    {/* label pill */}
+                    <div
+                        className={`inline-flex items-center rounded-full px-3 py-1 text-xs font-semibold text-white ${service.theme.labelBg}`}
+                    >
+                        {service.highlight}
+                    </div>
+
+                    {/* image + ripple */}
+                    <div className="relative mt-1 flex h-44 w-full items-center justify-center">
+                        {/* ripple perfectly centered */}
+                        <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
+                            <GlowRipple
+                                className={`${service.theme.rippleColor}`}
+                            />
+                        </div>
+
+                        {/* image perfectly centered */}
+                        <img
+                            src={service.image}
+                            alt={service.title}
+                            className="relative z-10 max-h-32 object-contain mx-auto"
+                        />
+                    </div>
+
+                    {/* text + round arrow bottom-right */}
+                    <div className="flex items-end justify-between gap-4 mt-1">
+                        <div>
+                            <CardHeader className="p-0">
+                                <CardTitle className="text-[18px] font-semibold text-slate-900">
+                                    {service.title}
+                                </CardTitle>
+                            </CardHeader>
+                            <CardContent className=" p-0">
+                                <CardDescription className="text-[14px] leading-relaxed text-slate-600">
+                                    {service.description}
+                                </CardDescription>
+                            </CardContent>
+                        </div>
+
+                        <Link href={service.href} className="shrink-0">
+                            <div
+                                className={`flex h-11 w-11 items-center justify-center rounded-full bg-black text-white transition-all duration-300 group-hover:translate-x-1 ${service.theme.arrowHoverBg}`}
+                            >
+                                <ArrowRight className="h-5 w-5" />
+                            </div>
+                        </Link>
+                    </div>
+                </Card>
+            ))}
+        </div>
     );
 }

@@ -3,25 +3,40 @@ import React from "react";
 
 const STEPS = [
     {
+        id: "fixed_price",
+        question: "Typical Fixed Part Prices?",
+        type: "select",
+        options: [
+            { label: "Sensor" },
+            { label: "Electrodes" },
+            {
+                label: "Plate heat exchanger",
+            },
+            { label: "Fan" },
+            {
+                label: "Room thermostat",
+            },
+        ],
+    },
+
+    {
         id: "boiler_type",
         question: "What type of boiler do you have?",
+        type: "select",
         options: ["Combi", "System", "Heat Only"],
     },
 
     {
-        id: "fault_type",
-        question: "What issue are you experiencing?",
-        options: [
-            { label: "No heating", price: 0 },
-            { label: "Leaking", price: 25 },
-            { label: "Error code showing", price: 15 },
-            { label: "Other", price: 0 },
-        ],
+        id: "boiler_model",
+        question: "What is the boiler brand & model?",
+        type: "text",
+        placeholder: "e.g. Worcester Bosch Greenstar 30i",
     },
 
     {
         id: "boiler_age",
         question: "How old is your boiler?",
+        type: "select",
         options: [
             "Under 5 years",
             "5–10 years",
@@ -31,8 +46,21 @@ const STEPS = [
     },
 
     {
+        id: "fault_type",
+        question: "What issue are you experiencing?",
+        type: "select",
+        options: [
+            { label: "No heating" },
+            { label: "No hot water" },
+            { label: "Leaking" },
+            { label: "Error code", requiresText: true },
+        ],
+    },
+
+    {
         id: "issue_start",
-        question: "When did this problem start?",
+        question: "When did the issue start?",
+        type: "select",
         options: [
             "Today",
             "1–3 days ago",
@@ -40,15 +68,42 @@ const STEPS = [
             "More than 2 weeks ago",
         ],
     },
+
     {
         id: "previous_work",
-        question: "Has anyone worked on the boiler recently?",
-        options: ["Yes", "No"],
+        question: "Has anyone worked on it recently?",
+        type: "select",
+        options: [{ label: "No" }, { label: "Yes", requiresText: true }],
     },
+
+    {
+        id: "media",
+        question: "Upload photos or videos (optional)",
+        type: "upload",
+    },
+
     {
         id: "access",
         question: "Where is your boiler located?",
-        options: ["Easy access", "Inside a cupboard", "Loft", "Other"],
+        type: "select",
+        options: [
+            "Easy access",
+            "Cupboard / boxed in",
+            "Loft",
+            { label: "Other", requiresText: true },
+        ],
+    },
+
+    {
+        id: "customer_details",
+        question: "Your details",
+        type: "details",
+    },
+
+    {
+        id: "visit_time",
+        question: "Preferred visit date & time",
+        type: "datetime",
     },
 ];
 

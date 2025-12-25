@@ -45,4 +45,19 @@ class BookController extends Controller
         // renders resources/js/Pages/Book/ServicePage.jsx
         return Inertia::render('Book/ServicePage');
     }
+
+    public function serviceResults(Request $request)
+    {
+         return Inertia::render('Book/ServiceResults', [
+        'answers' => $request->all(),]);
+    }
+
+    public function install(Request $request)
+{
+    return Inertia::render('Book/InstallPage', [
+        'boilerId' => $request->boilerId,
+        'power'    => $request->power,
+    ]);
+}
+
 }
