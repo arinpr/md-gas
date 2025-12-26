@@ -12,6 +12,7 @@ import { PageHeader } from "../ui/page-header";
 import AppointmentDateTimePicker from "./AppointmentDateTimePicker";
 import { useEffect, useRef, useState, useMemo } from "react";
 import QuoteProcessingModal from "./QuoteProgressPopup";
+import { Link } from "@inertiajs/react";
 
 export default function Stepper({
     title = "Boiler Repair Quote",
@@ -29,11 +30,39 @@ export default function Stepper({
     // const [showQuotePopup, setShowQuotePopup] = useState(false);
     const [showProcessing, setShowProcessing] = useState(false);
 
-    const current = steps[index] || null;
-
     /* -------------------------------------------------------
        dropdown positioning
     ------------------------------------------------------- */
+
+    // debug for answers state
+
+    // useEffect(() => {
+    //     console.log("ANSWERS UPDATED:", answers);
+    // }, [answers]);
+
+    // different type of login
+
+    const visibleSteps = useMemo(() => {
+        return steps.filter((step) => {
+            if (!step.showIf) return true;
+            return step.showIf(answers);
+        });
+    }, [steps, answers]);
+
+    const current = visibleSteps[index] || null;
+
+    useEffect(() => {
+        Object.keys(answers).forEach((key) => {
+            const step = steps.find((s) => s.id === key);
+            if (step?.showIf && !step.showIf(answers)) {
+                setAnswers((prev) => {
+                    const next = { ...prev };
+                    delete next[key];
+                    return next;
+                });
+            }
+        });
+    }, [answers, steps]);
 
     useEffect(() => {
         if (!isDropdownOpen || !dropdownTriggerRef.current) return;
@@ -65,7 +94,7 @@ export default function Stepper({
 
     const answeredCount = Object.keys(answers).length;
     const progress = Math.round(
-        (answeredCount / Math.max(1, steps.length)) * 100
+        (index / Math.max(1, visibleSteps.length - 1)) * 100
     );
 
     useEffect(() => {
@@ -153,6 +182,8 @@ export default function Stepper({
         if (current.type === "text") {
             return !!ans?.value?.trim();
         }
+
+        if (current.type === "info") return false;
 
         if (current.type === "select") {
             if (!ans) return false;
@@ -302,7 +333,8 @@ export default function Stepper({
                                         Question
                                     </p>
                                     <p className="text-xs text-muted-foreground">
-                                        Step {index + 1} of {steps.length}
+                                        Step {index + 1} of{" "}
+                                        {visibleSteps.length}
                                     </p>
                                 </div>
 
@@ -361,100 +393,6 @@ export default function Stepper({
                                                 </div>
                                             </label>
                                         </div>
-
-                                        {/* Quantity controls */}
-                                        {/* {answers[current.id]?.enabled && (
-                                            <div className="mt-6 flex items-center justify-between rounded-xl bg-slate-50 border px-6 py-4">
-                                                <span className="text-sm text-muted-foreground">
-                                                    Quantity
-                                                </span>
-
-                                                <div className="flex items-center gap-4">
-                                                    
-                                                    <button
-                                                        type="button"
-                                                        onClick={() =>
-                                                            setAnswers((s) => {
-                                                                const qty =
-                                                                    Math.max(
-                                                                        1,
-                                                                        s[
-                                                                            current
-                                                                                .id
-                                                                        ].qty -
-                                                                            1
-                                                                    );
-
-                                                                return {
-                                                                    ...s,
-                                                                    [current.id]:
-                                                                        {
-                                                                            ...s[
-                                                                                current
-                                                                                    .id
-                                                                            ],
-                                                                            qty,
-                                                                            price:
-                                                                                qty *
-                                                                                s[
-                                                                                    current
-                                                                                        .id
-                                                                                ]
-                                                                                    .unitPrice,
-                                                                        },
-                                                                };
-                                                            })
-                                                        }
-                                                        className="h-10 w-10 rounded-full border flex items-center justify-center text-lg font-bold"
-                                                    >
-                                                        −
-                                                    </button>
-
-                                                    <span className="text-lg font-semibold">
-                                                        {
-                                                            answers[current.id]
-                                                                .qty
-                                                        }
-                                                    </span>
-
-                                                    
-                                                    <button
-                                                        type="button"
-                                                        onClick={() =>
-                                                            setAnswers((s) => {
-                                                                const qty =
-                                                                    s[
-                                                                        current
-                                                                            .id
-                                                                    ].qty + 1;
-
-                                                                return {
-                                                                    ...s,
-                                                                    [current.id]:
-                                                                        {
-                                                                            ...s[
-                                                                                current
-                                                                                    .id
-                                                                            ],
-                                                                            qty,
-                                                                            price:
-                                                                                qty *
-                                                                                s[
-                                                                                    current
-                                                                                        .id
-                                                                                ]
-                                                                                    .unitPrice,
-                                                                        },
-                                                                };
-                                                            })
-                                                        }
-                                                        className="h-10 w-10 rounded-full border flex items-center justify-center text-lg font-bold"
-                                                    >
-                                                        +
-                                                    </button>
-                                                </div>
-                                            </div>
-                                        )} */}
                                     </div>
                                 )}
 
@@ -538,8 +476,391 @@ export default function Stepper({
                                     </div>
                                 )}
 
-                                {/* dropdown */}
+                                {/* ========= INFO / SPECIALIST HELP ========= */}
+                                {current?.type === "info" && (
+                                    <div className="mt-5 max-w-5xl mx-auto">
+                                        {/* Unique side-by-side with perfect bridge */}
+                                        <div className="relative flex gap-8">
+                                            {/* Live Chat - Perfected Design */}
+                                            <div className="flex-1 group">
+                                                <Link
+                                                    href="https://wa.me/441234567890"
+                                                    target="_blank"
+                                                    rel="noopener noreferrer"
+                                                    className="relative flex items-center gap-4 p-5 rounded-2xl bg-gradient-to-br from-white to-green-50/30 border-l-4 border-green-400 hover:border-green-500 transition-all duration-300 hover:shadow-lg group-hover:shadow-green-100/50 overflow-hidden"
+                                                >
+                                                    {/* Background gradient accent */}
+                                                    <div className="absolute right-0 top-0 bottom-0 w-20 bg-gradient-to-l from-green-400/5 to-transparent"></div>
 
+                                                    {/* Floating chat bubbles */}
+                                                    <div className="absolute -left-2 top-1/4 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                                                        <div className="relative">
+                                                            <div className="absolute -right-1 top-1/2 h-2 w-2 rounded-full bg-green-200/30 border border-green-300/30"></div>
+                                                        </div>
+                                                    </div>
+
+                                                    {/* Icon with perfected status ring */}
+                                                    <div className="relative z-10">
+                                                        <div className="relative h-14 w-14">
+                                                            <div className="absolute inset-0 rounded-full bg-gradient-to-br from-green-100 to-emerald-100 group-hover:from-green-200 group-hover:to-emerald-200 transition-all duration-300 shadow-md flex items-center justify-center">
+                                                                <svg
+                                                                    className="h-6 w-6 text-green-600"
+                                                                    fill="currentColor"
+                                                                    viewBox="0 0 24 24"
+                                                                >
+                                                                    <path d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+                                                                </svg>
+                                                            </div>
+                                                            {/* Animated status ring */}
+                                                            {/* Animated status ring — hover only */}
+                                                            <div
+                                                                className="absolute -inset-2 rounded-full border-2 border-green-400/30 
+    opacity-0 
+    group-hover:opacity-100 
+    group-hover:animate-ping 
+    transition-opacity duration-300"
+                                                            ></div>
+                                                        </div>
+                                                    </div>
+
+                                                    {/* Content area */}
+                                                    <div className="flex-1 relative z-10">
+                                                        <div className="space-y-1">
+                                                            <span className="block text-[16px] font-bold text-gray-800 tracking-tight">
+                                                                Live Chat
+                                                            </span>
+                                                            <span className="block text-xs text-gray-500 font-medium">
+                                                                Instant
+                                                                connection
+                                                            </span>
+                                                        </div>
+                                                    </div>
+
+                                                    {/* Action button */}
+                                                    <div className="relative z-10">
+                                                        <div className="px-4 py-2.5 rounded-xl bg-gradient-to-r from-green-500 to-emerald-500 text-white font-semibold text-sm shadow-md hover:shadow-lg transition-all duration-300 group-hover:translate-x-1">
+                                                            Start now
+                                                        </div>
+                                                        <div className="absolute -bottom-1 left-1/2 transform -translate-x-1/2 h-1 w-8 bg-gradient-to-r from-green-400/50 to-emerald-400/50 rounded-full blur-sm opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                                                    </div>
+                                                </Link>
+                                            </div>
+
+                                            {/* Phone Call - Perfected Design */}
+                                            <div className="flex-1 group">
+                                                <a
+                                                    href="tel:03301131333"
+                                                    className="relative flex items-center gap-4 p-5 rounded-2xl bg-gradient-to-br from-white to-blue-50/30 border-r-4 border-blue-400 hover:border-blue-500 transition-all duration-300 hover:shadow-lg group-hover:shadow-blue-100/50 overflow-hidden"
+                                                >
+                                                    {/* Background gradient accent */}
+                                                    <div className="absolute left-0 top-0 bottom-0 w-20 bg-gradient-to-r from-blue-400/5 to-transparent"></div>
+
+                                                    {/* Icon with perfected status ring (same as chat) */}
+                                                    <div className="relative z-10">
+                                                        <div className="relative h-14 w-14">
+                                                            <div className="absolute inset-0 rounded-full bg-gradient-to-br from-blue-100 to-cyan-100 group-hover:from-blue-200 group-hover:to-cyan-200 transition-all duration-300 shadow-md flex items-center justify-center">
+                                                                <svg
+                                                                    className="h-6 w-6 text-primary"
+                                                                    fill="currentColor"
+                                                                    viewBox="0 0 24 24"
+                                                                >
+                                                                    <path d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                                                                </svg>
+                                                            </div>
+                                                            {/* Fixed: Added same animated status ring as chat */}
+                                                            {/* Animated status ring — hover only */}
+                                                            <div
+                                                                className="absolute -inset-2 rounded-full border-2 border-blue-400/30 
+    opacity-0 
+    group-hover:opacity-100 
+    group-hover:animate-ping 
+    transition-opacity duration-300"
+                                                            ></div>
+                                                        </div>
+                                                    </div>
+
+                                                    {/* Content area */}
+                                                    <div className="flex-1 relative z-10">
+                                                        <div className="space-y-1">
+                                                            <span className="block text-[14px] font-bold text-gray-800 tracking-tight">
+                                                                Phone Call
+                                                            </span>
+                                                            <span className="block text-xs text-gray-500 font-medium">
+                                                                conversation
+                                                            </span>
+                                                        </div>
+                                                    </div>
+
+                                                    {/* Phone number display */}
+                                                    <div className="relative z-10">
+                                                        <div className="px-4 py-2.5 rounded-xl bg-gradient-to-r from-primary to-secondary text-white font-semibold text-sm shadow-md hover:shadow-lg transition-all duration-300 group-hover:-translate-x-1">
+                                                            <div className="flex items-center gap-2">
+                                                                <span>
+                                                                    0330
+                                                                </span>
+                                                                <div className="h-1 w-1 rounded-full bg-white/50"></div>
+                                                                <span>113</span>
+                                                                <div className="h-1 w-1 rounded-full bg-white/50"></div>
+                                                                <span>
+                                                                    1333
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                        <div className="absolute -bottom-1 left-1/2 transform -translate-x-1/2 h-1 w-8 bg-gradient-to-r from-blue-400/50 to-cyan-400/50 rounded-full blur-sm opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                                                    </div>
+                                                </a>
+                                            </div>
+                                        </div>
+
+                                        {/* Perfect restart button */}
+                                        <div className="mt-12 relative flex justify-center">
+                                            <div className="relative inline-block group mx-auto block text-center">
+                                                <button
+                                                    onClick={restart}
+                                                    className="relative px-6 py-3 cursor-pointer rounded-full text-[18px] font-medium text-gray-700 hover:text-gray-900 transition-colors duration-500"
+                                                >
+                                                    <div className="flex items-center gap-3">
+                                                        {/* Animated restart icon */}
+                                                        <div className="relative h-8 w-8">
+                                                            <div className="absolute inset-0 rounded-full bg-gradient-to-r from-green-100 to-blue-100 flex items-center justify-center group-hover:from-green-200 group-hover:to-blue-200 transition-all duration-300">
+                                                                <svg
+                                                                    className="h-5 w-5 transform group-hover:rotate-180 transition-all duration-700"
+                                                                    fill="none"
+                                                                    stroke="currentColor"
+                                                                    viewBox="0 0 24 24"
+                                                                >
+                                                                    <path
+                                                                        strokeLinecap="round"
+                                                                        strokeLinejoin="round"
+                                                                        strokeWidth="2"
+                                                                        d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
+                                                                    />
+                                                                </svg>
+                                                            </div>
+                                                            <div className="absolute -inset-2 rounded-full border-2 border-green-400/20 group-hover:border-blue-400/20 transition-all duration-500"></div>
+                                                        </div>
+
+                                                        <span className="font-semibold tracking-tight">
+                                                            Start fresh
+                                                            conversation
+                                                        </span>
+                                                    </div>
+
+                                                    {/* Floating particles */}
+                                                    <div className="absolute inset-0 overflow-hidden rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                                                        <div className="absolute -top-2 left-1/4 h-1 w-1 rounded-full bg-green-400 animate-bounce"></div>
+                                                        <div
+                                                            className="absolute -top-1 left-1/2 h-1 w-1 rounded-full bg-blue-400 animate-bounce"
+                                                            style={{
+                                                                animationDelay:
+                                                                    "150ms",
+                                                            }}
+                                                        ></div>
+                                                        <div
+                                                            className="absolute -top-2 left-3/4 h-1 w-1 rounded-full bg-green-400 animate-bounce"
+                                                            style={{
+                                                                animationDelay:
+                                                                    "300ms",
+                                                            }}
+                                                        ></div>
+                                                    </div>
+                                                </button>
+                                            </div>
+                                        </div>
+
+                                        {/* Add custom animation keyframes if needed */}
+                                        <style jsx>{`
+                                            @keyframes pulse-slow {
+                                                0%,
+                                                100% {
+                                                    opacity: 1;
+                                                    transform: scale(1);
+                                                }
+                                                50% {
+                                                    opacity: 0.8;
+                                                    transform: scale(0.98);
+                                                }
+                                            }
+                                            .animate-pulse-slow {
+                                                animation: pulse-slow 2s
+                                                    cubic-bezier(0.4, 0, 0.6, 1)
+                                                    infinite;
+                                            }
+                                        `}</style>
+                                    </div>
+                                )}
+
+                                {/* ===== Visual guidance (editorial style) - Redesigned ===== */}
+                                {current?.helperImages && (
+                                    <div className="max-w-6xl mx-auto mb-12">
+                                        {/* Unique header with gradient accent */}
+                                        {current.helperText && (
+                                            <div className="relative mb-10">
+                                                <div className="text-center max-w-2xl mx-auto">
+                                                    <div className="inline-flex items-center gap-3 mb-3">
+                                                        <div className="h-1 w-10 bg-gradient-to-r from-cyan-400 to-blue-400 rounded-full"></div>
+                                                        <span className="text-sm font-semibold text-blue-600 uppercase tracking-wider">
+                                                            Visual Guide
+                                                        </span>
+                                                        <div className="h-1 w-10 bg-gradient-to-r from-blue-400 to-purple-400 rounded-full"></div>
+                                                    </div>
+                                                    <p className="text-lg md:text-xl font-medium text-gray-800 leading-relaxed">
+                                                        {current.helperText}
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        )}
+
+                                        {/* Unique image grid with floating cards */}
+                                        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
+                                            {current.helperImages.map(
+                                                (img, i) => (
+                                                    <div
+                                                        key={i}
+                                                        className="group relative"
+                                                    >
+                                                        {/* Floating card effect with unique shadow */}
+                                                        <div className="relative h-full transform transition-all duration-500 group-hover:-translate-y-2">
+                                                            {/* Decorative background element */}
+                                                            <div className="absolute -inset-4 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-700">
+                                                                <div
+                                                                    className={`absolute inset-0 rounded-3xl bg-gradient-to-br ${
+                                                                        i %
+                                                                            2 ===
+                                                                        0
+                                                                            ? "from-cyan-400/5 via-blue-400/3 to-purple-400/5"
+                                                                            : "from-purple-400/5 via-pink-400/3 to-cyan-400/5"
+                                                                    } blur-xl`}
+                                                                ></div>
+                                                            </div>
+
+                                                            {/* Main image container with unique border */}
+                                                            <div className="relative bg-white rounded-2xl overflow-hidden shadow-[0_10px_40px_rgba(0,0,0,0.08)] group-hover:shadow-[0_20px_60px_rgba(59,130,246,0.15)] transition-all duration-500 border border-gray-100 group-hover:border-blue-100">
+                                                                {/* Image with gradient overlay on hover */}
+                                                                <div className="relative aspect-[4/3] overflow-hidden">
+                                                                    <img
+                                                                        src={
+                                                                            img.src
+                                                                        }
+                                                                        alt={
+                                                                            img.alt
+                                                                        }
+                                                                        className="w-full h-full object-cover transform transition-transform duration-700 group-hover:scale-105"
+                                                                    />
+
+                                                                    {/* Gradient overlay on hover */}
+                                                                    <div className="absolute inset-0 bg-gradient-to-t from-black/0 via-black/0 to-black/0 group-hover:from-black/20 group-hover:via-black/10 group-hover:to-black/0 transition-all duration-500"></div>
+
+                                                                    {/* Zoom indicator */}
+                                                                    <div className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-y-2 group-hover:translate-y-0">
+                                                                        <div className="h-10 w-10 rounded-full bg-white/90 backdrop-blur-sm flex items-center justify-center shadow-lg">
+                                                                            <svg
+                                                                                className="h-5 w-5 text-gray-700"
+                                                                                fill="none"
+                                                                                stroke="currentColor"
+                                                                                viewBox="0 0 24 24"
+                                                                            >
+                                                                                <path
+                                                                                    strokeLinecap="round"
+                                                                                    strokeLinejoin="round"
+                                                                                    strokeWidth="2"
+                                                                                    d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7"
+                                                                                />
+                                                                            </svg>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+
+                                                                {/* Unique caption bar that slides up on hover */}
+                                                                <div className="absolute bottom-0 left-0 right-0 transform translate-y-full group-hover:translate-y-0 transition-transform duration-500 bg-gradient-to-r from-white to-gray-50 border-t border-gray-100 p-4">
+                                                                    <div className="flex items-center justify-between">
+                                                                        <div className="flex items-center gap-2">
+                                                                            <div
+                                                                                className={`h-2 w-2 rounded-full ${
+                                                                                    i %
+                                                                                        2 ===
+                                                                                    0
+                                                                                        ? "bg-cyan-500"
+                                                                                        : "bg-purple-500"
+                                                                                }`}
+                                                                            ></div>
+                                                                            <span className="text-sm font-medium text-gray-700 truncate">
+                                                                                {
+                                                                                    img.alt
+                                                                                }
+                                                                            </span>
+                                                                        </div>
+                                                                        <svg
+                                                                            className="h-4 w-4 text-gray-400 group-hover:text-blue-500 transition-colors"
+                                                                            fill="none"
+                                                                            stroke="currentColor"
+                                                                            viewBox="0 0 24 24"
+                                                                        >
+                                                                            <path
+                                                                                strokeLinecap="round"
+                                                                                strokeLinejoin="round"
+                                                                                strokeWidth="2"
+                                                                                d="M9 5l7 7-7 7"
+                                                                            />
+                                                                        </svg>
+                                                                    </div>
+                                                                </div>
+
+                                                                {/* Corner decorative elements */}
+                                                                <div className="absolute top-0 left-0 w-16 h-16">
+                                                                    <div className="absolute top-0 left-0 w-8 h-8 border-t-2 border-l-2 border-cyan-400/30 rounded-tl-xl"></div>
+                                                                </div>
+                                                                <div className="absolute bottom-0 right-0 w-16 h-16">
+                                                                    <div className="absolute bottom-0 right-0 w-8 h-8 border-b-2 border-r-2 border-purple-400/30 rounded-br-xl"></div>
+                                                                </div>
+                                                            </div>
+
+                                                            {/* Floating number indicator */}
+                                                            <div className="absolute -top-3 -left-3 h-8 w-8 rounded-full bg-gradient-to-br from-blue-500 to-cyan-500 text-white font-bold text-sm flex items-center justify-center shadow-lg z-10">
+                                                                {i + 1}
+                                                            </div>
+
+                                                            {/* Glow effect on hover */}
+                                                            <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-blue-400/0 via-cyan-400/0 to-purple-400/0 group-hover:from-blue-400/10 group-hover:via-cyan-400/5 group-hover:to-purple-400/10 transition-all duration-700 blur-md -z-10"></div>
+                                                        </div>
+
+                                                        {/* Connect line between images (only on desktop) */}
+                                                        {i === 0 && (
+                                                            <div className="hidden md:block absolute top-1/2 right-0 transform translate-x-6 -translate-y-1/2 z-0">
+                                                                <div className="relative">
+                                                                    <div className="h-0.5 w-12 bg-gradient-to-r from-blue-400/50 to-cyan-400/50 rounded-full"></div>
+                                                                    <div className="absolute -right-1 top-1/2 transform -translate-y-1/2 h-3 w-3 rounded-full bg-gradient-to-r from-blue-400 to-cyan-400 border-2 border-white"></div>
+                                                                </div>
+                                                            </div>
+                                                        )}
+                                                    </div>
+                                                )
+                                            )}
+                                        </div>
+
+                                        {/* Unique pagination indicator */}
+                                        <div className="mt-10 flex justify-center">
+                                            <div className="flex items-center gap-2">
+                                                {current.helperImages.map(
+                                                    (_, i) => (
+                                                        <div
+                                                            key={i}
+                                                            className={`h-1.5 rounded-full transition-all duration-300 ${
+                                                                i === 0
+                                                                    ? "w-8 bg-gradient-to-r from-blue-500 to-cyan-500"
+                                                                    : i === 1
+                                                                    ? "w-6 bg-gradient-to-r from-cyan-500 to-purple-500"
+                                                                    : "w-1.5 bg-gray-300"
+                                                            }`}
+                                                        ></div>
+                                                    )
+                                                )}
+                                            </div>
+                                        </div>
+                                    </div>
+                                )}
+
+                                {/* dropdown */}
                                 {current?.type === "dropdown" && (
                                     <div className="max-w-2xl mx-auto w-full overflow-x-clip">
                                         <div className="relative">
@@ -851,7 +1172,7 @@ export default function Stepper({
                                             onClick={() => {
                                                 if (
                                                     index ===
-                                                    steps.length - 1
+                                                    visibleSteps.length - 1
                                                 ) {
                                                     setShowProcessing(true);
                                                 } else {
@@ -877,11 +1198,10 @@ export default function Stepper({
 
             <QuoteProcessingModal
                 open={showProcessing}
-                // answers={answers}
+                answers={answers}
                 onComplete={() => {
                     setShowProcessing(false);
-                    // later → navigate to results page
-                    // console.log("READY TO SHOW QUOTES", answers);
+                    console.log("READY TO SHOW QUOTES", answers);
                 }}
                 onClose={() => setShowProcessing(false)}
             />

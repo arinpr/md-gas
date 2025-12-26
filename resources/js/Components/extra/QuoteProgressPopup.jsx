@@ -20,6 +20,12 @@ export default function QuoteProcessingModal({
     const [energyLevels, setEnergyLevels] = useState([0, 0, 0]);
     const canvasRef = useRef(null);
 
+    useEffect(() => {
+        if (open) {
+            console.log("MODAL RECEIVED ANSWERS:", answers);
+        }
+    }, [open]);
+
     const steps = useMemo(
         () => [
             {
