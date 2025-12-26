@@ -3,6 +3,7 @@ import Dropdown from '@/Components/Dropdown';
 import NavLink from '@/Components/NavLink';
 import ResponsiveNavLink from '@/Components/ResponsiveNavLink';
 import { Link, usePage } from '@inertiajs/react';
+import { ChevronDown } from 'lucide-react';
 import { useState } from 'react';
 
 export default function AuthenticatedLayout({ header, children }) {
@@ -24,14 +25,59 @@ export default function AuthenticatedLayout({ header, children }) {
                                 </Link>
                             </div>
 
-                            <div className="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                            <div className="hidden sm:-my-px sm:ms-10 sm:flex items-center space-x-8">
+                                {/* Dashboard */}
                                 <NavLink
-                                    href={route('dashboard')}
-                                    active={route().current('dashboard')}
+                                    href={route("dashboard")}
+                                    active={route().current("dashboard")}
                                 >
                                     Dashboard
                                 </NavLink>
+
+                                {/* Pricing Dropdown */}
+                                <div className="relative group h-full flex items-center">
+                                    <button
+                                        className="inline-flex items-center gap-1 h-full px-1 
+                                        text-sm font-medium hover:text-gray-700 
+                                        border-b-2 border-transparent hover:border-gray-300
+                                        focus:outline-none transition"
+                                    >
+                                        Pricing
+                                        <ChevronDown className="h-4 w-4" />
+                                    </button>
+
+                                    {/* Dropdown menu */}
+                                    <div
+                                        className="absolute left-0 top-full z-50 mt-2 w-48 rounded-xl bg-white
+                                        border border-gray-100 shadow-lg opacity-0 invisible
+                                        group-hover:opacity-100 group-hover:visible
+                                        transition-all duration-200"
+                                    >
+                                        <NavLink
+                                        // href={route(baseprice")}
+                                        href={route("pricing.base")}
+                                            className="block px-4 py-2.5 text-sm hover:bg-gray-50 rounded-t-xl"
+                                        >
+                                            Base Price management
+                                        </NavLink>  
+
+                                        <NavLink
+                                        href={route("pricing.quotation")}
+                                            className="block px-4 py-2.5 text-sm hover:bg-gray-50"
+                                        >
+                                            new quotation management
+                                        </NavLink>
+
+                                        <NavLink
+                                            className="block px-4 py-2.5 text-sm hover:bg-gray-50 rounded-b-xl"
+                                        >
+                                            Premium Plan
+                                        </NavLink>
+                                    </div>
+                                </div>
                             </div>
+
+
                         </div>
 
                         <div className="hidden sm:ms-6 sm:flex sm:items-center">

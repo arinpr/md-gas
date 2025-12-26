@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\BasePriceController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -64,6 +65,20 @@ Route::inertia('/terms-conditions', 'TermsConditionsPage', [
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
+
+Route::middleware('auth')
+    ->prefix('pricing')
+    ->name('pricing.')
+    ->group(function () {
+        Route::get('/base-price', [BasePriceController::class, 'index'])
+            ->name('base');
+            Route::post('/base-price/{id}/update', [BasePriceController::class, 'update'])
+            ->name('update');
+
+            Route::get('/quotation', [BasePriceController::class, 'quotation'])
+            ->name('quotation');
+    });
+
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
