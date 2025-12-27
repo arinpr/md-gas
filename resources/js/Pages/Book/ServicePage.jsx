@@ -3,21 +3,21 @@ import React from "react";
 
 const STEPS = [
     {
-        id: "boiler_Service_type",
+        id: "boiler_type",
         question: "What type of boiler do you have?",
         type: "select",
         options: ["Combi", "System", "Heat Only"],
     },
 
     {
-        id: "boiler_Service_model",
+        id: "boiler_model",
         question: "What is the boiler brand & model?",
         type: "text",
         placeholder: "e.g. Worcester Bosch Greenstar 30i",
     },
 
     {
-        id: "boiler_Service_age",
+        id: "boiler_age",
         question: "How old is your boiler?",
         type: "select",
         options: [
@@ -29,7 +29,7 @@ const STEPS = [
     },
 
     {
-        id: "access_Service",
+        id: "access",
         question: "Where is your boiler located?",
         type: "select",
         options: [
@@ -48,7 +48,7 @@ const STEPS = [
     },
 
     {
-        id: "customer_Service_details",
+        id: "customer_details",
         question: "Your details",
         type: "details",
     },
