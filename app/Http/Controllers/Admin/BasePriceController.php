@@ -14,6 +14,7 @@ class BasePriceController extends Controller
     {
         return Inertia::render('Admin/BasePrice', [
             'prices' => BasePrice::all(),
+            'currencySymbol' => config('services.currency.symbol')
         ]);
     }
 

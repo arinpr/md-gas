@@ -1,12 +1,14 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head, router, useForm } from '@inertiajs/react';
 import { useState } from 'react';
+import { usePage } from "@inertiajs/react";
 
 export default function BasePrice({ prices = [] }) {
 
     // Modal state
     const [showModal, setShowModal] = useState(false);
     const [editingItem, setEditingItem] = useState(null);
+    const { currencySymbol } = usePage().props;
 
     // Form state
     const { data, setData, post, processing, errors, reset } = useForm({
@@ -70,7 +72,7 @@ export default function BasePrice({ prices = [] }) {
                                             </td>
 
                                             <td className="border px-4 py-2 font-semibold">
-                                                £{item.price}
+                                                {currencySymbol} {item.price}
                                             </td>
 
                                             <td className="border px-6 py-3 text-center">
@@ -118,20 +120,23 @@ export default function BasePrice({ prices = [] }) {
                         {/* Price */}
                         <div className="mb-4">
                             <label className="block text-sm font-medium text-gray-700">
-                                Price (£)
+                                Price ({currencySymbol})
                             </label>
+
                             <input
                                 type="number"
                                 value={data.price}
                                 onChange={(e) => setData('price', e.target.value)}
-                                className="mt-1 w-full rounded-lg border-gray-300"
+                                className="mt-1 w-full rounded-lg border border-gray-300"
                             />
+
                             {errors.price && (
                                 <p className="text-sm text-red-600 mt-1">
                                     {errors.price}
                                 </p>
                             )}
                         </div>
+
 
                         {/* Actions */}
                         <div className="flex justify-end gap-3">
@@ -146,8 +151,8 @@ export default function BasePrice({ prices = [] }) {
                                 disabled={processing}
                                 onClick={() =>
                                     post(route('pricing.update', editingItem.id), {
-    onSuccess: () => closeModal(),
-})
+                                        onSuccess: () => closeModal(),
+                                    })
                                 }
                                 className="rounded-lg bg-indigo-600 px-4 py-2 text-sm
                                 font-medium text-white hover:bg-indigo-700 disabled:opacity-50"

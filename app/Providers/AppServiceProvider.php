@@ -33,6 +33,9 @@ class AppServiceProvider extends ServiceProvider
         //     // This will call the built SSR bundle using Node
         //     return app('inertia.ssr')->render($page);
         // });
+
+       
+
         Vite::prefetch(concurrency: 3);
     }
 }

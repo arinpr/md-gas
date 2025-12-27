@@ -2,6 +2,7 @@ import React, { useEffect, useMemo, useState } from "react";
 import { Head, Link } from "@inertiajs/react";
 import { PageHeader } from "@/Components/ui/page-header";
 import { GoogleReview } from "@/Components/GoogleReview";
+import { TechnicianButton } from "@/Components/TechnicianButton";
 
 const pageTitle = "Get a Quote";
 
@@ -179,15 +180,7 @@ export default function QuotePage() {
                                     <div className="absolute inset-0 bg-gradient-to-r from-primary/90 to-blue-700 rounded-xl opacity-0 group-hover/primary:opacity-100 transition-opacity duration-300"></div>
                                 </Link>
 
-                                <a
-                                    href="#contact-expert"
-                                    className="group/secondary inline-flex items-center justify-center gap-3 rounded-xl border-2 border-slate-300 bg-white px-7 py-4 text-sm font-medium text-slate-900 hover:border-primary/50 hover:bg-gradient-to-r hover:from-blue-50 hover:to-indigo-50 transition-all duration-300 hover:scale-[1.02]"
-                                >
-                                    <span>Book a technician</span>
-                                    <span className="text-slate-500 group-hover/secondary:text-primary transition-colors">
-                                        🔧
-                                    </span>
-                                </a>
+                                <TechnicianButton/>
                             </div>
 
                             {/* Trust indicators matching right side design */}
