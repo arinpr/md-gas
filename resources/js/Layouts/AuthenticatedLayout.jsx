@@ -37,8 +37,8 @@ export default function AuthenticatedLayout({ header, children }) {
                                 {/* Pricing Dropdown */}
                                 <div className="relative group h-full flex items-center">
                                     <button
-                                        className="inline-flex items-center gap-1 h-full px-1 
-                                        text-sm font-medium hover:text-gray-700 
+                                        className="inline-flex items-center gap-1 h-full px-1
+                                        text-sm font-medium hover:text-gray-700
                                         border-b-2 border-transparent hover:border-gray-300
                                         focus:outline-none transition"
                                     >
@@ -58,8 +58,8 @@ export default function AuthenticatedLayout({ header, children }) {
                                         href={route("pricing.base")}
                                             className="block px-4 py-2.5 text-sm hover:bg-gray-50 rounded-t-xl"
                                         >
-                                            Base Price management
-                                        </NavLink>  
+                                            Base Price Management
+                                        </NavLink>
 
                                         <NavLink
                                         href={route("pricing.quotation")}

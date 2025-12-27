@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\BasePriceController;
+use App\Http\Controllers\Admin\BasePriceController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;

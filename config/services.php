@@ -51,6 +51,12 @@ return [
             'key' => 'power_flush',
             'value' => 'Power Flush',
         ]
-    ]
+    ],
+
+    'currency' => [
+        'code'   => env('PAYMENT_CURRENCY', 'GBP'),
+        'symbol' => env('PAYMENT_CURRENCY_SYMBOL', '£'),
+    ],
+
 
 ];

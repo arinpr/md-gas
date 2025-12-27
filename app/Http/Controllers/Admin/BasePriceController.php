@@ -1,16 +1,18 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
 use App\Models\BasePrice;
-use Illuminate\Http\Request;   
+use Illuminate\Http\Request;
 use Inertia\Inertia;
+use App\Http\Controllers\Controller;
+
 
 class BasePriceController extends Controller
 {
     public function index()
     {
-        return Inertia::render('BasePrice', [
+        return Inertia::render('Admin/BasePrice', [
             'prices' => BasePrice::all(),
         ]);
     }
