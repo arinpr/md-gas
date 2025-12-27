@@ -34,5 +34,23 @@ return [
             'channel' => env('SLACK_BOT_USER_DEFAULT_CHANNEL'),
         ],
     ],
+    'forms' => [
+        [
+            'key' => 'boiler_repair',
+            'value' => 'Boiler Repair',
+        ],
+        [
+            'key' => 'boiler_service',
+            'value' => 'Boiler Service',
+        ],
+        [
+            'key' => 'new_boiler_quote',
+            'value' => 'New Boiler Quote',
+        ],
+        [
+            'key' => 'power_flush',
+            'value' => 'Power Flush',
+        ]
+    ]
 
 ];

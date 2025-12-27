@@ -6,5 +6,5 @@ use Illuminate\Database\Eloquent\Model;
 
 class BasePrice extends Model
 {
-     protected $fillable = ['service', 'price'];
+     protected $fillable = ['service','service_key', 'price'];
 }
