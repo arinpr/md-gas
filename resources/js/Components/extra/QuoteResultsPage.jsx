@@ -1,13 +1,10 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
-    FiStar,
     FiInfo,
     FiX,
     FiChevronRight,
-    FiClock,
     FiShield,
     FiThermometer,
-    FiTag,
     FiCalendar,
     FiChevronDown,
     FiChevronUp,
@@ -21,14 +18,17 @@ import {
     FiCheck,
     FiDownload,
     FiHash,
-    FiBox,
-    FiPackage,
     FiTruck,
-    FiTool,
+    FiCamera,
+    FiChevronLeft,
+    FiCpu,
     FiTrendingUp,
-    FiAnchor,
-    FiDollarSign,
-    FiPhone,
+    FiCreditCard,
+    FiMessageSquare,
+    FiEye,
+    FiVolume2,
+    FiMinus,
+    FiPlus,
 } from "react-icons/fi";
 
 import { AiOutlineQuestion } from "react-icons/ai";
@@ -166,6 +166,160 @@ export default function QuoteResultsPage() {
     const [expandedSpecs, setExpandedSpecs] = useState(false);
     const [powerModal, setPowerModal] = useState(null);
     const [selectedPower, setSelectedPower] = useState("25");
+
+    // Carousel state
+    const [currentImageIndex, setCurrentImageIndex] = useState(0);
+    const [autoRotate, setAutoRotate] = useState(false);
+
+    // Carousel images array - replace with your actual images
+    const carouselImages = detailsQuote
+        ? [
+              boilerImages[detailsQuote.id],
+              "/images/ideal-20logic.png",
+              "/images/ideal-20logic.png",
+          ]
+        : [];
+
+    const imageViews = [
+        "Front View • Technical Grade",
+        "Side View • Component Layout",
+        "Back View • Connection Points",
+    ];
+
+    // Power selection state
+    // const [selectedPower, setSelectedPower] = useState("25");
+
+    // Power options data
+    const powerOptions = detailsQuote
+        ? [
+              {
+                  power: "25kW",
+                  price: detailsQuote.price,
+                  selected: selectedPower === "25",
+                  efficiency: "95%",
+              },
+              {
+                  power: "30kW",
+                  price: detailsQuote.price + 100,
+                  selected: selectedPower === "30",
+                  efficiency: "93%",
+              },
+              {
+                  power: "35kW",
+                  price: detailsQuote.price + 200,
+                  selected: selectedPower === "35",
+                  efficiency: "90%",
+              },
+          ]
+        : [];
+
+    // System load calculation
+    const systemLoad = selectedPower === "25" ? 60 : 45;
+
+    // Specifications data
+    const specs = detailsQuote
+        ? [
+              {
+                  label: "Efficiency",
+                  value: detailsQuote.efficiency,
+                  icon: FiActivity,
+                  gradient: "from-emerald-500/20 to-emerald-600/10",
+              },
+              {
+                  label: "Hot Water Flow",
+                  value: detailsQuote.hotWater,
+                  icon: FiDroplet,
+                  gradient: "from-cyan-500/20 to-blue-500/10",
+              },
+              {
+                  label: "Noise Level",
+                  value: "≤ 40dB",
+                  icon: FiVolume2,
+                  gradient: "from-violet-500/20 to-purple-500/10",
+              },
+              {
+                  label: "Energy Rating",
+                  value: "A",
+                  icon: FiTrendingUp,
+                  gradient: "from-amber-500/20 to-orange-500/10",
+              },
+          ]
+        : [];
+
+    const additionalSpecs = detailsQuote
+        ? [
+              { label: "Max Pressure", value: "3.0 bar" },
+              { label: "Flow Rate", value: "9.8 L/min" },
+              {
+                  label: "Warranty",
+                  value: detailsQuote.warranty.split("·")[0] + " Years",
+              },
+              { label: "Certification", value: "UKCA Approved" },
+          ]
+        : [];
+
+    const costBreakdown = detailsQuote
+        ? [
+              {
+                  label: "Boiler Unit",
+                  cost: detailsQuote.price * 0.7,
+                  color: "bg-emerald-500",
+                  width: "70%",
+                  percentage: "70%",
+                  included: false,
+              },
+              {
+                  label: "Professional Installation",
+                  cost: detailsQuote.price * 0.2,
+                  color: "bg-cyan-500",
+                  width: "20%",
+                  percentage: "20%",
+                  included: false,
+              },
+              {
+                  label: "Smart Controls",
+                  cost: 0,
+                  color: "bg-blue-500",
+                  width: "0%",
+                  percentage: "0%",
+                  included: true,
+              },
+              {
+                  label: "Extended Warranty",
+                  cost: 0,
+                  color: "bg-violet-500",
+                  width: "0%",
+                  percentage: "0%",
+                  included: true,
+              },
+          ]
+        : [];
+
+    // Carousel navigation functions
+    const handleNextImage = () => {
+        setCurrentImageIndex((prev) => (prev + 1) % carouselImages.length);
+    };
+
+    const handlePrevImage = () => {
+        setCurrentImageIndex(
+            (prev) => (prev - 1 + carouselImages.length) % carouselImages.length
+        );
+    };
+
+    const handlePowerSelect = (power) => {
+        setSelectedPower(power);
+    };
+
+    // Auto-rotate effect
+    useEffect(() => {
+        let interval;
+        if (autoRotate) {
+            interval = setInterval(() => {
+                handleNextImage();
+            }, 3000);
+        }
+        return () => clearInterval(interval);
+    }, [autoRotate, currentImageIndex]);
 
     return (
         <div className="min-h-screen bg-light-background px-4 py-12 md:px-6 md:py-16">
@@ -535,325 +689,389 @@ export default function QuoteResultsPage() {
 
             {detailsQuote && (
                 <>
-                    {/* Simplified overlay */}
+                    {/* Overlay with animated circuit pattern */}
                     <div
                         onClick={() => setDetailsQuote(null)}
-                        className="fixed inset-0 bg-black/30 z-40 animate-fadeIn"
-                    />
+                        className="fixed inset-0 bg-gradient-to-br from-slate-900/80 to-slate-800/70 z-40"
+                    >
+                        <div
+                            className="absolute inset-0 opacity-30"
+                            style={{
+                                backgroundImage: `radial-gradient(circle at 1px 1px, rgba(255,255,255,0.15) 1px, transparent 0)`,
+                                backgroundSize: "40px 40px",
+                            }}
+                        />
+                    </div>
 
-                    <aside className="fixed right-0 top-0 h-full w-full lg:w-[980px] bg-white z-50 shadow-2xl shadow-slate-400/20 border-l border-slate-100 animate-slideFromRight">
+                    {/* Main sidebar - Futuristic control panel design */}
+                    <aside className="fixed right-0 top-0 h-full w-full overflow-y-auto lg:w-[1000px] bg-gradient-to-b from-slate-900 to-slate-800 z-50 border-l border-slate-700/50 shadow-2xl shadow-black/50">
                         <div className="h-full flex flex-col">
-                            {/* Header - Blueprint style */}
-                            <div className="sticky top-0 bg-white z-20 border-b border-slate-100">
+                            {/* Header - Holographic UI */}
+                            <div className="sticky top-0 z-30 bg-slate-900/90 backdrop-blur-xl border-b border-slate-700/50">
                                 <div className="relative px-8 py-5">
-                                    {/* Blueprint grid background */}
-                                    <div className="absolute inset-0 opacity-5">
-                                        <div
-                                            className="absolute inset-0"
-                                            style={{
-                                                backgroundImage: `linear-gradient(to right, #64748b 1px, transparent 1px),
-                                                 linear-gradient(to bottom, #64748b 1px, transparent 1px)`,
-                                                backgroundSize: "20px 20px",
-                                            }}
-                                        />
-                                    </div>
+                                    {/* Circuit line effect */}
+                                    <div className="absolute top-0 left-8 right-8 h-px bg-gradient-to-r from-transparent via-emerald-400/30 to-transparent" />
 
                                     <div className="relative flex justify-between items-center">
                                         <div className="flex items-center gap-4">
-                                            {/* Unique badge design */}
-                                            <div
-                                                className={`relative px-4 py-2.5 rounded-lg font-bold text-white ${detailsQuote.badge} overflow-hidden`}
-                                            >
-                                                <div className="absolute inset-0 bg-white/20" />
-                                                <div className="relative flex items-center gap-2">
-                                                    <div className="w-2 h-2 rounded-full bg-white/80 animate-pulse" />
-                                                    {detailsQuote.tier}
+                                            {/* Holographic badge */}
+                                            <div className="relative group">
+                                                <div
+                                                    className={`relative px-4 py-2.5 rounded-lg font-bold text-white ${detailsQuote.badge} overflow-hidden`}
+                                                >
+                                                    <div className="absolute inset-0 bg-gradient-to-r from-white/20 to-transparent" />
+                                                    <div className="absolute inset-0 bg-[linear-gradient(90deg,transparent,rgba(255,255,255,0.2),transparent)] animate-shimmer" />
+                                                    <div className="relative flex items-center gap-2">
+                                                        <div className="w-2 h-2 rounded-full bg-white animate-pulse" />
+                                                        <span className="text-shadow-lg">
+                                                            {detailsQuote.tier}
+                                                        </span>
+                                                    </div>
                                                 </div>
+                                                {/* Holographic glow */}
+                                                <div className="absolute -inset-2 bg-emerald-500/20 blur-xl opacity-0 group-hover:opacity-100 transition-opacity" />
                                             </div>
 
                                             <div>
-                                                <h1 className="text-2xl font-bold text-slate-900 tracking-tight">
+                                                <h1 className="text-2xl font-bold text-white tracking-tight">
                                                     {detailsQuote.name}
                                                 </h1>
-                                                <div className="text-sm text-slate-500 flex items-center gap-2 mt-1">
-                                                    <span>
-                                                        Configuration Panel
+                                                <div className="text-sm text-slate-400 flex items-center gap-2 mt-1">
+                                                    <span className="flex items-center gap-1">
+                                                        <FiHash className="text-emerald-400" />
+                                                        {detailsQuote.id}
                                                     </span>
-                                                    <span className="text-slate-300">
+                                                    <span className="text-slate-600">
                                                         •
                                                     </span>
-                                                    <span className="flex items-center gap-1">
-                                                        <FiHash className="text-slate-400" />
-                                                        {detailsQuote.id}
+                                                    <span className="text-emerald-400">
+                                                        ACTIVE CONFIGURATION
                                                     </span>
                                                 </div>
                                             </div>
                                         </div>
 
                                         <div className="flex items-center gap-3">
-                                            {/* Blueprint button */}
-                                            <button className="px-4 py-2 rounded-lg border border-slate-200 hover:border-slate-300 bg-white/80 hover:bg-white text-sm font-medium text-slate-700 flex items-center gap-2 transition-all">
-                                                <FiDownload />
-                                                Export Specs
+                                            {/* Holographic button */}
+                                            <button className="relative px-4 py-2 rounded-lg bg-slate-800/50 backdrop-blur-sm border border-slate-700 hover:border-emerald-500/50 text-sm font-medium text-slate-300 hover:text-white transition-all flex items-center gap-2 group">
+                                                <div className="absolute inset-0 bg-gradient-to-r from-emerald-500/0 via-emerald-500/5 to-emerald-500/0 opacity-0 group-hover:opacity-100 transition-opacity" />
+                                                <FiDownload className="relative z-10" />
+                                                <span className="relative z-10">
+                                                    Export Specs
+                                                </span>
                                             </button>
 
+                                            {/* Close button with particle effect */}
                                             <button
                                                 onClick={() =>
                                                     setDetailsQuote(null)
                                                 }
-                                                className="h-12 w-12 rounded-xl border border-slate-200 hover:border-slate-300 bg-white hover:bg-slate-50 flex items-center justify-center transition-all hover:scale-105 group"
+                                                className="relative h-12 w-12 rounded-xl bg-slate-800/50 border border-slate-700 hover:border-red-400/50 hover:bg-slate-800/80 flex items-center justify-center transition-all group"
                                             >
-                                                <div className="relative">
-                                                    <FiX className="text-slate-600 group-hover:text-slate-900 transition-colors text-lg" />
-                                                    <div className="absolute -inset-1 bg-slate-100/50 rounded-full blur-sm opacity-0 group-hover:opacity-100 transition-opacity" />
-                                                </div>
+                                                <div className="absolute inset-0 rounded-xl bg-gradient-to-br from-transparent via-red-500/0 to-transparent opacity-0 group-hover:opacity-100 group-hover:via-red-500/10 transition-all" />
+                                                <FiX className="text-slate-400 group-hover:text-white transition-colors text-lg relative z-10" />
                                             </button>
                                         </div>
                                     </div>
-
-                                    {/* Blueprint measurement line */}
-                                    <div className="absolute bottom-0 left-8 right-8 h-px bg-gradient-to-r from-transparent via-slate-300 to-transparent" />
                                 </div>
                             </div>
 
-                            {/* Body with blueprint grid */}
-                            <div className="flex-1 overflow-y-auto bg-slate-50/50">
-                                <div className="relative p-8">
-                                    {/* Grid background */}
-                                    <div
-                                        className="absolute inset-0 pointer-events-none"
-                                        style={{
-                                            backgroundImage: `linear-gradient(to right, #cbd5e1 1px, transparent 1px),
-                                             linear-gradient(to bottom, #cbd5e1 1px, transparent 1px)`,
-                                            backgroundSize: "40px 40px",
-                                            opacity: 0.2,
-                                        }}
-                                    />
+                            {/* Body with split layout */}
+                            <div className="flex-1 overflow-hidden">
+                                <div className="flex h-full">
+                                    {/* Left Column - Sticky Carousel */}
+                                    <div className="hidden lg:flex lg:w-[400px] sticky top-0">
+                                        <div className="relative w-full p-6">
+                                            {/* Carousel Container */}
+                                            <div className="relative h-full rounded-2xl bg-gradient-to-br from-slate-800/50 to-slate-900/30 border border-slate-700/50 overflow-hidden">
+                                                {/* Grid pattern background */}
+                                                <div className="absolute inset-0 opacity-20">
+                                                    <div
+                                                        className="absolute inset-0"
+                                                        style={{
+                                                            backgroundImage: `linear-gradient(to right, #334155 1px, transparent 1px),
+                                                linear-gradient(to bottom, #334155 1px, transparent 1px)`,
+                                                            backgroundSize:
+                                                                "40px 40px",
+                                                        }}
+                                                    />
+                                                </div>
 
-                                    <div className="relative grid grid-cols-1 lg:grid-cols-2 gap-8">
-                                        {/* Left Column - Technical Specifications */}
-                                        <div className="space-y-8">
-                                            {/* Boiler Unit Display */}
-                                            <div className="relative bg-white rounded-2xl border border-slate-200 p-6 overflow-hidden">
-                                                {/* Corner markers */}
-                                                <div className="absolute top-3 left-3 w-3 h-3 border-t border-l border-slate-400" />
-                                                <div className="absolute top-3 right-3 w-3 h-3 border-t border-r border-slate-400" />
-                                                <div className="absolute bottom-3 left-3 w-3 h-3 border-b border-l border-slate-400" />
-                                                <div className="absolute bottom-3 right-3 w-3 h-3 border-b border-r border-slate-400" />
-
-                                                <div className="relative">
-                                                    <div className="text-center mb-6">
-                                                        <div className="inline-flex items-center gap-2 px-4 py-2 bg-emerald-50 rounded-full mb-2">
-                                                            <FiBox className="text-emerald-600" />
-                                                            <span className="text-sm font-medium text-emerald-700">
-                                                                Unit Preview
-                                                            </span>
+                                                {/* Carousel header */}
+                                                <div className="relative z-10 p-6 border-b border-slate-700/50">
+                                                    <div className="flex items-center justify-between">
+                                                        <div className="flex items-center gap-3">
+                                                            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-emerald-500/20 to-cyan-500/20 border border-emerald-500/30 flex items-center justify-center">
+                                                                <FiCamera className="text-emerald-400" />
+                                                            </div>
+                                                            <div>
+                                                                <h3 className="text-lg font-bold text-white">
+                                                                    Visual
+                                                                    Overview
+                                                                </h3>
+                                                                <div className="text-sm text-slate-400">
+                                                                    360°
+                                                                    Inspection
+                                                                </div>
+                                                            </div>
                                                         </div>
-                                                        <h2 className="text-xl font-bold text-slate-900">
-                                                            {detailsQuote.brand}{" "}
-                                                            {detailsQuote.name}
-                                                        </h2>
+                                                        <div className="text-sm text-slate-400">
+                                                            {currentImageIndex +
+                                                                1}
+                                                            /
+                                                            {
+                                                                carouselImages.length
+                                                            }
+                                                        </div>
                                                     </div>
+                                                </div>
 
-                                                    <div className="relative p-8 bg-gradient-to-br from-slate-50 to-slate-100 rounded-xl border border-slate-200">
-                                                        {/* Blueprint-style crosshairs */}
-                                                        <div className="absolute top-1/2 left-4 w-2 h-2 border border-slate-400 rounded-full" />
-                                                        <div className="absolute top-1/2 right-4 w-2 h-2 border border-slate-400 rounded-full" />
-                                                        <div className="absolute top-4 left-1/2 w-2 h-2 border border-slate-400 rounded-full" />
-                                                        <div className="absolute bottom-4 left-1/2 w-2 h-2 border border-slate-400 rounded-full" />
-
+                                                {/* Main carousel image */}
+                                                <div className="relative p-8">
+                                                    <div className="relative aspect-square rounded-xl overflow-hidden border-2 border-slate-700/50 bg-gradient-to-br from-slate-900 to-black">
+                                                        {/* Image with holographic effect */}
                                                         <img
                                                             src={
-                                                                boilerImages[
-                                                                    detailsQuote
-                                                                        .id
+                                                                carouselImages[
+                                                                    currentImageIndex
                                                                 ]
                                                             }
-                                                            alt={
+                                                            alt={`${
                                                                 detailsQuote.name
-                                                            }
-                                                            className="h-56 mx-auto object-contain drop-shadow-xl relative z-10"
+                                                            } - View ${
+                                                                currentImageIndex +
+                                                                1
+                                                            }`}
+                                                            className="w-full h-full object-contain p-6 transition-opacity duration-300"
                                                         />
 
-                                                        {/* Dimension lines */}
-                                                        <div className="absolute -bottom-2 left-8 right-8 flex justify-between text-xs text-slate-500">
-                                                            <span>
-                                                                {
-                                                                    detailsQuote.dimensions.split(
-                                                                        "×"
-                                                                    )[0]
-                                                                }{" "}
-                                                                mm
-                                                            </span>
-                                                            <span>Width</span>
-                                                            <span>
-                                                                {
-                                                                    detailsQuote.dimensions.split(
-                                                                        "×"
-                                                                    )[0]
-                                                                }{" "}
-                                                                mm
-                                                            </span>
+                                                        {/* Holographic grid overlay */}
+                                                        <div className="absolute inset-0 opacity-30">
+                                                            <div
+                                                                className="absolute inset-0"
+                                                                style={{
+                                                                    backgroundImage: `linear-gradient(90deg, transparent 24px, rgba(6, 182, 212, 0.1) 25px, transparent 26px),
+                                                        linear-gradient(0deg, transparent 24px, rgba(6, 182, 212, 0.1) 25px, transparent 26px)`,
+                                                                    backgroundSize:
+                                                                        "50px 50px",
+                                                                }}
+                                                            />
+                                                        </div>
+
+                                                        {/* View indicator */}
+                                                        <div className="absolute top-4 right-4 w-8 h-8 rounded-full border-2 border-emerald-400/50 flex items-center justify-center">
+                                                            <div className="w-4 h-4 rounded-full border-2 border-emerald-400 animate-ping" />
+                                                        </div>
+
+                                                        {/* Zoom controls */}
+                                                        <div className="absolute top-4 left-4 flex gap-2">
+                                                            <button className="w-8 h-8 rounded-lg bg-slate-800/80 border border-slate-700 hover:border-emerald-500/50 flex items-center justify-center hover:bg-slate-800 transition-all">
+                                                                <FiPlus className="text-slate-400 hover:text-white text-sm" />
+                                                            </button>
+                                                            <button className="w-8 h-8 rounded-lg bg-slate-800/80 border border-slate-700 hover:border-emerald-500/50 flex items-center justify-center hover:bg-slate-800 transition-all">
+                                                                <FiMinus className="text-slate-400 hover:text-white text-sm" />
+                                                            </button>
                                                         </div>
                                                     </div>
 
-                                                    <div className="grid grid-cols-2 gap-3 mt-6">
-                                                        <div className="px-4 py-3 bg-white rounded-xl border border-slate-100 flex items-center gap-3">
-                                                            <div className="w-10 h-10 rounded-lg bg-emerald-50 flex items-center justify-center">
-                                                                <FiPackage className="text-emerald-600" />
-                                                            </div>
-                                                            <div>
-                                                                <div className="text-sm text-slate-500">
-                                                                    Status
-                                                                </div>
-                                                                <div className="font-bold text-slate-900">
-                                                                    In Stock
-                                                                </div>
-                                                            </div>
+                                                    {/* Image details */}
+                                                    <div className="mt-4 text-center">
+                                                        <div className="text-sm text-slate-400 mb-2">
+                                                            {
+                                                                imageViews[
+                                                                    currentImageIndex
+                                                                ]
+                                                            }
                                                         </div>
-                                                        <div className="px-4 py-3 bg-white rounded-xl border border-slate-100 flex items-center gap-3">
-                                                            <div className="w-10 h-10 rounded-lg bg-blue-50 flex items-center justify-center">
-                                                                <FiTruck className="text-blue-600" />
-                                                            </div>
-                                                            <div>
-                                                                <div className="text-sm text-slate-500">
-                                                                    Delivery
-                                                                </div>
-                                                                <div className="font-bold text-slate-900">
-                                                                    Next Day
-                                                                </div>
-                                                            </div>
+                                                        <div className="text-xs text-emerald-400">
+                                                            Enhanced Detail •
+                                                            Zoom Available
                                                         </div>
                                                     </div>
+                                                </div>
+
+                                                {/* Thumbnail strip */}
+                                                <div className="relative z-10 p-6 border-t border-slate-700/50">
+                                                    <div className="grid grid-cols-3 gap-3">
+                                                        {carouselImages.map(
+                                                            (img, index) => (
+                                                                <button
+                                                                    key={index}
+                                                                    onClick={() =>
+                                                                        setCurrentImageIndex(
+                                                                            index
+                                                                        )
+                                                                    }
+                                                                    className={`aspect-square rounded-lg border-2 ${
+                                                                        currentImageIndex ===
+                                                                        index
+                                                                            ? "border-emerald-500/50 bg-emerald-500/10"
+                                                                            : "border-slate-700 hover:border-emerald-500/50 bg-gradient-to-br from-slate-800 to-slate-900"
+                                                                    } overflow-hidden relative group transition-all`}
+                                                                >
+                                                                    <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/0 to-cyan-500/0 group-hover:from-emerald-500/10 group-hover:to-cyan-500/10 transition-all" />
+                                                                    <div className="relative w-full h-full flex items-center justify-center">
+                                                                        <img
+                                                                            src={
+                                                                                img
+                                                                            }
+                                                                            alt={`Thumbnail ${
+                                                                                index +
+                                                                                1
+                                                                            }`}
+                                                                            className="w-full h-full object-cover opacity-60 group-hover:opacity-100 transition-opacity"
+                                                                        />
+                                                                    </div>
+                                                                    <div
+                                                                        className={`absolute bottom-1 right-1 text-xs ${
+                                                                            currentImageIndex ===
+                                                                            index
+                                                                                ? "text-emerald-400"
+                                                                                : "text-slate-500 group-hover:text-emerald-400"
+                                                                        } transition-colors`}
+                                                                    >
+                                                                        {index +
+                                                                            1}
+                                                                    </div>
+                                                                    {currentImageIndex ===
+                                                                        index && (
+                                                                        <div className="absolute top-1 left-1 w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+                                                                    )}
+                                                                </button>
+                                                            )
+                                                        )}
+                                                    </div>
+                                                </div>
+
+                                                {/* Carousel controls */}
+                                                <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex items-center gap-3">
+                                                    <button
+                                                        onClick={() =>
+                                                            handlePrevImage()
+                                                        }
+                                                        className="w-10 h-10 rounded-full bg-slate-800/80 border border-slate-700 hover:border-emerald-500/50 flex items-center justify-center hover:bg-slate-800 transition-all group"
+                                                    >
+                                                        <FiChevronLeft className="text-slate-400 group-hover:text-white" />
+                                                    </button>
+                                                    <button
+                                                        onClick={() =>
+                                                            setAutoRotate(
+                                                                !autoRotate
+                                                            )
+                                                        }
+                                                        className={`px-4 py-2 rounded-lg border ${
+                                                            autoRotate
+                                                                ? "bg-gradient-to-r from-emerald-500/30 to-cyan-500/20 border-emerald-500/50 text-emerald-400"
+                                                                : "bg-slate-800/50 border-slate-700/50 text-slate-400 hover:border-emerald-500/50 hover:text-emerald-400"
+                                                        } text-sm font-medium transition-all`}
+                                                    >
+                                                        {autoRotate
+                                                            ? "Stop Auto"
+                                                            : "Auto Rotate"}
+                                                    </button>
+                                                    <button
+                                                        onClick={() =>
+                                                            handleNextImage()
+                                                        }
+                                                        className="w-10 h-10 rounded-full bg-slate-800/80 border border-slate-700 hover:border-emerald-500/50 flex items-center justify-center hover:bg-slate-800 transition-all group"
+                                                    >
+                                                        <FiChevronRight className="text-slate-400 group-hover:text-white" />
+                                                    </button>
                                                 </div>
                                             </div>
 
-                                            {/* Specifications Grid */}
-                                            <div className="bg-white rounded-2xl border border-slate-200 p-6">
-                                                <div className="flex items-center justify-between mb-6">
-                                                    <div className="flex items-center gap-3">
-                                                        <div className="w-10 h-10 rounded-xl bg-slate-900 flex items-center justify-center">
-                                                            <FiTool className="text-white" />
-                                                        </div>
-                                                        <div>
-                                                            <h2 className="text-xl font-bold text-slate-900">
-                                                                Technical
-                                                                Specifications
-                                                            </h2>
-                                                            <div className="text-sm text-slate-500">
-                                                                Complete system
-                                                                metrics
-                                                            </div>
-                                                        </div>
+                                            {/* Quick specs in carousel panel */}
+                                            <div className="mt-6 grid grid-cols-2 gap-3">
+                                                <div className="p-4 rounded-xl bg-gradient-to-br from-slate-800/50 to-slate-900/30 border border-slate-700/50">
+                                                    <div className="text-xs text-slate-400 mb-2">
+                                                        Dimensions
                                                     </div>
-                                                    <button
-                                                        onClick={() =>
-                                                            setExpandedSpecs(
-                                                                !expandedSpecs
-                                                            )
+                                                    <div className="text-lg font-bold text-white">
+                                                        {
+                                                            detailsQuote.dimensions
                                                         }
-                                                        className="px-4 py-2 rounded-lg border border-slate-200 hover:border-slate-300 text-sm font-medium text-slate-700 hover:text-slate-900 transition-all flex items-center gap-2"
-                                                    >
-                                                        {expandedSpecs
-                                                            ? "Collapse"
-                                                            : "Expand"}
-                                                        {expandedSpecs ? (
-                                                            <FiChevronUp />
-                                                        ) : (
-                                                            <FiChevronDown />
-                                                        )}
-                                                    </button>
+                                                    </div>
                                                 </div>
+                                                <div className="p-4 rounded-xl bg-gradient-to-br from-slate-800/50 to-slate-900/30 border border-slate-700/50">
+                                                    <div className="text-xs text-slate-400 mb-2">
+                                                        Weight
+                                                    </div>
+                                                    <div className="text-lg font-bold text-white">
+                                                        {detailsQuote.weight}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
 
-                                                <div className="grid grid-cols-3 gap-4">
-                                                    {/* Key Specs */}
-                                                    <div className="col-span-3 grid grid-cols-3 gap-4 mb-6">
-                                                        {[
-                                                            {
-                                                                label: "Efficiency",
-                                                                value: detailsQuote.efficiency,
-                                                                icon: FiTrendingUp,
-                                                                color: "text-emerald-600",
-                                                                bg: "bg-emerald-50",
-                                                            },
-                                                            {
-                                                                label: "Hot Water",
-                                                                value: detailsQuote.hotWater,
-                                                                icon: FiDroplet,
-                                                                color: "text-blue-600",
-                                                                bg: "bg-blue-50",
-                                                            },
-                                                            {
-                                                                label: "Weight",
-                                                                value: detailsQuote.weight,
-                                                                icon: FiAnchor,
-                                                                color: "text-slate-600",
-                                                                bg: "bg-slate-50",
-                                                            },
-                                                        ].map((spec, index) => (
-                                                            <div
-                                                                key={index}
-                                                                className="relative p-4 rounded-xl border border-slate-100"
-                                                            >
-                                                                <div className="absolute -top-2 -left-2 w-4 h-4 border-t border-l border-slate-300 rounded-tl-lg" />
-                                                                <div className="absolute -bottom-2 -right-2 w-4 h-4 border-b border-r border-slate-300 rounded-br-lg" />
-
-                                                                <div
-                                                                    className={`w-12 h-12 ${spec.bg} rounded-xl flex items-center justify-center mb-3`}
-                                                                >
-                                                                    <spec.icon
-                                                                        className={`text-xl ${spec.color}`}
-                                                                    />
-                                                                </div>
-                                                                <div className="text-2xl font-bold text-slate-900 mb-1">
-                                                                    {spec.value}
-                                                                </div>
-                                                                <div className="text-sm text-slate-500">
-                                                                    {spec.label}
+                                    {/* Right Column - Configuration Panel */}
+                                    <div className="flex-1 overflow-y-auto">
+                                        <div className="p-6">
+                                            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                                                {/* Technical Specifications Panel */}
+                                                <div className="lg:col-span-2">
+                                                    <div className="bg-gradient-to-br from-slate-800/50 to-slate-900/30 rounded-2xl border border-slate-700/50 p-6">
+                                                        <div className="flex items-center gap-3 mb-6">
+                                                            <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-emerald-500/20 to-cyan-500/20 border border-emerald-500/30 flex items-center justify-center">
+                                                                <FiCpu className="text-emerald-400 text-xl" />
+                                                            </div>
+                                                            <div>
+                                                                <h2 className="text-xl font-bold text-white">
+                                                                    Technical
+                                                                    Specifications
+                                                                </h2>
+                                                                <div className="text-sm text-slate-400">
+                                                                    Complete
+                                                                    system
+                                                                    analysis
                                                                 </div>
                                                             </div>
-                                                        ))}
-                                                    </div>
+                                                        </div>
 
-                                                    {/* Expanded Specs */}
-                                                    {expandedSpecs && (
-                                                        <>
-                                                            <div className="col-span-3 border-t border-slate-100 pt-6">
-                                                                <div className="grid grid-cols-3 gap-4">
-                                                                    {[
-                                                                        {
-                                                                            label: "Dimensions",
-                                                                            value: detailsQuote.dimensions,
-                                                                            unit: "mm",
-                                                                        },
-                                                                        {
-                                                                            label: "Energy Rating",
-                                                                            value: "A",
-                                                                            unit: "Class",
-                                                                        },
-                                                                        {
-                                                                            label: "Noise Level",
-                                                                            value: "≤ 40",
-                                                                            unit: "dB",
-                                                                        },
-                                                                        {
-                                                                            label: "Pressure Max",
-                                                                            value: "3.0",
-                                                                            unit: "bar",
-                                                                        },
-                                                                        {
-                                                                            label: "Flow Rate",
-                                                                            value: "9.8",
-                                                                            unit: "L/min",
-                                                                        },
-                                                                        {
-                                                                            label: "Warranty",
-                                                                            value: detailsQuote.warranty.split(
-                                                                                "·"
-                                                                            )[0],
-                                                                            unit: "Years",
-                                                                        },
-                                                                    ].map(
+                                                        {/* Specs grid with holographic effect */}
+                                                        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+                                                            {specs.map(
+                                                                (
+                                                                    spec,
+                                                                    index
+                                                                ) => (
+                                                                    <div
+                                                                        key={
+                                                                            index
+                                                                        }
+                                                                        className="relative group"
+                                                                    >
+                                                                        <div
+                                                                            className={`bg-gradient-to-br ${spec.gradient} rounded-xl border border-slate-700/50 p-4 backdrop-blur-sm`}
+                                                                        >
+                                                                            <div className="flex items-center gap-3 mb-3">
+                                                                                <div className="w-10 h-10 rounded-lg bg-white/5 flex items-center justify-center">
+                                                                                    <spec.icon className="text-white/80" />
+                                                                                </div>
+                                                                            </div>
+                                                                            <div className="text-2xl font-bold text-white mb-1">
+                                                                                {
+                                                                                    spec.value
+                                                                                }
+                                                                            </div>
+                                                                            <div className="text-sm text-slate-400">
+                                                                                {
+                                                                                    spec.label
+                                                                                }
+                                                                            </div>
+                                                                        </div>
+                                                                        {/* Hover effect */}
+                                                                        <div className="absolute inset-0 rounded-xl bg-gradient-to-br from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none" />
+                                                                    </div>
+                                                                )
+                                                            )}
+                                                        </div>
+
+                                                        {/* Expanded specs toggle */}
+                                                        {expandedSpecs && (
+                                                            <div className="mt-6 pt-6 border-t border-slate-700/50">
+                                                                <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+                                                                    {additionalSpecs.map(
                                                                         (
                                                                             spec,
                                                                             index
@@ -862,344 +1080,428 @@ export default function QuoteResultsPage() {
                                                                                 key={
                                                                                     index
                                                                                 }
-                                                                                className="p-4 rounded-xl bg-slate-50/50 border border-slate-100"
+                                                                                className="p-3 rounded-lg bg-slate-900/30 border border-slate-700/30"
                                                                             >
-                                                                                <div className="text-sm text-slate-500 mb-2">
+                                                                                <div className="text-xs text-slate-400 mb-1">
                                                                                     {
                                                                                         spec.label
                                                                                     }
                                                                                 </div>
-                                                                                <div className="flex items-baseline gap-1">
-                                                                                    <div className="text-xl font-bold text-slate-900">
-                                                                                        {
-                                                                                            spec.value
-                                                                                        }
-                                                                                    </div>
-                                                                                    <div className="text-sm text-slate-500">
-                                                                                        {
-                                                                                            spec.unit
-                                                                                        }
-                                                                                    </div>
+                                                                                <div className="text-lg font-semibold text-white">
+                                                                                    {
+                                                                                        spec.value
+                                                                                    }
                                                                                 </div>
                                                                             </div>
                                                                         )
                                                                     )}
                                                                 </div>
                                                             </div>
-                                                        </>
-                                                    )}
-                                                </div>
-                                            </div>
-                                        </div>
+                                                        )}
 
-                                        {/* Right Column - Configuration & Actions */}
-                                        <div className="space-y-8">
-                                            {/* Investment Breakdown */}
-                                            <div className="bg-white rounded-2xl border border-slate-200 p-6 overflow-hidden">
-                                                <div className="flex items-center gap-3 mb-6">
-                                                    <div className="w-10 h-10 rounded-xl bg-slate-900 flex items-center justify-center">
-                                                        <FiDollarSign className="text-white" />
+                                                        <button
+                                                            onClick={() =>
+                                                                setExpandedSpecs(
+                                                                    !expandedSpecs
+                                                                )
+                                                            }
+                                                            className="mt-6 w-full py-3 rounded-xl border border-slate-700/50 hover:border-emerald-500/50 text-slate-400 hover:text-white transition-all flex items-center justify-center gap-2"
+                                                        >
+                                                            {expandedSpecs
+                                                                ? "Show Less Details"
+                                                                : "Show Full Technical Specifications"}
+                                                            {expandedSpecs ? (
+                                                                <FiChevronUp />
+                                                            ) : (
+                                                                <FiChevronDown />
+                                                            )}
+                                                        </button>
                                                     </div>
-                                                    <div>
-                                                        <h2 className="text-xl font-bold text-slate-900">
-                                                            Investment Breakdown
-                                                        </h2>
-                                                        <div className="text-sm text-slate-500">
-                                                            Complete cost
-                                                            analysis
+                                                </div>
+
+                                                {/* Investment Breakdown - Holographic display */}
+                                                <div className="lg:col-span-2">
+                                                    <div className="bg-gradient-to-br from-slate-800/50 to-slate-900/30 rounded-2xl border border-slate-700/50 p-6 overflow-hidden">
+                                                        <div className="flex items-center gap-3 mb-6">
+                                                            <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-amber-500/20 to-orange-500/20 border border-amber-500/30 flex items-center justify-center">
+                                                                <FiCreditCard className="text-amber-400 text-xl" />
+                                                            </div>
+                                                            <div>
+                                                                <h2 className="text-xl font-bold text-white">
+                                                                    Investment
+                                                                    Analysis
+                                                                </h2>
+                                                                <div className="text-sm text-slate-400">
+                                                                    Complete
+                                                                    financial
+                                                                    breakdown
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        {/* Cost breakdown with visual bars */}
+                                                        <div className="space-y-4 mb-8">
+                                                            {costBreakdown.map(
+                                                                (
+                                                                    item,
+                                                                    index
+                                                                ) => (
+                                                                    <div
+                                                                        key={
+                                                                            index
+                                                                        }
+                                                                        className="relative group"
+                                                                    >
+                                                                        <div className="flex items-center justify-between py-3 border-b border-slate-700/30 last:border-0">
+                                                                            <div className="flex items-center gap-3">
+                                                                                <div className="w-8 h-8 rounded-lg bg-white/5 flex items-center justify-center">
+                                                                                    <div
+                                                                                        className={`w-2 h-2 rounded-full ${
+                                                                                            item.included
+                                                                                                ? "bg-emerald-400"
+                                                                                                : "bg-amber-400"
+                                                                                        }`}
+                                                                                    />
+                                                                                </div>
+                                                                                <div>
+                                                                                    <div className="font-medium text-white">
+                                                                                        {
+                                                                                            item.label
+                                                                                        }
+                                                                                    </div>
+                                                                                    <div className="text-xs text-slate-400">
+                                                                                        {!item.included &&
+                                                                                            "Equipment & Labor"}
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div className="text-right">
+                                                                                {item.included ? (
+                                                                                    <span className="px-3 py-1 rounded-full bg-emerald-500/20 text-emerald-400 text-sm font-medium">
+                                                                                        INCLUDED
+                                                                                    </span>
+                                                                                ) : (
+                                                                                    <>
+                                                                                        <div className="font-bold text-white">
+                                                                                            £
+                                                                                            {item.cost.toLocaleString()}
+                                                                                        </div>
+                                                                                        <div className="text-xs text-slate-400">
+                                                                                            {
+                                                                                                item.percentage
+                                                                                            }{" "}
+                                                                                            of
+                                                                                            total
+                                                                                        </div>
+                                                                                    </>
+                                                                                )}
+                                                                            </div>
+                                                                        </div>
+
+                                                                        {/* Visual bar */}
+                                                                        {!item.included && (
+                                                                            <div className="absolute -bottom-1 left-0 right-0 h-1 bg-slate-800/50 rounded-full overflow-hidden">
+                                                                                <div
+                                                                                    className={`h-full ${item.color} rounded-full transition-all duration-1000`}
+                                                                                    style={{
+                                                                                        width: item.width,
+                                                                                    }}
+                                                                                />
+                                                                            </div>
+                                                                        )}
+                                                                    </div>
+                                                                )
+                                                            )}
+                                                        </div>
+
+                                                        {/* Total display with glowing effect */}
+                                                        <div className="relative p-6 rounded-xl bg-gradient-to-br from-slate-900/50 to-black/30 border border-slate-700/50">
+                                                            <div className="absolute inset-0 bg-gradient-to-r from-emerald-500/10 via-transparent to-cyan-500/10 opacity-50" />
+
+                                                            <div className="relative flex justify-between items-center">
+                                                                <div>
+                                                                    <div className="text-sm text-slate-400">
+                                                                        Total
+                                                                        Package
+                                                                    </div>
+                                                                    <div className="flex items-baseline gap-2 mt-2">
+                                                                        <div className="text-4xl font-bold text-white">
+                                                                            £
+                                                                            {detailsQuote.price.toLocaleString()}
+                                                                        </div>
+                                                                        <div className="px-3 py-1 rounded-full bg-gradient-to-r from-emerald-500/20 to-emerald-600/10 border border-emerald-500/30 text-emerald-400 text-sm">
+                                                                            SAVE
+                                                                            £
+                                                                            {detailsQuote.oldPrice -
+                                                                                detailsQuote.price}
+                                                                        </div>
+                                                                    </div>
+                                                                    <div className="text-sm text-slate-400 mt-2 line-through">
+                                                                        Was £
+                                                                        {detailsQuote.oldPrice.toLocaleString()}
+                                                                    </div>
+                                                                </div>
+
+                                                                <div className="text-right">
+                                                                    <div className="text-sm text-slate-400">
+                                                                        Monthly
+                                                                    </div>
+                                                                    <div className="text-3xl font-bold text-white mt-2">
+                                                                        £
+                                                                        {
+                                                                            detailsQuote.monthly
+                                                                        }
+                                                                    </div>
+                                                                    <div className="text-xs text-emerald-400 mt-1">
+                                                                        0% APR •
+                                                                        10 Years
+                                                                    </div>
+                                                                </div>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
 
-                                                {/* Cost breakdown with architectural lines */}
-                                                <div className="space-y-4 mb-8">
-                                                    {[
-                                                        {
-                                                            label: "Boiler Unit",
-                                                            cost:
-                                                                detailsQuote.price *
-                                                                0.7,
-                                                            percentage: "70%",
-                                                        },
-                                                        {
-                                                            label: "Professional Installation",
-                                                            cost:
-                                                                detailsQuote.price *
-                                                                0.2,
-                                                            percentage: "20%",
-                                                        },
-                                                        {
-                                                            label: "Smart Controls & Accessories",
-                                                            cost: 0,
-                                                            included: true,
-                                                        },
-                                                        {
-                                                            label: `Warranty (${
-                                                                detailsQuote.warranty.split(
-                                                                    "·"
-                                                                )[0]
-                                                            })`,
-                                                            cost: 0,
-                                                            included: true,
-                                                        },
-                                                    ].map((item, index) => (
-                                                        <div
-                                                            key={index}
-                                                            className="flex items-center justify-between py-3 border-b border-slate-100 last:border-0"
-                                                        >
+                                                {/* Power Selection - Interactive panel */}
+                                                <div className="lg:col-span-2">
+                                                    <div className="bg-gradient-to-br from-slate-800/50 to-slate-900/30 rounded-2xl border border-slate-700/50 p-6">
+                                                        <div className="flex items-center justify-between mb-6">
                                                             <div className="flex items-center gap-3">
-                                                                <div className="w-8 h-8 rounded-lg bg-slate-50 flex items-center justify-center">
-                                                                    <div className="w-2 h-2 rounded-full bg-slate-400" />
+                                                                <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-purple-500/20 to-pink-500/20 border border-purple-500/30 flex items-center justify-center">
+                                                                    <FiZap className="text-purple-400 text-xl" />
                                                                 </div>
                                                                 <div>
-                                                                    <div className="font-medium text-slate-900">
-                                                                        {
-                                                                            item.label
-                                                                        }
-                                                                    </div>
-                                                                    <div className="text-xs text-slate-500">
-                                                                        {
-                                                                            item.percentage
-                                                                        }
+                                                                    <h2 className="text-xl font-bold text-white">
+                                                                        Power
+                                                                        Configuration
+                                                                    </h2>
+                                                                    <div className="text-sm text-slate-400">
+                                                                        Select
+                                                                        optimal
+                                                                        output
                                                                     </div>
                                                                 </div>
                                                             </div>
                                                             <div className="text-right">
-                                                                {item.included ? (
-                                                                    <span className="px-3 py-1 rounded-full bg-emerald-50 text-emerald-700 text-sm font-medium">
-                                                                        Included
-                                                                    </span>
-                                                                ) : (
-                                                                    <>
-                                                                        <div className="font-bold text-slate-900">
-                                                                            £
-                                                                            {item.cost.toLocaleString()}
-                                                                        </div>
-                                                                        <div className="text-xs text-slate-500">
-                                                                            {
-                                                                                item.percentage
-                                                                            }
-                                                                        </div>
-                                                                    </>
-                                                                )}
-                                                            </div>
-                                                        </div>
-                                                    ))}
-                                                </div>
-
-                                                {/* Total Price */}
-                                                <div className="p-6 bg-gradient-to-r from-slate-50 to-slate-100 rounded-xl border border-slate-200">
-                                                    <div className="flex justify-between items-start mb-4">
-                                                        <div>
-                                                            <div className="text-sm text-slate-500">
-                                                                Total Package
-                                                                Price
-                                                            </div>
-                                                            <div className="text-4xl font-bold text-slate-900 mt-2">
-                                                                £
-                                                                {detailsQuote.price.toLocaleString()}
-                                                            </div>
-                                                            <div className="flex items-center gap-3 mt-3">
-                                                                <div className="text-sm text-slate-400 line-through">
-                                                                    £
-                                                                    {detailsQuote.oldPrice.toLocaleString()}
+                                                                <div className="text-sm text-slate-400">
+                                                                    Current
                                                                 </div>
-                                                                <div className="px-3 py-1 rounded-full bg-emerald-100 text-emerald-700 text-sm font-medium">
-                                                                    Save £
-                                                                    {detailsQuote.oldPrice -
-                                                                        detailsQuote.price}
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div className="text-right">
-                                                            <div className="text-sm text-slate-500">
-                                                                Monthly from
-                                                            </div>
-                                                            <div className="text-3xl font-bold text-slate-900">
-                                                                £
-                                                                {
-                                                                    detailsQuote.monthly
-                                                                }
-                                                            </div>
-                                                            <div className="text-xs text-slate-500 mt-1">
-                                                                0% APR available
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            {/* Power Selection - Match the modal style */}
-                                            <div className="bg-white rounded-2xl border border-slate-200 p-6">
-                                                <div className="flex items-center justify-between mb-6">
-                                                    <div>
-                                                        <h3 className="text-lg font-bold text-slate-900">
-                                                            Select Boiler Power
-                                                        </h3>
-                                                        <div className="text-sm text-slate-500">
-                                                            Choose the optimal
-                                                            output
-                                                        </div>
-                                                    </div>
-                                                    <div className="text-right">
-                                                        <div className="text-xs text-slate-500">
-                                                            Current
-                                                        </div>
-                                                        <div className="text-xl font-bold text-emerald-600">
-                                                            25kW
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                                <div className="grid grid-cols-3 gap-3">
-                                                    {[
-                                                        {
-                                                            power: "25kW",
-                                                            tag: "Recommended",
-                                                            price: detailsQuote.price,
-                                                            color: "bg-emerald-500",
-                                                            selected: true,
-                                                        },
-                                                        {
-                                                            power: "30kW",
-                                                            tag: "+£100",
-                                                            price:
-                                                                detailsQuote.price +
-                                                                100,
-                                                            color: "bg-slate-800",
-                                                        },
-                                                        {
-                                                            power: "35kW",
-                                                            tag: "+£200",
-                                                            price:
-                                                                detailsQuote.price +
-                                                                200,
-                                                            color: "bg-slate-600",
-                                                        },
-                                                    ].map((option, index) => (
-                                                        <button
-                                                            key={index}
-                                                            className={`relative p-4 rounded-xl border-2 transition-all duration-300 ${
-                                                                option.selected
-                                                                    ? "border-emerald-500 bg-emerald-50"
-                                                                    : "border-slate-200 hover:border-slate-300 hover:bg-slate-50"
-                                                            }`}
-                                                        >
-                                                            <div className="text-center">
-                                                                <div className="text-2xl font-bold text-slate-900 mb-2">
+                                                                <div className="text-2xl font-bold text-emerald-400">
                                                                     {
-                                                                        option.power
+                                                                        selectedPower
                                                                     }
+                                                                    kW
                                                                 </div>
-                                                                <div
-                                                                    className={`text-sm font-medium px-3 py-1 rounded-full inline-block ${
-                                                                        option.selected
-                                                                            ? "bg-emerald-100 text-emerald-700"
-                                                                            : "bg-slate-100 text-slate-600"
-                                                                    }`}
-                                                                >
-                                                                    {option.tag}
+                                                            </div>
+                                                        </div>
+
+                                                        {/* Power options with unique slider */}
+                                                        <div className="grid grid-cols-3 gap-4 mb-8">
+                                                            {powerOptions.map(
+                                                                (
+                                                                    option,
+                                                                    index
+                                                                ) => (
+                                                                    <button
+                                                                        key={
+                                                                            index
+                                                                        }
+                                                                        onClick={() =>
+                                                                            handlePowerSelect(
+                                                                                option.power
+                                                                            )
+                                                                        }
+                                                                        className={`relative p-4 rounded-xl border-2 transition-all duration-300 ${
+                                                                            option.selected
+                                                                                ? "border-emerald-500/50 bg-gradient-to-br from-emerald-500/10 to-emerald-600/5"
+                                                                                : "border-slate-700/50 hover:border-slate-600/50 hover:bg-slate-800/30"
+                                                                        }`}
+                                                                    >
+                                                                        <div className="text-center">
+                                                                            <div className="text-2xl font-bold text-white mb-2">
+                                                                                {
+                                                                                    option.power
+                                                                                }
+                                                                            </div>
+                                                                            <div
+                                                                                className={`text-sm font-medium px-3 py-1 rounded-full inline-block ${
+                                                                                    option.selected
+                                                                                        ? "bg-emerald-500/20 text-emerald-400"
+                                                                                        : "bg-slate-800/50 text-slate-400"
+                                                                                }`}
+                                                                            >
+                                                                                {option.selected
+                                                                                    ? "RECOMMENDED"
+                                                                                    : `+£${
+                                                                                          option.price -
+                                                                                          detailsQuote.price
+                                                                                      }`}
+                                                                            </div>
+                                                                            <div className="text-xs text-slate-400 mt-3">
+                                                                                Efficiency:{" "}
+                                                                                <span className="text-emerald-400">
+                                                                                    {
+                                                                                        option.efficiency
+                                                                                    }
+                                                                                </span>
+                                                                            </div>
+                                                                        </div>
+
+                                                                        {option.selected && (
+                                                                            <>
+                                                                                <div className="absolute top-3 right-3 w-6 h-6 rounded-full bg-emerald-500 flex items-center justify-center">
+                                                                                    <FiCheck className="text-white text-xs" />
+                                                                                </div>
+                                                                                <div className="absolute inset-0 rounded-xl border-2 border-emerald-500/30" />
+                                                                            </>
+                                                                        )}
+                                                                    </button>
+                                                                )
+                                                            )}
+                                                        </div>
+
+                                                        {/* System Load Visualization */}
+                                                        <div className="pt-6 border-t border-slate-700/50">
+                                                            <div className="flex items-center justify-between mb-4">
+                                                                <div>
+                                                                    <div className="text-sm font-medium text-white">
+                                                                        System
+                                                                        Load
+                                                                        Analysis
+                                                                    </div>
+                                                                    <div className="text-xs text-slate-400">
+                                                                        Optimal
+                                                                        at
+                                                                        60-70%
+                                                                        capacity
+                                                                    </div>
                                                                 </div>
-                                                                <div className="text-xs text-slate-500 mt-3">
-                                                                    £
-                                                                    {option.price.toLocaleString()}
+                                                                <div className="text-right">
+                                                                    <div className="text-sm text-slate-400">
+                                                                        Current
+                                                                        Load
+                                                                    </div>
+                                                                    <div className="text-2xl font-bold text-emerald-400">
+                                                                        {
+                                                                            systemLoad
+                                                                        }
+                                                                        %
+                                                                    </div>
                                                                 </div>
                                                             </div>
 
-                                                            {option.selected && (
-                                                                <>
-                                                                    <div className="absolute top-2 right-2 w-6 h-6 rounded-full bg-emerald-500 flex items-center justify-center">
-                                                                        <FiCheck className="text-white text-xs" />
-                                                                    </div>
-                                                                    <div className="absolute -inset-0.5 border-2 border-emerald-500/30 rounded-xl blur-sm" />
-                                                                </>
-                                                            )}
-                                                        </button>
-                                                    ))}
-                                                </div>
+                                                            {/* Interactive load meter */}
+                                                            <div className="relative h-3 bg-slate-800/50 rounded-full overflow-hidden mb-2">
+                                                                <div className="absolute inset-0 bg-gradient-to-r from-emerald-500/20 via-emerald-400/30 to-cyan-500/20" />
+                                                                <div
+                                                                    className="h-full bg-gradient-to-r from-emerald-400 to-emerald-500 rounded-full relative transition-all duration-700"
+                                                                    style={{
+                                                                        width: `${systemLoad}%`,
+                                                                    }}
+                                                                >
+                                                                    <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent" />
+                                                                </div>
+                                                                {/* Load markers */}
+                                                                <div className="absolute left-1/4 w-px h-3 bg-amber-400/50" />
+                                                                <div className="absolute left-2/4 w-px h-3 bg-emerald-400/50" />
+                                                                <div className="absolute left-3/4 w-px h-3 bg-red-400/50" />
+                                                            </div>
 
-                                                {/* System Load Preview */}
-                                                <div className="mt-6 pt-6 border-t border-slate-100">
-                                                    <div className="flex items-center justify-between mb-4">
-                                                        <div className="text-sm font-medium text-slate-900">
-                                                            System Load Level
+                                                            <div className="flex justify-between text-xs text-slate-400">
+                                                                <span>
+                                                                    Idle
+                                                                </span>
+                                                                <span className="text-emerald-400">
+                                                                    Optimal
+                                                                </span>
+                                                                <span>Max</span>
+                                                            </div>
                                                         </div>
-                                                        <div className="text-xl font-bold text-emerald-600">
-                                                            60%
-                                                        </div>
-                                                    </div>
-                                                    <div className="h-2 bg-slate-100 rounded-full overflow-hidden">
-                                                        <div className="h-full w-3/5 bg-gradient-to-r from-emerald-400 to-emerald-500 rounded-full" />
-                                                    </div>
-                                                    <div className="text-xs text-slate-500 mt-2">
-                                                        Optimal efficiency at
-                                                        current selection
                                                     </div>
                                                 </div>
                                             </div>
 
-                                            {/* Action Buttons */}
-                                            <div className="space-y-4">
-                                                <button className="w-full rounded-xl bg-gradient-to-r from-emerald-500 to-emerald-600 hover:from-emerald-600 hover:to-emerald-700 text-white py-4 font-bold text-lg shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center gap-3 group">
-                                                    <FiCalendar className="group-hover:scale-110 transition-transform" />
-                                                    <span>
-                                                        Book Installation Date
-                                                    </span>
+                                            {/* Action Buttons - Futuristic panel */}
+                                            <div className="mt-6 grid grid-cols-1 lg:grid-cols-3 gap-4">
+                                                <button className="relative group p-6 rounded-xl bg-gradient-to-br from-emerald-500/20 to-emerald-600/10 border border-emerald-500/30 hover:border-emerald-400/50 transition-all">
+                                                    <div className="absolute inset-0 bg-gradient-to-r from-emerald-500/0 via-emerald-500/5 to-emerald-500/0 opacity-0 group-hover:opacity-100 transition-opacity" />
+                                                    <div className="relative flex items-center justify-center gap-3">
+                                                        <FiCalendar className="text-emerald-400 text-xl" />
+                                                        <div className="text-left">
+                                                            <div className="font-bold text-white">
+                                                                Book
+                                                                Installation
+                                                            </div>
+                                                            <div className="text-sm text-emerald-400">
+                                                                Schedule
+                                                                installation
+                                                                date
+                                                            </div>
+                                                        </div>
+                                                    </div>
                                                 </button>
 
-                                                <div className="grid grid-cols-2 gap-3">
-                                                    <button className="rounded-xl border-2 border-slate-200 hover:border-slate-300 bg-white hover:bg-slate-50 py-3 font-semibold text-slate-700 transition-all flex items-center justify-center gap-2">
-                                                        <FiTag />
-                                                        <span>
-                                                            Request Quote
-                                                        </span>
-                                                    </button>
+                                                <button className="relative group p-6 rounded-xl bg-gradient-to-br from-cyan-500/20 to-blue-500/10 border border-cyan-500/30 hover:border-cyan-400/50 transition-all">
+                                                    <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/0 via-cyan-500/5 to-cyan-500/0 opacity-0 group-hover:opacity-100 transition-opacity" />
+                                                    <div className="relative flex items-center justify-center gap-3">
+                                                        <FiMessageSquare className="text-cyan-400 text-xl" />
+                                                        <div className="text-left">
+                                                            <div className="font-bold text-white">
+                                                                Live Chat
+                                                            </div>
+                                                            <div className="text-sm text-cyan-400">
+                                                                Talk to our
+                                                                experts
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </button>
 
-                                                    <button className="rounded-xl border-2 border-slate-200 hover:border-emerald-300 bg-white hover:bg-emerald-50 py-3 font-semibold text-slate-700 transition-all flex items-center justify-center gap-2">
-                                                        <FiPhone />
-                                                        <span>
-                                                            Schedule Call
-                                                        </span>
-                                                    </button>
-                                                </div>
-
-                                                <div className="text-center">
-                                                    <button className="inline-flex items-center gap-2 text-emerald-600 hover:text-emerald-700 font-medium">
-                                                        <FiDownload />
-                                                        Download Technical Sheet
-                                                    </button>
-                                                </div>
+                                                <button className="relative group p-6 rounded-xl bg-gradient-to-br from-purple-500/20 to-pink-500/10 border border-purple-500/30 hover:border-purple-400/50 transition-all">
+                                                    <div className="absolute inset-0 bg-gradient-to-r from-purple-500/0 via-purple-500/5 to-purple-500/0 opacity-0 group-hover:opacity-100 transition-opacity" />
+                                                    <div className="relative flex items-center justify-center gap-3">
+                                                        <FiDownload className="text-purple-400 text-xl" />
+                                                        <div className="text-left">
+                                                            <div className="font-bold text-white">
+                                                                Download Quote
+                                                            </div>
+                                                            <div className="text-sm text-purple-400">
+                                                                PDF with all
+                                                                details
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </button>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
 
-                            {/* Blueprint Footer */}
-                            <div className="border-t border-slate-100 bg-white px-8 py-4">
-                                <div className="flex items-center justify-between text-sm text-slate-500">
-                                    <div className="flex items-center gap-4">
-                                        <span>Ref: {detailsQuote.id}</span>
-                                        <span className="text-slate-300">
+                            {/* Footer - Status bar */}
+                            <div className="border-t border-slate-700/50 bg-slate-900/50 px-8 py-4">
+                                <div className="flex items-center justify-between text-sm">
+                                    <div className="flex items-center gap-4 text-slate-400">
+                                        <span className="flex items-center gap-2">
+                                            <FiShield className="text-emerald-400" />
+                                            {detailsQuote.warranty}
+                                        </span>
+                                        <span className="text-slate-600">
                                             •
                                         </span>
-                                        <span className="flex items-center gap-1">
-                                            <FiClock />
-                                            Updated just now
+                                        <span className="flex items-center gap-2">
+                                            <FiTruck className="text-cyan-400" />
+                                            Next Day Delivery
                                         </span>
                                     </div>
-                                    <div className="flex items-center gap-3">
-                                        <span className="flex items-center gap-1">
-                                            <FiShield />
-                                            10-Year Warranty
-                                        </span>
-                                        <span className="text-slate-300">
-                                            •
-                                        </span>
-                                        <span className="flex items-center gap-1">
-                                            <FiCheckCircle className="text-emerald-500" />
-                                            Installation Included
-                                        </span>
+                                    <div className="flex items-center gap-4">
+                                        <div className="flex items-center gap-2 text-emerald-400">
+                                            <div className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+                                            Configuration Ready
+                                        </div>
+                                        <button className="px-4 py-2 rounded-lg bg-gradient-to-r from-emerald-500 to-emerald-600 hover:from-emerald-600 hover:to-emerald-700 text-white font-bold shadow-lg hover:shadow-xl transition-all">
+                                            Finalize Selection
+                                        </button>
                                     </div>
                                 </div>
                             </div>
@@ -1843,16 +2145,6 @@ export default function QuoteResultsPage() {
                     </div>
                 </>
             )}
-        </div>
-    );
-}
-
-/* Helper */
-function Stat({ label, value }) {
-    return (
-        <div className="p-4 rounded-xl bg-slate-50 border">
-            <div className="text-xs text-slate-500 mb-1">{label}</div>
-            <div className="font-bold text-slate-900">{value}</div>
         </div>
     );
 }

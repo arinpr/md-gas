@@ -513,3 +513,20 @@ aside::-webkit-scrollbar-thumb {
 aside::-webkit-scrollbar-thumb:hover {
     background: #94a3b8;
 }
+
+@keyframes shimmer {
+    0% {
+        transform: translateX(-100%);
+    }
+    100% {
+        transform: translateX(100%);
+    }
+}
+
+.animate-shimmer {
+    animation: shimmer 2s infinite;
+}
+
+.text-shadow-lg {
+    text-shadow: 0 0 20px rgba(52, 211, 153, 0.5);
+}

@@ -7,12 +7,20 @@ import {
     FiHome,
     FiClock,
     FiStar,
+    FiPhoneCall,
 } from "react-icons/fi";
 import { PageHeader } from "../ui/page-header";
 import AppointmentDateTimePicker from "./AppointmentDateTimePicker";
 import { useEffect, useRef, useState, useMemo } from "react";
 import QuoteProcessingModal from "./QuoteProgressPopup";
 import { Link } from "@inertiajs/react";
+import InstantQuoteModal from "./InstantQuoteModal";
+
+const SERVICES_WITH_INSTANT_QUOTE = [
+    "boiler_repair",
+    "boiler_service",
+    "power_flush",
+];
 
 export default function Stepper({
     title = "Boiler Repair Quote",
@@ -20,6 +28,7 @@ export default function Stepper({
     basePrice = 0,
     currency = "£",
     onSubmit,
+    serviceKey,
 }) {
     const [index, setIndex] = useState(0);
     const [answers, setAnswers] = useState({});
@@ -27,8 +36,10 @@ export default function Stepper({
     const dropdownTriggerRef = useRef(null);
     const dropdownRef = useRef(null);
     const [openUpwards, setOpenUpwards] = useState(false);
-    // const [showQuotePopup, setShowQuotePopup] = useState(false);
+    const [showInstantQuote, setShowInstantQuote] = useState(false);
     const [showProcessing, setShowProcessing] = useState(false);
+    const [hoveredIndex, setHoveredIndex] = useState(null);
+    const [mouse, setMouse] = useState({ x: 50, y: 50 });
 
     /* -------------------------------------------------------
        dropdown positioning
@@ -222,6 +233,10 @@ export default function Stepper({
             <div className="fixed inset-0 bg-light-grey -z-10"></div>
             <div className="min-h-screen bg-light-grey overflow-hidden sm:overflow-auto">
                 <PageHeader />
+
+                {/* Hidden service identifiers */}
+                <input type="hidden" name="service_key" value={serviceKey} />
+                <input type="hidden" name="service_name" value={title} />
 
                 <div className="max-w-7xl mx-auto space-y-10 py-16 px-4 sm:px-6 lg:px-0">
                     {/* TITLE */}
@@ -690,175 +705,97 @@ export default function Stepper({
                                     </div>
                                 )}
 
-                                {/* ===== Visual guidance (editorial style) - Redesigned ===== */}
-                                {current?.helperImages && (
-                                    <div className="max-w-6xl mx-auto mb-12">
-                                        {/* Unique header with gradient accent */}
-                                        {current.helperText && (
-                                            <div className="relative mb-10">
-                                                <div className="text-center max-w-2xl mx-auto">
-                                                    <div className="inline-flex items-center gap-3 mb-3">
-                                                        <div className="h-1 w-10 bg-gradient-to-r from-cyan-400 to-blue-400 rounded-full"></div>
-                                                        <span className="text-sm font-semibold text-blue-600 uppercase tracking-wider">
-                                                            Visual Guide
-                                                        </span>
-                                                        <div className="h-1 w-10 bg-gradient-to-r from-blue-400 to-purple-400 rounded-full"></div>
-                                                    </div>
-                                                    <p className="text-lg md:text-xl font-medium text-gray-800 leading-relaxed">
-                                                        {current.helperText}
-                                                    </p>
-                                                </div>
-                                            </div>
-                                        )}
-
-                                        {/* Unique image grid with floating cards */}
-                                        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
-                                            {current.helperImages.map(
-                                                (img, i) => (
-                                                    <div
-                                                        key={i}
-                                                        className="group relative"
-                                                    >
-                                                        {/* Floating card effect with unique shadow */}
-                                                        <div className="relative h-full transform transition-all duration-500 group-hover:-translate-y-2">
-                                                            {/* Decorative background element */}
-                                                            <div className="absolute -inset-4 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-700">
-                                                                <div
-                                                                    className={`absolute inset-0 rounded-3xl bg-gradient-to-br ${
-                                                                        i %
-                                                                            2 ===
-                                                                        0
-                                                                            ? "from-cyan-400/5 via-blue-400/3 to-purple-400/5"
-                                                                            : "from-purple-400/5 via-pink-400/3 to-cyan-400/5"
-                                                                    } blur-xl`}
-                                                                ></div>
-                                                            </div>
-
-                                                            {/* Main image container with unique border */}
-                                                            <div className="relative bg-white rounded-2xl overflow-hidden shadow-[0_10px_40px_rgba(0,0,0,0.08)] group-hover:shadow-[0_20px_60px_rgba(59,130,246,0.15)] transition-all duration-500 border border-gray-100 group-hover:border-blue-100">
-                                                                {/* Image with gradient overlay on hover */}
-                                                                <div className="relative aspect-[4/3] overflow-hidden">
-                                                                    <img
-                                                                        src={
-                                                                            img.src
-                                                                        }
-                                                                        alt={
-                                                                            img.alt
-                                                                        }
-                                                                        className="w-full h-full object-cover transform transition-transform duration-700 group-hover:scale-105"
-                                                                    />
-
-                                                                    {/* Gradient overlay on hover */}
-                                                                    <div className="absolute inset-0 bg-gradient-to-t from-black/0 via-black/0 to-black/0 group-hover:from-black/20 group-hover:via-black/10 group-hover:to-black/0 transition-all duration-500"></div>
-
-                                                                    {/* Zoom indicator */}
-                                                                    <div className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-y-2 group-hover:translate-y-0">
-                                                                        <div className="h-10 w-10 rounded-full bg-white/90 backdrop-blur-sm flex items-center justify-center shadow-lg">
-                                                                            <svg
-                                                                                className="h-5 w-5 text-gray-700"
-                                                                                fill="none"
-                                                                                stroke="currentColor"
-                                                                                viewBox="0 0 24 24"
-                                                                            >
-                                                                                <path
-                                                                                    strokeLinecap="round"
-                                                                                    strokeLinejoin="round"
-                                                                                    strokeWidth="2"
-                                                                                    d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7"
-                                                                                />
-                                                                            </svg>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-
-                                                                {/* Unique caption bar that slides up on hover */}
-                                                                <div className="absolute bottom-0 left-0 right-0 transform translate-y-full group-hover:translate-y-0 transition-transform duration-500 bg-gradient-to-r from-white to-gray-50 border-t border-gray-100 p-4">
-                                                                    <div className="flex items-center justify-between">
-                                                                        <div className="flex items-center gap-2">
-                                                                            <div
-                                                                                className={`h-2 w-2 rounded-full ${
-                                                                                    i %
-                                                                                        2 ===
-                                                                                    0
-                                                                                        ? "bg-cyan-500"
-                                                                                        : "bg-purple-500"
-                                                                                }`}
-                                                                            ></div>
-                                                                            <span className="text-sm font-medium text-gray-700 truncate">
-                                                                                {
-                                                                                    img.alt
-                                                                                }
-                                                                            </span>
-                                                                        </div>
-                                                                        <svg
-                                                                            className="h-4 w-4 text-gray-400 group-hover:text-blue-500 transition-colors"
-                                                                            fill="none"
-                                                                            stroke="currentColor"
-                                                                            viewBox="0 0 24 24"
-                                                                        >
-                                                                            <path
-                                                                                strokeLinecap="round"
-                                                                                strokeLinejoin="round"
-                                                                                strokeWidth="2"
-                                                                                d="M9 5l7 7-7 7"
-                                                                            />
-                                                                        </svg>
-                                                                    </div>
-                                                                </div>
-
-                                                                {/* Corner decorative elements */}
-                                                                <div className="absolute top-0 left-0 w-16 h-16">
-                                                                    <div className="absolute top-0 left-0 w-8 h-8 border-t-2 border-l-2 border-cyan-400/30 rounded-tl-xl"></div>
-                                                                </div>
-                                                                <div className="absolute bottom-0 right-0 w-16 h-16">
-                                                                    <div className="absolute bottom-0 right-0 w-8 h-8 border-b-2 border-r-2 border-purple-400/30 rounded-br-xl"></div>
-                                                                </div>
-                                                            </div>
-
-                                                            {/* Floating number indicator */}
-                                                            <div className="absolute -top-3 -left-3 h-8 w-8 rounded-full bg-gradient-to-br from-blue-500 to-cyan-500 text-white font-bold text-sm flex items-center justify-center shadow-lg z-10">
-                                                                {i + 1}
-                                                            </div>
-
-                                                            {/* Glow effect on hover */}
-                                                            <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-blue-400/0 via-cyan-400/0 to-purple-400/0 group-hover:from-blue-400/10 group-hover:via-cyan-400/5 group-hover:to-purple-400/10 transition-all duration-700 blur-md -z-10"></div>
-                                                        </div>
-
-                                                        {/* Connect line between images (only on desktop) */}
-                                                        {i === 0 && (
-                                                            <div className="hidden md:block absolute top-1/2 right-0 transform translate-x-6 -translate-y-1/2 z-0">
-                                                                <div className="relative">
-                                                                    <div className="h-0.5 w-12 bg-gradient-to-r from-blue-400/50 to-cyan-400/50 rounded-full"></div>
-                                                                    <div className="absolute -right-1 top-1/2 transform -translate-y-1/2 h-3 w-3 rounded-full bg-gradient-to-r from-blue-400 to-cyan-400 border-2 border-white"></div>
-                                                                </div>
-                                                            </div>
-                                                        )}
-                                                    </div>
-                                                )
-                                            )}
-                                        </div>
-
-                                        {/* Unique pagination indicator */}
-                                        <div className="mt-10 flex justify-center">
-                                            <div className="flex items-center gap-2">
-                                                {current.helperImages.map(
-                                                    (_, i) => (
+                                {/* ===== Visual guidance - Unique Minimal Design ===== */}
+                                {current?.helperImages &&
+                                    current.helperImages.length >= 2 && (
+                                        <div className="w-full flex flex-col items-center mb-10 mt-4">
+                                            {/* Images */}
+                                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-10">
+                                                {current.helperImages
+                                                    .slice(0, 2)
+                                                    .map((img, index) => (
                                                         <div
-                                                            key={i}
-                                                            className={`h-1.5 rounded-full transition-all duration-300 ${
-                                                                i === 0
-                                                                    ? "w-8 bg-gradient-to-r from-blue-500 to-cyan-500"
-                                                                    : i === 1
-                                                                    ? "w-6 bg-gradient-to-r from-cyan-500 to-purple-500"
-                                                                    : "w-1.5 bg-gray-300"
-                                                            }`}
-                                                        ></div>
-                                                    )
-                                                )}
+                                                            key={index}
+                                                            onMouseEnter={() =>
+                                                                setHoveredIndex(
+                                                                    index
+                                                                )
+                                                            }
+                                                            onMouseLeave={() =>
+                                                                setHoveredIndex(
+                                                                    null
+                                                                )
+                                                            }
+                                                            onMouseMove={(
+                                                                e
+                                                            ) => {
+                                                                const rect =
+                                                                    e.currentTarget.getBoundingClientRect();
+                                                                setMouse({
+                                                                    x:
+                                                                        ((e.clientX -
+                                                                            rect.left) /
+                                                                            rect.width) *
+                                                                        100,
+                                                                    y:
+                                                                        ((e.clientY -
+                                                                            rect.top) /
+                                                                            rect.height) *
+                                                                        100,
+                                                                });
+                                                            }}
+                                                            className="relative w-[240px] md:w-[350px] aspect-[4/3] rounded-3xl overflow-hidden border border-gray-200 bg-white shadow-md cursor-zoom-in"
+                                                        >
+                                                            {/* Base image */}
+                                                            <img
+                                                                src={img.src}
+                                                                alt={img.alt}
+                                                                className="absolute inset-0 w-full h-full object-cover"
+                                                            />
+
+                                                            {/* Internal zoom layer */}
+                                                            <div
+                                                                className={`absolute inset-0 transition-opacity duration-300 ${
+                                                                    hoveredIndex ===
+                                                                    index
+                                                                        ? "opacity-100"
+                                                                        : "opacity-0"
+                                                                }`}
+                                                            >
+                                                                <img
+                                                                    src={
+                                                                        img.src
+                                                                    }
+                                                                    alt=""
+                                                                    className="absolute inset-0 w-full h-full object-cover scale-[1.5]"
+                                                                    style={{
+                                                                        transformOrigin: `${mouse.x}% ${mouse.y}%`,
+                                                                    }}
+                                                                />
+                                                            </div>
+
+                                                            {/* Focus frame */}
+                                                            <div
+                                                                className={`pointer-events-none absolute inset-5 rounded-2xl border border-white/70 transition-opacity duration-300 ${
+                                                                    hoveredIndex ===
+                                                                    index
+                                                                        ? "opacity-100"
+                                                                        : "opacity-0"
+                                                                }`}
+                                                            />
+
+                                                            {/* Label */}
+                                                            <div className="absolute bottom-3 inset-x-0 flex justify-center">
+                                                                <div className="px-4 py-1.5 rounded-full bg-black/70 backdrop-blur text-xs font-medium text-white">
+                                                                    Example{" "}
+                                                                    {index + 1}
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    ))}
                                             </div>
                                         </div>
-                                    </div>
-                                )}
+                                    )}
 
                                 {/* dropdown */}
                                 {current?.type === "dropdown" && (
@@ -1147,6 +1084,64 @@ export default function Stepper({
                                     </>
                                 )}
 
+                                {current?.infoBox && (
+                                    <div className="mt-14 max-w-4xl mx-auto">
+                                        <div className="flex items-start gap-6">
+                                            {/* Soft expert badge */}
+                                            <div className="shrink-0">
+                                                <div className="h-11 w-11 rounded-full bg-gradient-to-br from-primary/10 to-dark/10 flex items-center justify-center">
+                                                    <span className="text-dark text-sm font-semibold">
+                                                        {current.infoBox
+                                                            .badge ?? "Tip"}
+                                                    </span>
+                                                </div>
+                                            </div>
+
+                                            {/* Editorial content */}
+                                            <div className="space-y-4">
+                                                {/* Main text */}
+                                                <p className="text-[16px] leading-relaxed text-slate-700 max-w-2xl">
+                                                    {current.infoBox.text}
+                                                </p>
+
+                                                {/* Optional phone CTA */}
+                                                {current.infoBox.phone &&
+                                                    current.infoBox
+                                                        .phoneLabel && (
+                                                        <div className="flex items-center gap-3 text-sm">
+                                                            <span className="text-slate-400">
+                                                                {current.infoBox
+                                                                    .helperLabel ??
+                                                                    "Not sure?"}
+                                                            </span>
+
+                                                            <a
+                                                                href={`tel:${current.infoBox.phone.replace(
+                                                                    /\s/g,
+                                                                    ""
+                                                                )}`}
+                                                                className="
+                                relative font-semibold text-slate-900
+                                after:absolute after:left-0 after:-bottom-1
+                                after:h-[2px] after:w-full
+                                after:bg-gradient-to-r after:from-dark/20 after:to-dark/10
+                                after:scale-x-0 hover:after:scale-x-100
+                                after:origin-left after:transition-transform
+                            "
+                                                            >
+                                                                {
+                                                                    current
+                                                                        .infoBox
+                                                                        .phoneLabel
+                                                                }
+                                                            </a>
+                                                        </div>
+                                                    )}
+                                            </div>
+                                        </div>
+                                    </div>
+                                )}
+
                                 {/* CONTROLS */}
                                 <div className="mt-auto pt-10 flex items-center justify-between">
                                     <p className="text-sm text-muted-foreground">
@@ -1174,13 +1169,29 @@ export default function Stepper({
                                                     index ===
                                                     visibleSteps.length - 1
                                                 ) {
-                                                    setShowProcessing(true);
+                                                    if (
+                                                        SERVICES_WITH_INSTANT_QUOTE.includes(
+                                                            serviceKey?.key
+                                                        )
+                                                    ) {
+                                                        setShowInstantQuote(
+                                                            true
+                                                        );
+                                                        setShowProcessing(
+                                                            false
+                                                        ); // safety
+                                                    } else {
+                                                        setShowProcessing(true);
+                                                        setShowInstantQuote(
+                                                            false
+                                                        ); // safety
+                                                    }
                                                 } else {
                                                     next();
                                                 }
                                             }}
                                             disabled={!canProceed}
-                                            className={`btn-gloss flex gap-1 items-center ${
+                                            className={`btn-gloss flex gap-1 items-center cursor-pointer ${
                                                 !canProceed
                                                     ? "btn-disabled"
                                                     : ""
@@ -1204,6 +1215,13 @@ export default function Stepper({
                     console.log("READY TO SHOW QUOTES", answers);
                 }}
                 onClose={() => setShowProcessing(false)}
+            />
+
+            <InstantQuoteModal
+                answers={answers}
+                open={showInstantQuote}
+                price={pricing.base}
+                onClose={() => setShowInstantQuote(false)}
             />
         </>
     );

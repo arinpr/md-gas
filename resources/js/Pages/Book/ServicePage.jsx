@@ -1,3 +1,4 @@
+import { SERVICES_KEY_VALUE } from "@/Components/extra/ServicesKeyValue";
 import Stepper from "@/Components/extra/Stepper";
 import React from "react";
 
@@ -41,7 +42,7 @@ const STEPS = [
     },
 
     {
-        id: "Any_issue",
+        id: "any_issue",
         question: "Any known issues?",
         type: "select",
         options: [{ label: "No" }, { label: "Yes", requiresText: true }],
@@ -72,6 +73,7 @@ export default function ServiceQuote() {
                 title="Annual Boiler Service"
                 basePrice={75}
                 steps={STEPS}
+                serviceKey={SERVICES_KEY_VALUE.BOILER_SERVICE}
             />
         </>
     );

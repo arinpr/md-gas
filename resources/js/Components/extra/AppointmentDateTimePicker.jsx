@@ -14,7 +14,6 @@ const AppointmentDateRangePicker = ({ value, onChange }) => {
         if (value?.range) setRange(value.range);
     }, [value]);
 
-    // ✅ notify Stepper
     useEffect(() => {
         if (date && range) {
             onChange?.({ date, range });

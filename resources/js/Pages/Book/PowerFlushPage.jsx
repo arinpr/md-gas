@@ -1,3 +1,4 @@
+import { SERVICES_KEY_VALUE } from "@/Components/extra/ServicesKeyValue";
 import Stepper from "@/Components/extra/Stepper";
 import React from "react";
 
@@ -68,13 +69,15 @@ const STEPS = [
         question: "Preferred visit date & time",
         type: "datetime",
     },
-    {
-        id: "summary",
-        question: "Review & pricing",
-        type: "summary",
-    },
 ];
 
 export default function PowerflushQuote() {
-    return <Stepper title="Power Flush" basePrice={180} steps={STEPS} />;
+    return (
+        <Stepper
+            title="Power Flush"
+            basePrice={180}
+            steps={STEPS}
+            serviceKey={SERVICES_KEY_VALUE.POWER_FLUSH}
+        />
+    );
 }

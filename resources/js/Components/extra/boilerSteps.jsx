@@ -1,6 +1,8 @@
 // ❌ REMOVE THIS (NO LONGER NEEDED)
 // export const SERVICE_TYPES = { ... };
 
+import { Phone } from "lucide-react";
+
 export const SERVICE_QUESTIONS = {
     new: [
         /* ─────────────────────────────
@@ -8,11 +10,17 @@ export const SERVICE_QUESTIONS = {
     ───────────────────────────── */
         {
             id: "mains_gas",
-            question: "Is the boiler powered by mains gas?",
+            question: "Does your boiler run on mains gas?",
             type: "select",
             options: [{ label: "Yes" }, { label: "No" }],
+            infoBox: {
+                badge: "Tip", // optional
+                text: "Most homes in the UK are connected to mains gas. If you receive a gas bill or have a gas meter installed, this is almost certainly the correct option for your home.",
+                helperLabel: "Not sure?", // optional
+                phone: "0330 113 1333",
+                phoneLabel: "Speak to an engineer",
+            },
         },
-
         /* ─────────────────────────────
        1A. FUEL TYPE (NO MAINS GAS)
     ───────────────────────────── */
@@ -20,7 +28,7 @@ export const SERVICE_QUESTIONS = {
             id: "boiler_fuel",
             question: "What fuel does your boiler run on?",
             type: "select",
-            options: [{ label: "LPG" }, { label: "Other" }],
+            options: [{ label: "LPG Gas" }, { label: "Other" }],
             showIf: (a) => a.mains_gas?.label === "No",
         },
 
@@ -41,8 +49,16 @@ export const SERVICE_QUESTIONS = {
             question: "Do you know the type of boiler currently installed?",
             type: "select",
             options: [{ label: "Yes" }, { label: "No" }],
+            infoBox: {
+                badge: "Tip", // optional
+                text: "Select Yes if you know. If you’re not sure, choose Not sure and we’ll guide you through it in the next step — or you can speak with an engineer.",
+                helperLabel: "Not sure?",
+                phone: "0330 113 1333",
+                phoneLabel: "Speak to an expert",
+            },
             showIf: (a) =>
-                a.mains_gas?.label === "Yes" || a.boiler_fuel?.label === "LPG",
+                a.mains_gas?.label === "Yes" ||
+                a.boiler_fuel?.label === "LPG Gas",
         },
 
         /* ─────────────────────────────
@@ -241,6 +257,16 @@ export const SERVICE_QUESTIONS = {
         {
             id: "flue_distance",
             question: "Is the flue at least 30cm away from a window or door?",
+            helperImages: [
+                {
+                    src: "/images/stepper/flue_distance.png",
+                    alt: "Flue distance from window or door",
+                },
+                {
+                    src: "/images/stepper/flue_distance2.jpg",
+                    alt: "Flue distance from window or door",
+                },
+            ],
             type: "select",
             options: [{ label: "Yes" }, { label: "No" }],
             showIf: (a) =>
@@ -251,6 +277,16 @@ export const SERVICE_QUESTIONS = {
         {
             id: "flue_roof",
             question: "Does the flue exit via the roof?",
+            helperImages: [
+                {
+                    src: "/images/stepper/flue_roof.jpg",
+                    alt: "Boiler flue exiting roof",
+                },
+                {
+                    src: "/images/stepper/flue_roof2.jpg",
+                    alt: "External boiler roof flue",
+                },
+            ],
             type: "select",
             options: [{ label: "Yes" }, { label: "No" }],
             showIf: (a) =>

@@ -1,3 +1,4 @@
+import { SERVICES_KEY_VALUE } from "@/Components/extra/ServicesKeyValue";
 import Stepper from "@/Components/extra/Stepper";
 import { SERVICE_QUESTIONS } from "@/Components/extra/boilerSteps";
 import { useMemo } from "react";
@@ -33,5 +34,12 @@ export default function NewBoilerQuote() {
         );
     }
 
-    return <Stepper title="New boiler quote" steps={steps} basePrice={75} />;
+    return (
+        <Stepper
+            title="New boiler quote"
+            steps={steps}
+            basePrice={75}
+            serviceKey={SERVICES_KEY_VALUE.NEW_BOILER_QUOTE}
+        />
+    );
 }

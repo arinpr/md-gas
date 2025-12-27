@@ -1,3 +1,4 @@
+import { SERVICES_KEY_VALUE } from "@/Components/extra/ServicesKeyValue";
 import Stepper from "@/Components/extra/Stepper";
 import React from "react";
 
@@ -110,7 +111,12 @@ const STEPS = [
 export default function RepairQuote() {
     return (
         <>
-            <Stepper title="Boiler Repair Quote" basePrice={75} steps={STEPS} />
+            <Stepper
+                title="Boiler Repair Quote"
+                basePrice={75}
+                steps={STEPS}
+                serviceKey={SERVICES_KEY_VALUE.BOILER_REPAIR}
+            />
             ;
         </>
     );
