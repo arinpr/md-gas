@@ -45,7 +45,7 @@ const services = [
         description: "Instant online quote for a new boiler.",
         image: "/images/product_boiler.png",
         highlight: "Instant Quote",
-        href: "/book",
+        href: "/coming-soon",
         theme: {
             hoverBg: "hover:bg-[#E6F9EC]",
             hoverBorder: "hover:border-[#17A44A]",

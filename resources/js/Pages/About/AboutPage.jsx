@@ -372,7 +372,10 @@ export default function AboutPage() {
                     </section>
 
                     {/* OUR STORY SECTION - Unique Modern Design */}
-                    <section className="relative py-20 lg:py-24 overflow-hidden">
+                    <section
+                        id="qualification"
+                        className="relative py-20 lg:py-24 overflow-hidden"
+                    >
                         {/* Abstract background shapes */}
                         <div className="absolute inset-0 bg-gradient-to-br from-white via-gray-50/50 to-blue-50/20" />
                         <div className="absolute top-1/2 left-0 w-64 h-64 bg-indigo-100/30 rounded-full -translate-y-1/2 blur-3xl" />
@@ -665,7 +668,7 @@ export default function AboutPage() {
                     </section>
 
                     {/* ACCREDITATIONS - Modern Unique Design */}
-                    <section className="py-16 lg:py-3">
+                    <section id="services-area" className="py-16 lg:py-3">
                         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                             {/* Header with creative layout */}
                             <div className="text-center mb-12 lg:mb-16">

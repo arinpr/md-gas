@@ -36,13 +36,13 @@ const MEGA_SECTIONS = {
             title: "Our qualifications",
             description:
                 "Fully Gas Safe registered and compliant with UK regulations.",
-            href: "/about",
+            href: "/about#qualification",
         },
         {
             title: "Our service areas",
             description:
                 "Reliable boiler services across your local surrounding areas.",
-            href: "/about",
+            href: "/about#services-area",
         },
     ],
     contact: [
@@ -82,7 +82,7 @@ export default function Header({
     navActive = "bg-black text-white",
 }) {
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-    const [openMenu, setOpenMenu] = useState(null); // "services" | "about" | "contact" | null
+    const [openMenu, setOpenMenu] = useState(null);
 
     const isMegaOpen = !!openMenu;
 
@@ -109,19 +109,10 @@ export default function Header({
         <header className="absolute top-4 w-full z-50">
             <div className="relative">
                 {/* Top bar */}
-                <div className="mx-auto flex max-w-7xl items-center gap-6 px-4 py-4 sm:px-2 lg:px-6">
+                <div className="mx-auto flex max-w-7xl items-center gap-6 px-4 sm:px-2 lg:px-6">
                     {/* Logo */}
-                    <Link
-                        href="/"
-                        className="flex items-center gap-2"
-                        onClick={closeMega}
-                    >
-                        <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-dark">
-                            <Flame className="h-6 w-6 text-foreground" />
-                        </div>
-                        <span className={`text-2xl font-semibold ${textColor}`}>
-                            MD Gas
-                        </span>
+                    <Link href="/" className="w-[170px]">
+                        <img src="/logo.png" alt="MD Gas Logo" />
                     </Link>
 
                     {/* Centre nav (desktop) */}
@@ -159,10 +150,12 @@ export default function Header({
                         {/* Call button */}
                         <button
                             type="button"
-                            onClick={() => {
-                                closeMega();
-                                // console.log("Chat Now clicked (native)");
-                            }}
+                            onClick={() =>
+                                window.open(
+                                    "https://wa.me/447454796398",
+                                    "_blank"
+                                )
+                            }
                             className={`hidden gap-2 items-center rounded-full px-4 py-2 text-sm font-medium cursor-pointer ${buttonBg} ${buttonText} hover:opacity-80 transition sm:flex`}
                         >
                             <AiOutlineWhatsApp className="h-4 w-4" />
@@ -234,13 +227,13 @@ export default function Header({
                 {mobileMenuOpen && (
                     <div className="md:hidden border-t border-slate-200 bg-white/95 backdrop-blur-sm">
                         <nav className="flex flex-col space-y-2 px-4 py-4">
-                            <a
+                            <Link
                                 href="/#services"
                                 className="rounded-lg px-2 py-2 text-sm font-medium text-slate-700 hover:bg-slate-100"
                                 onClick={() => setMobileMenuOpen(false)}
                             >
                                 Services
-                            </a>
+                            </Link>
                             <Link
                                 href="/about"
                                 className="rounded-lg px-2 py-2 text-sm font-medium text-slate-700 hover:bg-slate-100"
@@ -248,13 +241,13 @@ export default function Header({
                             >
                                 About
                             </Link>
-                            <a
+                            <Link
                                 href="/#contact"
                                 className="rounded-lg px-2 py-2 text-sm font-medium text-slate-700 hover:bg-slate-100"
                                 onClick={() => setMobileMenuOpen(false)}
                             >
                                 Contact
-                            </a>
+                            </Link>
                         </nav>
                     </div>
                 )}

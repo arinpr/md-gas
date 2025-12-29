@@ -4,31 +4,16 @@ import { Flame, MessageSquare, ChevronRight } from "lucide-react";
 const STEPS = ["Choose", "Customise", "Book", "Complete"];
 
 export function PageHeader({ variant = "default", currentStep = 4 }) {
-    const waHref = "https://wa.me/441234567890";
-    const waNumber = "0330 113 1333";
+    const waHref = "https://wa.me/447454796398";
+    const waNumber = "+447454796398";
 
     return (
         <header className="border border-b-dark/15 bg-foreground">
             <div className="mx-auto max-w-7xl px-6 sm:px-8 lg:px-10">
                 <div className="flex h-[75px] items-center justify-between">
                     {/* Logo */}
-                    <Link
-                        href="/"
-                        className="flex items-center gap-3"
-                        aria-label="MD Gas home"
-                    >
-                        <div
-                            className="h-10 w-10 rounded-md flex items-center justify-center shadow-sm"
-                            style={{ backgroundColor: "var(--primary)" }}
-                        >
-                            <Flame className="h-5 w-5 text-light-background" />
-                        </div>
-
-                        <div>
-                            <span className="text-sm font-semibold text-dark leading-none">
-                                MD Gas
-                            </span>
-                        </div>
+                    <Link href="/" className="w-[120px]">
+                        <img src="/logo.png" alt="MD Gas Logo" />
                     </Link>
 
                     {variant === "results" && (

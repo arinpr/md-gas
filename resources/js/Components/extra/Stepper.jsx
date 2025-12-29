@@ -925,47 +925,56 @@ export default function Stepper({
                                                     {
                                                         key: "address",
                                                         label: "Address (Optional)",
-                                                        full: true
+                                                        full: true,
                                                     },
-                                                ].map(({ key, label, full  }) => (
+                                                ].map(
+                                                    ({ key, label, full }) => (
+                                                        <div
+                                                            key={key}
+                                                            className={`relative ${
+                                                                full
+                                                                    ? "md:col-span-2"
+                                                                    : ""
+                                                            }`}
+                                                        >
+                                                            <label className="absolute -top-2 left-5 z-10 bg-white px-1 text-xs font-medium text-slate-500">
+                                                                {label}
+                                                            </label>
 
-                                                    <div
-                                                        key={key}
-                                                        className={`relative ${full ? "md:col-span-2" : ""}`}
-                                                    >
-                                                        <label className="absolute -top-2 left-5 z-10 bg-white px-1 text-xs font-medium text-slate-500">
-                                                            {label}
-                                                        </label>
-
-                                                        <input
-                                                            value={
-                                                                answers[
-                                                                    current.id
-                                                                ]?.[key] || ""
-                                                            }
-                                                            onChange={(e) =>
-                                                                setAnswers(
-                                                                    (s) => ({
-                                                                        ...s,
-                                                                        [current.id]:
-                                                                            {
-                                                                                ...s[
-                                                                                    current
-                                                                                        .id
-                                                                                ],
-                                                                                [key]: e
-                                                                                    .target
-                                                                                    .value,
-                                                                            },
-                                                                    })
-                                                                )
-                                                            }
-                                                            className="w-full rounded-2xl border border-dark/20 bg-white px-5 py-4 text-sm text-dark
+                                                            <input
+                                                                value={
+                                                                    answers[
+                                                                        current
+                                                                            .id
+                                                                    ]?.[key] ||
+                                                                    ""
+                                                                }
+                                                                onChange={(e) =>
+                                                                    setAnswers(
+                                                                        (
+                                                                            s
+                                                                        ) => ({
+                                                                            ...s,
+                                                                            [current.id]:
+                                                                                {
+                                                                                    ...s[
+                                                                                        current
+                                                                                            .id
+                                                                                    ],
+                                                                                    [key]: e
+                                                                                        .target
+                                                                                        .value,
+                                                                                },
+                                                                        })
+                                                                    )
+                                                                }
+                                                                className="w-full rounded-2xl border border-dark/20 bg-white px-5 py-4 text-sm text-dark
                                    focus:border-primary focus:ring-1 focus:ring-primary/10
                                    transition"
-                                                        />
-                                                    </div>
-                                                ))}
+                                                            />
+                                                        </div>
+                                                    )
+                                                )}
 
                                                 {/* Address */}
                                                 {/* <div className="relative sm:col-span-2">
@@ -989,24 +998,25 @@ export default function Stepper({
                                 {current?.type === "datetime" && (
                                     <div className="">
                                         <AppointmentDateTimePicker
-                                            value={answers[current.id]?.datetime || null}
-                                            type={serviceKey}              // ✅ string supported now
+                                            value={
+                                                answers[current.id]?.datetime ||
+                                                null
+                                            }
+                                            type={serviceKey} // ✅ string supported now
                                             onChange={(payload) => {
-
-                                                    console.log('Datetime Payloaad', payload);
-                                                    setAnswers((s) => ({
+                                                console.log(
+                                                    "Datetime Payloaad",
+                                                    payload
+                                                );
+                                                setAnswers((s) => ({
                                                     ...s,
                                                     [current.id]: {
                                                         ...s[current.id],
-                                                        datetime: payload,       // ✅ stores {date,time}
+                                                        datetime: payload, // ✅ stores {date,time}
                                                     },
-                                                    }))
-                                                }
-
-
-                                            }
+                                                }));
+                                            }}
                                         />
-
                                     </div>
                                 )}
 

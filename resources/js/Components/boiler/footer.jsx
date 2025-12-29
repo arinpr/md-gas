@@ -45,22 +45,14 @@ export function Footer() {
                 <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-5 mb-12">
                     {/* Brand Section */}
                     <div className="lg:col-span-2">
-                        <Link
-                            href="/"
-                            className="inline-flex items-center gap-3 group"
-                        >
-                            <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-blue-500 to-cyan-400 transform transition-transform group-hover:scale-105">
-                                <Flame className="h-6 w-6 text-white" />
-                            </div>
-                            <div>
-                                <span className="text-2xl font-bold bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">
-                                    MD Gas
-                                </span>
-                                <p className="text-sm text-blue-200 font-medium mt-1">
-                                    Heating Specialists
-                                </p>
-                            </div>
+                        <Link href="/" className="inline-block">
+                            <img
+                                src="/footerLogo.png"
+                                alt="MD Gas Logo"
+                                className="h-22 w-auto object-contain"
+                            />
                         </Link>
+
                         <p className="mt-4 text-gray-300 leading-relaxed max-w-md">
                             Professional boiler services for homes across the
                             region. Gas Safe registered, fully insured, and
@@ -132,7 +124,7 @@ export function Footer() {
                         </h4>
                         <ul className="space-y-4">
                             <li className="flex items-start gap-3">
-                                <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-blue-500/20">
+                                <div className="flex-shrink-0 flex h-10 w-10 items-center justify-center rounded-lg bg-blue-500/20">
                                     <Phone className="h-5 w-5 text-blue-400" />
                                 </div>
                                 <div>
@@ -140,15 +132,18 @@ export function Footer() {
                                         Emergency Line
                                     </p>
                                     <a
-                                        href="tel:08001234567"
+                                        href="https://wa.me/447454796398"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
                                         className="text-gray-300 hover:text-blue-400 transition-colors text-sm"
                                     >
-                                        0800 123 4567
+                                        +44 7454 796398
                                     </a>
                                 </div>
                             </li>
+
                             <li className="flex items-start gap-3">
-                                <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-blue-500/20">
+                                <div className="flex-shrink-0 flex h-10 w-10 items-center justify-center rounded-lg bg-blue-500/20">
                                     <Mail className="h-5 w-5 text-blue-400" />
                                 </div>
                                 <div>
@@ -156,15 +151,16 @@ export function Footer() {
                                         Email
                                     </p>
                                     <a
-                                        href="mailto:info@mdgas.co.uk"
+                                        href="mailto:manpreetdhanjan@icloud.com"
                                         className="text-gray-300 hover:text-blue-400 transition-colors text-sm"
                                     >
-                                        info@mdgas.co.uk
+                                        manpreetdhanjan@icloud.com
                                     </a>
                                 </div>
                             </li>
+
                             <li className="flex items-start gap-3">
-                                <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-blue-500/20">
+                                <div className="flex-shrink-0 flex h-10 w-10 items-center justify-center rounded-lg bg-blue-500/20">
                                     <MapPin className="h-5 w-5 text-blue-400" />
                                 </div>
                                 <div>
@@ -209,11 +205,11 @@ export function Footer() {
                 </div>
 
                 {/* Bottom Bar */}
-                <div className="mt-12 border-t border-white/10 pt-8">
+                <div className="mt-8 border-t border-white/10 pt-8">
                     <div className="flex flex-col items-center justify-between gap-4 sm:flex-row">
                         <p className="text-sm text-gray-400">
-                            © {currentYear} MD Gas Ltd. Registered in England
-                            No. 12345678. All rights reserved.
+                            © {currentYear} MD Gas, registered in England and
+                            Wales under Company No. 636354. All rights reserved.
                         </p>
                         <div className="flex flex-wrap gap-6">
                             <Link
@@ -236,11 +232,11 @@ export function Footer() {
                             </Link>
                         </div>
                     </div>
-                    <div className="mt-4 text-center text-xs text-gray-500">
+                    <div className="mt-10 text-center text-xs text-gray-500">
                         <p>
-                            MD Gas is registered with the Gas Safe Register
-                            (License No. 123456). All engineers are Gas Safe
-                            certified.
+                            MD Gas is registered with the Gas Safe Register (Gas
+                            Safe ID: 636354). All work is carried out by fully
+                            Gas Safe certified engineers.
                         </p>
                     </div>
                 </div>

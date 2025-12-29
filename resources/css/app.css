@@ -65,6 +65,10 @@
     }
 }
 
+html {
+    scroll-behavior: smooth;
+}
+
 .badge-rotate-slow {
     animation: badge-rotate-slow 18s linear infinite;
     transform-origin: center;

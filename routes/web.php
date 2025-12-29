@@ -67,7 +67,10 @@ Route::prefix('book')->name('book.')->group(function () {
     Route::get('/', [BookController::class, 'index'])->name('home');
     Route::get('/quote', [BookController::class, 'quote'])->name('quote');
     Route::get('/quote/repair', [BookController::class, 'repairStepper'])->name('quote.repair');
+
     Route::get('/quote/new', [BookController::class, 'newStepper'])->name('quote.new');
+
+    
     Route::get('/quote/powerflush', [BookController::class, 'powerflushStepper'])->name('quote.powerflush');
     Route::get('/quote/service', [BookController::class, 'serviceStepper'])->name('quote.service');
     Route::get('/quote/new/results', [BookController::class, 'serviceResults'])
@@ -103,6 +106,9 @@ Route::inertia('/terms-conditions', 'TermsConditionsPage', [
 Route::inertia('/order-summary', 'OrderSummary/OrderSummary', [
     'pageTitle' => 'Order Summary',
 ])->name('order.summary');
+Route::inertia('/coming-soon', 'ComingSoon/ComingSoon', [
+    'pageTitle' => 'Coming Soon',
+])->name('coming.soon');
 
 
 // Route::post('/repair/submit', [RepairController::class, 'store']);
