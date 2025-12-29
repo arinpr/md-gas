@@ -222,7 +222,7 @@ export default function Stepper({
         }
 
         if (current.type === "datetime") {
-            return !!ans?.datetime?.date && !!ans?.datetime?.range;
+            return !!ans?.datetime?.date && !!ans?.datetime?.time;
         }
 
         return false;
@@ -231,7 +231,7 @@ export default function Stepper({
     return (
         <>
             <div className="fixed inset-0 bg-light-grey -z-10"></div>
-            <div className="min-h-screen bg-light-grey overflow-hidden sm:overflow-auto">
+            <div className="min-h-screen bg-light-grey overflow-hidden">
                 <PageHeader />
 
                 {/* Hidden service identifiers */}
@@ -468,7 +468,7 @@ export default function Stepper({
 
                                             {/* Helper */}
                                             <p className="mt-2 text-xs text-slate-400">
-                                                JPG, PNG, MP4 supported
+                                                JPG, PNG supported
                                             </p>
                                         </div>
                                     </div>
@@ -529,10 +529,10 @@ export default function Stepper({
                                                             {/* Animated status ring */}
                                                             {/* Animated status ring — hover only */}
                                                             <div
-                                                                className="absolute -inset-2 rounded-full border-2 border-green-400/30 
-    opacity-0 
-    group-hover:opacity-100 
-    group-hover:animate-ping 
+                                                                className="absolute -inset-2 rounded-full border-2 border-green-400/30
+    opacity-0
+    group-hover:opacity-100
+    group-hover:animate-ping
     transition-opacity duration-300"
                                                             ></div>
                                                         </div>
@@ -585,10 +585,10 @@ export default function Stepper({
                                                             {/* Fixed: Added same animated status ring as chat */}
                                                             {/* Animated status ring — hover only */}
                                                             <div
-                                                                className="absolute -inset-2 rounded-full border-2 border-blue-400/30 
-    opacity-0 
-    group-hover:opacity-100 
-    group-hover:animate-ping 
+                                                                className="absolute -inset-2 rounded-full border-2 border-blue-400/30
+    opacity-0
+    group-hover:opacity-100
+    group-hover:animate-ping
     transition-opacity duration-300"
                                                             ></div>
                                                         </div>
@@ -922,10 +922,16 @@ export default function Stepper({
                                                         key: "postcode",
                                                         label: "Postcode",
                                                     },
-                                                ].map(({ key, label }) => (
+                                                    {
+                                                        key: "address",
+                                                        label: "Address (Optional)",
+                                                        full: true
+                                                    },
+                                                ].map(({ key, label, full  }) => (
+
                                                     <div
                                                         key={key}
-                                                        className="relative"
+                                                        className={`relative ${full ? "md:col-span-2" : ""}`}
                                                     >
                                                         <label className="absolute -top-2 left-5 z-10 bg-white px-1 text-xs font-medium text-slate-500">
                                                             {label}
@@ -962,7 +968,7 @@ export default function Stepper({
                                                 ))}
 
                                                 {/* Address */}
-                                                <div className="relative sm:col-span-2">
+                                                {/* <div className="relative sm:col-span-2">
                                                     <label className="absolute -top-2 left-5 z-10 bg-white px-1 text-xs font-medium text-slate-500">
                                                         Address (optional)
                                                     </label>
@@ -972,7 +978,7 @@ export default function Stepper({
                                focus:border-primary focus:ring-1 focus:ring-primary/10
                                transition"
                                                     />
-                                                </div>
+                                                </div> */}
                                             </div>
                                         </div>
                                     </div>
@@ -983,20 +989,24 @@ export default function Stepper({
                                 {current?.type === "datetime" && (
                                     <div className="">
                                         <AppointmentDateTimePicker
-                                            value={
-                                                answers[current.id]?.datetime ||
-                                                null
-                                            }
-                                            onChange={(date) =>
-                                                setAnswers((s) => ({
+                                            value={answers[current.id]?.datetime || null}
+                                            type={serviceKey}              // ✅ string supported now
+                                            onChange={(payload) => {
+
+                                                    console.log('Datetime Payloaad', payload);
+                                                    setAnswers((s) => ({
                                                     ...s,
                                                     [current.id]: {
                                                         ...s[current.id],
-                                                        datetime: date,
+                                                        datetime: payload,       // ✅ stores {date,time}
                                                     },
-                                                }))
+                                                    }))
+                                                }
+
+
                                             }
                                         />
+
                                     </div>
                                 )}
 
@@ -1222,6 +1232,7 @@ export default function Stepper({
                 open={showInstantQuote}
                 price={pricing.base}
                 onClose={() => setShowInstantQuote(false)}
+                serviceKey={serviceKey}
             />
         </>
     );

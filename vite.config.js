@@ -20,4 +20,13 @@ export default defineConfig({
             "@/components": path.resolve(__dirname, "resources/js/Components"),
         },
     },
+    server: {
+        host: '0.0.0.0',          // allow LAN access
+        port: 5173,
+        strictPort: true,
+        hmr: {
+        host: '192.168.1.215',  // important: HMR must point to LAN IP
+        port: 5173,
+        },
+    },
 });

@@ -1,5 +1,6 @@
 import { SERVICES_KEY_VALUE } from "@/Components/extra/ServicesKeyValue";
 import Stepper from "@/Components/extra/Stepper";
+import { usePage } from "@inertiajs/react";
 import React from "react";
 
 const STEPS = [
@@ -109,13 +110,20 @@ const STEPS = [
 ];
 
 export default function RepairQuote() {
+    const {basePrice, symbol} = usePage().props;
+
+    const onSubmit = ()=> {
+        console.log()
+    }
     return (
         <>
             <Stepper
                 title="Boiler Repair Quote"
-                basePrice={75}
+                basePrice={basePrice}
                 steps={STEPS}
                 serviceKey={SERVICES_KEY_VALUE.BOILER_REPAIR}
+                currency={symbol}
+                onSubmit={onSubmit}
             />
             ;
         </>

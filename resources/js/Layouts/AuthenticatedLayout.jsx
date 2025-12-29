@@ -75,6 +75,36 @@ export default function AuthenticatedLayout({ header, children }) {
                                         </NavLink>
                                     </div>
                                 </div>
+
+                                {/* Pricing Dropdown */}
+                                <div className="relative group h-full flex items-center">
+                                    <button
+                                        className="inline-flex items-center gap-1 h-full px-1
+                                        text-sm font-medium hover:text-gray-700
+                                        border-b-2 border-transparent hover:border-gray-300
+                                        focus:outline-none transition"
+                                    >
+                                        Bookings
+                                        <ChevronDown className="h-4 w-4" />
+                                    </button>
+
+                                    {/* Dropdown menu */}
+                                    <div
+                                        className="absolute left-0 top-full z-50 mt-2 w-48 rounded-xl bg-white
+                                        border border-gray-100 shadow-lg opacity-0 invisible
+                                        group-hover:opacity-100 group-hover:visible
+                                        transition-all duration-200"
+                                    >
+                                        <NavLink
+                                        // href={route(baseprice")}
+                                        href={route("admin.orders.management")}
+                                            className="block px-4 py-2.5 text-sm hover:bg-gray-50 rounded-t-xl"
+                                        >
+                                            Booking Management
+                                        </NavLink>
+
+                                    </div>
+                                </div>
                             </div>
 
 

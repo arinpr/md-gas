@@ -1,5 +1,6 @@
 import { SERVICES_KEY_VALUE } from "@/Components/extra/ServicesKeyValue";
 import Stepper from "@/Components/extra/Stepper";
+import { usePage } from "@inertiajs/react";
 import React from "react";
 
 const RADIATOR_PRICING = [
@@ -14,9 +15,9 @@ const RADIATOR_PRICING = [
 const STEPS = [
     {
         id: "radiators",
-        type: "dropdown",
+        type: "select",
         question: "How many radiators are in your property?",
-        options: RADIATOR_PRICING,
+        options: RADIATOR_PRICING.map((i)=> i.label),
     },
 
     {
@@ -72,11 +73,13 @@ const STEPS = [
 ];
 
 export default function PowerflushQuote() {
+    const {basePrice, symbol} = usePage().props;
     return (
         <Stepper
             title="Power Flush"
-            basePrice={180}
+            basePrice={basePrice}
             steps={STEPS}
+            currency={symbol}
             serviceKey={SERVICES_KEY_VALUE.POWER_FLUSH}
         />
     );

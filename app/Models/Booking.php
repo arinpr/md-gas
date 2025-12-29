@@ -7,17 +7,48 @@ use Illuminate\Database\Eloquent\Model;
 class Booking extends Model
 {
     protected $fillable = [
-        'user_id',
-        'frontend_key',
-        'question',
-        'answer',
-        'base_amount',
-        'pricing',
+        'customer_id',
+        'appointment_id',
+        'subtotal',
+        'discount',
+        'tax',
+        'total',
+        'currency',
+        'status',
+        'payment_status',
+        'paid_at',
     ];
+
+    protected $casts = [
+        'subtotal' => 'decimal:2',
+        'discount' => 'decimal:2',
+        'tax' => 'decimal:2',
+        'total' => 'decimal:2',
+        'paid_at' => 'datetime',
+    ];
+
+    public function customer()
+    {
+        return $this->belongsTo(Customer::class);
+    }
+
+    public function appointment()
+    {
+        return $this->belongsTo(Appointment::class);
+    }
 
     public function details()
     {
         return $this->hasMany(BookingDetail::class);
     }
-}
 
+    public function transactions()
+    {
+        return $this->hasMany(Transaction::class);
+    }
+
+    public function latestTransaction()
+    {
+        return $this->hasOne(Transaction::class)->latestOfMany();
+    }
+}
