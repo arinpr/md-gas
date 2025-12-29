@@ -126,7 +126,7 @@
 /* privacy policy page css  */
 /* Thin modern scrollbar */
 .thin-scroll::-webkit-scrollbar {
-    width: 6px;
+    width: 2px;
 }
 
 .thin-scroll::-webkit-scrollbar-track {
@@ -529,4 +529,14 @@ aside::-webkit-scrollbar-thumb:hover {
 
 .text-shadow-lg {
     text-shadow: 0 0 20px rgba(52, 211, 153, 0.5);
+}
+
+.bg-radial-gradient {
+    background: radial-gradient(
+        circle at center,
+        rgba(255, 255, 255, 0.9) 0%,
+        rgba(255, 255, 255, 0.6) 35%,
+        rgba(0, 0, 0, 0.04) 70%,
+        rgba(0, 0, 0, 0.08) 100%
+    );
 }

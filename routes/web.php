@@ -93,6 +93,16 @@ Route::inertia('/terms-conditions', 'TermsConditionsPage', [
 ])->name('terms.conditions');
 
 
+// Route::inertia('/order-success', 'OrderSuccess/OrderSuccess', [
+//     'pageTitle' => 'Order Success',
+// ])->name('order.success');
+
+// Route::inertia('/order-failed', 'OrderFailed/OrderFailed', [
+//     'pageTitle' => 'Order Failed',
+// ])->name('order.failed');
+Route::inertia('/order-summary', 'OrderSummary/OrderSummary', [
+    'pageTitle' => 'Order Summary',
+])->name('order.summary');
 
 
 // Route::post('/repair/submit', [RepairController::class, 'store']);
