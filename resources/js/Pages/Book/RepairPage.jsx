@@ -1,6 +1,6 @@
 import { SERVICES_KEY_VALUE } from "@/Components/extra/ServicesKeyValue";
 import Stepper from "@/Components/extra/Stepper";
-import { usePage } from "@inertiajs/react";
+import { Head, usePage } from "@inertiajs/react";
 import React from "react";
 
 const STEPS = [
@@ -117,6 +117,7 @@ export default function RepairQuote() {
     }
     return (
         <>
+            <Head title="Boiler Repair" />
             <Stepper
                 title="Boiler Repair Quote"
                 basePrice={basePrice}

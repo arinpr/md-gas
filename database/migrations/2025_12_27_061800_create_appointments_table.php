@@ -27,7 +27,7 @@ return new class extends Migration {
             // Daily rules rely on this
             $table->date('appointment_date')->index();
 
-            $table->enum('status', ['pending', 'confirmed', 'cancelled'])
+            $table->enum('status', ['pending', 'confirmed', 'cancelled', 'completed'])
                 ->default('confirmed')
                 ->index();
 

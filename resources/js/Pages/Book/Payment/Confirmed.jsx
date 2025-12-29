@@ -175,7 +175,7 @@ export default function OrderSuccess() {
                     }`}
                 >
                     <h1 className="text-6xl font-bold text-white mb-6 tracking-tight">
-                        Order Successful!
+                        Booking Confirmed!
                     </h1>
                     <div className="w-24 h-1 bg-gradient-to-r from-transparent via-white to-transparent mx-auto mb-8 opacity-60" />
                 </div>
@@ -189,11 +189,10 @@ export default function OrderSuccess() {
                     }`}
                 >
                     <p className="text-2xl text-white font-light mb-4">
-                        Thank you for your purchase!
+                        Thank you for your booking!
                     </p>
                     <p className="text-lg text-purple-100 font-light max-w-md mx-auto leading-relaxed">
-                        Your order has been confirmed and will be on its way
-                        soon. We appreciate your business.
+                        Your booking has been confirmed and will reach by your appointment date. We appreciate your business.
                     </p>
                 </div>
 

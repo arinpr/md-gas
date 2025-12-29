@@ -8,6 +8,9 @@ use App\Services\QuoteCheckoutService;
 use Illuminate\Http\Request;
 use Stripe\StripeClient;
 use Inertia\Inertia;
+use Illuminate\Validation\ValidationException;
+use App\Services\BookingNotificationService;
+
 
 class QuoteCheckoutController extends Controller
 {
@@ -65,6 +68,32 @@ class QuoteCheckoutController extends Controller
             if (method_exists($booking, 'appointment') && $booking->appointment) {
                 $booking->appointment()->update(['status' => 'confirmed']);
             }
+            \Log::info('Stripe success hit', [
+                'booking' => $request->query('booking'),
+                'tx' => $request->query('tx'),
+                'session_id' => $request->query('session_id'),
+            ]);
+            // app(BookingNotificationService::class)->sendConfirmed($booking);
+            try {
+                \Log::info('About to send booking emails', ['booking_id' => $booking->id]);
+
+                app(\App\Services\BookingNotificationService::class)->sendConfirmed($booking);
+
+                \Log::info('Booking emails sent', ['booking_id' => $booking->id]);
+            } catch (\Throwable $e) {
+                \Log::error('Booking email send failed', [
+                    'booking_id' => $booking->id,
+                    'error' => $e->getMessage(),
+                ]);
+            }
+
+            \Log::info('Email targets', [
+                'customer_email' => $booking->customer?->email,
+                'admin_emails' => config('mail.admin_emails'),
+                'from' => config('mail.from.address'),
+            ]);
+
+
 
             return redirect()->route('booking.confirmed', ['booking' => $booking->id]);
         }

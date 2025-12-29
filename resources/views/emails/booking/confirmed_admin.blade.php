@@ -1,0 +1,56 @@
+@php
+  $c = $booking->customer;
+  $a = $booking->appointment;
+  $currency = $booking->currency ?: 'GBP';
+  $paidAmount = number_format((float)$booking->total, 2);
+
+  $startsAt = $a?->starts_at ? \Carbon\Carbon::parse($a->starts_at)->timezone(config('app.timezone'))->format('D, d M Y • h:i A') : null;
+  $type = $a?->type ? str_replace('_',' ', $a->type) : 'Service';
+
+  $tx = $booking->transactions?->sortByDesc('id')->first();
+@endphp
+
+<x-mail::message>
+<div style="padding: 12px 0;">
+  <div style="font-size:18px; font-weight:800; color:#0f172a;">
+    New Paid Booking — #{{ $booking->id }}
+  </div>
+  <div style="margin-top:4px; font-size:13px; color:#475569;">
+    {{ strtoupper($booking->payment_status) }} • {{ $currency }} {{ $paidAmount }}
+  </div>
+</div>
+
+<div style="background:#ffffff; border:1px solid #e2e8f0; border-radius:16px; padding:16px; margin:12px 0;">
+  <div style="font-size:14px; font-weight:700; color:#0f172a;">Appointment</div>
+  <div style="margin-top:8px; font-size:13px; color:#334155;">
+    <div><strong>Service:</strong> {{ ucwords($type) }}</div>
+    <div><strong>Booked for:</strong> {{ $startsAt ?: '—' }}</div>
+    <div><strong>Appointment Status:</strong> {{ $a?->status ?: '—' }}</div>
+  </div>
+</div>
+
+<div style="background:#ffffff; border:1px solid #e2e8f0; border-radius:16px; padding:16px; margin:12px 0;">
+  <div style="font-size:14px; font-weight:700; color:#0f172a;">Customer</div>
+  <div style="margin-top:8px; font-size:13px; color:#334155;">
+    <div><strong>Name:</strong> {{ $c?->full_name ?: '—' }}</div>
+    <div><strong>Email:</strong> {{ $c?->email ?: '—' }}</div>
+    <div><strong>Phone:</strong> {{ $c?->phone ?: '—' }}</div>
+    <div><strong>Postcode:</strong> {{ $c?->postcode ?: '—' }}</div>
+    <div><strong>Address:</strong> {{ $c?->address_full ?: '—' }}</div>
+  </div>
+</div>
+
+<div style="background:#0f172a; color:#ffffff; border-radius:16px; padding:16px; margin:12px 0;">
+  <div style="font-size:14px; font-weight:700;">Transaction</div>
+  <div style="margin-top:8px; font-size:13px; opacity:.95;">
+    <div><strong>Status:</strong> {{ $tx?->status ?: '—' }}</div>
+    <div><strong>Session:</strong> {{ $tx?->provider_checkout_session_id ?: '—' }}</div>
+    <div><strong>Intent:</strong> {{ $tx?->provider_payment_intent_id ?: '—' }}</div>
+  </div>
+</div>
+
+<x-mail::button :url="url('/admin/order/management')">
+Open Admin Orders
+</x-mail::button>
+
+</x-mail::message>
