@@ -3,32 +3,33 @@ import React, { useState, useEffect } from "react";
 export default function ComingSoon() {
     const [mounted, setMounted] = useState(false);
     const [mousePos, setMousePos] = useState({ x: 50, y: 50 });
-    const [particles, setParticles] = useState([]);
-    const [letterIndex, setLetterIndex] = useState(0);
+    const [waveOffset, setWaveOffset] = useState(0);
+    const [glitchActive, setGlitchActive] = useState(false);
+    const [rotationAngle, setRotationAngle] = useState(0);
 
     useEffect(() => {
         setMounted(true);
 
-        // Create grid particles
-        const newParticles = [];
-        for (let i = 0; i < 12; i++) {
-            for (let j = 0; j < 12; j++) {
-                newParticles.push({
-                    id: `${i}-${j}`,
-                    x: (i / 11) * 100,
-                    y: (j / 11) * 100,
-                    delay: (i + j) * 0.05,
-                });
+        const waveInterval = setInterval(
+            () => setWaveOffset((p) => (p + 1) % 360),
+            30
+        );
+        const rotationInterval = setInterval(
+            () => setRotationAngle((p) => (p + 0.5) % 360),
+            20
+        );
+        const glitchInterval = setInterval(() => {
+            if (Math.random() > 0.7) {
+                setGlitchActive(true);
+                setTimeout(() => setGlitchActive(false), 150);
             }
-        }
-        setParticles(newParticles);
+        }, 3000);
 
-        // Letter animation cycle
-        const interval = setInterval(() => {
-            setLetterIndex((prev) => (prev + 1) % 4);
-        }, 2000);
-
-        return () => clearInterval(interval);
+        return () => {
+            clearInterval(waveInterval);
+            clearInterval(rotationInterval);
+            clearInterval(glitchInterval);
+        };
     }, []);
 
     const handleMouseMove = (e) => {
@@ -38,126 +39,212 @@ export default function ComingSoon() {
         });
     };
 
-    const letters = ["S", "O", "O", "N"];
+    const floatingElements = Array.from({ length: 20 }, (_, i) => ({
+        id: i,
+        size: Math.random() * 60 + 40,
+        x: Math.random() * 100,
+        y: Math.random() * 100,
+        duration: Math.random() * 20 + 15,
+        delay: Math.random() * -20,
+    }));
 
     return (
         <div
-            className="min-h-screen bg-white relative overflow-hidden"
+            className="min-h-screen relative overflow-hidden"
+            style={{
+                "--primary": "#0067ff",
+                "--secondary": "#172a44",
+                background:
+                    "linear-gradient(135deg, var(--secondary), #0f1f33, var(--secondary))",
+            }}
             onMouseMove={handleMouseMove}
         >
-            {/* Gradient mesh that follows cursor */}
-            <div className="fixed inset-0 pointer-events-none">
+            {/* Floating orbs */}
+            {floatingElements.map((el) => (
                 <div
-                    className="absolute w-[800px] h-[800px] rounded-full blur-3xl opacity-20 transition-all duration-700 ease-out"
+                    key={el.id}
+                    className="absolute rounded-full blur-3xl opacity-20"
                     style={{
-                        left: `${mousePos.x}%`,
-                        top: `${mousePos.y}%`,
-                        transform: "translate(-50%, -50%)",
+                        left: `${el.x}%`,
+                        top: `${el.y}%`,
+                        width: `${el.size}px`,
+                        height: `${el.size}px`,
                         background:
-                            "radial-gradient(circle, rgba(0,0,0,0.15) 0%, transparent 70%)",
+                            "radial-gradient(circle, rgba(0,103,255,0.35) 0%, rgba(0,103,255,0.15) 50%, transparent 100%)",
+                        animation: `float ${el.duration}s ease-in-out infinite`,
+                        animationDelay: `${el.delay}s`,
                     }}
                 />
-            </div>
+            ))}
 
-            {/* Dot grid */}
-            <div className="fixed inset-0 pointer-events-none opacity-30">
-                {particles.map((p) => {
-                    const distance = Math.sqrt(
-                        Math.pow(p.x - mousePos.x, 2) +
-                            Math.pow(p.y - mousePos.y, 2)
-                    );
-                    const scale = Math.max(0.3, 1 - distance / 100);
+            {/* Mouse glow */}
+            <div
+                className="fixed inset-0 pointer-events-none opacity-30 transition-all duration-500"
+                style={{
+                    background: `radial-gradient(circle at ${mousePos.x}% ${mousePos.y}%, rgba(0,103,255,0.35) 0%, transparent 50%)`,
+                }}
+            />
 
-                    return (
-                        <div
-                            key={p.id}
-                            className="absolute w-1 h-1 bg-black rounded-full transition-all duration-500"
-                            style={{
-                                left: `${p.x}%`,
-                                top: `${p.y}%`,
-                                transform: `scale(${scale})`,
-                                opacity: mounted ? 1 : 0,
-                                transitionDelay: `${p.delay}s`,
-                            }}
-                        />
-                    );
-                })}
-            </div>
+            {/* Scanlines */}
+            <div
+                className="fixed inset-0 pointer-events-none opacity-10"
+                style={{
+                    backgroundImage:
+                        "repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(255,255,255,0.03) 2px, rgba(255,255,255,0.03) 4px)",
+                }}
+            />
 
-            {/* Main content */}
-            <div className="relative min-h-screen flex items-center justify-center px-8">
+            {/* Main */}
+            <div className="relative min-h-screen flex items-center justify-center px-4">
                 <div className="text-center">
-                    {/* Letter blocks */}
-                    <div className="flex gap-8 mb-20 justify-center">
-                        {letters.map((letter, idx) => (
+                    {/* Rotating frame */}
+                    <div className="relative mb-12 flex justify-center">
+                        <div
+                            className="absolute w-32 h-32"
+                            style={{
+                                transform: `rotate(${rotationAngle}deg)`,
+                            }}
+                        >
+                            {[...Array(8)].map((_, i) => (
+                                <div
+                                    key={i}
+                                    className="absolute top-1/2 left-1/2 w-1"
+                                    style={{
+                                        height: "120px",
+                                        transform: `translate(-50%, -50%) rotate(${
+                                            i * 45
+                                        }deg) translateY(-60px)`,
+                                        background:
+                                            "linear-gradient(to bottom, var(--primary), transparent)",
+                                        opacity: 0.35,
+                                    }}
+                                />
+                            ))}
+                        </div>
+
+                        {/* Logo */}
+                        <div className="relative z-10">
                             <div
-                                key={idx}
-                                className={`relative transition-all duration-1000 ${
+                                className={`absolute inset-0 rounded-full blur-2xl transition-all duration-1000 ${
                                     mounted
-                                        ? "opacity-100 translate-y-0"
-                                        : "opacity-0 translate-y-20"
+                                        ? "opacity-60 scale-150"
+                                        : "opacity-0 scale-0"
                                 }`}
                                 style={{
-                                    transitionDelay: `${idx * 200}ms`,
+                                    background: "var(--primary)",
+                                }}
+                            />
+                            <div
+                                className={`relative p-4 rounded-full border-4 transition-all duration-1000 ${
+                                    mounted
+                                        ? "opacity-100 scale-100"
+                                        : "opacity-0 scale-0"
+                                }`}
+                                style={{
+                                    background:
+                                        "linear-gradient(135deg, var(--primary), #004bb8)",
+                                    borderColor: "var(--primary)",
                                 }}
                             >
-                                {/* Letter container with border */}
-                                <div
-                                    className={`relative w-40 h-40 border-2 border-black flex items-center justify-center transition-all duration-700 ${
-                                        letterIndex === idx
-                                            ? "bg-black"
-                                            : "bg-transparent"
-                                    }`}
-                                >
-                                    <span
-                                        className={`text-7xl font-bold transition-all duration-700 ${
-                                            letterIndex === idx
-                                                ? "text-white scale-110"
-                                                : "text-black scale-100"
-                                        }`}
-                                    >
-                                        {letter}
-                                    </span>
-
-                                    {/* Corner accents */}
-                                    <div className="absolute top-0 left-0 w-3 h-3 border-t-4 border-l-4 border-black -translate-x-1 -translate-y-1" />
-                                    <div className="absolute top-0 right-0 w-3 h-3 border-t-4 border-r-4 border-black translate-x-1 -translate-y-1" />
-                                    <div className="absolute bottom-0 left-0 w-3 h-3 border-b-4 border-l-4 border-black -translate-x-1 translate-y-1" />
-                                    <div className="absolute bottom-0 right-0 w-3 h-3 border-b-4 border-r-4 border-black translate-x-1 translate-y-1" />
-                                </div>
+                                <img
+                                    src="/favicon.png"
+                                    alt="MD Gas Logo"
+                                    className="h-20"
+                                />
                             </div>
-                        ))}
-                    </div>
-
-                    {/* Tagline */}
-                    <div
-                        className={`transition-all duration-1500 delay-1000 ${
-                            mounted ? "opacity-100" : "opacity-0"
-                        }`}
-                    >
-                        <div className="inline-block relative">
-                            <p className="text-xl tracking-[0.3em] text-black font-light mb-8">
-                                THE FUTURE AWAITS
-                            </p>
-                            <div className="absolute -bottom-2 left-0 right-0 h-px bg-black" />
                         </div>
                     </div>
 
-                    {/* Vertical bars decoration */}
-                    <div
-                        className={`flex gap-2 justify-center mt-16 transition-all duration-1500 delay-1200 ${
-                            mounted
-                                ? "opacity-100 translate-y-0"
-                                : "opacity-0 translate-y-10"
+                    {/* Glitch headline */}
+                    <div className="relative mb-4">
+                        <h1
+                            className={`text-7xl md:text-9xl font-black transition-all duration-100 ${
+                                glitchActive ? "translate-x-1" : "translate-x-0"
+                            }`}
+                            style={{
+                                color: "white",
+                                textShadow: glitchActive
+                                    ? `2px 2px var(--primary), -2px -2px rgba(0,103,255,0.6)`
+                                    : `4px 4px 20px rgba(0,103,255,0.6)`,
+                                fontFamily: "Arial Black, sans-serif",
+                            }}
+                        >
+                            NEW BOILER
+                        </h1>
+                    </div>
+
+                    {/* Wave line */}
+                    <div className="relative h-2 max-w-3xl mx-auto mb-8">
+                        <svg
+                            className="w-full h-full"
+                            preserveAspectRatio="none"
+                        >
+                            <path
+                                d={`M 0 ${
+                                    1 + Math.sin((waveOffset * Math.PI) / 180)
+                                } Q 25 ${
+                                    0.5 +
+                                    Math.sin(
+                                        ((waveOffset + 45) * Math.PI) / 180
+                                    )
+                                }, 50 ${
+                                    1 + Math.sin((waveOffset * Math.PI) / 180)
+                                } T 100 ${
+                                    1 + Math.sin((waveOffset * Math.PI) / 180)
+                                }`}
+                                stroke="var(--primary)"
+                                strokeWidth="3"
+                                fill="none"
+                            />
+                        </svg>
+                    </div>
+
+                    {/* QUOTE */}
+                    <h2
+                        className={`text-5xl md:text-7xl font-bold transition-all duration-1000 ${
+                            mounted ? "opacity-100" : "opacity-0"
                         }`}
+                        style={{
+                            backgroundImage:
+                                "linear-gradient(90deg, var(--primary), #3b82f6, var(--primary))",
+                            backgroundClip: "text",
+                            WebkitBackgroundClip: "text",
+                            color: "transparent",
+                            backgroundSize: "200% auto",
+                            animation: "shine 3s linear infinite",
+                        }}
                     >
-                        {[...Array(5)].map((_, i) => (
+                        QUOTE
+                    </h2>
+
+                    {/* Coming soon */}
+                    <div className="mt-12 flex items-center justify-center gap-4">
+                        <div
+                            className={`h-px transition-all duration-1000 ${
+                                mounted ? "w-32" : "w-0"
+                            }`}
+                            style={{ background: "var(--primary)" }}
+                        />
+                        <p className="text-2xl tracking-[0.4em] text-white/80">
+                            COMING SOON
+                        </p>
+                        <div
+                            className={`h-px transition-all duration-1000 ${
+                                mounted ? "w-32" : "w-0"
+                            }`}
+                            style={{ background: "var(--primary)" }}
+                        />
+                    </div>
+
+                    {/* Dots */}
+                    <div className="mt-12 flex gap-3 justify-center">
+                        {[...Array(3)].map((_, i) => (
                             <div
                                 key={i}
-                                className="w-px bg-black transition-all duration-700"
+                                className="w-3 h-3 rounded-full animate-pulse"
                                 style={{
-                                    height:
-                                        letterIndex === i % 4 ? "40px" : "20px",
+                                    background: "var(--primary)",
+                                    animationDelay: `${i * 0.3}s`,
                                 }}
                             />
                         ))}
@@ -165,29 +252,40 @@ export default function ComingSoon() {
                 </div>
             </div>
 
-            {/* Corner frame */}
-            <div className="fixed inset-0 pointer-events-none">
+            {/* Corners */}
+            {["tl", "tr", "bl", "br"].map((pos) => (
                 <div
-                    className={`absolute top-8 left-8 w-24 h-24 border-l-2 border-t-2 border-black transition-all duration-2000 ${
-                        mounted ? "opacity-100 scale-100" : "opacity-0 scale-50"
-                    }`}
+                    key={pos}
+                    className={`fixed ${
+                        pos.includes("t") ? "top-8" : "bottom-8"
+                    } ${pos.includes("l") ? "left-8" : "right-8"} w-20 h-20`}
+                    style={{
+                        borderColor: "var(--primary)",
+                        borderStyle: "solid",
+                        borderWidth:
+                            pos === "tl"
+                                ? "2px 0 0 2px"
+                                : pos === "tr"
+                                ? "2px 2px 0 0"
+                                : pos === "bl"
+                                ? "0 0 2px 2px"
+                                : "0 2px 2px 0",
+                        opacity: 0.4,
+                    }}
                 />
-                <div
-                    className={`absolute top-8 right-8 w-24 h-24 border-r-2 border-t-2 border-black transition-all duration-2000 delay-200 ${
-                        mounted ? "opacity-100 scale-100" : "opacity-0 scale-50"
-                    }`}
-                />
-                <div
-                    className={`absolute bottom-8 left-8 w-24 h-24 border-l-2 border-b-2 border-black transition-all duration-2000 delay-400 ${
-                        mounted ? "opacity-100 scale-100" : "opacity-0 scale-50"
-                    }`}
-                />
-                <div
-                    className={`absolute bottom-8 right-8 w-24 h-24 border-r-2 border-b-2 border-black transition-all duration-2000 delay-600 ${
-                        mounted ? "opacity-100 scale-100" : "opacity-0 scale-50"
-                    }`}
-                />
-            </div>
+            ))}
+
+            <style>{`
+                @keyframes float {
+                    0%,100% { transform: translate(0,0); }
+                    25% { transform: translate(20px,-20px); }
+                    50% { transform: translate(-20px,20px); }
+                    75% { transform: translate(20px,10px); }
+                }
+                @keyframes shine {
+                    to { background-position: 200% center; }
+                }
+            `}</style>
         </div>
     );
 }
