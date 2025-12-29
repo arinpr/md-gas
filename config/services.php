@@ -58,7 +58,7 @@ return [
         'symbol' => env('PAYMENT_CURRENCY_SYMBOL', '£'),
     ],
     'stripe' => [
-        'secret' => env('STRIPE_SECRET','sk_test_51SiexA9FMtDui4WvtkYmNL33gephntDpeR5xYzLqfndKZRFsE1g1LJl3QOAXsgnbWGZx91yzNHHRlgPEaIkaRrkS00J8YaHj9O'),
+        'secret' => env('STRIPE_SECRET','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'),
         'api'   => 'pk_test_51SiexA9FMtDui4Wvp6m5YMxU9kysY6fFlOALbAFYIr1TQUUMesY5wLLx0erHqEdfuDyMTXfUAaacUxub2z6quHCi00FMVxoBK1'
     ]
 

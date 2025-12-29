@@ -115,7 +115,7 @@ return [
         'name' => env('MAIL_FROM_NAME', 'Example'),
     ],
 
-    'admin_emails' => env('ADMIN_BOOKING_EMAILS', 'arinpr7@gmail.com'),
+    'admin_emails' => env('ADMIN_BOOKING_EMAILS', 'manpreetdhanjan@icloud.com'),
 
 
 ];
