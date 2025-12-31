@@ -1,6 +1,6 @@
-import { SERVICES_KEY_VALUE } from "@/Components/extra/ServicesKeyValue";
-import Stepper from "@/Components/extra/Stepper";
-import { SERVICE_QUESTIONS } from "@/Components/extra/boilerSteps";
+import { SERVICES_KEY_VALUE } from "@/components/extra/ServicesKeyValue";
+import Stepper from "@/components/extra/Stepper";
+import { SERVICE_QUESTIONS } from "@/components/extra/boilerSteps";
 import { useMemo } from "react";
 
 /* -----------------------------

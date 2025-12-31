@@ -48,17 +48,17 @@ export function ServiceCards() {
                             <h2 className="text-3xl sm:text-4xl font-[500] tracking-tight text-dark leading-10">
                                 Get a{" "}
                                 <span className="font-bold font-marcellus text-primary text-[42px]">
-                                    fixed online price
+                                    clear online quote
                                 </span>
                                 ,
                                 <br className="hidden sm:block" />
                                 <span className="inline-block">
-                                    without a salesperson in sight.
+                                    with no pressure or obligation.
                                 </span>
                             </h2>
                             <p className="mt-3 text-lg text-dark/70">
-                                Simple, transparent, and fully online — the way
-                                it should be.
+                                Straightforward pricing and a simple online
+                                process from start to finish.
                             </p>
                         </div>
 

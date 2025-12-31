@@ -14,8 +14,9 @@ const services = [
         title: "Boiler Repair",
         description: "Fast boiler repairs with fixed labour.",
         image: "/images/product_boiler.png",
-        highlight: "From £75 Labour",
+        highlight: "instant booking",
         href: "/book/quote?service=repair",
+        featured: true,
         theme: {
             hoverBg: "hover:bg-[#E5F1FF]",
             hoverBorder: "hover:border-[#2358FF]",
@@ -46,6 +47,7 @@ const services = [
         image: "/images/product_boiler.png",
         highlight: "Instant Quote",
         href: "/book",
+
         theme: {
             hoverBg: "hover:bg-[#E6F9EC]",
             hoverBorder: "hover:border-[#17A44A]",
@@ -59,7 +61,7 @@ const services = [
         title: "Power Flush",
         description: "Deep clean for radiators and pipework.",
         image: "/images/product_boiler.png",
-        highlight: "From £400",
+        highlight: "instant booking",
         href: "/book/quote?service=powerflush",
         theme: {
             hoverBg: "hover:bg-[#F3E9FF]",
@@ -127,7 +129,18 @@ export function HeroServices() {
             {services.map((service) => (
                 <Card
                     key={service.id}
-                    className={`group relative flex flex-col justify-start items-start overflow-hidden rounded-[30px] border-[3px] border-[#EFEFEF] bg-white px-7 pt-7 pb-6 shadow-[0_18px_45px_rgba(15,23,42,0.06)] transition-all duration-300 hover:shadow-[0_24px_60px_rgba(15,23,42,0.14)] ${service.theme.hoverBg} ${service.theme.hoverBorder}`}
+                    className={`group relative flex flex-col items-start overflow-hidden rounded-[30px]
+    border-[3px]
+    ${
+        service.featured
+            ? "border-[#2358FF] shadow-[0_24px_60px_rgba(15,23,42,0.35)]"
+            : "border-[#EFEFEF] shadow-[0_18px_45px_rgba(15,23,42,0.06)]"
+    }
+    bg-white px-7 pt-7 pb-6
+    transition-all duration-300
+    hover:shadow-[0_24px_60px_rgba(15,23,42,0.35)]
+    ${service.theme.hoverBg}
+    ${service.theme.hoverBorder}`}
                 >
                     {/* label pill */}
                     <div

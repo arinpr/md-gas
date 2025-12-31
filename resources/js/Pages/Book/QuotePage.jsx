@@ -1,8 +1,8 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { Head, Link } from "@inertiajs/react";
-import { PageHeader } from "@/Components/ui/page-header";
-import { GoogleReview } from "@/Components/GoogleReview";
-import { TechnicianButton } from "@/Components/TechnicianButton";
+import { PageHeader } from "@/components/ui/page-header";
+import { GoogleReview } from "@/components/GoogleReview";
+import { TechnicianButton } from "@/components/TechnicianButton";
 
 const pageTitle = "Get a Quote";
 
@@ -180,7 +180,7 @@ export default function QuotePage() {
                                     <div className="absolute inset-0 bg-gradient-to-r from-primary/90 to-blue-700 rounded-xl opacity-0 group-hover/primary:opacity-100 transition-opacity duration-300"></div>
                                 </Link>
 
-                                <TechnicianButton/>
+                                <TechnicianButton />
                             </div>
 
                             {/* Trust indicators matching right side design */}

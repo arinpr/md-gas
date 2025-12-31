@@ -1,5 +1,6 @@
 import { Link } from "@inertiajs/react";
 import { Flame, MessageSquare, ChevronRight } from "lucide-react";
+import { FaWhatsapp } from "react-icons/fa";
 
 const STEPS = ["Choose", "Customise", "Book", "Complete"];
 
@@ -66,7 +67,7 @@ export function PageHeader({ variant = "default", currentStep = 4 }) {
                         href={waHref}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="slim-bar relative inline-flex items-center rounded-md px-3 pr-8 py-1.5 gap-3 focus:outline-none focus-visible:ring-2 focus-visible:ring-[rgba(0,103,255,0.16)]"
+                        className="slim-bar relative inline-flex items-center rounded-md px-3 pr-8 py-1.5 gap-2 focus:outline-none focus-visible:ring-2 focus-visible:ring-[rgba(0,103,255,0.16)]"
                         aria-label={`Chat on WhatsApp ${waNumber}`}
                     >
                         {/* icon tile */}
@@ -77,28 +78,22 @@ export function PageHeader({ variant = "default", currentStep = 4 }) {
                                 border: "1px solid rgba(0,103,255,0.06)",
                             }}
                         >
-                            <MessageSquare className="h-4 w-4 text-primary" />
+                            <FaWhatsapp className="h-4 w-4 text-primary" />
                         </span>
 
                         {/* divider */}
                         <span className="divider hidden sm:block" aria-hidden />
 
                         {/* label (hidden on very small screens) */}
-                        <span className="hidden sm:block text-xs text-dark">
-                            Chat
+                        <span className="hidden sm:block text-xs font-medium text-dark">
+                            Chat now
                         </span>
 
-                        {/* phone/text */}
-                        <span className="text-sm font-bold text-dark">
-                            {waNumber}
-                        </span>
-
-                        {/* chevron */}
                         <span
                             className="chev hidden sm:inline-flex items-center justify-center h-6 w-6 rounded-sm"
                             aria-hidden
                         >
-                            <ChevronRight className="h-4 w-4 text-dark" />
+                            <ChevronRight className="h-4 w-4 text-primary" />
                         </span>
 
                         {/* --- ONLINE STATUS: on the RIGHT side of the chat card --- */}

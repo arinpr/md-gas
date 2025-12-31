@@ -164,7 +164,7 @@ html {
 .divider {
     width: 1px;
     height: 28px;
-    background: rgba(23, 42, 68, 0.06);
+    background: rgba(67, 122, 200, 0.2);
     margin: 0 6px;
 }
 
@@ -175,7 +175,6 @@ html {
 .slim-bar:hover .chev,
 .slim-bar:focus .chev {
     transform: translateX(2px);
-    color: var(--primary);
 }
 
 /* -------- ONLINE STATUS BLINK ---------- */

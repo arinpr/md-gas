@@ -12,42 +12,42 @@ const BENEFITS = [
     {
         title: "Trusted installer.",
         description:
-            "Accredited by leading industry bodies so you know your installation is in safe hands.",
+            "Experienced engineers delivering professional boiler installations you can rely on.",
         icon: FiAward,
         iconColor: "text-sky-400",
     },
     {
         title: "All-inclusive aftercare.",
         description:
-            "Every installation comes with our workmanship guarantee and dedicated support.",
+            "Ongoing support and workmanship cover to give you confidence after installation.",
         icon: FiHeart,
         iconColor: "text-blue-400",
     },
     {
-        title: "Price promise.",
+        title: "Transparent pricing.",
         description:
-            "If you find a genuine like-for-like quote that’s cheaper, we’ll match it. Simple.",
+            "Clear, upfront quotes with no hidden costs or unexpected surprises.",
         icon: FiTag,
         iconColor: "text-violet-400",
     },
     {
-        title: "5 star reviews.",
+        title: "Customer-focused service.",
         description:
-            "Thousands of verified 5★ reviews across platforms like Trustpilot and Google.",
+            "We prioritise clear communication and a smooth experience from start to finish.",
         icon: FiStar,
         iconColor: "text-emerald-400",
     },
     {
-        title: "We give back.",
+        title: "Energy-efficient solutions.",
         description:
-            "For every energy-saving installation, we donate to carefully chosen charities.",
+            "Modern boiler options designed to improve efficiency and reduce energy waste.",
         icon: FiShield,
         iconColor: "text-pink-400",
     },
     {
         title: "A safe choice.",
         description:
-            "Gas Safe registered engineers and fully certified for boiler and heating work.",
+            "Gas Safe registered engineers fully certified for boiler and heating work.",
         icon: FiZap,
         iconColor: "text-amber-400",
     },

@@ -1,5 +1,5 @@
-import QuoteResultsPage from "@/Components/extra/QuoteResultsPage";
-import { PageHeader } from "@/Components/ui/page-header";
+import QuoteResultsPage from "@/components/extra/QuoteResultsPage";
+import { PageHeader } from "@/components/ui/page-header";
 import { usePage } from "@inertiajs/react";
 
 export default function ServiceResults() {

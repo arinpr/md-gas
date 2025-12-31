@@ -1,9 +1,9 @@
 import { useState } from "react";
-import Header from "@/Components/boiler/header";
-import { Footer } from "@/Components/boiler/footer";
-import WhyChooseUs from "@/Components/boiler/WhyChooseUs";
-import { ServiceCards } from "@/Components/boiler/service-cards";
-import Faq from "@/Components/boiler/Faq";
+import Header from "@/components/boiler/header";
+import { Footer } from "@/components/boiler/footer";
+import WhyChooseUs from "@/components/boiler/WhyChooseUs";
+import { ServiceCards } from "@/components/boiler/service-cards";
+import Faq from "@/components/boiler/Faq";
 import { Link } from "@inertiajs/react";
 
 export default function Home() {

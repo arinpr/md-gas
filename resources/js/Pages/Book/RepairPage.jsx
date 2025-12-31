@@ -1,25 +1,25 @@
-import { SERVICES_KEY_VALUE } from "@/Components/extra/ServicesKeyValue";
-import Stepper from "@/Components/extra/Stepper";
+import { SERVICES_KEY_VALUE } from "@/components/extra/ServicesKeyValue";
+import Stepper from "@/components/extra/Stepper";
 import { Head, usePage } from "@inertiajs/react";
 import React from "react";
 
 const STEPS = [
-    {
-        id: "fixed_price",
-        question: "Typical Fixed Part Prices?",
-        type: "select",
-        options: [
-            { label: "Sensor" },
-            { label: "Electrodes" },
-            {
-                label: "Plate heat exchanger",
-            },
-            { label: "Fan" },
-            {
-                label: "Room thermostat",
-            },
-        ],
-    },
+    // {
+    //     id: "fixed_price",
+    //     question: "Typical Fixed Part Prices?",
+    //     type: "select",
+    //     options: [
+    //         { label: "Sensor" },
+    //         { label: "Electrodes" },
+    //         {
+    //             label: "Plate heat exchanger",
+    //         },
+    //         { label: "Fan" },
+    //         {
+    //             label: "Room thermostat",
+    //         },
+    //     ],
+    // },
 
     {
         id: "boiler_type",
@@ -110,11 +110,11 @@ const STEPS = [
 ];
 
 export default function RepairQuote() {
-    const {basePrice, symbol} = usePage().props;
+    const { basePrice, symbol } = usePage().props;
 
-    const onSubmit = ()=> {
-        console.log()
-    }
+    const onSubmit = () => {
+        console.log();
+    };
     return (
         <>
             <Head title="Boiler Repair" />

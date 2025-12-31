@@ -42,7 +42,7 @@ export function Footer() {
                     </div>
                 </div>
 
-                <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-5 mb-12">
+                <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-5 mb-12">
                     {/* Brand Section */}
                     <div className="lg:col-span-2">
                         <Link href="/" className="inline-block">
@@ -99,10 +99,10 @@ export function Footer() {
                                     href: "/book/power-flush",
                                     label: "Power Flush",
                                 },
-                                {
-                                    href: "/book/landlord",
-                                    label: "Landlord Certificates",
-                                },
+                                // {
+                                //     href: "/book/landlord",
+                                //     label: "Landlord Certificates",
+                                // },
                             ].map((service) => (
                                 <li key={service.href}>
                                     <Link
@@ -151,10 +151,10 @@ export function Footer() {
                                         Email
                                     </p>
                                     <a
-                                        href="mailto:manpreetdhanjan@icloud.com"
+                                        href="mailto:Info@mdgasleeds.co.uk"
                                         className="text-gray-300 hover:text-blue-400 transition-colors text-sm"
                                     >
-                                        manpreetdhanjan@icloud.com
+                                        Info@mdgasleeds.co.uk
                                     </a>
                                 </div>
                             </li>
@@ -168,7 +168,7 @@ export function Footer() {
                                         Service Area
                                     </p>
                                     <p className="text-gray-300 text-sm">
-                                        Greater London &<br />
+                                        Leeds &<br />
                                         Surrounding Areas
                                     </p>
                                 </div>
@@ -182,19 +182,19 @@ export function Footer() {
                             Opening Hours
                         </h4>
                         <ul className="space-y-2 text-sm text-gray-300">
-                            <li className="flex justify-between py-2 border-b border-white/10">
+                            <li className="flex items-center gap-3 py-2 border-b border-white/10">
                                 <span>Mon - Fri</span>
                                 <span className="font-medium text-white">
                                     8:00 AM - 8:00 PM
                                 </span>
                             </li>
-                            <li className="flex justify-between py-2 border-b border-white/10">
+                            <li className="flex items-center gap-3 py-2 border-b border-white/10">
                                 <span>Saturday</span>
                                 <span className="font-medium text-white">
                                     9:00 AM - 6:00 PM
                                 </span>
                             </li>
-                            <li className="flex justify-between py-2 border-b border-white/10">
+                            <li className="flex items-center gap-3 py-2 border-b border-white/10">
                                 <span>Sunday</span>
                                 <span className="font-medium text-white">
                                     Emergency Only

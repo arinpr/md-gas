@@ -1,14 +1,14 @@
 import { useState } from "react";
-import ApplicationLogo from "@/Components/ApplicationLogo";
+import ApplicationLogo from "@/components/ApplicationLogo";
 
 import { Flame, Phone, Menu, X } from "lucide-react";
 import { Link } from "@inertiajs/react";
 
 // Icons (update based on your setup)
 // import { Flame, Phone, Menu, X } from "lucide-react";
-import { Button } from "@/Components/ui/button"; // update if different
-import Header from "@/Components/boiler/header";
-import { Footer } from "@/Components/boiler/footer";
+import { Button } from "@/components/ui/button"; // update if different
+import Header from "@/components/boiler/header";
+import { Footer } from "@/components/boiler/footer";
 
 export default function GuestLayout({ children }) {
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);

@@ -1,5 +1,5 @@
-import { Footer } from "@/Components/boiler/footer";
-import Header from "@/Components/boiler/header";
+import { Footer } from "@/components/boiler/footer";
+import Header from "@/components/boiler/header";
 import { Head, usePage } from "@inertiajs/react";
 import React, { useState, useEffect } from "react";
 import { MdKeyboardArrowDown } from "react-icons/md";

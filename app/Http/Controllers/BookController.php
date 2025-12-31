@@ -39,7 +39,7 @@ class BookController extends Controller
     public function powerflushStepper()
     {
         // renders resources/js/Pages/Book/PowerFlushPage.jsx
-        $basePrice = BasePrice::powerFlush()->value('price');
+        $basePrice = BasePrice::powerFlush()->value('price') ?? 75;
         $symbol = config('services.currency.symbol');
         return Inertia::render('Book/PowerFlushPage', compact('basePrice', 'symbol'));
     }

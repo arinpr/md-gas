@@ -1,6 +1,6 @@
 // AboutPage.jsx
 import { Head, Link, usePage } from "@inertiajs/react";
-import Header from "@/Components/boiler/header";
+import Header from "@/components/boiler/header";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Shield, Award, Users, Clock, CheckCircle2, Phone } from "lucide-react";
@@ -15,7 +15,7 @@ import {
     FaClipboardCheck,
 } from "react-icons/fa";
 import React, { useEffect, useState } from "react";
-import { Footer } from "@/Components/boiler/footer";
+import { Footer } from "@/components/boiler/footer";
 
 /* ---------- Content (edit to taste) ---------- */
 const VALUES = [

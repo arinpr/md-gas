@@ -1,8 +1,8 @@
-// import Checkbox from '@/Components/Checkbox';
-// import InputError from '@/Components/InputError';
-// import InputLabel from '@/Components/InputLabel';
-// import PrimaryButton from '@/Components/PrimaryButton';
-// import TextInput from '@/Components/TextInput';
+// import Checkbox from '@/components/Checkbox';
+// import InputError from '@/components/InputError';
+// import InputLabel from '@/components/InputLabel';
+// import PrimaryButton from '@/components/PrimaryButton';
+// import TextInput from '@/components/TextInput';
 // import GuestLayout from '@/Layouts/GuestLayout';
 // import { Head, Link, useForm } from '@inertiajs/react';
 
@@ -100,11 +100,11 @@
 // }
 
 // import { Head, Link, useForm } from "@inertiajs/react"
-// import Checkbox from "@/Components/Checkbox"
-// import InputError from "@/Components/InputError"
-// import InputLabel from "@/Components/InputLabel"
-// import PrimaryButton from "@/Components/PrimaryButton"
-// import TextInput from "@/Components/TextInput"
+// import Checkbox from "@/components/Checkbox"
+// import InputError from "@/components/InputError"
+// import InputLabel from "@/components/InputLabel"
+// import PrimaryButton from "@/components/PrimaryButton"
+// import TextInput from "@/components/TextInput"
 
 // export default function Login({ status, canResetPassword }) {
 //   const { data, setData, post, processing, errors, reset } = useForm({
@@ -199,14 +199,12 @@
 // }
 
 import { Head, Link, useForm } from "@inertiajs/react";
-import Checkbox from "@/Components/Checkbox";
-import InputError from "@/Components/InputError";
-import PrimaryButton from "@/Components/PrimaryButton";
-import { Flame } from "lucide-react"
-
+import Checkbox from "@/components/Checkbox";
+import InputError from "@/components/InputError";
+import PrimaryButton from "@/components/PrimaryButton";
+import { Flame } from "lucide-react";
 
 export default function Login({ status, canResetPassword }) {
-
     const { data, setData, post, processing, errors, reset } = useForm({
         email: "",
         password: "",
@@ -225,14 +223,15 @@ export default function Login({ status, canResetPassword }) {
             <Head title="Login" />
 
             <div className="w-full max-w-md bg-white shadow-xl rounded-2xl p-8">
-
                 {/* Logo */}
                 <div className="flex justify-center mb-4">
                     <div className="flex items-center gap-2">
                         <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary">
                             <Flame className="h-6 w-6 text-primary-foreground" />
                         </div>
-                        <h1 className="text-2xl font-bold text-gray-900">MD Gas</h1>
+                        <h1 className="text-2xl font-bold text-gray-900">
+                            MD Gas
+                        </h1>
                     </div>
                 </div>
 
@@ -243,10 +242,12 @@ export default function Login({ status, canResetPassword }) {
                 )}
 
                 <form onSubmit={submit} className="space-y-5">
-
                     {/* Email */}
                     <div>
-                        <label htmlFor="email" className="text-sm font-medium text-gray-700">
+                        <label
+                            htmlFor="email"
+                            className="text-sm font-medium text-gray-700"
+                        >
                             Email
                         </label>
 
@@ -263,7 +264,10 @@ export default function Login({ status, canResetPassword }) {
 
                     {/* Password */}
                     <div>
-                        <label htmlFor="password" className="text-sm font-medium text-gray-700">
+                        <label
+                            htmlFor="password"
+                            className="text-sm font-medium text-gray-700"
+                        >
                             Password
                         </label>
 
@@ -272,10 +276,15 @@ export default function Login({ status, canResetPassword }) {
                             type="password"
                             value={data.password}
                             className="mt-2 block w-full rounded-lg border border-gray-300 bg-gray-50 px-4 py-2.5 text-gray-900 focus:border-blue-600 focus:ring-blue-600"
-                            onChange={(e) => setData("password", e.target.value)}
+                            onChange={(e) =>
+                                setData("password", e.target.value)
+                            }
                         />
 
-                        <InputError message={errors.password} className="mt-2" />
+                        <InputError
+                            message={errors.password}
+                            className="mt-2"
+                        />
                     </div>
 
                     {/* Remember Me */}
@@ -283,7 +292,9 @@ export default function Login({ status, canResetPassword }) {
                         <Checkbox
                             name="remember"
                             checked={data.remember}
-                            onChange={(e) => setData("remember", e.target.checked)}
+                            onChange={(e) =>
+                                setData("remember", e.target.checked)
+                            }
                         />
                         <span className="ml-2 text-sm text-gray-600">
                             Remember me
@@ -292,7 +303,6 @@ export default function Login({ status, canResetPassword }) {
 
                     {/* Actions */}
                     <div className="flex items-center justify-between pt-2">
-
                         {canResetPassword && (
                             <Link
                                 href={route("password.request")}
@@ -306,10 +316,8 @@ export default function Login({ status, canResetPassword }) {
                             Log In
                         </PrimaryButton>
                     </div>
-
                 </form>
             </div>
         </div>
     );
 }
-

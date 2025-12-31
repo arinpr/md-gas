@@ -93,11 +93,12 @@ export default function Stepper({
     ------------------------------------------------------- */
     const displayOptions = useMemo(() => {
         if (!current?.options) return [];
+
         return current.options.map((opt) =>
             typeof opt === "string"
-                ? { label: opt }
+                ? { label: opt, price: 0 }
                 : {
-                      label: opt.label,
+                      ...opt,
                       requiresText: opt.requiresText || false,
                   }
         );
@@ -124,10 +125,12 @@ export default function Stepper({
     ------------------------------------------------------- */
     function choose(option) {
         if (!current) return;
+
         setAnswers((s) => ({
             ...s,
             [current.id]: {
                 ...option,
+                price: option.price || 0, // ✅ generic & safe
                 extraText: "",
             },
         }));
@@ -176,9 +179,16 @@ export default function Stepper({
     /* -------------------------------------------------------
        pricing (BASE ONLY)
     ------------------------------------------------------- */
-    const pricing = {
-        base: basePrice,
-    };
+    const pricing = useMemo(() => {
+        const radiatorPrice = answers.radiators?.price || 0;
+
+        const total = basePrice + radiatorPrice;
+
+        return {
+            base: total,
+            radiator: radiatorPrice,
+        };
+    }, [answers, basePrice]);
 
     /* -------------------------------------------------------
        can proceed logic
@@ -306,19 +316,22 @@ export default function Stepper({
                             </ul>
 
                             {/* PRICE */}
-                            <div className="mt-8 rounded-2xl bg-foreground p-4">
-                                <p className="text-xs uppercase text-muted-foreground">
-                                    Your price
-                                </p>
-                                <p className="mt-1 text-3xl font-extrabold text-dark">
-                                    {currency}
-                                    {pricing.base}
-                                </p>
+                            {pricing.base > 0 && (
+                                <div className="mt-8 rounded-2xl bg-foreground p-4">
+                                    <p className="text-xs uppercase text-muted-foreground">
+                                        Your price
+                                    </p>
 
-                                <p className="mt-2 text-xs text-muted-foreground">
-                                    Fixed price · No hidden extras
-                                </p>
-                            </div>
+                                    <p className="mt-1 text-3xl font-extrabold text-dark">
+                                        {currency}
+                                        {pricing.base}
+                                    </p>
+
+                                    <p className="mt-2 text-xs text-muted-foreground">
+                                        Fixed price · No hidden extras
+                                    </p>
+                                </div>
+                            )}
 
                             {/* PROGRESS */}
                             <div className="mt-auto pt-8">

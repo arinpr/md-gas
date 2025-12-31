@@ -1,5 +1,5 @@
 import { Head, Link, router } from "@inertiajs/react";
-import { PageHeader } from "@/Components/ui/page-header";
+import { PageHeader } from "@/components/ui/page-header";
 import {
     FiArrowLeft,
     FiChevronDown,
