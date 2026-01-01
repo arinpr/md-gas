@@ -4,25 +4,16 @@ import { usePage } from "@inertiajs/react";
 import React from "react";
 
 export default function PowerflushQuote() {
-    const { basePrice, symbol } = usePage().props;
-
-    const RADIATOR_PRICING = [
-        { label: "Up to 5 radiators", price: 75 },
-        { label: "6-8 radiators", price: 125 },
-        { label: "9-12 radiators", price: 75 },
-        { label: "13-15 radiators", price: 100 },
-        { label: "16-20 radiators", price: 75 },
-        { label: "21+ radiators", price: 125 },
-    ];
-
+    const { basePrice, symbol,radiatorPrices } = usePage().props;
+    
     const STEPS = [
         {
             id: "radiators",
             type: "select",
             question: "How many radiators are in your property?",
-            options: RADIATOR_PRICING.map((i) => ({
-                label: i.label,
-                price: i.price,
+            options: radiatorPrices.map(item => ({
+                label: item.label,
+                price: Number(item.price),
             })),
         },
 

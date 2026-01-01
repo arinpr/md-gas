@@ -44,6 +44,12 @@ export default function AuthenticatedLayout({ header, children }) {
                         href: route("pricing.base"),
                         isActive: () => route().current("pricing.base"),
                     },
+                   {
+                        key: "pricing.radiators",
+                        label: "Power flush Price Management",
+                        href: route("pricing.radiators"),
+                        isActive: () => route().current("pricing.radiators"),
+                    }
                     // add more pricing items here later
                 ],
             },

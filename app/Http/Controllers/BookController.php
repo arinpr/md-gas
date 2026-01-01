@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use App\Models\BasePrice;
+use App\Models\RadiatorPrice;
 
 class BookController extends Controller
 {
@@ -36,13 +37,21 @@ class BookController extends Controller
     }
 
     // GET /book/quote/powerflush
+    
     public function powerflushStepper()
-    {
-        // renders resources/js/Pages/Book/PowerFlushPage.jsx
-        $basePrice = BasePrice::powerFlush()->value('price') ?? 75;
-        $symbol = config('services.currency.symbol');
-        return Inertia::render('Book/PowerFlushPage', compact('basePrice', 'symbol'));
-    }
+{
+    $basePrice = BasePrice::powerFlush()->value('price');
+    $symbol = config('services.currency.symbol');
+
+    $radiatorPrices = RadiatorPrice::orderBy('id')->get();
+
+    return Inertia::render('Book/PowerFlushPage', [
+        'basePrice' => $basePrice,
+        'symbol' => $symbol,
+        'radiatorPrices' => $radiatorPrices,
+    ]);
+}
+
 
     // GET /book/quote/service
     public function serviceStepper()

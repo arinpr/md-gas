@@ -11,6 +11,8 @@ use Illuminate\Validation\Rule;
 use Illuminate\Http\Request;
 use App\Http\Controllers\QuoteCheckoutController;
 use App\Http\Controllers\Admin\OrderManagementController;
+use App\Http\Controllers\Admin\RadiatorPriceController;
+
 
 Route::get('/health', function () {
     return Inertia::render('Welcome', [
@@ -142,6 +144,13 @@ Route::middleware('auth')
 
             Route::get('/quotation', [BasePriceController::class, 'quotation'])
             ->name('quotation');
+
+             // Radiator Prices
+        Route::get('/radiators', [RadiatorPriceController::class, 'index'])
+            ->name('radiators');
+
+        Route::post('/radiators/{id}/update', [RadiatorPriceController::class, 'update'])
+            ->name('radiators.update');
     });
 
 Route::middleware(['auth']) // add your admin middleware if you have one
@@ -157,6 +166,9 @@ Route::middleware(['auth']) // add your admin middleware if you have one
         Route::put('/order/management/{booking}/status', [OrderManagementController::class, 'updateStatus'])
             ->name('orders.management.status');
 });
+
+
+
 
 Route::middleware('auth')->group(function () {
     Route::get('/admin', fn () => redirect('/dashboard'));

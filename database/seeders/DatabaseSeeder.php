@@ -17,6 +17,7 @@ class DatabaseSeeder extends Seeder
             SingleUserSeeder::class,
             BasePriceSeeder::class,
             QuestionsSeeder::class,
+            RadiatorPriceSeeder::class,
         ]);
     }
 }
