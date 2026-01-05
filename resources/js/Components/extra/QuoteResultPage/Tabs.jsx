@@ -17,7 +17,7 @@ import {
     HiOutlineArrowTurnUpLeft,
     HiOutlineArrowTurnUpRight,
 } from "react-icons/hi2";
-import FAQItem from "@/Components/extra/AppointmentDateTimePicker/FAQItem";
+import FAQItem from "@/Components/extra/QuoteResultPage/FAQItem";
 
 const tabs = [
     {
