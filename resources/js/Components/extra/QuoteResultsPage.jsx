@@ -175,11 +175,11 @@ export default function QuoteResultsPage() {
     // Carousel images array - replace with your actual images
     const carouselImages = detailsQuote
         ? [
-              boilerImages[detailsQuote.id],
-              "/images/boiler_1.png",
-              "/images/boiler_2.png",
-              "/images/boiler_3.png",
-          ]
+            boilerImages[detailsQuote.id],
+            "/images/boiler_1.png",
+            "/images/boiler_2.png",
+            "/images/boiler_3.png",
+        ]
         : [];
 
     // Carousel navigation functions
@@ -223,13 +223,13 @@ export default function QuoteResultsPage() {
                                 <div className="text-xs uppercase tracking-wider text-slate-500 mb-1">
                                     Installation packages
                                 </div>
-                                <div className="text-4xl font-semibold text-slate-900">
+                                {/* <div className="text-4xl font-semibold text-slate-900">
                                     13 options
-                                </div>
+                                </div> */}
                             </div>
 
                             {/* CENTER — PROPERTY */}
-                            <div className="flex items-center gap-4 text-sm text-slate-700">
+                            {/* <div className="flex items-center gap-4 text-sm text-slate-700">
                                 {["1 bedroom", "1 bathroom", "SW2"].map(
                                     (item) => (
                                         <div
@@ -244,10 +244,10 @@ export default function QuoteResultsPage() {
                                 <button className="h-10 w-10 rounded-full bg-slate-900 text-white hover:bg-slate-800 transition">
                                     ✎
                                 </button>
-                            </div>
+                            </div> */}
 
                             {/* RIGHT — ACTIONS */}
-                            <div className="flex items-center gap-3">
+                            {/* <div className="flex items-center gap-3">
                                 <button className="rounded-full border border-slate-200 bg-white/80 px-5 py-2.5 text-sm font-medium hover:bg-white transition">
                                     What’s included?
                                 </button>
@@ -255,7 +255,7 @@ export default function QuoteResultsPage() {
                                 <button className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-slate-900 to-slate-700 px-5 py-2.5 text-sm font-semibold text-white shadow-lg">
                                     ✉ Save
                                 </button>
-                            </div>
+                            </div> */}
                         </div>
                     </div>
                 </div>
@@ -266,13 +266,11 @@ export default function QuoteResultsPage() {
                 {QUOTES.map((q) => (
                     <div
                         key={q.id}
-                        className={`relative rounded-3xl bg-gradient-to-b ${
-                            q.cardGradient
-                        } shadow-[0_20px_60px_rgba(0,0,0,0.08)] overflow-hidden border border-foreground hover:shadow-[0_30px_80px_rgba(0,0,0,0.12)] hover:-translate-y-1 transition-all duration-300 ${
-                            q.featured
+                        className={`relative rounded-3xl bg-gradient-to-b ${q.cardGradient
+                            } shadow-[0_20px_60px_rgba(0,0,0,0.08)] overflow-hidden border border-foreground hover:shadow-[0_30px_80px_rgba(0,0,0,0.12)] hover:-translate-y-1 transition-all duration-300 ${q.featured
                                 ? "ring-1 ring-primary/20 ring-offset-2"
                                 : ""
-                        }`}
+                            }`}
                     >
                         {/* Header */}
                         <div
