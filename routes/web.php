@@ -66,12 +66,13 @@ Route::get('/', function () {
 })->name('landing');
 
 Route::prefix('book')->name('book.')->group(function () {
-    
+
     if(config('app.env') === 'production'){
         //ComingSoon/ComingSoon
         Route::inertia('/', 'ComingSoon/ComingSoon', [
             'pageTitle' => 'Coming Soon',
         ])->name('quote.new');
+        Route::get('/new-boiler', [BookController::class, 'index'])->name('home');
     }
     else{
         Route::get('/', [BookController::class, 'index'])->name('home');
@@ -80,7 +81,7 @@ Route::prefix('book')->name('book.')->group(function () {
     Route::get('/quote', [BookController::class, 'quote'])->name('quote');
     Route::get('/quote/repair', [BookController::class, 'repairStepper'])->name('quote.repair');
 
-    
+
 
     Route::get('/quote/new', [BookController::class, 'newStepper'])->name('quote.new');
     Route::get('/quote/powerflush', [BookController::class, 'powerflushStepper'])->name('quote.powerflush');
