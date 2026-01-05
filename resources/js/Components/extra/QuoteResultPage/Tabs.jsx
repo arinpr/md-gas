@@ -17,7 +17,7 @@ import {
     HiOutlineArrowTurnUpLeft,
     HiOutlineArrowTurnUpRight,
 } from "react-icons/hi2";
-import FAQItem from "./FAQItem";
+import FAQItem from "@/Components/extra/AppointmentDateTimePicker/FAQItem";
 
 const tabs = [
     {
@@ -134,8 +134,8 @@ export default function ProductTabs() {
             {/* Sticky Tabs Header */}
             <div
                 className={`sticky z-40 transition-all duration-300 ${isSticky
-                        ? "top-0 pt-4 pb-2 bg-gradient-to-b from-slate-900/95 via-slate-900/90 to-slate-900/80 backdrop-blur-xl border-b border-slate-800/50 shadow-2xl"
-                        : "top-4"
+                    ? "top-0 pt-4 pb-2 bg-gradient-to-b from-slate-900/95 via-slate-900/90 to-slate-900/80 backdrop-blur-xl border-b border-slate-800/50 shadow-2xl"
+                    : "top-4"
                     }`}
             >
                 {/* Glow effect under sticky header */}
@@ -155,8 +155,8 @@ export default function ProductTabs() {
                                         key={tab.id}
                                         onClick={() => scrollToSection(tab.id)}
                                         className={`relative group min-w-[160px] px-5 py-3 rounded-xl border transition-all duration-300 flex-shrink-0 ${isActive
-                                                ? `${tab.borderColor} bg-gradient-to-br from-slate-800/80 to-slate-900/60 shadow-2xl scale-[1.02]`
-                                                : "border-slate-700/50 hover:border-slate-600/70 hover:bg-slate-800/40 hover:scale-[1.01]"
+                                            ? `${tab.borderColor} bg-gradient-to-br from-slate-800/80 to-slate-900/60 shadow-2xl scale-[1.02]`
+                                            : "border-slate-700/50 hover:border-slate-600/70 hover:bg-slate-800/40 hover:scale-[1.01]"
                                             }`}
                                     >
                                         {/* Background Glow Effect for Active Tab */}
@@ -173,14 +173,14 @@ export default function ProductTabs() {
                                             {/* Icon Container with Animation */}
                                             <div
                                                 className={`relative w-10 h-10 rounded-xl flex items-center justify-center transition-all duration-300 ${isActive
-                                                        ? `${tab.color} border ${tab.borderColor}`
-                                                        : "bg-slate-800/60"
+                                                    ? `${tab.color} border ${tab.borderColor}`
+                                                    : "bg-slate-800/60"
                                                     }`}
                                             >
                                                 <tab.icon
                                                     className={`text-lg transition-all duration-300 ${isActive
-                                                            ? tab.iconColor
-                                                            : "text-slate-400 group-hover:text-slate-300"
+                                                        ? tab.iconColor
+                                                        : "text-slate-400 group-hover:text-slate-300"
                                                         }`}
                                                 />
 
@@ -194,8 +194,8 @@ export default function ProductTabs() {
                                             <div className="text-left">
                                                 <div
                                                     className={`font-bold transition-all duration-300 ${isActive
-                                                            ? "text-white"
-                                                            : "text-slate-300 group-hover:text-white"
+                                                        ? "text-white"
+                                                        : "text-slate-300 group-hover:text-white"
                                                         }`}
                                                 >
                                                     {tab.label}
@@ -637,8 +637,8 @@ export default function ProductTabs() {
                                         <FiStar
                                             key={i}
                                             className={`text-lg ${i < 5
-                                                    ? "text-amber-400 fill-amber-400"
-                                                    : "text-slate-600"
+                                                ? "text-amber-400 fill-amber-400"
+                                                : "text-slate-600"
                                                 }`}
                                         />
                                     ))}
@@ -715,8 +715,8 @@ export default function ProductTabs() {
                                                     <FiStar
                                                         key={i}
                                                         className={`text-sm ${i < review.rating
-                                                                ? "text-amber-400 fill-amber-400"
-                                                                : "text-slate-600"
+                                                            ? "text-amber-400 fill-amber-400"
+                                                            : "text-slate-600"
                                                             }`}
                                                     />
                                                 ))}
