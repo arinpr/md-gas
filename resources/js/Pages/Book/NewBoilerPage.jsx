@@ -38,7 +38,7 @@ export default function NewBoilerQuote() {
         <Stepper
             title="New boiler quote"
             steps={steps}
-            basePrice={0}
+            basePrice={75}
             serviceKey={SERVICES_KEY_VALUE.NEW_BOILER_QUOTE}
         />
     );
