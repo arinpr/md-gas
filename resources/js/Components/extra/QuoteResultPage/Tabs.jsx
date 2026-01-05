@@ -13,6 +13,11 @@ import {
     FiUsers,
     FiShield,
 } from "react-icons/fi";
+import {
+    HiOutlineArrowTurnUpLeft,
+    HiOutlineArrowTurnUpRight,
+} from "react-icons/hi2";
+import FAQItem from "./FAQItem";
 
 const tabs = [
     {
@@ -240,11 +245,11 @@ export default function ProductTabs() {
                             </div>
                             <div>
                                 <h3 className="text-2xl font-bold text-white">
-                                    Product Details
+                                    Built for everyday comfort
                                 </h3>
                                 <div className="text-slate-400">
-                                    Complete technical specifications and
-                                    features
+                                    A dependable combi boiler designed around
+                                    real homes and real usage
                                 </div>
                             </div>
                         </div>
@@ -261,13 +266,15 @@ export default function ProductTabs() {
                                             25kW
                                         </div>
                                         <div className="text-[12px] text-slate-400">
-                                            Heating Output
+                                            Suitable output range
                                         </div>
                                     </div>
                                 </div>
                                 <div className="text-slate-300 text-sm">
-                                    High-efficiency condensing boiler with 94%
-                                    efficiency rating
+                                    Well-balanced power for apartments and small
+                                    to medium-sized houses, delivering steady
+                                    heating and reliable hot water without
+                                    unnecessary energy waste.
                                 </div>
                             </div>
 
@@ -278,16 +285,18 @@ export default function ProductTabs() {
                                     </div>
                                     <div>
                                         <div className="text-2xl font-bold text-white">
-                                            10 Years
+                                            10-Year
                                         </div>
                                         <div className="text-[12px] text-slate-400">
-                                            Warranty
+                                            Manufacturer-backed warranty
                                         </div>
                                     </div>
                                 </div>
                                 <div className="text-slate-300 text-sm">
-                                    Comprehensive manufacturer warranty with
-                                    extended coverage
+                                    Long-term peace of mind with extensive cover
+                                    on parts and labour when installed and
+                                    maintained in line with manufacturer
+                                    guidance.
                                 </div>
                             </div>
                         </div>
@@ -295,14 +304,22 @@ export default function ProductTabs() {
                         {/* Features List */}
                         <div className="space-y-4">
                             <h4 className="text-lg font-bold text-white mb-4">
-                                Key Features
+                                Key Highlights
                             </h4>
+
+                            <p className="text-slate-300 text-sm leading-relaxed mb-4">
+                                This combi boiler focuses on simplicity,
+                                efficiency, and proven performance — making it a
+                                solid choice for homeowners who want dependable
+                                heating without unnecessary complexity.
+                            </p>
+
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
                                 {[
-                                    "Quiet operation technology",
-                                    "Smart heating control",
-                                    "Energy efficiency A-rated",
-                                    "Compact modern design",
+                                    "Consistent hot water for daily household demand",
+                                    "Compact casing ideal for kitchens or cupboards",
+                                    "Hydrogen-blend ready for future gas upgrades",
+                                    "Designed to help keep running costs under control",
                                 ].map((feature, index) => (
                                     <div
                                         key={index}
@@ -333,10 +350,11 @@ export default function ProductTabs() {
                             </div>
                             <div>
                                 <h3 className="text-2xl font-bold text-white">
-                                    What's Included
+                                    What’s included in your installation
                                 </h3>
                                 <div className="text-slate-400">
-                                    Everything you get with your purchase
+                                    Everything required for a safe, complete,
+                                    and compliant boiler replacement
                                 </div>
                             </div>
                         </div>
@@ -345,62 +363,49 @@ export default function ProductTabs() {
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                             {[
                                 {
-                                    title: "Professional Installation",
+                                    title: "New Combi Boiler Unit",
                                     description:
-                                        "Gas Safe registered engineers",
-                                    // icon: FiUsers,
-                                    color: "text-blue-400",
-                                    bg: "bg-blue-500/10",
+                                        "A brand-new, high-efficiency combi boiler supplied and fitted as part of your fixed price package.",
                                 },
                                 {
-                                    title: "Magnetic Filter",
+                                    title: "Full System Chemical Clean",
                                     description:
-                                        "System protection and efficiency",
-                                    // icon: FiCpu,
-                                    color: "text-cyan-400",
-                                    bg: "bg-cyan-500/10",
+                                        "Your heating system is flushed and treated with inhibitor to help protect against corrosion and sludge.",
                                 },
                                 {
-                                    title: "Smart Thermostat",
+                                    title: "Magnetic System Filter",
                                     description:
-                                        "Wireless programmable control",
-                                    // icon: FiClock,
-                                    color: "text-purple-400",
-                                    bg: "bg-purple-500/10",
+                                        "Installed to capture debris and metal particles, helping extend the life of your new boiler.",
                                 },
                                 {
-                                    title: "System Flush",
-                                    description: "Complete cleaning process",
-                                    // icon: FiAlertCircle,
-                                    color: "text-amber-400",
-                                    bg: "bg-amber-500/10",
-                                },
-                                {
-                                    title: "10-Year Warranty",
+                                    title: "Wireless Heating Controls",
                                     description:
-                                        "Extended manufacturer coverage",
-                                    // icon: FiShield,
-                                    color: "text-emerald-400",
-                                    bg: "bg-emerald-500/10",
+                                        "Simple, easy-to-use programmable controls for managing heating and hot water efficiently.",
                                 },
                                 {
-                                    title: "Aftercare Support",
-                                    description: "24/7 customer service",
-                                    // icon: FiStar,
-                                    color: "text-rose-400",
-                                    bg: "bg-rose-500/10",
+                                    title: "Carbon Monoxide Alarm",
+                                    description:
+                                        "A safety alarm installed to alert you if carbon monoxide levels rise above safe limits.",
+                                },
+                                {
+                                    title: "Gas Safe Installation",
+                                    description:
+                                        "Removal of your existing boiler and professional installation by Gas Safe registered engineers.",
+                                },
+                                {
+                                    title: "Horizontal Flue Kit",
+                                    description:
+                                        "Supply and installation of a new horizontal flue where suitable for your property layout.",
+                                },
+                                {
+                                    title: "Commissioning & Handover",
+                                    description:
+                                        "Full system testing, setup, and explanation so everything is working correctly before we leave.",
                                 },
                             ].map((item, index) => (
                                 <div key={index} className="group">
                                     <div className="h-full bg-gradient-to-br from-slate-900/40 to-slate-800/20 rounded-xl border border-slate-700/40 p-6 transition-all duration-300 hover:border-slate-600/60 hover:scale-[1.02]">
                                         <div className="flex items-start gap-4">
-                                            {/* <div
-                                                className={`w-12 h-12 rounded-xl ${item.bg} flex items-center justify-center flex-shrink-0`}
-                                            >
-                                                <item.icon
-                                                    className={`text-xl ${item.color}`}
-                                                />
-                                            </div> */}
                                             <div>
                                                 <h4 className="font-bold text-white mb-1">
                                                     {item.title}
@@ -423,73 +428,120 @@ export default function ProductTabs() {
                     ref={(el) => (tabRefs.current["extra"] = el)}
                     className="scroll-mt-24"
                 >
-                    <div className="bg-gradient-to-br from-slate-800/50 via-slate-900/30 to-slate-900/20 rounded-2xl border border-slate-700/50 p-8">
-                        <div className="flex items-start gap-4 mb-8">
-                            <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-purple-500/20 to-pink-500/20 border border-purple-500/30 flex items-center justify-center flex-shrink-0">
-                                <FiPackage className="text-2xl text-purple-400" />
-                            </div>
-                            <div>
-                                <h3 className="text-2xl font-bold text-white">
-                                    Additional Options
-                                </h3>
-                                <div className="text-slate-400">
-                                    Enhance your system with these extras
+                    <div className="bg-gradient-to-br from-slate-800/50 via-slate-900/30 to-slate-900/20 rounded-2xl border border-slate-700/50 p-8 relative overflow-hidden">
+                        {/* Header */}
+                        <div className="flex items-center justify-between mb-10">
+                            <div className="flex items-start gap-4">
+                                <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-purple-500/20 to-pink-500/20 border border-purple-500/30 flex items-center justify-center">
+                                    <FiPackage className="text-2xl text-purple-400" />
                                 </div>
+                                <div>
+                                    <h3 className="text-[20px] font-bold text-white">
+                                        Often bought together
+                                    </h3>
+                                    <div className="text-slate-400">
+                                        Optional upgrades
+                                    </div>
+                                </div>
+                            </div>
+
+                            {/* Arrows */}
+                            <div className="hidden md:flex gap-2">
+                                <button
+                                    onClick={() =>
+                                        document
+                                            .getElementById("extras-carousel")
+                                            .scrollBy({
+                                                left: -320,
+                                                behavior: "smooth",
+                                            })
+                                    }
+                                    className="w-11 h-11 rounded-xl cursor-pointer border border-slate-600/40 bg-slate-800/60 hover:bg-slate-700/60 flex items-center justify-center text-slate-300"
+                                >
+                                    <HiOutlineArrowTurnUpLeft />
+                                </button>
+                                <button
+                                    onClick={() =>
+                                        document
+                                            .getElementById("extras-carousel")
+                                            .scrollBy({
+                                                left: 320,
+                                                behavior: "smooth",
+                                            })
+                                    }
+                                    className="w-11 h-11 rounded-xl cursor-pointer border border-slate-600/40 bg-slate-800/60 hover:bg-slate-700/60 flex items-center justify-center text-slate-300"
+                                >
+                                    <HiOutlineArrowTurnUpRight />
+                                </button>
                             </div>
                         </div>
 
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        {/* Carousel */}
+                        <div
+                            id="extras-carousel"
+                            className="flex gap-6 overflow-x-auto scroll-smooth no-scrollbar pb-4"
+                        >
                             {[
                                 {
-                                    title: "Extended Warranty",
+                                    title: "Limescale Protection",
                                     description:
-                                        "Add 5 additional years to your warranty coverage",
-                                    price: "£299",
-                                    popular: true,
+                                        "Reduces mineral build-up to help protect internal boiler components over time.",
+                                    price: "£65",
                                 },
                                 {
-                                    title: "Annual Service Plan",
+                                    title: "Professional Powerflush",
                                     description:
-                                        "Regular maintenance and priority support",
-                                    price: "£99/year",
-                                    popular: false,
+                                        "A deep system clean that removes sludge and debris before commissioning.",
+                                    price: "£195",
                                 },
                                 {
-                                    title: "Smart Home Integration",
+                                    title: "Annual Boiler Service",
                                     description:
-                                        "Connect with Alexa, Google Home, and Apple HomeKit",
+                                        "Routine inspection and tuning to maintain efficiency and safety.",
+                                    price: "£99",
+                                },
+                                {
+                                    title: "Extended Care Cover",
+                                    description:
+                                        "Extra reassurance with support beyond standard installation.",
                                     price: "£149",
-                                    popular: true,
                                 },
-                            ].map((option, index) => (
+                            ].map((item, index) => (
                                 <div
                                     key={index}
-                                    className="bg-gradient-to-br from-slate-900/40 to-slate-800/20 rounded-xl border border-slate-700/40 p-6"
+                                    className="
+                        min-w-[300px]
+                        relative
+                        rounded-2xl
+                        border border-slate-700/40
+                        bg-gradient-to-br from-slate-900/50 to-slate-800/30
+                        p-6
+                        flex flex-col
+                        transition-all duration-300
+                        hover:border-slate-600/60
+                    "
                                 >
-                                    <div className="flex flex-col justify-between items-start">
-                                        <div>
-                                            <div className="flex items-center gap-2 mb-1">
-                                                <h4 className="font-bold text-white">
-                                                    {option.title}
-                                                </h4>
-                                                {option.popular && (
-                                                    <span className="text-xs px-2 py-1 rounded-full bg-purple-500/20 text-purple-400">
-                                                        Popular
-                                                    </span>
-                                                )}
-                                            </div>
-                                            <p className="text-slate-400 text-sm mb-3">
-                                                {option.description}
-                                            </p>
+                                    {/* Accent strip */}
+                                    {/* <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-purple-500/60 to-pink-500/60 rounded-t-2xl" /> */}
+
+                                    {/* Content */}
+                                    <div className="mb-6">
+                                        <h4 className="text-lg font-semibold text-white mb-2">
+                                            {item.title}
+                                        </h4>
+                                        <p className="text-sm text-slate-400 leading-relaxed">
+                                            {item.description}
+                                        </p>
+                                    </div>
+
+                                    {/* Footer */}
+                                    <div className="mt-auto flex items-center justify-between pt-4 border-t border-slate-700/40">
+                                        <div className="text-xl font-bold text-white">
+                                            {item.price}
                                         </div>
-                                        <div className="text-right">
-                                            <div className="text-2xl font-bold text-white">
-                                                {option.price}
-                                            </div>
-                                            <button className="mt-2 px-4 py-2 text-sm rounded-lg bg-purple-500/20 text-purple-400 hover:bg-purple-500/30 transition-colors">
-                                                Add Option
-                                            </button>
-                                        </div>
+                                        <button className="px-4 py-2 text-sm rounded-lg bg-purple-500/20 text-purple-400 hover:bg-purple-500/30 transition-colors">
+                                            Add
+                                        </button>
                                     </div>
                                 </div>
                             ))}
@@ -504,52 +556,52 @@ export default function ProductTabs() {
                     className="scroll-mt-24"
                 >
                     <div className="bg-gradient-to-br from-slate-800/50 via-slate-900/30 to-slate-900/20 rounded-2xl border border-slate-700/50 p-8">
+                        {/* Header */}
                         <div className="flex items-start gap-4 mb-8">
                             <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-amber-500/20 to-orange-500/20 border border-amber-500/30 flex items-center justify-center flex-shrink-0">
                                 <FiHelpCircle className="text-2xl text-amber-400" />
                             </div>
                             <div>
                                 <h3 className="text-2xl font-bold text-white mb-2">
-                                    Frequently Asked Questions
+                                    FAQs
                                 </h3>
                                 <div className="text-slate-400">
-                                    Common questions about our products and
-                                    services
+                                    Answers to common questions about this
+                                    boiler and installation
                                 </div>
                             </div>
                         </div>
 
-                        <div className="space-y-4">
+                        {/* Accordion */}
+                        <div className="space-y-3">
                             {[
                                 {
                                     question:
-                                        "What's included in the installation price?",
-                                    answer: "The price includes the boiler, all installation labor, system flush, magnetic filter, wireless smart thermostat, and commissioning. No hidden costs.",
+                                        "Will this boiler fit inside a kitchen cupboard?",
+                                    answer: "This boiler is larger than a standard kitchen wall unit used for storage. However, it fits comfortably inside most purpose-built boiler cupboards, utility spaces, or airing cupboards.",
                                 },
                                 {
                                     question:
-                                        "How long does installation take?",
-                                    answer: "Most installations are completed within 1-2 days, depending on system complexity. We'll provide a specific timeline during your survey.",
+                                        "How soon can installation be arranged?",
+                                    answer: "Installation is often available within a few working days after order confirmation. Exact timings depend on availability and whether a pre-install check is required.",
                                 },
                                 {
-                                    question: "Do you offer financing options?",
-                                    answer: "Yes, we offer 0% finance options over 2-5 years. Apply online or speak to our advisors for more information.",
+                                    question:
+                                        "Do I need a survey before purchasing?",
+                                    answer: "Not always. Many installations can be planned using the details you provide online. If anything needs verification, we’ll arrange a quick check before proceeding.",
                                 },
                                 {
-                                    question: "What warranty do you provide?",
-                                    answer: "All installations come with a 10-year manufacturer warranty and a 2-year workmanship guarantee for complete peace of mind.",
+                                    question:
+                                        "What’s the difference between the 4000 and 8000 models?",
+                                    answer: "The 8000 range offers higher output, premium internal components, and is better suited to larger homes or higher demand. The 4000 focuses on reliable performance for everyday household use.",
+                                },
+                                {
+                                    question:
+                                        "How many radiators can the 4000 support?",
+                                    answer: "In most homes, the 4000 model comfortably supports around 8 to 12 radiators, depending on insulation quality and system layout.",
                                 },
                             ].map((faq, index) => (
-                                <div key={index} className="group">
-                                    <div className="bg-gradient-to-br from-slate-900/40 to-slate-800/20 rounded-xl border border-slate-700/40 p-6 transition-all duration-300 hover:border-slate-600/60">
-                                        <h4 className="font-bold text-white mb-3 group-hover:text-amber-400 transition-colors">
-                                            {faq.question}
-                                        </h4>
-                                        <p className="text-slate-400 text-sm leading-relaxed">
-                                            {faq.answer}
-                                        </p>
-                                    </div>
-                                </div>
+                                <FAQItem key={index} faq={faq} />
                             ))}
                         </div>
                     </div>
@@ -562,62 +614,109 @@ export default function ProductTabs() {
                     className="scroll-mt-24 mb-20"
                 >
                     <div className="bg-gradient-to-br from-slate-800/50 via-slate-900/30 to-slate-900/20 rounded-2xl border border-slate-700/50 p-8">
-                        <div className="flex items-start gap-4 mb-8">
+                        {/* Header */}
+                        <div className="flex items-start gap-4 mb-10">
                             <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-rose-500/20 to-red-500/20 border border-rose-500/30 flex items-center justify-center flex-shrink-0">
                                 <FiStar className="text-2xl text-rose-400" />
                             </div>
                             <div>
                                 <h3 className="text-2xl font-bold text-white mb-2">
-                                    Customer Reviews
+                                    Customer reviews
                                 </h3>
                                 <div className="text-slate-400">
-                                    What our customers say about their
-                                    experience
+                                    Feedback from verified customers following
+                                    installation
                                 </div>
                             </div>
                         </div>
 
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        {/* Rating Summary */}
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
+                            {/* Overall score */}
+                            <div className="rounded-xl border border-slate-700/40 bg-slate-900/40 p-6">
+                                <div className="text-4xl font-bold text-white mb-2">
+                                    4.8
+                                </div>
+                                <div className="flex items-center gap-1 mb-2">
+                                    {[...Array(5)].map((_, i) => (
+                                        <FiStar
+                                            key={i}
+                                            className={`text-lg ${
+                                                i < 5
+                                                    ? "text-amber-400 fill-amber-400"
+                                                    : "text-slate-600"
+                                            }`}
+                                        />
+                                    ))}
+                                </div>
+                                <p className="text-sm text-slate-400">
+                                    Based on 800+ verified reviews
+                                </p>
+                            </div>
+
+                            {/* Breakdown */}
+                            <div className="md:col-span-2 rounded-xl border border-slate-700/40 bg-slate-900/40 p-6 space-y-3">
+                                {[
+                                    { stars: "5", percent: 88 },
+                                    { stars: "4", percent: 8 },
+                                    { stars: "3", percent: 3 },
+                                    { stars: "2", percent: 0 },
+                                    { stars: "1", percent: 1 },
+                                ].map((row, index) => (
+                                    <div
+                                        key={index}
+                                        className="flex items-center gap-3"
+                                    >
+                                        <span className="w-6 text-sm text-slate-300">
+                                            {row.stars}
+                                        </span>
+                                        <div className="flex-1 h-2 rounded-full bg-slate-700/50 overflow-hidden">
+                                            <div
+                                                className="h-full bg-gradient-to-r from-amber-400 to-amber-500"
+                                                style={{
+                                                    width: `${row.percent}%`,
+                                                }}
+                                            />
+                                        </div>
+                                        <span className="w-10 text-xs text-slate-400 text-right">
+                                            {row.percent}%
+                                        </span>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+
+                        {/* Reviews List */}
+                        <div className="space-y-6">
                             {[
                                 {
-                                    name: "Sarah Johnson",
+                                    name: "Dani G",
+                                    meta: "Installation in PE19 · Dec 2025",
                                     rating: 5,
-                                    date: "2 weeks ago",
                                     comment:
-                                        "Excellent service from start to finish. The engineers were professional and tidy.",
+                                        "The boiler is noticeably quieter and more efficient than our previous system. You can feel the improvement straight away.",
                                 },
                                 {
-                                    name: "Michael Brown",
+                                    name: "Steve Q",
+                                    meta: "Installation in NE17 · Dec 2025",
                                     rating: 5,
-                                    date: "1 month ago",
                                     comment:
-                                        "Great value for money. Boiler is quiet and efficient. Highly recommend!",
-                                },
-                                {
-                                    name: "Emma Wilson",
-                                    rating: 4,
-                                    date: "3 months ago",
-                                    comment:
-                                        "Installation was quick and clean. The smart thermostat is easy to use.",
-                                },
-                                {
-                                    name: "David Lee",
-                                    rating: 5,
-                                    date: "2 months ago",
-                                    comment:
-                                        "Professional team, quality workmanship. Heating bills have reduced significantly.",
+                                        "From installation to daily use, everything has been smooth. The heating responds quickly and the controls are simple to use.",
                                 },
                             ].map((review, index) => (
                                 <div
                                     key={index}
-                                    className="bg-gradient-to-br from-slate-900/40 to-slate-800/20 rounded-xl border border-slate-700/40 p-6"
+                                    className="rounded-xl border border-slate-700/40 bg-gradient-to-br from-slate-900/40 to-slate-800/20 p-6"
                                 >
-                                    <div className="flex justify-between items-start mb-4">
+                                    <div className="flex items-start justify-between mb-3">
                                         <div>
-                                            <h4 className="font-bold text-white">
+                                            <h4 className="font-semibold text-white">
                                                 {review.name}
                                             </h4>
-                                            <div className="flex items-center gap-1 mt-1">
+                                            <p className="text-xs text-slate-500">
+                                                {review.meta}
+                                            </p>
+                                            <div className="flex items-center gap-1 mt-2">
                                                 {[...Array(5)].map((_, i) => (
                                                     <FiStar
                                                         key={i}
@@ -630,10 +729,12 @@ export default function ProductTabs() {
                                                 ))}
                                             </div>
                                         </div>
-                                        <span className="text-xs text-slate-500">
-                                            {review.date}
+
+                                        <span className="text-xs px-2 py-1 rounded-full bg-emerald-500/10 text-emerald-400">
+                                            Verified
                                         </span>
                                     </div>
+
                                     <p className="text-slate-300 text-sm leading-relaxed">
                                         {review.comment}
                                     </p>
@@ -641,9 +742,10 @@ export default function ProductTabs() {
                             ))}
                         </div>
 
-                        <div className="mt-8 text-center">
-                            <button className="px-6 py-3 rounded-lg bg-gradient-to-r from-rose-500/20 to-rose-600/20 border border-rose-500/30 text-rose-400 hover:bg-rose-500/30 transition-all duration-300">
-                                View All Reviews
+                        {/* CTA */}
+                        <div className="mt-10 text-center">
+                            <button className="px-6 py-3 rounded-lg border border-rose-500/30 bg-rose-500/10 text-rose-400 hover:bg-rose-500/20 transition-all">
+                                View all customer reviews
                             </button>
                         </div>
                     </div>

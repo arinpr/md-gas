@@ -65,53 +65,32 @@ export default function DetailsQuoteSidebar({
             <aside className="fixed right-0 top-0 h-full w-full overflow-y-auto lg:w-[1000px] bg-gradient-to-b from-slate-900 to-slate-800 z-50 border-l border-slate-700/50 shadow-2xl shadow-black/50">
                 <div className="h-full flex flex-col">
                     {/* Header - Holographic UI */}
-                    <div className="sticky top-0 z-30 bg-slate-900/90 backdrop-blur-xl border-b border-slate-700/50">
+                    <div className="sticky top-0 z-30 bg-dark/90 backdrop-blur-xl border-b border-dark/50">
                         <div className="relative px-8 py-5">
-                            {/* Circuit line effect */}
-                            <div className="absolute top-0 left-8 right-8 h-px bg-gradient-to-r from-transparent via-emerald-400/30 to-transparent" />
-
                             <div className="relative flex justify-between items-center">
                                 <div className="flex items-center gap-4">
-                                    {/* Holographic badge */}
-                                    <div className="relative group">
-                                        <div
-                                            className={`relative px-4 py-2.5 rounded-lg font-bold text-white ${detailsQuote.badge} overflow-hidden`}
-                                        >
-                                            <div className="absolute inset-0 bg-gradient-to-r from-white/20 to-transparent" />
-                                            <div className="absolute inset-0 bg-[linear-gradient(90deg,transparent,rgba(255,255,255,0.2),transparent)] animate-shimmer" />
-                                            <div className="relative flex items-center gap-2">
-                                                <div className="w-2 h-2 rounded-full bg-white animate-pulse" />
-                                                <span className="text-shadow-lg">
-                                                    {detailsQuote.tier}
-                                                </span>
-                                            </div>
+                                    <div
+                                        className={`relative px-4 py-2.5 rounded-lg font-bold text-dark ${detailsQuote.badge} overflow-hidden`}
+                                    >
+                                        <div className="absolute inset-0 bg-gradient-to-r from-secondary/80 to-foreground" />
+                                        <div className="relative flex items-center gap-2">
+                                            <div className="w-2 h-2 rounded-full bg-white animate-pulse" />
+                                            <span className="text-shadow-lg">
+                                                {detailsQuote.tier}
+                                            </span>
                                         </div>
-                                        {/* Holographic glow */}
-                                        <div className="absolute -inset-2 bg-emerald-500/20 blur-xl opacity-0 group-hover:opacity-100 transition-opacity" />
                                     </div>
 
                                     <div>
                                         <h1 className="text-2xl font-bold text-white tracking-tight">
                                             {detailsQuote.name}
                                         </h1>
-                                        <div className="text-sm text-slate-400 flex items-center gap-2 mt-1">
-                                            <span className="flex items-center gap-1">
-                                                <FiHash className="text-emerald-400" />
-                                                {detailsQuote.id}
-                                            </span>
-                                            <span className="text-slate-600">
-                                                •
-                                            </span>
-                                            <span className="text-emerald-400">
-                                                ACTIVE CONFIGURATION
-                                            </span>
-                                        </div>
                                     </div>
                                 </div>
 
                                 <div className="flex items-center gap-3">
                                     {/* Holographic button */}
-                                    <button className="relative px-4 py-3 rounded-lg bg-slate-800/50 backdrop-blur-sm border border-slate-700 hover:border-green-500/50 cursor-pointer transition-colors duration-300 text-sm font-medium text-slate-300 hover:text-white transition-all flex items-center gap-2 group">
+                                    <button className="relative px-4 py-3 rounded-lg bg-dark/50 backdrop-blur-sm border border-dark.90 hover:border-green-500/50 cursor-pointer transition-colors duration-300 text-sm font-medium text-slate-300 hover:text-white transition-all flex items-center gap-2 group">
                                         <div className="absolute inset-0 bg-gradient-to-r from-emerald-500/0 via-emerald-500/5 to-emerald-500/0 opacity-0 group-hover:opacity-100 transition-opacity" />
                                         <FiMessageSquare className="relative z-10 group-hover:text-green-500 transition-colors duration-300" />
                                         <span className="relative z-10 group-hover:text-green-300 transition-colors duration-300">
@@ -122,7 +101,7 @@ export default function DetailsQuoteSidebar({
                                     {/* Close button with particle effect */}
                                     <button
                                         onClick={onClose}
-                                        className="relative h-12 w-12 cursor-pointer rounded-xl bg-slate-800/50 border border-slate-700 hover:border-red-400/50 hover:bg-slate-800/80 flex items-center justify-center transition-all group"
+                                        className="relative h-12 w-12 cursor-pointer rounded-xl bg-dark/50 border border-dark hover:border-red-400/50 hover:bg-dark/80 flex items-center justify-center transition-all group"
                                     >
                                         <div className="absolute inset-0 rounded-xl bg-gradient-to-br from-transparent via-red-500/0 to-transparent opacity-0 group-hover:opacity-100 group-hover:via-red-500/10 transition-all" />
                                         <FiX className="text-slate-400 group-hover:text-white transition-colors text-lg relative z-10" />
@@ -133,13 +112,13 @@ export default function DetailsQuoteSidebar({
                     </div>
 
                     {/* Body with split layout */}
-                    <div className="flex-1 overflow-hidden">
+                    <div className="flex-1 overflow-hidden bg-dark/40">
                         <div className="flex h-full">
                             {/* Left Column - Sticky Carousel (keep as is) */}
                             <div className="hidden lg:flex lg:w-[400px] sticky top-0">
                                 <div className="relative w-full p-6">
                                     {/* Carousel Container */}
-                                    <div className="relative rounded-2xl bg-gradient-to-br from-slate-800/50 to-slate-900/30 border border-slate-700/50 overflow-hidden">
+                                    <div className="relative rounded-2xl bg-gradient-to-br from-dark/90 to-dark/30 border border-white/10 overflow-hidden">
                                         {/* Grid pattern background */}
                                         <div className="absolute inset-0 opacity-20">
                                             <div
@@ -153,7 +132,7 @@ export default function DetailsQuoteSidebar({
                                         </div>
 
                                         {/* Carousel header */}
-                                        <div className="relative z-10 px-6 py-4 border-b border-slate-700/50">
+                                        <div className="relative z-10 px-6 py-4 border-b border-foreground/20">
                                             <div className="flex items-center justify-between">
                                                 <div className="flex items-center gap-3">
                                                     <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-emerald-500/20 to-cyan-500/20 border border-emerald-500/30 flex items-center justify-center">
@@ -180,15 +159,7 @@ export default function DetailsQuoteSidebar({
 
                                                 {/* Center glow */}
                                                 <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black/5" />
-                                                <div
-                                                    className="
-  absolute bottom-[18%]
-  w-[60%] h-6
-  bg-black/30
-  blur-2xl
-  rounded-full
-"
-                                                />
+                                                <div className="absolute bottom-[18%] w-[60%] h-6 bg-black/30 blur-2xl rounded-full" />
 
                                                 {/* Image with holographic effect */}
                                                 <img
@@ -202,9 +173,7 @@ export default function DetailsQuoteSidebar({
                                                     } - View ${
                                                         currentImageIndex + 1
                                                     }`}
-                                                    className="
-    relative z-10
-    max-h-[85%]
+                                                    className="relative z-10 max-h-[85%]
     max-w-[80%]
     object-contain
     drop-shadow-[0_35px_50px_rgba(0,0,0,0.25)]
@@ -237,7 +206,7 @@ export default function DetailsQuoteSidebar({
                                         <div className="flex items-center justify-center gap-4 w-full mt-3 pb-6">
                                             <button
                                                 onClick={onPrevImage}
-                                                className="w-10 h-10 rounded-full bg-slate-800/80 border border-slate-700 hover:border-emerald-500/50 flex items-center justify-center hover:bg-slate-800 transition-all group"
+                                                className="w-10 h-10 rounded-full bg-dark/80 border border-white/10 hover:border-emerald-500/50 flex items-center justify-center hover:bg-slate-800 transition-all group"
                                             >
                                                 <FiChevronLeft className="text-slate-400 group-hover:text-white" />
                                             </button>
@@ -248,7 +217,7 @@ export default function DetailsQuoteSidebar({
                                                 className={`px-4 py-2 rounded-lg border ${
                                                     autoRotate
                                                         ? "bg-gradient-to-r from-emerald-500/30 to-cyan-500/20 border-emerald-500/50 text-emerald-400"
-                                                        : "bg-slate-800/50 border-slate-700/50 text-slate-400 hover:border-emerald-500/50 hover:text-emerald-400"
+                                                        : "bg-dark/50 border-white/10 text-slate-400 hover:border-emerald-500/50 hover:text-emerald-400"
                                                 } text-sm font-medium transition-all`}
                                             >
                                                 {autoRotate
@@ -257,30 +226,10 @@ export default function DetailsQuoteSidebar({
                                             </button>
                                             <button
                                                 onClick={onNextImage}
-                                                className="w-10 h-10 rounded-full bg-slate-800/80 border border-slate-700 hover:border-emerald-500/50 flex items-center justify-center hover:bg-slate-800 transition-all group"
+                                                className="w-10 h-10 rounded-full bg-dark/80 border border-white/10 hover:border-emerald-500/50 flex items-center justify-center hover:bg-slate-800 transition-all group"
                                             >
                                                 <FiChevronRight className="text-slate-400 group-hover:text-white" />
                                             </button>
-                                        </div>
-                                    </div>
-
-                                    {/* Quick specs in carousel panel */}
-                                    <div className="mt-6 grid grid-cols-2 gap-3">
-                                        <div className="p-4 rounded-xl bg-gradient-to-br from-slate-800/50 to-slate-900/30 border border-slate-700/50">
-                                            <div className="text-xs text-slate-400 mb-2">
-                                                Dimensions
-                                            </div>
-                                            <div className="text-lg font-bold text-white">
-                                                {detailsQuote.dimensions}
-                                            </div>
-                                        </div>
-                                        <div className="p-4 rounded-xl bg-gradient-to-br from-slate-800/50 to-slate-900/30 border border-slate-700/50">
-                                            <div className="text-xs text-slate-400 mb-2">
-                                                Weight
-                                            </div>
-                                            <div className="text-lg font-bold text-white">
-                                                {detailsQuote.weight}
-                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -293,7 +242,7 @@ export default function DetailsQuoteSidebar({
                                     <div className="grid grid-cols-1 gap-6 mb-8">
                                         {/* Investment Breakdown */}
                                         <div className="relative group">
-                                            <div className="bg-gradient-to-br from-slate-800/50 to-slate-900/30 rounded-2xl border border-slate-700/50 p-6 overflow-hidden">
+                                            <div className="bg-gradient-to-br from-dark/50 to-dark/30 rounded-2xl border border-white/10 p-6 overflow-hidden">
                                                 {/* Animated background */}
                                                 <div className="absolute inset-0 bg-gradient-to-r from-emerald-500/5 via-transparent to-cyan-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
 
@@ -314,14 +263,14 @@ export default function DetailsQuoteSidebar({
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <div className="px-3 py-1 rounded-full bg-gradient-to-r from-emerald-500/20 to-emerald-600/10 border border-emerald-500/30 text-emerald-400 text-sm font-medium">
+                                                        <div className="px-3 py-1 rounded-full bg-gradient-to-r from-primary/20 to-primary/10 border border-primary/30 text-primary text-sm font-medium">
                                                             {selectedPower}
                                                             kW
                                                         </div>
                                                     </div>
 
                                                     {/* Total Price */}
-                                                    <div className="p-4 rounded-xl bg-gradient-to-br from-slate-900/50 to-black/30 border border-slate-700/50">
+                                                    <div className="p-4 rounded-xl bg-gradient-to-br from-slate-900/50 to-black/30 border border-white/10">
                                                         <div className="flex justify-between items-end">
                                                             <div>
                                                                 <div className="text-sm text-slate-400 mb-2">
@@ -333,7 +282,7 @@ export default function DetailsQuoteSidebar({
                                                                         £
                                                                         {detailsQuote.price.toLocaleString()}
                                                                     </div>
-                                                                    <div className="px-2 py-1 rounded-full bg-gradient-to-r from-emerald-500/20 to-emerald-600/10 border border-emerald-500/30 text-emerald-400 text-xs">
+                                                                    <div className="px-2 py-1 rounded-full bg-gradient-to-r from-secondary/20 to-primary/10 border border-primary/30 text-primary text-xs">
                                                                         Save £
                                                                         {detailsQuote.oldPrice -
                                                                             detailsQuote.price}
@@ -354,7 +303,7 @@ export default function DetailsQuoteSidebar({
                                                                         detailsQuote.monthly
                                                                     }
                                                                 </div>
-                                                                <div className="text-xs text-emerald-400">
+                                                                <div className="text-[13px] text-primary">
                                                                     0% APR • 10
                                                                     Years
                                                                 </div>
@@ -367,7 +316,7 @@ export default function DetailsQuoteSidebar({
 
                                         {/* Power Selection with System Load */}
                                         <div className="relative group">
-                                            <div className="bg-gradient-to-br from-slate-800/50 to-slate-900/30 rounded-2xl border border-slate-700/50 p-6 overflow-hidden">
+                                            <div className="bg-gradient-to-br from-dark/50 to-dark/30 rounded-2xl border border-white/10 p-6 overflow-hidden">
                                                 <div className="relative">
                                                     <div className="flex items-center justify-between mb-8">
                                                         <div className="flex items-center gap-3">
@@ -390,7 +339,7 @@ export default function DetailsQuoteSidebar({
                                                             <div className="text-sm text-slate-400">
                                                                 Current
                                                             </div>
-                                                            <div className="text-2xl font-bold text-emerald-400">
+                                                            <div className="text-2xl font-bold text-primary">
                                                                 {selectedPower}
                                                                 kW
                                                             </div>
@@ -426,10 +375,10 @@ export default function DetailsQuoteSidebar({
                                                                                 option.power
                                                                             )
                                                                         }
-                                                                        className={`relative p-6 rounded-xl border-2 transition-all duration-300 ${
+                                                                        className={`relative p-6 rounded-xl border-2 transition-all duration-300 cursor-pointer ${
                                                                             isSelected
-                                                                                ? "border-emerald-500/50 bg-gradient-to-br from-emerald-500/10 to-emerald-600/5"
-                                                                                : "border-slate-700/50 hover:border-slate-600/50 hover:bg-slate-800/30"
+                                                                                ? "border-primary bg-gradient-to-br from-primary/5 to-primary/5"
+                                                                                : "border-white/20 hover:border-white/30 hover:bg-slate-800/30"
                                                                         }`}
                                                                     >
                                                                         <div className="text-center">
@@ -439,9 +388,9 @@ export default function DetailsQuoteSidebar({
                                                                                 }
                                                                             </div>
                                                                             <div
-                                                                                className={`text-xs font-medium px-2 py-1 rounded-full ${
+                                                                                className={`text-xs font-medium py-1 rounded-full ${
                                                                                     isSelected
-                                                                                        ? "bg-emerald-500/20 text-emerald-400"
+                                                                                        ? "bg-primary/10 text-[#689bdf]"
                                                                                         : "bg-slate-800/50 text-slate-400"
                                                                                 }`}
                                                                             >
@@ -454,7 +403,7 @@ export default function DetailsQuoteSidebar({
                                                                             </div>
                                                                         </div>
                                                                         {isSelected && (
-                                                                            <div className="absolute top-2 right-2 w-4 h-4 rounded-full bg-emerald-500 flex items-center justify-center">
+                                                                            <div className="absolute top-2 right-2 w-4 h-4 rounded-full bg-primary flex items-center justify-center">
                                                                                 <FiCheck className="text-white text-[8px]" />
                                                                             </div>
                                                                         )}
@@ -470,7 +419,7 @@ export default function DetailsQuoteSidebar({
                                                                 <div className="text-sm font-medium text-slate-300 mb-2">
                                                                     System Load
                                                                 </div>
-                                                                <div className="text-2xl font-bold text-emerald-400">
+                                                                <div className="text-3xl font-bold text-secondary">
                                                                     {selectedPower ===
                                                                     "25"
                                                                         ? "60%"
@@ -495,14 +444,14 @@ export default function DetailsQuoteSidebar({
                                                                                 : "25"
                                                                         )
                                                                     }
-                                                                    className="relative w-20 h-10 focus:outline-none focus:ring-2 focus:ring-emerald-500/30 rounded-full transition-all duration-300 cursor-pointer active:scale-95"
+                                                                    className="relative w-20 h-10 focus:outline-none focus:ring-2 focus:ring-primary/40 rounded-full transition-all duration-300 cursor-pointer active:scale-95"
                                                                 >
                                                                     {/* Track Background - Fixed with better gradient */}
                                                                     <div
                                                                         className={`absolute inset-0 rounded-full transition-all duration-300 ${
                                                                             selectedPower ===
                                                                             "25"
-                                                                                ? "bg-gradient-to-r from-emerald-500/90 via-emerald-400/80 to-emerald-500/90"
+                                                                                ? "bg-gradient-to-r from-secondary via-secondary to-secondary/90"
                                                                                 : "bg-gradient-to-r from-slate-600/90 via-slate-500/80 to-slate-600/90"
                                                                         }`}
                                                                     >
@@ -511,7 +460,7 @@ export default function DetailsQuoteSidebar({
                                                                             className={`absolute inset-0 rounded-full transition-all duration-300 ${
                                                                                 selectedPower ===
                                                                                 "25"
-                                                                                    ? "bg-emerald-400/30 animate-pulse"
+                                                                                    ? "bg-primary/30 animate-pulse"
                                                                                     : "bg-slate-500/20"
                                                                             }`}
                                                                             style={{
@@ -536,7 +485,7 @@ export default function DetailsQuoteSidebar({
                                                                                 className={`w-6 h-6 rounded-full transition-all duration-300 ${
                                                                                     selectedPower ===
                                                                                     "25"
-                                                                                        ? "bg-gradient-to-br from-emerald-400 to-emerald-500 shadow-inner shadow-emerald-400/30"
+                                                                                        ? "bg-gradient-to-br from-primary to-primary shadow-inner shadow-primary/30"
                                                                                         : "bg-gradient-to-br from-slate-300 to-slate-400 shadow-inner shadow-slate-400/30"
                                                                                 }`}
                                                                             >
@@ -550,7 +499,7 @@ export default function DetailsQuoteSidebar({
                                                                             className={`absolute -inset-1 rounded-full blur-sm transition-all duration-300 ${
                                                                                 selectedPower ===
                                                                                 "25"
-                                                                                    ? "bg-emerald-400/50"
+                                                                                    ? "bg-primary/50"
                                                                                     : "bg-slate-400/30"
                                                                             }`}
                                                                         />
@@ -561,12 +510,8 @@ export default function DetailsQuoteSidebar({
 
                                                         {/* System Load Visualization - Updated with Proper Synchronization */}
                                                         <div className="relative">
-                                                            {/* Main Load Bar Container */}
                                                             <div className="relative h-full w-24 rounded-2xl overflow-hidden bg-gradient-to-b from-slate-900/80 via-slate-900/50 to-slate-900/80 border border-slate-700/50 backdrop-blur-sm shadow-xl">
-                                                                {/* Background Gradient Layer */}
                                                                 <div className="absolute inset-0 bg-gradient-to-b from-slate-900 via-slate-800/20 to-slate-900" />
-
-                                                                {/* Holographic Grid Pattern */}
                                                                 <div className="absolute inset-0 opacity-[0.15]">
                                                                     <div
                                                                         className="absolute inset-0"
@@ -581,14 +526,13 @@ export default function DetailsQuoteSidebar({
                                                                     />
                                                                 </div>
 
-                                                                {/* Fill Level Indicator - UPDATED with toggle synchronization */}
                                                                 <div
                                                                     className={`
           absolute bottom-0 left-0 right-0 
           transition-all duration-500 ease-out
           ${
               selectedPower === "25"
-                  ? "h-[60%] bg-gradient-to-t from-emerald-500/90 via-emerald-400/80 to-emerald-500/90"
+                  ? "h-[60%] bg-gradient-to-t from-primary via-primary/80 to-secondary/90"
                   : "h-[45%] bg-gradient-to-t from-slate-600/80 via-slate-500/70 to-slate-600/80"
           }
         `}
@@ -634,7 +578,7 @@ export default function DetailsQuoteSidebar({
                     index === 0
                         ? "bg-gradient-to-r from-red-400/60 via-red-400/80 to-red-400/60"
                         : index === 1
-                        ? "bg-gradient-to-r from-emerald-400/60 via-emerald-400/80 to-emerald-400/60"
+                        ? "bg-gradient-to-r from-primary/60 via-primary/80 to-primary/60"
                         : "bg-gradient-to-r from-slate-400/40 via-slate-400/60 to-slate-400/40"
                 }
               `}
@@ -681,7 +625,7 @@ export default function DetailsQuoteSidebar({
             border-t-2 border-dashed w-full
             ${
                 selectedPower === "25"
-                    ? "border-emerald-400/70 shadow-[0_0_15px_rgba(16,185,129,0.4)]"
+                    ? "border-primary/70 shadow-[0_0_15px_rgba(16,185,129,0.4)]"
                     : "border-slate-400/50 shadow-[0_0_10px_rgba(100,116,139,0.3)]"
             }
           `}
@@ -693,7 +637,7 @@ export default function DetailsQuoteSidebar({
               transition-all duration-300
               ${
                   selectedPower === "25"
-                      ? "bg-emerald-400 shadow-[0_0_15px_rgba(16,185,129,0.8)]"
+                      ? "bg-primary shadow-[0_0_15px_rgba(16,185,129,0.8)]"
                       : "bg-slate-400 shadow-[0_0_10px_rgba(100,116,139,0.5)]"
               }
             `}

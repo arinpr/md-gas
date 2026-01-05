@@ -49,7 +49,6 @@ export default function PowerModel({
                                         <h2 className="text-2xl font-bold text-slate-900">
                                             Select Boiler Output
                                         </h2>
-                                        s
                                     </div>
                                 </div>
 

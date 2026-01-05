@@ -164,10 +164,10 @@ const QUOTES = [
 export default function QuoteResultsPage() {
     const [activeQuote, setActiveQuote] = useState(null);
     const [detailsQuote, setDetailsQuote] = useState(null);
-    const [expandedSpecs, setExpandedSpecs] = useState(false);
+    // const [expandedSpecs, setExpandedSpecs] = useState(false);
     const [powerModal, setPowerModal] = useState(null);
     const [selectedPower, setSelectedPower] = useState("25");
-    const [activeTab, setActiveTab] = useState("specs");
+    // const [activeTab, setActiveTab] = useState("specs");
     // Carousel state
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
     const [autoRotate, setAutoRotate] = useState(false);
@@ -179,62 +179,6 @@ export default function QuoteResultsPage() {
               "/images/boiler_1.png",
               "/images/boiler_2.png",
               "/images/boiler_3.png",
-          ]
-        : [];
-
-    // Tabs configuration
-    const tabs = [
-        {
-            id: "specs",
-            label: "Specifications",
-            subtitle: "Technical details",
-            icon: FiCpu,
-        },
-        {
-            id: "details",
-            label: "Details",
-            subtitle: "Package info",
-            icon: FiInfo,
-        },
-        { id: "faq", label: "FAQs", subtitle: "Questions", icon: FiHelpCircle },
-        {
-            id: "reviews",
-            label: "Reviews",
-            subtitle: "Customer feedback",
-            icon: FiStar,
-        },
-    ];
-
-    // System load calculation
-    const systemLoad = selectedPower === "25" ? 60 : 45;
-
-    // Specifications data
-    const specs = detailsQuote
-        ? [
-              {
-                  label: "Efficiency",
-                  value: detailsQuote.efficiency,
-                  icon: FiActivity,
-                  gradient: "from-emerald-500/20 to-emerald-600/10",
-              },
-              {
-                  label: "Hot Water Flow",
-                  value: detailsQuote.hotWater,
-                  icon: FiDroplet,
-                  gradient: "from-cyan-500/20 to-blue-500/10",
-              },
-              {
-                  label: "Noise Level",
-                  value: "≤ 40dB",
-                  icon: FiVolume2,
-                  gradient: "from-violet-500/20 to-purple-500/10",
-              },
-              {
-                  label: "Energy Rating",
-                  value: "A",
-                  icon: FiTrendingUp,
-                  gradient: "from-amber-500/20 to-orange-500/10",
-              },
           ]
         : [];
 
