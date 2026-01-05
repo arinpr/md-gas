@@ -17,7 +17,7 @@ import {
     HiOutlineArrowTurnUpLeft,
     HiOutlineArrowTurnUpRight,
 } from "react-icons/hi2";
-import FAQItem from "@/Components/extra/QuoteResultPage/FAQItem";
+import FAQItem from "@/components/extra/QuoteResultPage/FAQItem";
 
 const tabs = [
     {
