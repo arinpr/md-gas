@@ -397,8 +397,8 @@ export default function Stepper({
                                     <div className="max-w-2xl mx-auto w-full">
                                         <div
                                             className={`flex items-center justify-between rounded-2xl border px-6 py-5 transition ${answers[current.id]?.enabled
-                                                    ? "border-primary bg-primary/5"
-                                                    : "border-dark/20 bg-white"
+                                                ? "border-primary bg-primary/5"
+                                                : "border-dark/20 bg-white"
                                                 }`}
                                         >
                                             <label className="flex items-center gap-4 cursor-pointer">
@@ -790,9 +790,9 @@ export default function Stepper({
                                                             {/* Internal zoom layer */}
                                                             <div
                                                                 className={`absolute inset-0 transition-opacity duration-300 ${hoveredIndex ===
-                                                                        index
-                                                                        ? "opacity-100"
-                                                                        : "opacity-0"
+                                                                    index
+                                                                    ? "opacity-100"
+                                                                    : "opacity-0"
                                                                     }`}
                                                             >
                                                                 <img
@@ -810,9 +810,9 @@ export default function Stepper({
                                                             {/* Focus frame */}
                                                             <div
                                                                 className={`pointer-events-none absolute inset-5 rounded-2xl border border-white/70 transition-opacity duration-300 ${hoveredIndex ===
-                                                                        index
-                                                                        ? "opacity-100"
-                                                                        : "opacity-0"
+                                                                    index
+                                                                    ? "opacity-100"
+                                                                    : "opacity-0"
                                                                     }`}
                                                             />
 
@@ -886,8 +886,8 @@ export default function Stepper({
                                                 <div
                                                     ref={dropdownRef}
                                                     className={`absolute inset-x-0 z-50 ${openUpwards
-                                                            ? "bottom-full mb-2"
-                                                            : "top-full mt-2"
+                                                        ? "bottom-full mb-2"
+                                                        : "top-full mt-2"
                                                         }`}
                                                 >
                                                     <div className="bg-white border-2 border-dark/20 rounded-xl overflow-hidden">
@@ -963,8 +963,8 @@ export default function Stepper({
                                                         <div
                                                             key={key}
                                                             className={`relative ${full
-                                                                    ? "md:col-span-2"
-                                                                    : ""
+                                                                ? "md:col-span-2"
+                                                                : ""
                                                                 }`}
                                                         >
                                                             <label className="absolute -top-2 left-5 z-10 bg-white px-1 text-xs font-medium text-slate-500">
@@ -1065,8 +1065,8 @@ export default function Stepper({
                                                     <div
                                                         key={opt.label}
                                                         className={`option-card ${active
-                                                                ? "option-active sheen"
-                                                                : "option-inactive"
+                                                            ? "option-active sheen"
+                                                            : "option-inactive"
                                                             }`}
                                                     >
                                                         <button
@@ -1079,8 +1079,8 @@ export default function Stepper({
                                                             <div className="flex items-center gap-5">
                                                                 <div
                                                                     className={`radial-dot ${active
-                                                                            ? "radial-dot-active"
-                                                                            : "radial-dot-inactive"
+                                                                        ? "radial-dot-active"
+                                                                        : "radial-dot-inactive"
                                                                         }`}
                                                                 >
                                                                     <span className="radial-dot-core" />
@@ -1203,8 +1203,8 @@ export default function Stepper({
                                             onClick={back}
                                             disabled={index === 0}
                                             className={`btn-pill flex gap-1 items-center cursor-pointer ${index === 0
-                                                    ? "btn-disabled"
-                                                    : ""
+                                                ? "btn-disabled"
+                                                : ""
                                                 }`}
                                         >
                                             <FiChevronLeft /> Back
@@ -1239,8 +1239,8 @@ export default function Stepper({
                                             }}
                                             disabled={!canProceed}
                                             className={`btn-gloss flex gap-1 items-center cursor-pointer ${!canProceed
-                                                    ? "btn-disabled"
-                                                    : ""
+                                                ? "btn-disabled"
+                                                : ""
                                                 }`}
                                         >
                                             Next <FiChevronRight />
