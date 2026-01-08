@@ -12,26 +12,15 @@ const COMBI_INCLUDES = [
 ];
 
 const COMBI_NOTES = [
-    "Fixed install price – must not be recalculated",
-    "Vertical flue adds £300 if required",
-    "Smart thermostat upgrade adds £100",
-    "TRVs £35 each",
+
 ];
 
 const SYSTEM_HEAT_INCLUDES = [
-    "Magnetic filter",
-    "Basic wireless programmable thermostat",
-    "Chemical flush + inhibitor",
-    "Old boiler removal & disposal",
-    "Commissioning + registration",
+
 ];
 
 const SYSTEM_HEAT_NOTES = [
-    "Final price = boiler cost + £750 minimum margin",
-    "Horizontal flue adds £150",
-    "Vertical flue adds £300",
-    "Smart thermostat upgrade adds £100",
-    "TRVs £35 each",
+
 ];
 
 export const PRODUCTS = [
