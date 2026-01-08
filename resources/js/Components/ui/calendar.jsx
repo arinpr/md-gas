@@ -7,7 +7,7 @@ import {
 import { DayPicker, getDefaultClassNames } from "react-day-picker";
 
 import { cn } from "@/lib/utils";
-import { Button, buttonVariants } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/Components/ui/button";
 
 function Calendar({
     className,
@@ -16,7 +16,7 @@ function Calendar({
     captionLayout = "label",
     buttonVariant = "ghost",
     formatters,
-    components,
+    Components,
     ...props
 }) {
     const defaultClassNames = getDefaultClassNames();
@@ -129,7 +129,7 @@ function Calendar({
                 hidden: cn("invisible", defaultClassNames.hidden),
                 ...classNames,
             }}
-            components={{
+            Components={{
                 Root: ({ className, rootRef, ...props }) => {
                     return (
                         <div
@@ -176,7 +176,7 @@ function Calendar({
                         </td>
                     );
                 },
-                ...components,
+                ...Components,
             }}
             {...props}
         />

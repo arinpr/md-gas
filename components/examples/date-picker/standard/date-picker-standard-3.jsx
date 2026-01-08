@@ -3,14 +3,14 @@
 import { format } from "date-fns";
 import { CalendarIcon } from "lucide-react";
 import { useState } from "react";
-import { Button } from "@/components/ui/button";
-import { Calendar } from "@/components/ui/calendar";
+import { Button } from "@/Components/ui/button";
+import { Calendar } from "@/Components/ui/calendar";
 import {
     Popover,
     PopoverContent,
     PopoverTrigger,
-} from "@/components/ui/popover";
-import { ScrollArea } from "@/components/ui/scroll-area";
+} from "@/Components/ui/popover";
+import { ScrollArea } from "@/Components/ui/scroll-area";
 import { cn } from "@/lib/utils";
 
 export const title = "Date Picker as Appointment Picker";

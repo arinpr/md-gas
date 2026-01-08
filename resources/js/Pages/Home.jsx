@@ -1,8 +1,8 @@
-import Faq from "@/components/boiler/Faq";
-import { HeroSection } from "@/components/boiler/hero-section";
-import { HomeTypesStrip } from "@/components/boiler/home-types-strip";
-import { ServiceCards } from "@/components/boiler/service-cards";
-import WhyChooseUs from "@/components/boiler/WhyChooseUs";
+import Faq from "@/Components/boiler/Faq";
+import { HeroSection } from "@/Components/boiler/hero-section";
+import { HomeTypesStrip } from "@/Components/boiler/home-types-strip";
+import { ServiceCards } from "@/Components/boiler/service-cards";
+import WhyChooseUs from "@/Components/boiler/WhyChooseUs";
 import GuestLayout from "@/Layouts/GuestLayout";
 import { Head } from "@inertiajs/react";
 

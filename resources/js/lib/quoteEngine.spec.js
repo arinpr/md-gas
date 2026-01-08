@@ -1,6 +1,6 @@
 // lib/quoteEngine.spec.js
 import { buildBoilerQuote } from "./quoteEngine";
-import { SERVICE_QUESTIONS } from "@/components/extra/boilerSteps";
+import { SERVICE_QUESTIONS } from "@/Components/extra/boilerSteps";
 
 function a(label, value) {
     return value == null ? { label } : { label, value };

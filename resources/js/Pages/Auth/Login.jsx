@@ -1,8 +1,8 @@
-// import Checkbox from '@/components/Checkbox';
-// import InputError from '@/components/InputError';
-// import InputLabel from '@/components/InputLabel';
-// import PrimaryButton from '@/components/PrimaryButton';
-// import TextInput from '@/components/TextInput';
+// import Checkbox from '@/Components/Checkbox';
+// import InputError from '@/Components/InputError';
+// import InputLabel from '@/Components/InputLabel';
+// import PrimaryButton from '@/Components/PrimaryButton';
+// import TextInput from '@/Components/TextInput';
 // import GuestLayout from '@/Layouts/GuestLayout';
 // import { Head, Link, useForm } from '@inertiajs/react';
 
@@ -100,11 +100,11 @@
 // }
 
 // import { Head, Link, useForm } from "@inertiajs/react"
-// import Checkbox from "@/components/Checkbox"
-// import InputError from "@/components/InputError"
-// import InputLabel from "@/components/InputLabel"
-// import PrimaryButton from "@/components/PrimaryButton"
-// import TextInput from "@/components/TextInput"
+// import Checkbox from "@/Components/Checkbox"
+// import InputError from "@/Components/InputError"
+// import InputLabel from "@/Components/InputLabel"
+// import PrimaryButton from "@/Components/PrimaryButton"
+// import TextInput from "@/Components/TextInput"
 
 // export default function Login({ status, canResetPassword }) {
 //   const { data, setData, post, processing, errors, reset } = useForm({
@@ -199,9 +199,9 @@
 // }
 
 import { Head, Link, useForm } from "@inertiajs/react";
-import Checkbox from "@/components/Checkbox";
-import InputError from "@/components/InputError";
-import PrimaryButton from "@/components/PrimaryButton";
+import Checkbox from "@/Components/Checkbox";
+import InputError from "@/Components/InputError";
+import PrimaryButton from "@/Components/PrimaryButton";
 import { Flame } from "lucide-react";
 
 export default function Login({ status, canResetPassword }) {

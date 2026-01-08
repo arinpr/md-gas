@@ -1,6 +1,6 @@
 "use client";
 
-import { Label } from "@/components/ui/label";
+import { Label } from "@/Components/ui/label";
 import { cn } from "@/lib/utils";
 
 export function RadioGroupField({

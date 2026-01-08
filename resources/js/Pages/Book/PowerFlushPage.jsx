@@ -1,11 +1,11 @@
-import { SERVICES_KEY_VALUE } from "@/components/extra/ServicesKeyValue";
-import Stepper from "@/components/extra/Stepper";
+import { SERVICES_KEY_VALUE } from "@/Components/extra/ServicesKeyValue";
+import Stepper from "@/Components/extra/Stepper";
 import { usePage } from "@inertiajs/react";
 import React from "react";
 
 export default function PowerflushQuote() {
     const { basePrice, symbol,radiatorPrices } = usePage().props;
-    
+
     const STEPS = [
         {
             id: "radiators",

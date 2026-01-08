@@ -1,8 +1,8 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { Head, Link } from "@inertiajs/react";
-import { PageHeader } from "@/components/ui/page-header";
-import { GoogleReview } from "@/components/GoogleReview";
-import { TechnicianButton } from "@/components/TechnicianButton";
+import { PageHeader } from "@/Components/ui/page-header";
+import { GoogleReview } from "@/Components/GoogleReview";
+import { TechnicianButton } from "@/Components/TechnicianButton";
 
 const pageTitle = "Get a Quote";
 

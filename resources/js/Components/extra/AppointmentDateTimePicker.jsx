@@ -7,7 +7,7 @@ import {
     isSameDay,
 } from "date-fns";
 import { Clock, CalendarDays } from "lucide-react";
-import { Calendar } from "@/components/ui/calendar";
+import { Calendar } from "@/Components/ui/calendar";
 import { cn } from "@/lib/utils";
 import axios from "axios";
 

@@ -1,8 +1,8 @@
 // AboutPage.jsx
 import { Head, Link, usePage } from "@inertiajs/react";
-import Header from "@/components/boiler/header";
-import { Card, CardContent } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
+import Header from "@/Components/boiler/header";
+import { Card, CardContent } from "@/Components/ui/card";
+import { Button } from "@/Components/ui/button";
 import { Shield, Award, Users, Clock, CheckCircle2, Phone } from "lucide-react";
 import {
     FaShieldAlt,
@@ -15,7 +15,7 @@ import {
     FaClipboardCheck,
 } from "react-icons/fa";
 import React, { useEffect, useState } from "react";
-import { Footer } from "@/components/boiler/footer";
+import { Footer } from "@/Components/boiler/footer";
 
 /* ---------- Content (edit to taste) ---------- */
 const VALUES = [
@@ -285,20 +285,20 @@ export default function AboutPage() {
                                 {VALUES.map((value) => (
                                     <div
                                         key={value.title}
-                                        className="group relative bg-white rounded-2xl border border-gray-100 p-6 lg:p-8 
-                   hover:shadow-lg hover:border-indigo-100 transition-all duration-300 
+                                        className="group relative bg-white rounded-2xl border border-gray-100 p-6 lg:p-8
+                   hover:shadow-lg hover:border-indigo-100 transition-all duration-300
                    hover:-translate-y-1"
                                     >
                                         {/* Subtle hover effect background */}
                                         <div
-                                            className="absolute inset-0 bg-gradient-to-br from-white to-indigo-50/30 opacity-0 
+                                            className="absolute inset-0 bg-gradient-to-br from-white to-indigo-50/30 opacity-0
                         group-hover:opacity-100 rounded-2xl transition-opacity duration-300 -z-10"
                                         />
 
                                         {/* Icon container - matches hero's style */}
                                         <div
-                                            className="inline-flex items-center justify-center w-14 h-14 rounded-xl 
-                        bg-gradient-to-br from-indigo-50 to-blue-50 border border-indigo-100 
+                                            className="inline-flex items-center justify-center w-14 h-14 rounded-xl
+                        bg-gradient-to-br from-indigo-50 to-blue-50 border border-indigo-100
                         group-hover:from-indigo-100 group-hover:to-blue-100 transition-all"
                                         >
                                             <value.icon className="h-7 w-7 text-indigo-600" />
@@ -540,7 +540,7 @@ export default function AboutPage() {
                                             <div className="relative z-10">
                                                 <div className="inline-flex items-center gap-3 mb-8">
                                                     <div
-                                                        className="w-12 h-12 rounded-xl bg-gradient-to-br from-indigo-600 to-blue-600 
+                                                        className="w-12 h-12 rounded-xl bg-gradient-to-br from-indigo-600 to-blue-600
                           flex items-center justify-center shadow-lg"
                                                     >
                                                         <svg
@@ -724,8 +724,8 @@ export default function AboutPage() {
                                     return (
                                         <div
                                             key={cert.title}
-                                            className="group relative bg-white rounded-2xl p-6 lg:p-8 border border-gray-100 
-                     hover:border-indigo-200 hover:shadow-xl transition-all duration-300 
+                                            className="group relative bg-white rounded-2xl p-6 lg:p-8 border border-gray-100
+                     hover:border-indigo-200 hover:shadow-xl transition-all duration-300
                      hover:-translate-y-1"
                                         >
                                             {/* Decorative corner */}
@@ -735,7 +735,7 @@ export default function AboutPage() {
 
                                             {/* Number indicator */}
                                             <div
-                                                className="absolute -top-3 -left-3 w-8 h-8 rounded-full bg-gradient-to-r from-indigo-600 to-blue-600 
+                                                className="absolute -top-3 -left-3 w-8 h-8 rounded-full bg-gradient-to-r from-indigo-600 to-blue-600
                           text-white flex items-center justify-center text-sm font-bold shadow-md"
                                             >
                                                 {index + 1}
@@ -743,7 +743,7 @@ export default function AboutPage() {
 
                                             {/* Icon with gradient */}
                                             <div
-                                                className={`w-14 h-14 rounded-xl bg-gradient-to-br ${cert.color} 
+                                                className={`w-14 h-14 rounded-xl bg-gradient-to-br ${cert.color}
                           flex items-center justify-center mb-6 group-hover:scale-110 transition-transform shadow-md`}
                                             >
                                                 <IconComponent className="h-7 w-7 text-white" />
