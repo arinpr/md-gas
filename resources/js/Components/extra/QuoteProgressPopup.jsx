@@ -22,6 +22,8 @@ export default function QuoteProcessingModal({
     const [energyLevels, setEnergyLevels] = useState([0, 0, 0]);
     const canvasRef = useRef(null);
 
+    const [quote, setQuote] = useState(null);
+
     useEffect(() => {
         if (open) {
             console.log("MODAL RECEIVED ANSWERS:", answers);
@@ -30,6 +32,21 @@ export default function QuoteProcessingModal({
             // console.log("Product Details & Quote", quote);
             const quote = buildBoilerQuote({ answers, questions: SERVICE_QUESTIONS.new });
             console.log("Generated Quote", quote);
+
+            const postcode =
+                answers?.details?.postcode ||
+                new URLSearchParams(window.location.search).get("postcode") ||
+                "";
+
+            const quoteWithPostcode = {
+                ...quote,
+                inputs: {
+                ...(quote?.inputs || {}),
+                postcode,
+                },
+            };
+
+            setQuote(quoteWithPostcode);
 
             // If you already have a boiler base price from selection:
             // const total = boilerBasePrice + addOnsTotal;
@@ -301,20 +318,18 @@ export default function QuoteProcessingModal({
                         {completed && (
                             <button
                                 onClick={() => {
-                                    router.get("/book/quote/new/results", {
-                                        postcode:
-                                            answers?.details?.postcode ||
-                                            new URLSearchParams(
-                                                window.location.search
-                                            ).get("postcode"),
-                                    });
+                                if (!quote) return;
+
+                                router.post("/book/quote/new/results", quote, {
+                                    preserveScroll: true,
+                                });
                                 }}
                                 className="w-full rounded-2xl bg-gradient-to-r from-primary to-secondary px-6 py-4 text-white font-semibold flex items-center justify-between hover:opacity-90 transition"
                             >
                                 <span>View your quote</span>
                                 <FiChevronRight />
                             </button>
-                        )}
+                            )}
                     </div>
                 </div>
             </div>

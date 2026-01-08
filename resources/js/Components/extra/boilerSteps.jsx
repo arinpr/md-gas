@@ -1,327 +1,240 @@
-// ❌ REMOVE THIS (NO LONGER NEEDED)
-// export const SERVICE_TYPES = { ... };
-
 import { Phone } from "lucide-react";
 
 export const SERVICE_QUESTIONS = {
-    new: [
-        /* ─────────────────────────────
-           1. MAINS GAS
-        ───────────────────────────── */
-        {
-            id: "mains_gas",
-            question: "Does your boiler run on mains gas?",
-            type: "select",
-            options: [{ label: "Yes" }, { label: "No" }],
-            infoBox: {
-                badge: "Tip",
-                text:
-                    "Most homes in the UK are connected to mains gas. If you receive a gas bill or have a gas meter installed, this is almost certainly the correct option for your home.",
-                helperLabel: "Not sure?",
-                phone: "0330 113 1333",
-                phoneLabel: "Speak to an engineer",
-            },
-        },
+  new: [
+    {
+      id: "mains_gas",
+      question: "Does your boiler run on mains gas?",
+      type: "select",
+      options: [{ label: "Yes" }, { label: "No" }],
+      infoBox: {
+        badge: "Tip",
+        text:
+          "Most homes in the UK are connected to mains gas. If you receive a gas bill or have a gas meter installed, this is almost certainly the correct option for your home.",
+        // helperLabel: "Not sure?",
+        // phone: "0330 113 1333",
+        // phoneLabel: "Speak to an engineer",
+      },
+    },
 
-        /* ─────────────────────────────
-           1A. FUEL TYPE (NO MAINS GAS)
-        ───────────────────────────── */
-        {
-            id: "boiler_fuel",
-            question: "What fuel does your boiler run on?",
-            type: "select",
-            options: [{ label: "LPG Gas" }, { label: "Other" }],
-            showIf: (a) => a.mains_gas?.label === "No",
-        },
+    {
+      id: "boiler_fuel",
+      question: "What fuel does your boiler run on?",
+      type: "select",
+      options: [{ label: "LPG Gas" }, { label: "Other" }],
+      showIf: (a) => a.mains_gas?.label === "No",
+    },
 
-        {
-            id: "fuel_help",
-            question:
-                "Thanks — this setup needs a specialist review. One of our experts will help you.",
-            type: "info",
-            showIf: (a) =>
-                a.mains_gas?.label === "No" && a.boiler_fuel?.label === "Other",
-        },
+    {
+      id: "fuel_help",
+      question:
+        "Thanks — this setup needs a specialist review. One of our experts will help you.",
+      type: "info",
+      showIf: (a) =>
+        a.mains_gas?.label === "No" && a.boiler_fuel?.label === "Other",
+    },
 
-        /* ─────────────────────────────
-           2. KNOW BOILER TYPE
-        ───────────────────────────── */
-        {
-            id: "boiler_type_known",
-            question: "Do you know the type of boiler currently installed?",
-            type: "select",
-            options: [{ label: "Yes" }, { label: "No" }],
-            infoBox: {
-                badge: "Tip",
-                text:
-                    "Select Yes if you know. If you’re not sure, choose No and we’ll guide you through it in the next step — or you can speak with an engineer.",
-                helperLabel: "Not sure?",
-                phone: "0330 113 1333",
-                phoneLabel: "Speak to an expert",
-            },
-            showIf: (a) =>
-                a.mains_gas?.label === "Yes" || a.boiler_fuel?.label === "LPG Gas",
-        },
+    {
+      id: "boiler_type_known",
+      question: "Do you know the type of boiler currently installed?",
+      type: "select",
+      options: [{ label: "Yes" }, { label: "No" }],
+      infoBox: {
+        badge: "Tip",
+        text:
+          "Select Yes if you know. If you’re not sure, choose No and we’ll guide you through it in the next step — or you can speak with an engineer.",
+        // helperLabel: "Not sure?",
+        // phone: "0330 113 1333",
+        // phoneLabel: "Speak to an expert",
+      },
+      showIf: (a) =>
+        a.mains_gas?.label === "Yes" || a.boiler_fuel?.label === "LPG Gas",
+    },
 
-        /* ─────────────────────────────
-           2A. KNOWN BOILER TYPE
-        ───────────────────────────── */
-        {
-            id: "current_boiler_type",
-            question: "What kind of boiler do you have right now?",
-            type: "select",
-            options: [
-                { label: "Combi boiler" },
-                { label: "Regular / Standard boiler" },
-                { label: "System boiler" },
-                { label: "Back boiler" },
-            ],
-            showIf: (a) => a.boiler_type_known?.label === "Yes",
-        },
+    {
+      id: "current_boiler_type",
+      question: "What kind of boiler do you have right now?",
+      type: "select",
+      options: [
+        { label: "Combi boiler" },
+        { label: "Regular / Standard boiler" },
+        { label: "System boiler" },
+        { label: "Back boiler" },
+      ],
+      showIf: (a) => a.boiler_type_known?.label === "Yes",
+    },
 
-        /* ─────────────────────────────
-           2B. UNKNOWN BOILER TYPE (GUIDANCE)
-        ───────────────────────────── */
-        {
-            id: "has_water_tank",
-            question: "Does your home have a water tank or hot water cylinder?",
-            type: "select",
-            options: [{ label: "Yes" }, { label: "No" }],
-            showIf: (a) => a.boiler_type_known?.label === "No",
-        },
+    {
+      id: "has_water_tank",
+      question: "Does your home have a water tank or hot water cylinder?",
+      type: "select",
+      options: [{ label: "Yes" }, { label: "No" }],
+      showIf: (a) => a.boiler_type_known?.label === "No",
+    },
 
-        {
-            id: "pressure_gauge",
-            question: "Can you see a pressure gauge on your boiler?",
-            type: "select",
-            options: [{ label: "Yes" }, { label: "No" }],
-            showIf: (a) => a.has_water_tank?.label === "Yes",
-        },
+    {
+      id: "pressure_gauge",
+      question: "Can you see a pressure gauge on your boiler?",
+      type: "select",
+      options: [{ label: "Yes" }, { label: "No" }],
+      showIf: (a) => a.has_water_tank?.label === "Yes",
+    },
 
-        /* ─────────────────────────────
-           3. MOVE TO COMBI (CLIENT CLARIFICATION)
-           +£800 conversion later (handled in engine)
-        ───────────────────────────── */
-        {
-            id: "move_to_combi",
-            question: "Are you thinking about moving to a combi boiler?",
-            type: "select",
-            options: [{ label: "Yes" }, { label: "No" }],
-            showIf: (a) =>
-                ["Regular / Standard boiler", "System boiler"].includes(
-                    a.current_boiler_type?.label
-                ) || a.pressure_gauge?.label === "Yes",
-        },
+    {
+      id: "move_to_combi",
+      question: "Are you thinking about moving to a combi boiler?",
+      type: "select",
+      options: [{ label: "Yes" }, { label: "No" }],
+      showIf: (a) =>
+        ["Regular / Standard boiler", "System boiler"].includes(
+          a.current_boiler_type?.label
+        ) || a.pressure_gauge?.label === "Yes",
+    },
 
-        /* ─────────────────────────────
-           4. MOVE LOCATION (CLIENT CLARIFICATION)
-           +£800 relocation later (handled in engine)
-        ───────────────────────────── */
-        {
-            id: "boiler_move_location",
-            question: "Are you planning to move the boiler to a different location?",
-            type: "select",
-            options: [{ label: "Yes" }, { label: "No" }],
-            showIf: (a) =>
-                a.move_to_combi?.label ||
-                a.has_water_tank?.label === "No" ||
-                a.current_boiler_type?.label === "Combi boiler",
-        },
+    {
+      id: "boiler_move_location",
+      question: "Are you planning to move the boiler to a different location?",
+      type: "select",
+      options: [{ label: "Yes" }, { label: "No" }],
+      showIf: (a) =>
+        a.move_to_combi?.label ||
+        a.has_water_tank?.label === "No" ||
+        a.current_boiler_type?.label === "Combi boiler",
+    },
 
-        {
-            id: "preferred_location",
-            question: "What is the preferred location for the boiler?",
-            type: "select",
-            options: [
-                { label: "In the airing cupboard" },
-                { label: "New place within the same room" },
-                { label: "Another room on the same floor" },
-                { label: "Another floor or loft" },
-            ],
-            showIf: (a) =>
-                a.boiler_move_location?.label === "Yes" ||
-                a.current_boiler_type?.label === "Back boiler",
-        },
+    {
+      id: "preferred_location",
+      question: "What is the preferred location for the boiler?",
+      type: "select",
+      options: [
+        { label: "In the airing cupboard" },
+        { label: "New place within the same room" },
+        { label: "Another room on the same floor" },
+        { label: "Another floor or loft" },
+      ],
+      showIf: (a) =>
+        a.boiler_move_location?.label === "Yes" ||
+        a.current_boiler_type?.label === "Back boiler",
+    },
 
-        /* ─────────────────────────────
-           5. PROPERTY TYPE
-        ───────────────────────────── */
-        {
-            id: "property_type",
-            question: "What type of property do you live in?",
-            type: "select",
-            options: [{ label: "House" }, { label: "Bungalow" }, { label: "Flat / Apartment" }],
-            showIf: (a) =>
-                a.boiler_move_location?.label === "No" || !!a.preferred_location,
-        },
+    {
+      id: "property_type",
+      question: "What type of property do you live in?",
+      type: "select",
+      options: [
+        { label: "House" },
+        { label: "Bungalow" },
+        { label: "Flat / Apartment" },
+      ],
+      showIf: (a) =>
+        a.boiler_move_location?.label === "No" || !!a.preferred_location,
+    },
 
-        {
-            id: "flat_upper_floor",
-            question: "Is the property on the second floor or higher?",
-            type: "select",
-            options: [{ label: "Yes" }, { label: "No" }],
-            showIf: (a) => a.property_type?.label === "Flat / Apartment",
-        },
+    {
+      id: "flat_upper_floor",
+      question: "Is the property on the second floor or higher?",
+      type: "select",
+      options: [{ label: "Yes" }, { label: "No" }],
+      showIf: (a) => a.property_type?.label === "Flat / Apartment",
+    },
 
-        {
-            id: "flue_reachable",
-            question: "Can the flue be reached from outside?",
-            type: "select",
-            options: [{ label: "Yes" }, { label: "No" }],
-            showIf: (a) => a.flat_upper_floor?.label === "Yes",
-        },
+    {
+      id: "flue_reachable",
+      question: "Can the flue be reached from outside?",
+      type: "select",
+      options: [{ label: "Yes" }, { label: "No" }],
+      showIf: (a) => a.flat_upper_floor?.label === "Yes",
+    },
 
-        {
-            id: "flue_help",
-            question:
-                "Thanks — this setup requires a specialist assessment. Our team will help you.",
-            type: "info",
-            showIf: (a) => a.flue_reachable?.label === "No",
-        },
+    {
+      id: "flue_help",
+      question:
+        "Thanks — this setup requires a specialist assessment. Our team will help you.",
+      type: "info",
+      showIf: (a) => a.flue_reachable?.label === "No",
+    },
 
-        /* ─────────────────────────────
-           6. HOUSE QUESTIONS (SPEC BUCKETS)
-           - Bathrooms: 1 / 1.5 / 2 / 3+
-           - Radiators: Up to 6 / 7–12 / 13–20 / 21+
-        ───────────────────────────── */
-        {
-            id: "bathrooms",
-            question: "How many bathrooms are in your property?",
-            type: "select",
-            options: [{ label: "1" }, { label: "1.5" }, { label: "2" }, { label: "3+" }],
-            showIf: (a) =>
-                (a.property_type?.label === "House" ||
-                    a.property_type?.label === "Bungalow" ||
-                    a.flat_upper_floor?.label === "No" ||
-                    a.flue_reachable?.label === "Yes") &&
-                a.pressure_gauge?.label !== "No",
-        },
+    // Spec buckets (keep)
+    {
+      id: "bathrooms",
+      question: "How many bathrooms are in your property?",
+      type: "select",
+      options: [{ label: "1" }, { label: "1.5" }, { label: "2" }, { label: "3+" }],
+      showIf: (a) =>
+        (a.property_type?.label === "House" ||
+          a.property_type?.label === "Bungalow" ||
+          a.flat_upper_floor?.label === "No" ||
+          a.flue_reachable?.label === "Yes") &&
+        a.pressure_gauge?.label !== "No",
+    },
 
-        {
-            id: "bedrooms",
-            question: "How many bedrooms are in your property?",
-            type: "select",
-            options: [{ label: "1" }, { label: "2" }, { label: "3" }, { label: "4+" }],
-            showIf: (a) => !!a.bathrooms || a.pressure_gauge?.label === "No",
-        },
+    {
+      id: "bedrooms",
+      question: "How many bedrooms are in your property?",
+      type: "select",
+      options: [{ label: "1" }, { label: "2" }, { label: "3" }, { label: "4+" }],
+      showIf: (a) => !!a.bathrooms || a.pressure_gauge?.label === "No",
+    },
 
-        {
-            id: "radiators",
-            question: "How many radiators are in your home?",
-            type: "select",
-            options: [{ label: "Up to 6" }, { label: "7–12" }, { label: "13–20" }, { label: "21+" }],
-            showIf: (a) =>
-                !!a.bedrooms &&
-                a.move_to_combi?.label !== "Yes" &&
-                !["Combi boiler", "Back boiler"].includes(a.current_boiler_type?.label),
-        },
+    // ✅ show radiators always once bedrooms are known (even when moving to combi)
+    {
+      id: "radiators",
+      question: "How many radiators are in your home?",
+      type: "select",
+      options: [
+        { label: "Up to 6" },
+        { label: "7–12" },
+        { label: "13–20" },
+        { label: "21+" },
+      ],
+      showIf: (a) => !!a.bedrooms,
+    },
 
-        /* ─────────────────────────────
-           7. FLUE DETAILS (YOUR FLOW) + CANONICAL FLUE TYPE
-           SPEC PRICING depends on flue_type
-        ───────────────────────────── */
+    // ✅ SIMPLE FLUE QUESTION ONLY
+    // No flue_type needed. Engine: if flue_wall=No => +£300 vertical flue.
+    {
+      id: "flue_wall",
+      question: "Does the flue come out the wall?",
+      type: "select",
+      options: [{ label: "Yes" }, { label: "No" }],
+      showIf: (a) => a.boiler_move_location?.label === "No" && !!a.radiators,
+    },
 
-        {
-            id: "flue_wall",
-            question: "Does your boiler flue go through the wall outside?",
-            helperImages: [
-                { src: "/images/stepper/flue_wall.jpg", alt: "Boiler flue exiting wall" },
-                { src: "/images/stepper/flue_wall2.jpg", alt: "External boiler flue" },
-            ],
-            type: "select",
-            options: [{ label: "Yes" }, { label: "No" }],
-            showIf: (a) => a.boiler_move_location?.label === "No" && !!a.bedrooms,
-        },
+    {
+      id: "thermostat_type",
+      question: "Thermostat choice",
+      type: "select",
+      options: [{ label: "Basic" }, { label: "Smart" }],
+      preset: { label: "Basic" },
+      showIf: (a) => !!a.radiators,
+    },
 
-        {
-            id: "flue_distance",
-            question: "Is the flue at least 30cm away from a window or door?",
-            helperImages: [
-                { src: "/images/stepper/flue_distance.png", alt: "Flue distance from window or door" },
-                { src: "/images/stepper/flue_distance2.jpg", alt: "Flue distance from window or door" },
-            ],
-            type: "select",
-            options: [{ label: "Yes" }, { label: "No" }],
-            showIf: (a) => a.boiler_move_location?.label === "No" && a.flue_wall?.label === "Yes",
-        },
+    {
+      id: "trv_required",
+      question: "Do you require new/additional TRVs?",
+      type: "select",
+      options: [{ label: "No" }, { label: "Yes" }],
+      preset: { label: "No" },
+      showIf: (a) => !!a.thermostat_type,
+    },
 
-        {
-            id: "flue_roof",
-            question: "Does the flue exit via the roof?",
-            helperImages: [
-                { src: "/images/stepper/flue_roof.jpg", alt: "Boiler flue exiting roof" },
-                { src: "/images/stepper/flue_roof2.jpg", alt: "External boiler roof flue" },
-            ],
-            type: "select",
-            options: [{ label: "Yes" }, { label: "No" }],
-            showIf: (a) => a.boiler_move_location?.label === "No" && a.flue_wall?.label === "No",
-        },
+    {
+      id: "trv_qty",
+      question: "How many TRVs?",
+      type: "dropdown",
+      options: Array.from({ length: 13 }, (_, idx) => {
+        const v = idx + 1;
+        return { label: String(v), value: v };
+      }),
+      showIf: (a) => a.trv_required?.label === "Yes",
+    },
 
-        // ✅ Canonical pricing field:
-        // - Combi: Horizontal included, Vertical +300
-        // - System/Heat-only: Horizontal +150, Vertical +300
-        // Engine can auto-force Vertical when flue_wall = No (your rule)
-        {
-            id: "flue_type",
-            question: "Flue type",
-            type: "select",
-            options: [{ label: "Horizontal" }, { label: "Vertical" }],
-            preset: { label: "Horizontal" },
-            showIf: (a) =>
-                a.boiler_move_location?.label === "No" &&
-                (
-                    a.flue_distance?.label || // wall route
-                    a.flue_roof?.label        // roof route
-                ),
-        },
-
-        /* ─────────────────────────────
-           8. ADD-ONS (SPEC)
-           - TRVs: Yes/No + qty 1–13
-           - Thermostat: Basic/Smart
-           Keep them late in the flow to reduce friction.
-        ───────────────────────────── */
-        {
-            id: "thermostat_type",
-            question: "Thermostat choice",
-            type: "select",
-            options: [{ label: "Basic" }, { label: "Smart" }],
-            preset: { label: "Basic" },
-            showIf: (a) => !!a.bathrooms && (!!a.radiators || a.move_to_combi?.label === "Yes"),
-        },
-
-        {
-            id: "trv_required",
-            question: "Do you require new/additional TRVs?",
-            type: "select",
-            options: [{ label: "No" }, { label: "Yes" }],
-            preset: { label: "No" },
-            showIf: (a) => !!a.thermostat_type,
-        },
-
-        {
-            id: "trv_qty",
-            question: "How many TRVs?",
-            type: "dropdown",
-            options: Array.from({ length: 13 }, (_, idx) => {
-                const v = idx + 1;
-                return { label: String(v), value: v };
-            }),
-            showIf: (a) => a.trv_required?.label === "Yes",
-        },
-
-        /* ─────────────────────────────
-           9. FINAL — WATER METER (KEEP)
-        ───────────────────────────── */
-        {
-            id: "water_meter",
-            question: "Is your property fitted with a water meter?",
-            type: "select",
-            options: [{ label: "Yes" }, { label: "No" }],
-            showIf: (a) =>
-                (a.boiler_move_location?.label === "No" &&
-                    (a.flue_distance?.label || a.flue_roof?.label)) ||
-                (a.boiler_move_location?.label === "Yes" && !!a.bedrooms),
-        },
-    ],
+    {
+      id: "water_meter",
+      question: "Is your property fitted with a water meter?",
+      type: "select",
+      options: [{ label: "Yes" }, { label: "No" }],
+      showIf: (a) => !!a.trv_required, // keep it as the final merge point
+    },
+  ],
 };
