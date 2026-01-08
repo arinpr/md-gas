@@ -22,7 +22,6 @@ export default function InstallPage() {
     const [selectedTime, setSelectedTime] = useState("");
     const titleOptions = ["Mr", "Mrs", "Ms", "Miss", "Dr"];
 
-
     const [formData, setFormData] = useState({
         title: "",
         firstName: "",
@@ -43,7 +42,6 @@ export default function InstallPage() {
         "w-full h-11 rounded-xl border border-slate-200 bg-slate-50 px-4 text-sm text-slate-900 placeholder-slate-400 shadow-sm transition focus:border-emerald-500 focus:bg-white focus:ring-4 focus:ring-emerald-100 focus:outline-none";
     const textareaClass =
         "w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-900 placeholder-slate-400 shadow-sm transition focus:border-emerald-500 focus:bg-white focus:ring-4 focus:ring-emerald-100 focus:outline-none";
-
 
     const getDaysInMonth = () => {
         const year = currentDate.getFullYear();
@@ -106,18 +104,8 @@ export default function InstallPage() {
 
             <div className="min-h-screen bg-slate-50">
                 <div className="max-w-7xl mx-auto px-4 py-12">
-                    <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                        <section className="bg-white rounded-2xl border p-6">
-                            <h2 className="text-lg font-bold mb-4 flex items-center gap-2">
-                                <FiCalendar className="text-emerald-600" />
-                                Select date
-                            </h2>
-
-                            <AppointmentDateRangePicker />
-                        </section>
-
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
                         <section className="relative rounded-3xl p-6 bg-gradient-to-br from-emerald-50 via-white to-indigo-50 shadow-xl space-y-6 overflow-hidden">
-
                             {/* subtle background glow */}
                             <div className="absolute -top-20 -right-20 h-56 w-56 bg-emerald-200/25 rounded-full blur-3xl" />
                             <div className="absolute -bottom-20 -left-20 h-56 w-56 bg-indigo-200/25 rounded-full blur-3xl" />
@@ -129,7 +117,6 @@ export default function InstallPage() {
 
                             {/* Form */}
                             <div className="relative space-y-5">
-
                                 {/* Title */}
                                 <div className="rounded-2xl bg-white p-4 shadow-sm">
                                     <label className="block text-xs font-semibold text-slate-600 mb-1">
@@ -142,9 +129,13 @@ export default function InstallPage() {
                                         className="w-full h-11 rounded-xl bg-slate-50 border border-slate-200 px-4 text-sm shadow-sm transition
                            focus:bg-white focus:border-emerald-500 focus:ring-4 focus:ring-emerald-100 outline-none"
                                     >
-                                        <option value="">Select an option…</option>
+                                        <option value="">
+                                            Select an option…
+                                        </option>
                                         {titleOptions.map((t) => (
-                                            <option key={t} value={t}>{t}</option>
+                                            <option key={t} value={t}>
+                                                {t}
+                                            </option>
                                         ))}
                                     </select>
                                 </div>
@@ -152,10 +143,21 @@ export default function InstallPage() {
                                 {/* Name */}
                                 <div className="grid grid-cols-2 gap-4">
                                     {[
-                                        { name: "firstName", label: "First name *", placeholder: "e.g. Sam" },
-                                        { name: "lastName", label: "Last name *", placeholder: "e.g. Doe" },
+                                        {
+                                            name: "firstName",
+                                            label: "First name *",
+                                            placeholder: "e.g. Sam",
+                                        },
+                                        {
+                                            name: "lastName",
+                                            label: "Last name *",
+                                            placeholder: "e.g. Doe",
+                                        },
                                     ].map((field) => (
-                                        <div key={field.name} className="rounded-2xl bg-white p-4 shadow-sm">
+                                        <div
+                                            key={field.name}
+                                            className="rounded-2xl bg-white p-4 shadow-sm"
+                                        >
                                             <label className="block text-xs font-semibold text-slate-600 mb-1">
                                                 {field.label}
                                             </label>
@@ -215,7 +217,8 @@ export default function InstallPage() {
                                         type="button"
                                         className="mt-2 text-sm font-medium text-emerald-600 hover:underline"
                                     >
-                                        Can’t find the address? Enter it manually
+                                        Can’t find the address? Enter it
+                                        manually
                                     </button>
                                 </div>
 
@@ -235,22 +238,10 @@ export default function InstallPage() {
                                 </div>
 
                                 {/* CTA */}
-                                <button
-                                    disabled={!selectedDate || !selectedTime}
-                                    className={`w-full py-4 rounded-2xl text-sm font-semibold transition
-                                         ${selectedDate && selectedTime
-                                            ? "bg-emerald-600 text-white hover:bg-emerald-700 shadow-lg"
-                                            : "bg-slate-200 text-slate-500 cursor-not-allowed"
-                                        }`}
-                                >
-                                    Book install
-                                </button>
                             </div>
                         </section>
 
-
                         <aside className="relative rounded-3xl p-6 bg-gradient-to-br from-emerald-50 via-white to-indigo-50 shadow-xl h-fit space-y-7 overflow-hidden">
-
                             {/* subtle background glow */}
                             <div className="absolute -top-20 -right-20 h-56 w-56 bg-emerald-200/25 rounded-full blur-3xl" />
                             <div className="absolute -bottom-20 -left-20 h-56 w-56 bg-indigo-200/25 rounded-full blur-3xl" />
@@ -295,6 +286,18 @@ export default function InstallPage() {
                                 </button>
                             </div>
 
+                            <button
+                                disabled={!selectedDate || !selectedTime}
+                                className={`w-full py-4 rounded-xl text-sm font-semibold transition
+                                         ${
+                                             selectedDate && selectedTime
+                                                 ? "bg-emerald-600 text-white hover:bg-emerald-700 shadow-lg"
+                                                 : "bg-slate-200 text-slate-500 cursor-not-allowed"
+                                         }`}
+                            >
+                                Book install
+                            </button>
+
                             {/* Finance methods */}
                             <div className="grid grid-cols-3 gap-3">
                                 <div className="rounded-2xl bg-emerald-100 text-emerald-800 px-3 py-4 flex flex-col items-center gap-2 text-xs font-semibold">
@@ -325,9 +328,6 @@ export default function InstallPage() {
                                     <h3 className="text-sm font-semibold text-slate-900">
                                         Your package
                                     </h3>
-                                    <button className="text-sm font-medium text-emerald-600 hover:underline">
-                                        Change
-                                    </button>
                                 </div>
 
                                 <div className="rounded-2xl bg-white p-4 flex gap-4 shadow-sm">
@@ -398,9 +398,16 @@ export default function InstallPage() {
                             </div>
                         </aside>
                     </div>
+                    <section className="bg-white rounded-2xl border p-6 mt-10">
+                        <h2 className="text-lg font-bold mb-4 flex items-center gap-2">
+                            <FiCalendar className="text-emerald-600" />
+                            Select date
+                        </h2>
+
+                        <AppointmentDateRangePicker />
+                    </section>
                 </div>
             </div>
-
         </>
     );
 }
