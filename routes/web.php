@@ -69,10 +69,11 @@ Route::prefix('book')->name('book.')->group(function () {
 
     if(config('app.env') === 'production'){
         //ComingSoon/ComingSoon
-        Route::inertia('/', 'ComingSoon/ComingSoon', [
-            'pageTitle' => 'Coming Soon',
-        ])->name('quote.new');
-        Route::get('/new-boiler', [BookController::class, 'index'])->name('quote.new');
+        // Route::inertia('/', 'ComingSoon/ComingSoon', [
+        //     'pageTitle' => 'Coming Soon',
+        // ])->name('quote.new');
+        Route::get('/', [BookController::class, 'index'])->name('quote.new');
+        //Route::get('/new-boiler', [BookController::class, 'index'])->name('quote.new');
     }
     else{
         Route::get('/', [BookController::class, 'index'])->name('quote.new');
