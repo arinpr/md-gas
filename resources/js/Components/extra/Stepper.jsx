@@ -119,9 +119,9 @@ export default function Stepper({
     }, [current]);
 
     const answeredCount = Object.keys(answers).length;
-    const progress = Math.round(
-        (index / Math.max(1, visibleSteps.length - 1)) * 100
-    );
+    // const progress = Math.round(
+    //     (index / Math.max(1, visibleSteps.length - 1)) * 100
+    // );
 
     useEffect(() => {
         steps.forEach((step) => {
@@ -252,6 +252,39 @@ export default function Stepper({
         return false;
     }, [current, answers]);
 
+    // ===============================
+    // ENTER KEY → NEXT STEP
+    // ===============================
+    useEffect(() => {
+        function handleKeyDown(e) {
+            if (e.key !== "Enter") return;
+            e.preventDefault();
+            if (!canProceed) return;
+
+            // Same behavior as Next button
+            if (index === visibleSteps.length - 1) {
+                if (SERVICES_WITH_INSTANT_QUOTE.includes(serviceKey?.key)) {
+                    setShowInstantQuote(true);
+                    setShowProcessing(false);
+                } else {
+                    setShowProcessing(true);
+                    setShowInstantQuote(false);
+                }
+            } else {
+                setIndex((i) => i + 1);
+            }
+        }
+
+        window.addEventListener("keydown", handleKeyDown);
+        return () => window.removeEventListener("keydown", handleKeyDown);
+    }, [
+        canProceed,
+        index,
+        visibleSteps.length,
+        serviceKey,
+    ]);
+
+
     return (
         <>
             <div className="fixed inset-0 bg-light-grey -z-10"></div>
@@ -309,18 +342,17 @@ export default function Stepper({
                         {/* ================= LEFT ================= */}
                         <aside className="md:col-span-4 glass-dark p-8 rounded-3xl overflow-hidden h-full flex flex-col relative">
                             <div className="sheen absolute inset-0 pointer-events-none rounded-3xl" />
-
                             <div className="flex items-center justify-between mb-6">
                                 <h3 className="text-2xl font-bold text-primary">
                                     Why choose us
                                 </h3>
 
-                                <button
+                                {/* <button
                                     onClick={restart}
                                     className="inline-flex items-center gap-2 text-xs bg-foreground text-dark px-3 py-1.5 rounded-full cursor-pointer"
                                 >
                                     <FiRefreshCcw /> Reset
-                                </button>
+                                </button> */}
                             </div>
 
                             <ul className="space-y-5 text-sm text-foreground/90">
@@ -356,7 +388,7 @@ export default function Stepper({
 
 
                             {/* PROGRESS */}
-                            <div className="mt-auto pt-8">
+                            {/* <div className="mt-auto pt-8">
                                 <div className="text-xs text-foreground/70 mb-2">
                                     Progress
                                 </div>
@@ -370,7 +402,30 @@ export default function Stepper({
                                     {answeredCount}/{steps.length} answered •{" "}
                                     {progress}%
                                 </div>
-                            </div>
+                            </div> */}
+                            
+                                {/* RESET BUTTON — bottom aligned */}
+                                <div className="mt-auto pt-10">
+                                   <button
+                                        onClick={restart}
+                                        className="
+                                            inline-flex items-center gap-3
+                                            text-sm font-medium
+                                            bg-foreground text-dark
+                                            px-6 py-3
+                                            rounded-full
+                                            cursor-pointer
+                                            shadow-sm
+                                            hover:bg-white hover:shadow-[0_8px_20px_rgba(255,255,255,0.25)]
+
+                                            transition-all"
+                                    >
+                                        <FiRefreshCcw className="text-base" />
+                                        Reset
+                                    </button>
+
+                                </div>
+
                         </aside>
 
                         {/* ================= RIGHT ================= */}

@@ -190,7 +190,6 @@ export const SERVICE_QUESTIONS = {
       showIf: (a) => !!a.bedrooms,
     },
 
-    // ✅ SIMPLE FLUE QUESTION ONLY
     // No flue_type needed. Engine: if flue_wall=No => +£300 vertical flue.
     {
       id: "flue_wall",
