@@ -5,10 +5,11 @@ import { useMemo, useRef, useState, useEffect } from "react";
 import axios from "axios";
 import { toast } from "react-hot-toast";
 import { FiCreditCard, FiLoader } from "react-icons/fi";
+import { add } from "date-fns";
 
 export default function InstallPage({ booking }) {
     const { symbol } = usePage().props;
-    // console.log("Postcode ", booking?.answers?.inputs?.postcode)
+    console.log("Postcode ", booking)
 
     const [selectedDate, setSelectedDate] = useState("");
     const [selectedTime, setSelectedTime] = useState(null);
@@ -59,6 +60,29 @@ export default function InstallPage({ booking }) {
 
     const includes = Array.isArray(booking?.includes) ? booking.includes : [];
     const visibleIncludes = showAllIncludes ? includes : includes.slice(0, 3);
+
+    const visibleAddOns = booking?.answers?.addOns;
+
+    const addOns = visibleAddOns?.items || [];
+
+    const trvItem = addOns.find((x) => x.key === "trv");
+    const flueType = visibleAddOns?.derived?.flueType || "horizontal"; // fallback
+    const isVertical = String(flueType).toLowerCase() === "vertical";
+
+    // Your vertical flue item can have different keys, so match by key OR label
+    const verticalFlueItem =
+        addOns.find((x) => x.key?.includes("vertical_flue")) ||
+        addOns.find((x) => String(x.label || "").toLowerCase().includes("vertical flue"));
+
+
+    const hasSmartThermostat = addOns.some(
+        (x) => x.key === "smart_stat"
+    );
+
+    const thermostatLabel = hasSmartThermostat
+        ? "Smart Thermostat"
+        : "Standard Wireless Thermostat";
+
 
     const scrollToRef = (ref) => {
         const el = ref?.current;
@@ -709,6 +733,92 @@ export default function InstallPage({ booking }) {
                                                         className={`space-y-2 overflow-hidden transition-all duration-500 ease-in-out ${showAllIncludes ? "max-h-[600px]" : "max-h-[180px]"
                                                             }`}
                                                     >
+
+                                                        <div className="space-y-3">
+                                                            {/* TRV */}
+                                                            {trvItem && (
+                                                                <div className="flex items-center justify-between text-[14px]">
+                                                                    <div className="text-slate-700 font-semibold">TRV supply & fit</div>
+                                                                    <div className="text-slate-900 font-bold">
+                                                                        {trvItem ? `${trvItem.qty} × £${trvItem.unitPrice} = £${trvItem.total}` : "—"}
+                                                                    </div>
+                                                                </div>
+                                                            )}
+
+                                                            {(() => {
+                                                                const relocation = addOns.find(x => x.key === "boiler_relocation");
+                                                                if (!relocation) return null;
+
+                                                                return (
+                                                                    <div className="flex items-center justify-between text-[14px]">
+                                                                        <div className="text-slate-700 font-semibold">
+                                                                            {relocation.label}
+                                                                        </div>
+                                                                        <div className="text-slate-900 font-bold">
+                                                                            £{relocation.total}
+                                                                        </div>
+                                                                    </div>
+                                                                );
+                                                            })()}
+
+                                                            {(() => {
+                                                                const convert_to_combi = addOns.find(x => x.key === "convert_to_combi");
+                                                                if (!convert_to_combi) return null;
+
+                                                                return (
+                                                                    <div className="flex items-center justify-between text-[14px]">
+                                                                        <div className="text-slate-700 font-semibold">
+                                                                            {convert_to_combi.label}
+                                                                        </div>
+                                                                        <div className="text-slate-900 font-bold">
+                                                                            £{convert_to_combi.total}
+                                                                        </div>
+                                                                    </div>
+                                                                );
+                                                            })()}
+
+
+
+                                                            {/* Flue Type */}
+                                                            <div className="flex items-center justify-between text-[14px]">
+                                                                <div className="text-slate-700 font-semibold">Flue Type</div>
+
+                                                                <div className="flex items-center gap-2">
+                                                                    <span
+                                                                        className={`px-2 py-0.5 rounded font-bold text-[12px] uppercase tracking-wider ${isVertical ? "bg-amber-100 text-amber-900" : "bg-emerald-100 text-emerald-900"
+                                                                            }`}
+                                                                    >
+                                                                        {isVertical ? "Vertical" : "Horizontal"}
+                                                                    </span>
+
+                                                                    {/* Only show cost if vertical add-on exists */}
+                                                                    {isVertical && verticalFlueItem ? (
+                                                                        <span className="text-slate-900 font-bold">£{verticalFlueItem.total}</span>
+                                                                    ) : (
+                                                                        <span className="text-slate-500 font-semibold text-[13px]">Included</span>
+                                                                    )}
+                                                                </div>
+                                                            </div>
+
+
+                                                        </div>
+
+                                                        <div className="flex items-center justify-between text-[14px]">
+                                                            <span className="text-slate-700 font-semibold">
+                                                                Thermostat
+                                                            </span>
+
+                                                            <span
+                                                                className={`font-bold ${hasSmartThermostat
+                                                                    ? "text-primary"
+                                                                    : "text-slate-700"
+                                                                    }`}
+                                                            >
+                                                                {thermostatLabel}
+                                                            </span>
+                                                        </div>
+
+
                                                         {visibleIncludes.map((item, i) => (
                                                             <li
                                                                 key={i}
@@ -719,6 +829,9 @@ export default function InstallPage({ booking }) {
                                                                 <span className="text-primary text-sm font-semibold">Included</span>
                                                             </li>
                                                         ))}
+
+
+
                                                     </ul>
 
                                                     {includes.length > 3 && (

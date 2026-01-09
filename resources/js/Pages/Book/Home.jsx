@@ -4,10 +4,18 @@ import { Footer } from "@/Components/boiler/footer";
 import WhyChooseUs from "@/Components/boiler/WhyChooseUs";
 import { ServiceCards } from "@/Components/boiler/service-cards";
 import Faq from "@/Components/boiler/Faq";
-import { Link, router } from "@inertiajs/react";
+import { router } from "@inertiajs/react";
 
+/**
+ * UK postcode (broadly accepted) regex
+ */
 const UK_POSTCODE_RE =
     /^(GIR\s?0AA|(?:(?:[A-PR-UWYZ][0-9]{1,2})|(?:[A-PR-UWYZ][A-HK-Y][0-9]{1,2})|(?:[A-PR-UWYZ][0-9][A-HJKPSTUW])|(?:[A-PR-UWYZ][A-HK-Y][0-9][ABEHMNPRVWXY]))\s?[0-9][ABD-HJLNP-UW-Z]{2})$/i;
+
+/**
+ * Allowed outward codes / prefixes (serviceable areas)
+ */
+const ALLOWED_OUTCODES = ["LS", "BD", "WF", "HG"];
 
 function normalizeUkPostcode(input) {
     const raw = String(input || "")
@@ -15,6 +23,7 @@ function normalizeUkPostcode(input) {
         .replace(/[^A-Z0-9]/g, ""); // strip spaces/symbols
 
     if (raw.length <= 3) return raw;
+
     // insert a space before last 3 chars
     return `${raw.slice(0, -3)} ${raw.slice(-3)}`.trim();
 }
@@ -24,23 +33,60 @@ function isValidUkPostcode(value) {
     return UK_POSTCODE_RE.test(v);
 }
 
+/**
+ * Outcode = part before the space. If no space yet, infer by removing the last 3 characters.
+ * Example:
+ *  - "LS1 4AB" -> "LS1"
+ *  - "LS14AB"  -> "LS1" (inferred)
+ */
+function getOutcode(value) {
+    const v = String(value || "").trim().toUpperCase();
+    if (!v) return "";
+
+    if (v.includes(" ")) return v.split(" ")[0];
+
+    // if user typed without spacing, infer outcode
+    if (v.length > 3) return v.slice(0, -3);
+
+    return v;
+}
+
+/**
+ * Serviceable rule:
+ * - only allow postcodes whose outcode starts with LS, BD, WF, HG
+ */
+function isAllowedOutcode(value) {
+    const outcode = getOutcode(value);
+    return ALLOWED_OUTCODES.some((prefix) => outcode.startsWith(prefix));
+}
+
 export default function Home() {
     const [postcode, setPostcode] = useState("");
     const [touched, setTouched] = useState(false);
 
     const normalized = useMemo(() => normalizeUkPostcode(postcode), [postcode]);
-    const valid = useMemo(() => isValidUkPostcode(normalized), [normalized]);
+
+    const validFormat = useMemo(
+        () => isValidUkPostcode(normalized),
+        [normalized]
+    );
+
+    const allowedArea = useMemo(
+        () => isAllowedOutcode(normalized),
+        [normalized]
+    );
+
+    const valid = validFormat && allowedArea;
 
     const submit = () => {
-        if (!valid) {
-            setTouched(true);
-            return;
-        }
+        setTouched(true);
 
-        // Option A (recommended): router visit so Enter works without relying on <Link>
-        router.visit(`/book/quote/new?postcode=${encodeURIComponent(normalized)}`, {
-            preserveScroll: true,
-        });
+        if (!valid) return;
+
+        router.visit(
+            `/book/quote/new?postcode=${encodeURIComponent(normalized)}`,
+            { preserveScroll: true }
+        );
     };
 
     return (
@@ -57,11 +103,12 @@ export default function Home() {
                     </span>
 
                     <h1 className="text-[44px] md:text-[56px] lg:text-[64px] font-extrabold tracking-tight text-slate-900 leading-[1.05]">
-                        Warmth, on your terms.
+                        Heating, handled.
                     </h1>
 
                     <p className="mt-6 text-lg md:text-xl text-slate-600 max-w-2xl mx-auto">
-                        Get a fixed boiler price instantly. Installed by certified engineers — often next day.
+                        Get a fixed boiler price instantly. Installed by
+                        certified engineers — often next day.
                     </p>
 
                     {/* Quote Panel */}
@@ -81,10 +128,12 @@ export default function Home() {
                                             submit();
                                         }
                                     }}
-                                    placeholder="Enter your postcode (e.g. SW1A 1AA)"
+                                    placeholder="Enter your postcode (LS/BD/WF/HG)"
                                     className={[
                                         "w-full px-6 py-5 rounded-2xl bg-slate-50 text-slate-800 placeholder-slate-400 outline-none transition",
-                                        touched && !valid ? "ring-2 ring-red-200" : "focus:ring-2 focus:ring-slate-200",
+                                        touched && normalized && !valid
+                                            ? "ring-2 ring-red-200"
+                                            : "focus:ring-2 focus:ring-slate-200",
                                     ].join(" ")}
                                     inputMode="text"
                                     autoComplete="postal-code"
@@ -93,11 +142,14 @@ export default function Home() {
 
                                 {touched && normalized && !valid ? (
                                     <div className="mt-2 text-left text-sm text-red-600 font-semibold">
-                                        Please enter a valid UK postcode.
+                                        {!validFormat
+                                            ? "Please enter a valid UK postcode."
+                                            : "We currently only serve postcodes starting with LS, BD, WF, or HG."}
                                     </div>
                                 ) : (
                                     <div className="mt-2 text-left text-xs text-slate-500">
-                                        Tip: We’ll use this to check availability and pricing in your area.
+                                        Tip: We’ll use this to check availability
+                                        and pricing in your area.
                                     </div>
                                 )}
                             </div>
@@ -107,7 +159,9 @@ export default function Home() {
                                 onClick={submit}
                                 className={[
                                     "px-8 py-5 rounded-2xl font-semibold transition flex items-center justify-center",
-                                    valid ? "bg-primary text-white hover:opacity-95" : "bg-slate-200 text-slate-500 cursor-not-allowed",
+                                    valid
+                                        ? "bg-primary text-white hover:opacity-95"
+                                        : "bg-slate-200 text-slate-500 cursor-not-allowed",
                                 ].join(" ")}
                                 disabled={!valid}
                             >

@@ -59,13 +59,13 @@ export function Footer() {
                             committed to excellence in every service we provide.
                         </p>
                         <div className="mt-6 flex gap-4">
-                            <a
+                            {/* <a
                                 href="tel:08001234567"
                                 className="inline-flex items-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 rounded-lg transition-all duration-300 hover:scale-105"
                             >
                                 <Phone className="h-4 w-4" />
                                 <span className="font-medium">Call Now</span>
-                            </a>
+                            </a> */}
                             <a
                                 href="mailto:info@mdgas.co.uk"
                                 className="inline-flex items-center gap-2 px-4 py-2 bg-white/10 hover:bg-white/20 rounded-lg transition-all duration-300 hover:scale-105"
@@ -129,7 +129,7 @@ export function Footer() {
                                 </div>
                                 <div>
                                     <p className="font-medium text-white">
-                                        Emergency Line
+                                        WhatsApp Chat
                                     </p>
                                     <a
                                         href="https://wa.me/447454796398"
@@ -139,6 +139,8 @@ export function Footer() {
                                     >
                                         +44 7454 796398
                                     </a>
+
+
                                 </div>
                             </li>
 
