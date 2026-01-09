@@ -500,7 +500,7 @@ html {
     animation: fadeIn 0.3s ease-out;
 }
 .animate-slideFromRight {
-    animation: slideFromRight 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    animation: slideFromRight 0.9s cubic-bezier(0.16, 1, 0.3, 1);
 }
 /* Custom scrollbar */
 aside::-webkit-scrollbar {
@@ -542,4 +542,19 @@ aside::-webkit-scrollbar-thumb:hover {
         rgba(0, 0, 0, 0.04) 70%,
         rgba(0, 0, 0, 0.08) 100%
     );
+}
+
+@keyframes included-animation-fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(6px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.included-animation {
+    animation: included-animation-fadeIn 0.55s ease forwards;
 }

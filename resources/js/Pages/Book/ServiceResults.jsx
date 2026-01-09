@@ -7,7 +7,7 @@ export default function ServiceResults() {
     console.log("ServiceResults answers:", answers);
     return (
         <>
-            <PageHeader variant="results" currentStep={4} />
+            <PageHeader />
             <QuoteResultsPage answers={answers} />{" "}
         </>
     );

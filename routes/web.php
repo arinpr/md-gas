@@ -93,7 +93,7 @@ Route::prefix('book')->name('book.')->group(function () {
 
 
 
-    Route::get('/install', [BookController::class, 'install'])
+    Route::post('/install', [BookController::class, 'install'])
         ->name('install');
 });
 

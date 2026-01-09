@@ -7,6 +7,7 @@ import {
 } from "react-icons/fi";
 import ProductTabs from "./Tabs";
 import { useRef, useState } from "react";
+import { router } from "@inertiajs/react";
 
 export default function DetailsQuoteSidebar({ detailsQuote, onClose }) {
     if (!detailsQuote) return null;
@@ -19,10 +20,15 @@ export default function DetailsQuoteSidebar({ detailsQuote, onClose }) {
         brand = "",
         model = "",
         tier = "",
+        kw = "",
+        warrantyYears = "",
+        includes = [],
         badge = "bg-slate-200 text-dark",
         price = 0,
         productImages = [],
     } = detailsQuote;
+
+    console.log("details page include", detailsQuote);
 
     const safePrice = Number(price) || 0;
 
@@ -30,7 +36,7 @@ export default function DetailsQuoteSidebar({ detailsQuote, onClose }) {
         ? productImages
         : productImages
         ? [productImages]
-        : ["/images/ideal-20logic.png"]; // fallback image
+        : ["/images/ideal-20logic.png"];
 
     return (
         <>
@@ -39,12 +45,32 @@ export default function DetailsQuoteSidebar({ detailsQuote, onClose }) {
                 className="fixed inset-0 bg-gradient-to-br from-slate-900/80 to-slate-800/70 z-40"
             />
 
-            <aside className="fixed right-0 top-0 h-full w-full overflow-y-auto lg:w-[1000px] bg-gradient-to-b from-slate-900 to-slate-800 z-50 border-l border-slate-700/50 shadow-2xl">
+            <aside className="fixed right-0 top-0 h-full w-full overflow-y-auto lg:w-[1000px] bg-gradient-to-b from-slate-900 to-slate-800 z-50 border-l border-slate-700/50 shadow-2xl animate-slideFromRight">
                 <div className="h-full flex flex-col">
                     {/* HEADER */}
                     <div className="sticky top-0 z-30 bg-dark/90 backdrop-blur-xl border-b border-dark/50">
                         <div className="px-8 py-5 flex justify-between items-center">
-                            <div className="">
+                            <div className="flex gap-3 items-center">
+                                <div className="flex items-center gap-4">
+                                    {tier && (
+                                        <div className="relative group">
+                                            {/* Glow effect behind the badge */}
+                                            <div className="absolute -inset-0.5 bg-gradient-to-r from-emerald-400 to-cyan-400 rounded-lg blur opacity-55 transition duration-200"></div>
+
+                                            {/* Badge Content */}
+                                            <div className="relative flex items-center gap-2 px-4 py-3 bg-gradient-to-r from-slate-900 to-slate-800 rounded-lg border border-slate-700 shadow-xl">
+                                                <span className="relative flex h-2 w-2">
+                                                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                                                    <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+                                                </span>
+                                                <span className="text-xs font-bold uppercase tracking-widest text-white">
+                                                    {tier}
+                                                </span>
+                                            </div>
+                                        </div>
+                                    )}
+                                </div>
+
                                 <button className="group relative cursor-pointer w-full flex items-center gap-3 p-2 px-4 rounded-lg bg-white/5 border border-white/10 hover:border-emerald-500/30 hover:bg-emerald-900/10 transition-all duration-300">
                                     <FiSave className="text-gray-400 group-hover:text-emerald-400 text-xl transition-colors" />
                                     <span className="text-white font-bold text-lg group-hover:text-emerald-100 transition-colors">
@@ -52,15 +78,7 @@ export default function DetailsQuoteSidebar({ detailsQuote, onClose }) {
                                     </span>
                                 </button>
                             </div>
-                            <div className="flex items-center gap-4">
-                                {badge && (
-                                    <div
-                                        className={`px-4 py-2.5 rounded-lg font-bold ${badge}`}
-                                    >
-                                        {tier}
-                                    </div>
-                                )}
-                            </div>
+
                             <div className="">
                                 <button
                                     onClick={onClose}
@@ -128,7 +146,25 @@ export default function DetailsQuoteSidebar({ detailsQuote, onClose }) {
                                     </div>
                                 </div>
 
-                                <button className="group relative cursor-pointer w-full flex items-center gap-4 p-5 rounded-2xl bg-gradient-to-r from-secondary/30 to-secondary/15 border border-secondary/20 hover:border-secondary/50 hover:from-secondary/30 transition-all duration-300 shadow-[0_0_20px_rgba(16,185,129,0.1)] hover:shadow-[0_0_30px_rgba(16,185,129,0.2)]">
+                                <button
+                                    type="button"
+                                    onClick={() =>
+                                        router.post("/book/install", {
+                                            boiler_id: detailsQuote?.id,
+                                            brand: detailsQuote?.brand,
+                                            model: detailsQuote?.model,
+                                            images: detailsQuote?.productImages,
+                                            kw: detailsQuote?.kw,
+                                            warrantyYears:
+                                                detailsQuote?.warrantyYears,
+                                            price: detailsQuote?.price,
+                                            includes:
+                                                detailsQuote?.includes ?? [],
+                                            power: "auto",
+                                        })
+                                    }
+                                    className="group relative cursor-pointer w-full flex items-center gap-4 p-5 rounded-2xl bg-gradient-to-r from-secondary/30 to-secondary/15 border border-secondary/20 hover:border-secondary/50 hover:from-secondary/30 transition-all duration-300 shadow-[0_0_20px_rgba(16,185,129,0.1)] hover:shadow-[0_0_30px_rgba(16,185,129,0.2)]"
+                                >
                                     <div className="h-12 w-12 flex items-center justify-center rounded-xl bg-secondary text-black shadow-lg shadow-secondary/20 shrink-0">
                                         <FiCalendar className="text-2xl" />
                                     </div>

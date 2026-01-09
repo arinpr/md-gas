@@ -53,17 +53,6 @@ export default function QuoteResultsPage({ answers }) {
         return base + margin + addons;
     };
 
-    // --- Image Carousel Logic ---
-
-    // Carousel images array
-    // const carouselImages = detailsQuote
-    //     ? [
-    //           detailsQuote.images?.[0] || "/images/default-boiler.png",
-    //           "/images/boiler_1.png",
-    //           "/images/boiler_2.png",
-    //       ]
-    //     : [];
-
     return (
         <div className="min-h-screen bg-light-background px-4 py-12 md:px-6 md:py-16">
             {/* HEADER */}
@@ -104,15 +93,15 @@ export default function QuoteResultsPage({ answers }) {
 
                                 <div className="relative p-6 flex justify-between items-start">
                                     {product.id === recommendedProductId && (
-                                        <div className="inline-flex items-center gap-2 rounded-full bg-dark px-4 py-1.5 text-white shadow-xl shadow-dark/30">
-                                            <span className="text-sm font-semibold tracking-wide">
+                                        <div className="inline-flex items-center gap-2 rounded-full bg-dark px-4 py-2 text-white shadow-xl shadow-dark/30">
+                                            <span className="text-[14px] font-semibold tracking-wide">
                                                 Recommended
                                             </span>
                                         </div>
                                     )}
 
                                     <div className="text-right">
-                                        <span className="text-xs font-bold uppercase tracking-wider text-slate-500">
+                                        <span className="text-[14px] font-bold uppercase tracking-wider text-slate-600">
                                             {product.kw} kW
                                         </span>
                                     </div>
@@ -174,28 +163,38 @@ export default function QuoteResultsPage({ answers }) {
                                 </div>
 
                                 {/* Expert Opinion (Generic or from notes if available) */}
-                                <div className="mt-5 rounded-2xl bg-gradient-to-r from-blue-50/80 to-indigo-50/50 p-4 border border-blue-100">
-                                    <div className="flex gap-3">
-                                        <div className="h-10 w-10 rounded-full bg-blue-100 flex items-center justify-center flex-shrink-0">
-                                            <FiInfo className="text-blue-600" />
-                                        </div>
-                                        <div>
-                                            <div className="font-semibold text-dark">
-                                                Expert Opinion
+                                {Array.isArray(product.notes) &&
+                                    product.notes.length > 0 && (
+                                        <div className="mt-5 rounded-2xl bg-gradient-to-r from-blue-50/80 to-indigo-50/50 p-4 border border-blue-100">
+                                            <div className="flex gap-3">
+                                                <div className="h-10 w-10 rounded-full bg-blue-100 flex items-center justify-center flex-shrink-0">
+                                                    <FiInfo className="text-blue-600" />
+                                                </div>
+                                                <div>
+                                                    <div className="font-semibold text-dark">
+                                                        Expert Opinion
+                                                    </div>
+                                                    <ul className="mt-1 space-y-1 list-disc list-inside text-sm text-slate-700 leading-relaxed">
+                                                        {product.notes &&
+                                                            product.notes.map(
+                                                                (
+                                                                    note,
+                                                                    index
+                                                                ) => (
+                                                                    <li
+                                                                        key={
+                                                                            index
+                                                                        }
+                                                                    >
+                                                                        {note}
+                                                                    </li>
+                                                                )
+                                                            )}
+                                                    </ul>
+                                                </div>
                                             </div>
-                                            <ul className="mt-1 space-y-1 list-disc list-inside text-sm text-slate-700 leading-relaxed">
-                                                {product.notes &&
-                                                    product.notes.map(
-                                                        (note, index) => (
-                                                            <li key={index}>
-                                                                {note}
-                                                            </li>
-                                                        )
-                                                    )}
-                                            </ul>
                                         </div>
-                                    </div>
-                                </div>
+                                    )}
 
                                 {/* Pricing Section */}
                                 <div className="mt-6 rounded-2xl bg-gradient-to-r from-dark to-dark text-white p-5 relative overflow-hidden">
@@ -247,6 +246,7 @@ export default function QuoteResultsPage({ answers }) {
                                                 // title
                                                 brand: product.brand,
                                                 model: product.model,
+
                                                 productImages: product.images,
                                                 kw: product.kw,
                                                 warrantyYears:
@@ -268,7 +268,6 @@ export default function QuoteResultsPage({ answers }) {
                                                 price: finalPrice,
 
                                                 // extras
-                                                images: product.images,
                                                 notes: product.notes,
                                                 includes: product.includes,
                                             })
@@ -281,18 +280,21 @@ export default function QuoteResultsPage({ answers }) {
 
                                     <button
                                         onClick={() =>
-                                            router.visit(
-                                                route("book.install"),
-                                                {
-                                                    method: "get",
-                                                    data: {
-                                                        boilerId: product.id,
-                                                        power: selectedPower,
-                                                    },
-                                                }
-                                            )
+                                            router.post("/book/install", {
+                                                boiler_id: product.id,
+                                                brand: product.brand,
+                                                model: product.model,
+                                                includes:
+                                                    product.includes ?? [],
+                                                images: product.images ?? [],
+                                                kw: product.kw,
+                                                warrantyYears:
+                                                    product.warrantyYears,
+                                                price: finalPrice,
+                                                power: selectedPower,
+                                            })
                                         }
-                                        className="w-full rounded-xl cursor-pointer bg-gradient-to-r from-primary/80 to-secondary/70 hover:from-primary hover:to-secondary text-white py-3.5 font-semibold shadow-lg hover:shadow-dark/20 hover:shadow-lg transition-all duration-300"
+                                        className="w-full rounded-xl cursor-pointer bg-gradient-to-r from-primary/90 to-secondary/80 hover:from-primary hover:to-secondary text-white py-3.5 font-semibold shadow-lg hover:shadow-dark/20 hover:shadow-lg transition-colors duration-300"
                                     >
                                         Select This Boiler
                                     </button>

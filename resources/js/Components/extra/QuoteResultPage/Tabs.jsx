@@ -126,9 +126,9 @@ export default function ProductTabs({
         <div ref={sectionRef} className="relative">
             {/* Sticky Tabs Header */}
             <div
-                className={`sticky z-40 transition-all duration-300 rounded-2xl ${
+                className={`sticky z-40 transition-all duration-300  rounded-2xl ${
                     isSticky
-                        ? "top-0 pt-4 pb-2 bg-dark/95 backdrop-blur-xl border-b border-slate-800/50 shadow-2xl -mx-6 px-6"
+                        ? "top-0 py-3 bg-dark/95 backdrop-blur-xl border-b border-slate-800/50 shadow-2xl -mx-2 px-6"
                         : "top-4"
                 }`}
             >

@@ -70,9 +70,27 @@ class BookController extends Controller
 
     public function install(Request $request)
 {
+    $data = $request->validate([
+        'boiler_id'     => 'required|string',
+        'brand'         => 'required|string',
+        'model'         => 'required|string',
+        'kw'            => 'required|numeric',
+        'warrantyYears' => 'required|numeric',
+        'price'         => 'required|numeric',
+        'includes'      => 'array',     
+        'includes.*'    => 'string',
+        'images'        => 'array',     
+        'images.*'      => 'string',
+        'power'         => 'required|string',
+    ]);
+
+    // Optional but recommended: store for multi-step booking
+    // session(['booking' => $data]);
+    $data['includes'] = $data['includes'] ?? [];
+    $data['images']   = $data['images'] ?? [];
+
     return Inertia::render('Book/InstallPage', [
-        'boilerId' => $request->boilerId,
-        'power'    => $request->power,
+        'booking' => $data,
     ]);
 }
 
