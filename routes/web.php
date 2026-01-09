@@ -72,10 +72,10 @@ Route::prefix('book')->name('book.')->group(function () {
         Route::inertia('/', 'ComingSoon/ComingSoon', [
             'pageTitle' => 'Coming Soon',
         ])->name('quote.new');
-        Route::get('/new-boiler', [BookController::class, 'index'])->name('home');
+        Route::get('/new-boiler', [BookController::class, 'index'])->name('quote.new');
     }
     else{
-        Route::get('/', [BookController::class, 'index'])->name('home');
+        Route::get('/', [BookController::class, 'index'])->name('quote.new');
     }
 
     Route::get('/quote', [BookController::class, 'quote'])->name('quote');
@@ -88,13 +88,13 @@ Route::prefix('book')->name('book.')->group(function () {
     Route::get('/quote/service', [BookController::class, 'serviceStepper'])->name('quote.service');
 
 
-    Route::post('/quote/new/results', [BookController::class, 'serviceResults'])
+    Route::match(['get', 'post'],'/quote/new/results', [BookController::class, 'serviceResults'])
     ->name('quote.new.results');
 
 
 
-    Route::post('/install', [BookController::class, 'install'])
-        ->name('install');
+    Route::match(['get', 'post'],'/quote/new/install', [BookController::class, 'install'])
+        ->name('quote.install');
 });
 
 

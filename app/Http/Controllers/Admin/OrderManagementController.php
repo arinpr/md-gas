@@ -32,6 +32,9 @@ class OrderManagementController extends Controller
                 'appointment:id,type,starts_at,appointment_date,status',
                 'details:id,booking_id,frontend_key,question_snapshot,answer_text,answer_json,media,amount',
                 'transactions:id,booking_id,provider,amount,currency,kind,status,provider_checkout_session_id,provider_payment_intent_id,provider_charge_id,provider_refund_id,created_at',
+
+                'products:id,booking_id,boiler_id,brand,model,kw,warranty_years,amount,includes,images',
+                'products.addOns:id,booking_id,customer_order_product_id,key,label,qty,unit_price,total,derived',
             ])
             ->latest('id');
 

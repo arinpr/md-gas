@@ -7,9 +7,23 @@ use Inertia\Inertia;
 use App\Models\BasePrice;
 use App\Models\RadiatorPrice;
 
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Str;
+
 class BookController extends Controller
 {
     //
+
+
+    //For storing new quote key
+    private function quoteCacheKey(Request $request): string
+    {
+        if (!$request->session()->has('quote_session_id')) {
+            $request->session()->put('quote_session_id', (string) Str::uuid());
+        }
+
+        return 'quote:new:results:' . $request->session()->get('quote_session_id');
+    }
 
 
     public function index(){
@@ -30,27 +44,28 @@ class BookController extends Controller
     }
 
     // GET /book/quote/new
-    public function newStepper()
+    public function newStepper(Request $request)
     {
         // renders resources/js/Pages/Book/NewBoilerPage.jsx
+        $this->reset($request);
         return Inertia::render('Book/NewBoilerPage');
     }
 
     // GET /book/quote/powerflush
-    
+
     public function powerflushStepper()
-{
-    $basePrice = BasePrice::powerFlush()->value('price');
-    $symbol = config('services.currency.symbol');
+    {
+        $basePrice = BasePrice::powerFlush()->value('price');
+        $symbol = config('services.currency.symbol');
 
-    $radiatorPrices = RadiatorPrice::orderBy('id')->get();
+        $radiatorPrices = RadiatorPrice::orderBy('id')->get();
 
-    return Inertia::render('Book/PowerFlushPage', [
-        'basePrice' => $basePrice,
-        'symbol' => $symbol,
-        'radiatorPrices' => $radiatorPrices,
-    ]);
-}
+        return Inertia::render('Book/PowerFlushPage', [
+            'basePrice' => $basePrice,
+            'symbol' => $symbol,
+            'radiatorPrices' => $radiatorPrices,
+        ]);
+    }
 
 
     // GET /book/quote/service
@@ -64,34 +79,112 @@ class BookController extends Controller
 
     public function serviceResults(Request $request)
     {
-         return Inertia::render('Book/ServiceResults', [
-        'answers' => $request->all(),]);
+        $key = $this->quoteCacheKey($request);
+
+        if ($request->isMethod('post')) {
+            $quote = $request->all();
+
+            if (empty($quote)) {
+                return back()->withErrors(['quote' => 'Quote payload missing.']);
+            }
+
+            Cache::put($key, $quote, now()->addMinutes(60));
+
+            // Option A (recommended with Inertia): force a GET visit (best refresh behavior)
+            return Inertia::location(route('book.quote.new.results'));
+
+            // Option B (also works): normal redirect
+            // return redirect()->route('quote.new.results');
+        }
+
+        $quote = Cache::get($key);
+
+        if (!$quote) {
+            // MUST be a redirect response, not route() string
+            return redirect()
+                ->route('book.quote.new')
+                ->with('message', 'Your quote expired. Please start again.');
+        }
+
+        return Inertia::render('Book/ServiceResults', [
+            'answers' => $quote,
+        ]);
     }
 
     public function install(Request $request)
-{
-    $data = $request->validate([
-        'boiler_id'     => 'required|string',
-        'brand'         => 'required|string',
-        'model'         => 'required|string',
-        'kw'            => 'required|numeric',
-        'warrantyYears' => 'required|numeric',
-        'price'         => 'required|numeric',
-        'includes'      => 'array',     
-        'includes.*'    => 'string',
-        'images'        => 'array',     
-        'images.*'      => 'string',
-        'power'         => 'required|string',
-    ]);
+    {
+        $key = $this->quoteCacheKey($request);
 
-    // Optional but recommended: store for multi-step booking
-    // session(['booking' => $data]);
-    $data['includes'] = $data['includes'] ?? [];
-    $data['images']   = $data['images'] ?? [];
+        if ($request->isMethod('post')) {
+            $data = $request->validate([
+                'boiler_id'     => 'required|string',
+                'brand'         => 'required|string',
+                'model'         => 'required|string',
+                'kw'            => 'required|numeric',
+                'warrantyYears' => 'required|numeric',
+                'price'         => 'required|numeric',
+                'includes'      => 'array',
+                'includes.*'    => 'string',
+                'images'        => 'array',
+                'images.*'      => 'string',
+                'power'         => 'required|string',
+                'answers'        => 'required'
+            ]);
 
-    return Inertia::render('Book/InstallPage', [
-        'booking' => $data,
-    ]);
-}
+            $data['includes'] = $data['includes'] ?? [];
+            $data['images']   = $data['images'] ?? [];
+
+            Cache::put($key, $data, now()->addMinutes(60));
+
+            // Force a clean GET visit so refresh works and no resubmission prompt
+            return Inertia::location(route('book.quote.install'));
+            // or: return redirect()->route('book.install');
+        }
+
+        // GET: load from cache
+        $data = Cache::get($key);
+
+        if (!$data) {
+            // If install cache is missing, fall back to results (or quote start)
+            return redirect()
+                ->route('book.quote.new.results')
+                ->with('message', 'Session expired. Please re-select your boiler.');
+        }
+
+        return Inertia::render('Book/InstallPage', [
+            'booking' => $data,
+            // 'answers' => $data
+        ]);
+    }
+
+
+
+
+
+
+
+
+
+
+
+    private function reset(Request $request)
+    {
+        if ($request->session()->has('quote_session_id')) {
+            Cache::forget('quote:new:results:' . $request->session()->get('quote_session_id'));
+            $request->session()->forget('quote_session_id');
+        }
+
+        return response()->json(['ok' => true]);
+    }
+
+    // public function bookingSuccess(Request $request)
+    // {
+    //     $key = $this->quoteCacheKey($request);
+
+    //     Cache::forget($key);
+    //     $request->session()->forget('quote_session_id');
+
+    //     return response()->json(['ok' => true]);
+    // }
 
 }

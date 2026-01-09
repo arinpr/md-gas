@@ -10,7 +10,7 @@ use Stripe\StripeClient;
 use Inertia\Inertia;
 use Illuminate\Validation\ValidationException;
 use App\Services\BookingNotificationService;
-
+use Illuminate\Support\Facades\Cache;
 
 class QuoteCheckoutController extends Controller
 {
@@ -93,7 +93,10 @@ class QuoteCheckoutController extends Controller
                 'from' => config('mail.from.address'),
             ]);
 
-
+            if ($request->session()->has('quote_session_id')) {
+                Cache::forget('quote:new:results:' . $request->session()->get('quote_session_id'));
+                $request->session()->forget('quote_session_id');
+            }
 
             return redirect()->route('booking.confirmed', ['booking' => $booking->id]);
         }

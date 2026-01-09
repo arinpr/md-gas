@@ -35,8 +35,8 @@ export default function DetailsQuoteSidebar({ detailsQuote, onClose }) {
     const carouselImages = Array.isArray(productImages)
         ? productImages
         : productImages
-        ? [productImages]
-        : ["/images/ideal-20logic.png"];
+            ? [productImages]
+            : ["/images/ideal-20logic.png"];
 
     return (
         <>
@@ -149,7 +149,7 @@ export default function DetailsQuoteSidebar({ detailsQuote, onClose }) {
                                 <button
                                     type="button"
                                     onClick={() =>
-                                        router.post("/book/install", {
+                                        router.post("/book/quote/new/install", {
                                             boiler_id: detailsQuote?.id,
                                             brand: detailsQuote?.brand,
                                             model: detailsQuote?.model,

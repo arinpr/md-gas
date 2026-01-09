@@ -251,23 +251,21 @@ export default function QuoteProcessingModal({
                                     return (
                                         <div
                                             key={step.id}
-                                            className={`rounded-xl p-4 border transition ${
-                                                active
-                                                    ? "border-cyan-400/40 bg-white/10"
-                                                    : done
+                                            className={`rounded-xl p-4 border transition ${active
+                                                ? "border-cyan-400/40 bg-white/10"
+                                                : done
                                                     ? "border-primary/90/30 bg-primary/90/10"
                                                     : "border-white/5 bg-white/5"
-                                            }`}
+                                                }`}
                                         >
                                             <div className="flex items-center gap-2.5">
                                                 <div
-                                                    className={`w-10 h-10 rounded-lg flex items-center justify-center ${
-                                                        active
-                                                            ? "bg-foreground"
-                                                            : done
+                                                    className={`w-10 h-10 rounded-lg flex items-center justify-center ${active
+                                                        ? "bg-foreground"
+                                                        : done
                                                             ? "bg-primary"
                                                             : "bg-gray-800"
-                                                    }`}
+                                                        }`}
                                                 >
                                                     <div className="w-10 h-10 rounded-xl bg-primary flex items-center justify-center shrink-0">
                                                         <Icon
@@ -311,10 +309,9 @@ export default function QuoteProcessingModal({
                                     <div
                                         className="h-full bg-gradient-to-r from-cyan-500 to-primary transition-all"
                                         style={{
-                                            width: `${
-                                                (activeStep / steps.length) *
+                                            width: `${(activeStep / steps.length) *
                                                 100
-                                            }%`,
+                                                }%`,
                                         }}
                                     />
                                 </div>
@@ -326,15 +323,13 @@ export default function QuoteProcessingModal({
                                 onClick={() => {
                                     if (!quote) return;
 
-                                    router.post(
-                                        "/book/quote/new/results",
-                                        quote,
+                                    router.post(`/book/quote/new/results`, quote,
                                         {
                                             preserveScroll: true,
                                         }
                                     );
                                 }}
-                                className="w-full rounded-2xl bg-gradient-to-r from-primary to-secondary px-6 py-4 text-white font-semibold flex items-center justify-between hover:opacity-90 transition"
+                                className="w-full rounded-2xl bg-gradient-to-r from-primary to-secondary px-6 py-4 text-white font-semibold flex items-center justify-between hover:opacity-90 transition cursor-pointer"
                             >
                                 <span>View your quote</span>
                                 <FiChevronRight />
@@ -351,9 +346,8 @@ export default function QuoteProcessingModal({
 
 function buildQuoteText(answers) {
     const flue = answers?.flue_type?.label;
-    return `We’re preparing a quote for your boiler${
-        flue ? ` with a ${flue.toLowerCase()}` : ""
-    }`;
+    return `We’re preparing a quote for your boiler${flue ? ` with a ${flue.toLowerCase()}` : ""
+        }`;
 }
 
 function buildCompatibilityText(answers) {

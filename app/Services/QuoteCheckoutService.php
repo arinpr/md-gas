@@ -8,6 +8,9 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\ValidationException;
 use Stripe\StripeClient;
+use App\Models\CustomerOrderProduct;
+use App\Models\CustomerOrderProductAddOn;
+
 
 class QuoteCheckoutService
 {
@@ -28,6 +31,9 @@ class QuoteCheckoutService
         $customerData = QuotePayloadNormalizer::customer($form);
         $apptData = QuotePayloadNormalizer::appointment($form);
         $answers = QuotePayloadNormalizer::answers($form);
+        $product = QuotePayloadNormalizer::product($form);
+        $addonsPayload = QuotePayloadNormalizer::addOns($form);
+        // dd($products);
 
         if (empty($customerData['email'])) {
             throw ValidationException::withMessages(['email' => ['Email is required.']]);
@@ -39,7 +45,7 @@ class QuoteCheckoutService
         $startsAtLocal = QuotePayloadNormalizer::parseStartsAt($apptData['date'], $apptData['time'], $tz);
         $appointmentDate = $startsAtLocal->toDateString();
 
-        return DB::transaction(function () use ($serviceType, $customerData, $answers, $startsAtLocal, $appointmentDate, $tz, $amount) {
+        return DB::transaction(function () use ($serviceType, $customerData, $answers, $startsAtLocal, $appointmentDate, $tz, $amount, $product, $addonsPayload) {
 
             // 1) Customer by email
             $customer = Customer::query()->updateOrCreate(
@@ -91,6 +97,44 @@ class QuoteCheckoutService
                 'payment_status' => 'pending',
             ]);
 
+            $productDetails = CustomerOrderProduct::query()->updateOrCreate(
+                [
+                    'booking_id' => $booking->id,
+                    'boiler_id'  => $product['boiler_id'],
+                ],
+                [
+                    'brand'          => $product['brand'] ?? null,
+                    'model'          => $product['model'] ?? null,
+                    'kw'             => $product['kw'] ?? null,
+                    'warranty_years' => $product['warrantyYears'] ?? null,
+                    'amount'         => (int) ($product['amount'] ?? 0),
+                    'includes'       => $product['includes'] ?? [],
+                    'images'         => $product['images'] ?? [],
+                    'meta'           => $product, // optional but recommended
+                ]
+            );
+
+
+            $derived = $addonsPayload['derived'] ?? null;
+            $items   = $addonsPayload['items'] ?? [];
+
+            foreach ($items as $item) {
+                CustomerOrderProductAddOn::updateOrCreate(
+                    [
+                        'booking_id' => $booking->id,
+                        'customer_order_product_id' => $productDetails->id,
+                        'key' => $item['key'],
+                    ],
+                    [
+                        'label' => $item['label'] ?? $item['key'],
+                        'qty' => (int) ($item['qty'] ?? 1),
+                        'unit_price' => (int) ($item['unitPrice'] ?? 0),
+                        'total' => (int) ($item['total'] ?? ((int)($item['qty'] ?? 1) * (int)($item['unitPrice'] ?? 0))),
+                        'derived' => $derived['flueType'] ?? null, // can be null
+                    ]
+                );
+            }
+
 
             // 5) Create BookingDetails from Questions table
             $questions = Question::query()
@@ -104,6 +148,7 @@ class QuoteCheckoutService
                 ]);
             }
 
+            // dd($answers);
             // reject unknown answer keys (optional but recommended)
             foreach ($answers as $k => $_) {
                 if (!$questions->has($k)) {

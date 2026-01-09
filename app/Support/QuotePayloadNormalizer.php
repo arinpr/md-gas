@@ -41,6 +41,19 @@ class QuotePayloadNormalizer
         ];
     }
 
+    public static function product(array $form): array
+    {
+        $dt = $form['product'] ?? [];
+
+        return $dt;
+    }
+
+    public static function addOns(array $form): array{
+        $dt = $form['addOns'] ?? [];
+
+        return $dt;
+    }
+
     /**
      * Converts your nested select objects into key => value suitable for BookingCreate.
      * Example:
@@ -52,8 +65,9 @@ class QuotePayloadNormalizer
         $out = [];
 
         foreach ($form as $key => $val) {
-            if (in_array($key, ['customer_details', 'visit_time'], true)) continue;
+            if (in_array($key, ['customer_details', 'visit_time', 'product', 'addOns'], true)) continue;
 
+            // dd($form['answers']);
             // upload/media fields can be array later
             if ($key === 'media') {
                 $out[$key] = is_array($val) ? $val : [];

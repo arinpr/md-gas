@@ -21,15 +21,15 @@ export default defineConfig({
         },
     },
     server: {
-        host: "192.168.1.215", // allow LAN access
+        host: "192.168.0.173", // allow LAN access
         port: 5173,
         strictPort: true,
         cors: {
-            origin: "http://192.168.1.215:8000",
+            origin: "http://192.168.0.173:8000",
             credentials: true,
         },
         hmr: {
-            host: "192.168.1.215", // important: HMR must point to LAN IP
+            host: "192.168.0.173", // important: HMR must point to LAN IP
             port: 5173,
         },
     },

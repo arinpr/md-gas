@@ -51,4 +51,14 @@ class Booking extends Model
     {
         return $this->hasOne(Transaction::class)->latestOfMany();
     }
+
+    public function products()
+    {
+        return $this->hasMany(CustomerOrderProduct::class);
+    }
+
+    public function productAddOns()
+    {
+        return $this->hasMany(CustomerOrderProductAddOn::class);
+    }
 }
