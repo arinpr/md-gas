@@ -156,7 +156,7 @@ export const SERVICE_QUESTIONS = {
             question: "Can the flue be reached from outside?",
             type: "select",
             options: [{ label: "Yes" }, { label: "No" }],
-            showIf: (a) => a.flat_upper_floor?.label === "Yes" || a.pressure_gauge?.label === "No",
+            showIf: (a) => a.flat_upper_floor?.label === "Yes",
         },
 
         {
