@@ -68,10 +68,10 @@ export const SERVICE_QUESTIONS = {
                     label: "System boiler",
                     image: "/images/stepper/system_boiler.png",
                 },
-                {
-                    label: "Back boiler",
-                    image: "/images/stepper/back_boiler.png",
-                },
+                // {
+                //     label: "Back boiler",
+                //     image: "/images/stepper/back_boiler.png",
+                // },
             ],
             showIf: (a) => a.boiler_type_known?.label === "Yes",
         },
