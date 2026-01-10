@@ -156,7 +156,7 @@ export const SERVICE_QUESTIONS = {
             question: "Can the flue be reached from outside?",
             type: "select",
             options: [{ label: "Yes" }, { label: "No" }],
-            showIf: (a) => a.flat_upper_floor?.label === "Yes",
+            showIf: (a) => a.flat_upper_floor?.label === "Yes" || a.pressure_gauge?.label === "No",
         },
 
         {
@@ -228,7 +228,7 @@ export const SERVICE_QUESTIONS = {
                 //     alt: "External boiler flue example",
                 // },
             ],
-            showIf: (a) => a.boiler_move_location?.label === "No" && !!a.radiators,
+            showIf: (a) => a.boiler_move_location?.label === "No" && !!a.radiators || a.pressure_gauge?.label === "No",
         },
 
 

@@ -5,6 +5,21 @@ import { createInertiaApp, router } from "@inertiajs/react";
 import { resolvePageComponent } from "laravel-vite-plugin/inertia-helpers";
 import { createRoot } from "react-dom/client";
 
+const pushPageView = () => {
+    window.dataLayer = window.dataLayer || [];
+    window.dataLayer.push({
+        event: "pageview",
+        page: window.location.pathname + window.location.search,
+        title: document.title,
+    });
+};
+// First load
+pushPageView();
+// Inertia navigations
+router.on("navigate", () => {
+    pushPageView();
+});
+
 const appName = import.meta.env.VITE_APP_NAME || "Laravel";
 
 function syncPricingOverridesFromPage(page) {
