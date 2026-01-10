@@ -49,6 +49,12 @@ export default function AuthenticatedLayout({ header, children }) {
                         label: "Power flush Price Management",
                         href: route("pricing.radiators"),
                         isActive: () => route().current("pricing.radiators"),
+                    },
+                    {
+                        key: "pricing.new.quote",
+                        label: "New Quote Price Management",
+                        href: route("admin.pricing.index"),
+                        isActive: () => route().current("admin.pricing.index"),
                     }
                     // add more pricing items here later
                 ],

@@ -65,8 +65,9 @@ export default function BasePrice({ prices = [] }) {
                                 </thead>
 
                                 <tbody>
-                                    {prices.map((item) => (
+                                    {prices.filter((item) => item.service !== "New Boiler Quote").map((item) => (
                                         <tr key={item.id}>
+
                                             <td className="border px-4 py-2">
                                                 {item.service}
                                             </td>
