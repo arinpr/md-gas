@@ -228,7 +228,7 @@ export const SERVICE_QUESTIONS = {
                 //     alt: "External boiler flue example",
                 // },
             ],
-            showIf: (a) => a.boiler_move_location?.label === "No" && !!a.radiators || a.pressure_gauge?.label === "No",
+            showIf: (a) => a.boiler_move_location?.label === "No" && !!a.radiators || a.pressure_gauge?.label === "No" || a.current_boiler_type?.label == 'Back boiler',
         },
 
 
