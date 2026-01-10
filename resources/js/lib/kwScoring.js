@@ -29,6 +29,15 @@ export function computeKw(answers) {
     const finalScore = Math.max(bScore, rScore); // “higher score always wins” :contentReference[oaicite:7]{index=7}
     const band = kwBandFromScore(finalScore);
 
+    console.log("computeKw:", {
+        bathrooms: answers?.bathrooms?.label,
+        radiators: answers?.radiators?.label,
+        bathroomScore: bScore,
+        radiatorScore: rScore,
+        finalScore,
+        band,
+    });
+
     return {
         bathroomScore: bScore,
         radiatorScore: rScore,

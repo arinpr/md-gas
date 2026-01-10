@@ -118,28 +118,27 @@ function combiAllowed(radsBucket, baths) {
 }
 
 function combiTargetKw(radsBucket, baths) {
-    const DEFAULT_KW = 35;
-    if (!radsBucket || baths == null) return DEFAULT_KW;
+    if (!radsBucket || baths == null) return null;
 
     if (radsBucket === "UP_TO_6") {
         if (baths === 1) return 24;
         if (baths === 1.5) return 30;
-        return DEFAULT_KW; // 2 or 3+
+        return null; // 2 or 3+
     }
 
     if (radsBucket === "R7_12") {
         if (baths === 1) return 30;
         if (baths === 1.5) return 30;
         if (baths === 2) return 35;
-        return DEFAULT_KW; // 3+
+        return null; // 3+
     }
 
     if (radsBucket === "R13_20") {
         if (baths <= 1.5) return 35;
-        return DEFAULT_KW; // 2+
+        return null; // 2+
     }
 
-    return DEFAULT_KW;
+    return null;
 }
 
 function sysHeatBand(radsBucket) {
@@ -339,7 +338,6 @@ export function buildBoilerQuote({ answers, questions = [] }) {
         system: true,
         heat_only: true,
     };
-
 
     // ✅ NEW: choose boiler type using your rules
     const selectedBoilerType = resolveBoilerTypeFromAnswers(answers, { combiOk, combiKw });
