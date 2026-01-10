@@ -56,13 +56,26 @@ export const SERVICE_QUESTIONS = {
             question: "What kind of boiler do you have right now?",
             type: "select",
             options: [
-                { label: "Combi boiler" },
-                { label: "Regular / Standard boiler" },
-                { label: "System boiler" },
-                { label: "Back boiler" },
+                {
+                    label: "Combi boiler",
+                    image: "/images/stepper/combi_boiler.png",
+                },
+                {
+                    label: "Regular / Standard boiler",
+                    image: "/images/stepper/regular_boiler.png",
+                },
+                {
+                    label: "System boiler",
+                    image: "/images/stepper/system_boiler.png",
+                },
+                {
+                    label: "Back boiler",
+                    image: "/images/stepper/back_boiler.png",
+                },
             ],
             showIf: (a) => a.boiler_type_known?.label === "Yes",
         },
+
 
         {
             id: "has_water_tank",
@@ -196,8 +209,19 @@ export const SERVICE_QUESTIONS = {
             question: "Does the flue come out the wall?",
             type: "select",
             options: [{ label: "Yes" }, { label: "No" }],
+            helperImages: [
+                {
+                    src: "/images/stepper/outside_wall.png",
+                    alt: "Boiler flue coming out of the wall",
+                },
+                {
+                    src: "/images/stepper/outside_wall2.png",
+                    alt: "External boiler flue example",
+                },
+            ],
             showIf: (a) => a.boiler_move_location?.label === "No" && !!a.radiators,
         },
+
 
         {
             id: "thermostat_type",
