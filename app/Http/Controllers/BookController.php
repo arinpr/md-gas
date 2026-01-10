@@ -94,7 +94,7 @@ class BookController extends Controller
             return Inertia::location(route('book.quote.new.results'));
 
             // Option B (also works): normal redirect
-            // return redirect()->route('quote.new.results');
+            // return redirect()->route('book.quote.new.results');
         }
 
         $quote = Cache::get($key);
@@ -113,6 +113,7 @@ class BookController extends Controller
 
     public function install(Request $request)
     {
+        $symbol = config('services.currency.symbol');
         $key = $this->quoteCacheKey($request);
 
         if ($request->isMethod('post')) {
@@ -138,7 +139,7 @@ class BookController extends Controller
 
             // Force a clean GET visit so refresh works and no resubmission prompt
             return Inertia::location(route('book.quote.install'));
-            // or: return redirect()->route('book.install');
+            // return redirect()->route('book.quote.install');
         }
 
         // GET: load from cache
@@ -153,6 +154,7 @@ class BookController extends Controller
 
         return Inertia::render('Book/InstallPage', [
             'booking' => $data,
+            'symbol' => $symbol,
             // 'answers' => $data
         ]);
     }

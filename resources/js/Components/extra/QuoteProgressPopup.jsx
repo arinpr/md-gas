@@ -28,6 +28,8 @@ export default function QuoteProcessingModal({ open, answers, onComplete, onClos
             questions: SERVICE_QUESTIONS.new,
         });
 
+        console.log("Built quote:", q);
+
         const postcode =
             answers?.details?.postcode ||
             new URLSearchParams(window.location.search).get("postcode") ||

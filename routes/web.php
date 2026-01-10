@@ -12,6 +12,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\QuoteCheckoutController;
 use App\Http\Controllers\Admin\OrderManagementController;
 use App\Http\Controllers\Admin\RadiatorPriceController;
+use App\Http\Controllers\Admin\PricingOverridesController;
 
 
 Route::get('/health', function () {
@@ -171,6 +172,10 @@ Route::middleware(['auth']) // add your admin middleware if you have one
 
         Route::put('/order/management/{booking}/status', [OrderManagementController::class, 'updateStatus'])
             ->name('orders.management.status');
+
+        Route::get('/pricing', [PricingOverridesController::class, 'index'])->name('pricing.index');
+        Route::post('/pricing/save', [PricingOverridesController::class, 'save'])->name('pricing.save');
+        Route::post('/pricing/reset', [PricingOverridesController::class, 'reset'])->name('pricing.reset');
 });
 
 
