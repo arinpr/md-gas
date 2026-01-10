@@ -208,16 +208,25 @@ export const SERVICE_QUESTIONS = {
             id: "flue_wall",
             question: "Does the flue come out the wall?",
             type: "select",
-            options: [{ label: "Yes" }, { label: "No" }],
+            options: [
+                {
+                    label: "Yes",
+                    image: "/images/stepper/Is your flue coming out of the wall - YES.jpeg",
+                },
+                {
+                    label: "No",
+                    image: "/images/stepper/Is your flue coming out of the wall - NO.jpeg",
+                }
+            ],
             helperImages: [
-                {
-                    src: "/images/stepper/outside_wall.png",
-                    alt: "Boiler flue coming out of the wall",
-                },
-                {
-                    src: "/images/stepper/outside_wall2.png",
-                    alt: "External boiler flue example",
-                },
+                // {
+                //     src: "/images/stepper/outside_wall.png",
+                //     alt: "Boiler flue coming out of the wall",
+                // },
+                // {
+                //     src: "/images/stepper/outside_wall2.png",
+                //     alt: "External boiler flue example",
+                // },
             ],
             showIf: (a) => a.boiler_move_location?.label === "No" && !!a.radiators,
         },
