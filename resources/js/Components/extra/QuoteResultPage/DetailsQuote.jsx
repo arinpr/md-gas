@@ -35,8 +35,8 @@ export default function DetailsQuoteSidebar({ detailsQuote, onClose }) {
     const carouselImages = Array.isArray(productImages)
         ? productImages
         : productImages
-            ? [productImages]
-            : ["/images/ideal-20logic.png"];
+        ? [productImages]
+        : ["/images/ideal-20logic.png"];
 
     return (
         <>
@@ -49,44 +49,57 @@ export default function DetailsQuoteSidebar({ detailsQuote, onClose }) {
                 <div className="h-full flex flex-col">
                     {/* HEADER */}
                     <div className="sticky top-0 z-30 bg-dark/90 backdrop-blur-xl border-b border-dark/50">
-                        <div className="px-8 py-5 flex justify-between items-center">
-                            <div className="flex gap-3 items-center">
-                                <div className="flex items-center gap-4">
-                                    {tier && (
-                                        <div className="relative group">
-                                            {/* Glow effect behind the badge */}
-                                            <div className="absolute -inset-0.5 bg-gradient-to-r from-emerald-400 to-cyan-400 rounded-lg blur opacity-55 transition duration-200"></div>
+                        <div className="relative px-8 py-6 flex justify-between items-center overflow-hidden">
+                            {/* Background decorative gradient */}
+                            <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-emerald-500/50 to-transparent"></div>
 
-                                            {/* Badge Content */}
-                                            <div className="relative flex items-center gap-2 px-4 py-3 bg-gradient-to-r from-slate-900 to-slate-800 rounded-lg border border-slate-700 shadow-xl">
-                                                <span className="relative flex h-2 w-2">
-                                                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-                                                    <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
-                                                </span>
-                                                <span className="text-xs font-bold uppercase tracking-widest text-white">
-                                                    {tier}
-                                                </span>
-                                            </div>
-                                        </div>
-                                    )}
-                                </div>
+                            <div className="flex gap-4 items-center z-10">
+                                {/* Tier Badge - Technical Tag Style */}
+                                {tier && (
+                                    <div className="flex flex-col items-start justify-center pl-3 border-l-2 border-emerald-500/50">
+                                        <span className="text-[9px] uppercase text-emerald-500/80 leading-none mb-1">
+                                            Current Tier
+                                        </span>
+                                        <span className="text-xs font-mono font-bold text-emerald-100 tracking-widest uppercase">
+                                            {tier}
+                                        </span>
+                                    </div>
+                                )}
 
-                                <button className="group relative cursor-pointer w-full flex items-center gap-3 p-2 px-4 rounded-lg bg-white/5 border border-white/10 hover:border-emerald-500/30 hover:bg-emerald-900/10 transition-all duration-300">
-                                    <FiSave className="text-gray-400 group-hover:text-emerald-400 text-xl transition-colors" />
-                                    <span className="text-white font-bold text-lg group-hover:text-emerald-100 transition-colors">
+                                {/* Save Button - Glass Panel */}
+                                <button
+                                    className="
+            group relative flex items-center gap-3 
+            px-6 py-3 
+            bg-gradient-to-b from-slate-800/50 to-slate-900/50
+            border border-slate-700 hover:border-emerald-500/50
+            backdrop-blur-sm rounded-lg
+            transition-all duration-300
+        "
+                                >
+                                    {/* Hover Glow Effect */}
+                                    <div className="absolute inset-0 bg-emerald-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+
+                                    <FiSave className="text-emerald-500/70 group-hover:text-emerald-400 text-lg transition-colors" />
+                                    <span className="text-sm font-medium text-slate-300 group-hover:text-white group-hover:translate-x-0.5 transition-all">
                                         Save Quote
                                     </span>
                                 </button>
                             </div>
 
-                            <div className="">
-                                <button
-                                    onClick={onClose}
-                                    className="h-12 w-12 rounded-xl bg-dark/50 group border border-foreground/20 cursor-pointer hover:border-red-400/50 flex items-center justify-center duration-300 transition-all"
-                                >
-                                    <FiX className="text-slate-400 group-hover:text-red-400 duration-300 transition-all" />
-                                </button>
-                            </div>
+                            {/* Close Button - Red Accent Hover */}
+                            <button
+                                onClick={onClose}
+                                className="
+            group relative h-10 w-10 cursor-pointer
+            flex items-center justify-center 
+            rounded-lg border border-slate-800 bg-slate-900/50
+            hover:border-red-500/30 hover:bg-red-500/10
+            transition-all duration-300
+        "
+                            >
+                                <FiX className="text-slate-400 group-hover:text-red-400 transition-colors" />
+                            </button>
                         </div>
                     </div>
 
@@ -121,7 +134,7 @@ export default function DetailsQuoteSidebar({ detailsQuote, onClose }) {
                         {/* 2. CHANGE: Added 'ref' here and 'scroll-smooth'. This is the main scroll area. */}
                         <div
                             ref={scrollContainerRef}
-                            className="flex-1 overflow-y-auto p-6 scroll-smooth relative"
+                            className="flex-1 overflow-y-auto p-6 scroll-smooth relative thin-scroll"
                         >
                             {/* STACKED CARD LAYOUT */}
                             <div className="space-y-4 mb-8">

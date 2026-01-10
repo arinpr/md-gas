@@ -255,12 +255,12 @@ export default function QuoteResultsPage({ answers }) {
                                                 // badge / tier
                                                 tier:
                                                     product.id ===
-                                                        recommendedProductId
+                                                    recommendedProductId
                                                         ? "Recommended"
                                                         : "",
                                                 badge:
                                                     product.id ===
-                                                        recommendedProductId
+                                                    recommendedProductId
                                                         ? "bg-primary text-white"
                                                         : "",
 
@@ -280,20 +280,24 @@ export default function QuoteResultsPage({ answers }) {
 
                                     <button
                                         onClick={() =>
-                                            router.post("/book/quote/new/install", {
-                                                boiler_id: product.id,
-                                                brand: product.brand,
-                                                model: product.model,
-                                                includes:
-                                                    product.includes ?? [],
-                                                images: product.images ?? [],
-                                                kw: product.kw,
-                                                warrantyYears:
-                                                    product.warrantyYears,
-                                                price: finalPrice,
-                                                power: selectedPower,
-                                                answers: answers
-                                            })
+                                            router.post(
+                                                "/book/quote/new/install",
+                                                {
+                                                    boiler_id: product.id,
+                                                    brand: product.brand,
+                                                    model: product.model,
+                                                    includes:
+                                                        product.includes ?? [],
+                                                    images:
+                                                        product.images ?? [],
+                                                    kw: product.kw,
+                                                    warrantyYears:
+                                                        product.warrantyYears,
+                                                    price: finalPrice,
+                                                    power: selectedPower,
+                                                    answers: answers,
+                                                }
+                                            )
                                         }
                                         className="w-full rounded-xl cursor-pointer bg-gradient-to-r from-primary/90 to-secondary/80 hover:from-primary hover:to-secondary text-white py-3.5 font-semibold shadow-lg hover:shadow-dark/20 hover:shadow-lg transition-colors duration-300"
                                     >

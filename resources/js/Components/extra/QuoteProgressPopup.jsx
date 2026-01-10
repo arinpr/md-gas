@@ -12,7 +12,12 @@ import { router } from "@inertiajs/react";
 import { buildBoilerQuote } from "@/lib/quoteEngine";
 import { SERVICE_QUESTIONS } from "./boilerSteps";
 
-export default function QuoteProcessingModal({ open, answers, onComplete, onClose }) {
+export default function QuoteProcessingModal({
+    open,
+    answers,
+    onComplete,
+    onClose,
+}) {
     const [activeStep, setActiveStep] = useState(0);
     const [waveOffset, setWaveOffset] = useState(0);
     const [energyLevels, setEnergyLevels] = useState([0, 0, 0]);
@@ -87,7 +92,8 @@ export default function QuoteProcessingModal({ open, answers, onComplete, onClos
         const energyInterval = setInterval(() => {
             setEnergyLevels((prev) =>
                 prev.map((v, i) => {
-                    if (i === activeStep) return Math.min(100, v + 2 + Math.random() * 3);
+                    if (i === activeStep)
+                        return Math.min(100, v + 2 + Math.random() * 3);
                     return Math.max(15, v - 1.5);
                 })
             );
@@ -112,7 +118,9 @@ export default function QuoteProcessingModal({ open, answers, onComplete, onClos
         if (!step) return;
 
         ctx.beginPath();
-        ctx.strokeStyle = step.waveColor.replace("rgb", "rgba").replace(")", ",0.35)");
+        ctx.strokeStyle = step.waveColor
+            .replace("rgb", "rgba")
+            .replace(")", ",0.35)");
         ctx.lineWidth = 3;
 
         for (let x = 0; x < canvas.width; x++) {
@@ -181,15 +189,19 @@ export default function QuoteProcessingModal({ open, answers, onComplete, onClos
                                         <FiClock className="text-white w-5 h-5" />
                                     </div>
                                     <div className="leading-tight">
-                                        <p className="text-[13px] font-bold text-white">Preparing your quote</p>
-                                        <p className="text-[11px] text-gray-400">Please wait…</p>
+                                        <p className="text-[13px] font-bold text-white">
+                                            Preparing your quote
+                                        </p>
+                                        <p className="text-[11px] text-gray-400">
+                                            Please wait…
+                                        </p>
                                     </div>
                                 </div>
 
                                 <button
                                     type="button"
                                     onClick={onClose}
-                                    className="h-10 w-10 rounded-xl bg-white/10 border border-white/10 flex items-center justify-center text-white"
+                                    className="h-10 w-10 rounded-xl bg-white/10 border border-white/10 flex items-center justify-center text-white cursor-pointerx"
                                     aria-label="Close"
                                 >
                                     <FiX />
@@ -197,7 +209,7 @@ export default function QuoteProcessingModal({ open, answers, onComplete, onClos
                             </div>
 
                             {/* Content area: scrollable on mobile */}
-                            <div className="px-4 pb-24 sm:pb-4 sm:px-0 sm:grid sm:grid-cols-1 lg:grid-cols-5 sm:gap-6 sm:p-4 lg:p-0 overflow-y-auto sm:overflow-visible h-[85dvh] sm:h-auto">
+                            <div className="px-4 pb-36 sm:pb-4 sm:px-0 sm:grid sm:grid-cols-1 lg:grid-cols-5 sm:gap-6 sm:p-4 lg:p-0 overflow-y-auto sm:overflow-visible thin-scroll h-full sm:h-auto">
                                 {/* LEFT PANEL */}
                                 <div className="lg:col-span-2 bg-black/55 backdrop-blur-xl rounded-3xl border border-white/10 p-5 sm:p-8 mt-4 sm:mt-0">
                                     {/* Desktop Header */}
@@ -211,7 +223,8 @@ export default function QuoteProcessingModal({ open, answers, onComplete, onClos
                                                     Preparing your quote
                                                 </h2>
                                                 <p className="text-[14px] text-gray-400">
-                                                    Just a moment while we check everything
+                                                    Just a moment while we check
+                                                    everything
                                                 </p>
                                             </div>
                                         </div>
@@ -227,7 +240,9 @@ export default function QuoteProcessingModal({ open, answers, onComplete, onClos
                                                         className="flex-1 rounded-t-lg transition-[height] duration-700 ease-out"
                                                         style={{
                                                             height: `${v}%`,
-                                                            background: steps[i]?.waveColor,
+                                                            background:
+                                                                steps[i]
+                                                                    ?.waveColor,
                                                         }}
                                                     />
                                                 ))}
@@ -238,10 +253,12 @@ export default function QuoteProcessingModal({ open, answers, onComplete, onClos
                                                     <FiCheck className="text-white w-6 h-6 sm:w-7 sm:h-7" />
                                                 </div>
                                                 <h3 className="text-[16px] sm:text-[18px] font-semibold text-white">
-                                                    All set — your quote is ready
+                                                    All set — your quote is
+                                                    ready
                                                 </h3>
                                                 <p className="mt-1 text-[12px] text-gray-400 max-w-sm">
-                                                    We’ve checked everything and you’re good to go.
+                                                    We’ve checked everything and
+                                                    you’re good to go.
                                                 </p>
                                             </div>
                                         )}
@@ -250,7 +267,9 @@ export default function QuoteProcessingModal({ open, answers, onComplete, onClos
                                     {/* STATUS CARD */}
                                     <div className="bg-black/60 rounded-2xl p-5 sm:p-6 border border-white/10">
                                         <p className="text-[11px] sm:text-xs text-gray-400 mb-2">
-                                            {completed ? "Done" : "Working on it…"}
+                                            {completed
+                                                ? "Done"
+                                                : "Working on it…"}
                                         </p>
 
                                         {/* prevent text overflow on mobile */}
@@ -276,17 +295,23 @@ export default function QuoteProcessingModal({ open, answers, onComplete, onClos
                                                 return (
                                                     <div
                                                         key={step.id}
-                                                        className={`rounded-xl p-4 border transition ${active
-                                                            ? "border-cyan-400/40 bg-white/10"
-                                                            : done
+                                                        className={`rounded-xl p-4 border transition ${
+                                                            active
+                                                                ? "border-cyan-400/40 bg-white/10"
+                                                                : done
                                                                 ? "border-primary/90/30 bg-primary/90/10"
                                                                 : "border-white/5 bg-white/5"
-                                                            }`}
+                                                        }`}
                                                     >
                                                         <div className="flex items-center gap-3">
                                                             <div
-                                                                className={`w-10 h-10 rounded-xl flex items-center justify-center shrink-0 ${active ? "bg-foreground" : done ? "bg-primary" : "bg-gray-800"
-                                                                    }`}
+                                                                className={`w-10 h-10 rounded-xl flex items-center justify-center shrink-0 z-10 ${
+                                                                    active
+                                                                        ? "bg-secondary"
+                                                                        : done
+                                                                        ? "bg-primary"
+                                                                        : "bg-gray-800"
+                                                                }`}
                                                             >
                                                                 <Icon className="w-4 h-4 text-white" />
                                                             </div>
@@ -301,7 +326,9 @@ export default function QuoteProcessingModal({ open, answers, onComplete, onClos
                                                                 </p>
                                                             </div>
 
-                                                            {done && <FiCheck className="text-primary/90 shrink-0" />}
+                                                            {done && (
+                                                                <FiCheck className="text-primary/90 shrink-0" />
+                                                            )}
                                                         </div>
                                                     </div>
                                                 );
@@ -311,13 +338,24 @@ export default function QuoteProcessingModal({ open, answers, onComplete, onClos
                                         <div className="mt-6">
                                             <div className="flex justify-between text-xs text-gray-400 mb-1">
                                                 <span>Almost there</span>
-                                                <span>{Math.round((activeStep / steps.length) * 100)}%</span>
+                                                <span>
+                                                    {Math.round(
+                                                        (activeStep /
+                                                            steps.length) *
+                                                            100
+                                                    )}
+                                                    %
+                                                </span>
                                             </div>
                                             <div className="h-1.5 bg-gray-800 rounded-full overflow-hidden">
                                                 <div
                                                     className="h-full bg-gradient-to-r from-cyan-500 to-primary transition-all"
                                                     style={{
-                                                        width: `${(activeStep / steps.length) * 100}%`,
+                                                        width: `${
+                                                            (activeStep /
+                                                                steps.length) *
+                                                            100
+                                                        }%`,
                                                     }}
                                                 />
                                             </div>
@@ -329,7 +367,11 @@ export default function QuoteProcessingModal({ open, answers, onComplete, onClos
                                         <button
                                             onClick={() => {
                                                 if (!quote) return;
-                                                router.post(`/book/quote/new/results`, quote, { preserveScroll: true });
+                                                router.post(
+                                                    `/book/quote/new/results`,
+                                                    quote,
+                                                    { preserveScroll: true }
+                                                );
                                             }}
                                             className="hidden sm:flex w-full rounded-2xl bg-gradient-to-r from-primary to-secondary px-6 py-4 text-white font-semibold items-center justify-between hover:opacity-90 transition cursor-pointer"
                                         >
@@ -346,11 +388,17 @@ export default function QuoteProcessingModal({ open, answers, onComplete, onClos
                                     <button
                                         onClick={() => {
                                             if (!quote) return;
-                                            router.post(`/book/quote/new/results`, quote, { preserveScroll: true });
+                                            router.post(
+                                                `/book/quote/new/results`,
+                                                quote,
+                                                { preserveScroll: true }
+                                            );
                                         }}
                                         className="w-full rounded-2xl bg-gradient-to-r from-primary to-secondary px-6 py-4 text-white font-semibold flex items-center justify-between hover:opacity-90 transition cursor-pointer"
                                     >
-                                        <span className="truncate">View your quote</span>
+                                        <span className="truncate">
+                                            View your quote
+                                        </span>
                                         <FiChevronRight />
                                     </button>
                                 </div>
@@ -377,7 +425,9 @@ export default function QuoteProcessingModal({ open, answers, onComplete, onClos
 
 function buildQuoteText(answers) {
     const flue = answers?.flue_type?.label;
-    return `We’re preparing a quote for your boiler${flue ? ` with a ${flue.toLowerCase()}` : ""}`;
+    return `We’re preparing a quote for your boiler${
+        flue ? ` with a ${flue.toLowerCase()}` : ""
+    }`;
 }
 
 function buildCompatibilityText(answers) {

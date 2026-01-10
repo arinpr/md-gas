@@ -21,16 +21,11 @@ const formatPrice = (value) => {
     return Number.isInteger(num) ? num : num.toFixed(2);
 };
 
-
-
-
 const SERVICES_WITH_INSTANT_QUOTE = [
     "boiler_repair",
     "boiler_service",
     "power_flush",
 ];
-
-
 
 export default function Stepper({
     title = "Boiler Repair Quote",
@@ -50,10 +45,6 @@ export default function Stepper({
     const [showProcessing, setShowProcessing] = useState(false);
     const [hoveredIndex, setHoveredIndex] = useState(null);
     const [mouse, setMouse] = useState({ x: 50, y: 50 });
-
-
-
-
 
     /* -------------------------------------------------------
        dropdown positioning
@@ -112,9 +103,9 @@ export default function Stepper({
             typeof opt === "string"
                 ? { label: opt, price: 0 }
                 : {
-                    ...opt,
-                    requiresText: opt.requiresText || false,
-                }
+                      ...opt,
+                      requiresText: opt.requiresText || false,
+                  }
         );
     }, [current]);
 
@@ -203,7 +194,6 @@ export default function Stepper({
         };
     }, [answers, basePrice]);
 
-
     /* -------------------------------------------------------
        can proceed logic
     ------------------------------------------------------- */
@@ -277,13 +267,7 @@ export default function Stepper({
 
         window.addEventListener("keydown", handleKeyDown);
         return () => window.removeEventListener("keydown", handleKeyDown);
-    }, [
-        canProceed,
-        index,
-        visibleSteps.length,
-        serviceKey,
-    ]);
-
+    }, [canProceed, index, visibleSteps.length, serviceKey]);
 
     return (
         <>
@@ -340,7 +324,7 @@ export default function Stepper({
                     </div>
                     <div className="grid grid-cols-1 md:grid-cols-12 gap-6 items-stretch">
                         {/* ================= LEFT ================= */}
-                        <aside className="md:col-span-4 glass-dark p-8 rounded-3xl overflow-hidden h-full flex flex-col relative">
+                        <aside className="order-2 md:order-none md:col-span-4 glass-dark p-8 rounded-3xl overflow-hidden h-full flex flex-col relative">
                             <div className="sheen absolute inset-0 pointer-events-none rounded-3xl" />
                             <div className="flex items-center justify-between mb-6">
                                 <h3 className="text-2xl font-bold text-primary">
@@ -369,7 +353,8 @@ export default function Stepper({
                                     </p>
 
                                     <p className="mt-1 text-3xl font-extrabold text-dark">
-                                        {currency}{formatPrice(pricing.total)}
+                                        {currency}
+                                        {formatPrice(pricing.total)}
                                     </p>
 
                                     {/* <div className="mt-2 space-y-1 text-xs text-muted-foreground">
@@ -384,8 +369,6 @@ export default function Stepper({
                                     </p>
                                 </div>
                             )}
-
-
 
                             {/* PROGRESS */}
                             {/* <div className="mt-auto pt-8">
@@ -403,12 +386,12 @@ export default function Stepper({
                                     {progress}%
                                 </div>
                             </div> */}
-                            
-                                {/* RESET BUTTON — bottom aligned */}
-                                <div className="mt-auto pt-10">
-                                   <button
-                                        onClick={restart}
-                                        className="
+
+                            {/* RESET BUTTON — bottom aligned */}
+                            <div className="mt-auto pt-10">
+                                <button
+                                    onClick={restart}
+                                    className="
                                             inline-flex items-center gap-3
                                             text-sm font-medium
                                             bg-foreground text-dark
@@ -419,17 +402,15 @@ export default function Stepper({
                                             hover:bg-white hover:shadow-[0_8px_20px_rgba(255,255,255,0.25)]
 
                                             transition-all"
-                                    >
-                                        <FiRefreshCcw className="text-base" />
-                                        Reset
-                                    </button>
-
-                                </div>
-
+                                >
+                                    <FiRefreshCcw className="text-base" />
+                                    Reset
+                                </button>
+                            </div>
                         </aside>
 
                         {/* ================= RIGHT ================= */}
-                        <section className="md:col-span-8 h-full flex">
+                        <section className="order-1 md:order-none md:col-span-8 h-full flex">
                             <div className="glass-root p-8 rounded-3xl w-full flex flex-col relative">
                                 <div className="radial-highlight absolute inset-0 pointer-events-none" />
 
@@ -451,10 +432,11 @@ export default function Stepper({
                                 {current?.type === "checkbox_quantity" && (
                                     <div className="max-w-2xl mx-auto w-full">
                                         <div
-                                            className={`flex items-center justify-between rounded-2xl border px-6 py-5 transition ${answers[current.id]?.enabled
-                                                ? "border-primary bg-primary/5"
-                                                : "border-dark/20 bg-white"
-                                                }`}
+                                            className={`flex items-center justify-between rounded-2xl border px-6 py-5 transition ${
+                                                answers[current.id]?.enabled
+                                                    ? "border-primary bg-primary/5"
+                                                    : "border-dark/20 bg-white"
+                                            }`}
                                         >
                                             <label className="flex items-center gap-4 cursor-pointer">
                                                 <input
@@ -472,19 +454,19 @@ export default function Stepper({
                                                             [current.id]:
                                                                 enabled
                                                                     ? {
-                                                                        enabled: true,
-                                                                        qty: 1,
-                                                                        unitPrice:
-                                                                            current.price,
-                                                                        price: current.price,
-                                                                    }
+                                                                          enabled: true,
+                                                                          qty: 1,
+                                                                          unitPrice:
+                                                                              current.price,
+                                                                          price: current.price,
+                                                                      }
                                                                     : {
-                                                                        enabled: false,
-                                                                        qty: 0,
-                                                                        unitPrice:
-                                                                            current.price,
-                                                                        price: 0,
-                                                                    },
+                                                                          enabled: false,
+                                                                          qty: 0,
+                                                                          unitPrice:
+                                                                              current.price,
+                                                                          price: 0,
+                                                                      },
                                                         }));
                                                     }}
                                                     className="h-5 w-5 accent-primary"
@@ -582,58 +564,53 @@ export default function Stepper({
 
                                 {/* ========= INFO / SPECIALIST HELP ========= */}
                                 {current?.type === "info" && (
-                                    <div className="mt-5 max-w-5xl mx-auto">
+                                    <div className="mt-5 w-full lg:max-w-5xl mx-auto">
                                         {/* Unique side-by-side with perfect bridge */}
-                                        <div className="relative flex gap-8">
-                                            {/* Live Chat - Perfected Design */}
-                                            <div className="flex-1 group">
+                                        <div className="w-full relative flex flex-col lg:flex-row gap-8">
+                                            {/* Live Chat */}
+                                            <div className="flex-1 group w-full">
                                                 <Link
                                                     href="https://wa.me/441234567890"
                                                     target="_blank"
                                                     rel="noopener noreferrer"
-                                                    className="relative flex items-center gap-4 p-5 rounded-2xl bg-gradient-to-br from-white to-green-50/30 border-l-4 border-green-400 hover:border-green-500 transition-all duration-300 hover:shadow-lg group-hover:shadow-green-100/50 overflow-hidden"
+                                                    className="
+                    relative flex flex-col sm:flex-row sm:items-center gap-4
+                    p-4 sm:p-5
+                    rounded-2xl bg-gradient-to-br from-white to-green-50/30
+                    border-l-4 border-green-400 hover:border-green-500
+                    transition-all duration-300 hover:shadow-lg
+                    group-hover:shadow-green-100/50 overflow-hidden
+                    "
+                                                    // 🔴 CHANGE: flex-col sm:flex-row + p-4 sm:p-5
                                                 >
-                                                    {/* Background gradient accent */}
+                                                    {/* Background accent */}
                                                     <div className="absolute right-0 top-0 bottom-0 w-20 bg-gradient-to-l from-green-400/5 to-transparent"></div>
+                                                    <div className="flex flex-row gap-2 items-center ">
+                                                        {/* Icon */}
+                                                        <div className="relative z-10">
+                                                            <div className="relative h-12 w-12 sm:h-14 sm:w-14">
+                                                                {/* 🔴 CHANGE: smaller icon on mobile */}
+                                                                <div className="absolute inset-0 rounded-full bg-gradient-to-br from-green-100 to-emerald-100 group-hover:from-green-200 group-hover:to-emerald-200 transition-all duration-300 shadow-md flex items-center justify-center">
+                                                                    <svg
+                                                                        className="h-6 w-6 text-green-600"
+                                                                        fill="currentColor"
+                                                                        viewBox="0 0 24 24"
+                                                                    >
+                                                                        <path d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+                                                                    </svg>
+                                                                </div>
 
-                                                    {/* Floating chat bubbles */}
-                                                    <div className="absolute -left-2 top-1/4 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-                                                        <div className="relative">
-                                                            <div className="absolute -right-1 top-1/2 h-2 w-2 rounded-full bg-green-200/30 border border-green-300/30"></div>
-                                                        </div>
-                                                    </div>
-
-                                                    {/* Icon with perfected status ring */}
-                                                    <div className="relative z-10">
-                                                        <div className="relative h-14 w-14">
-                                                            <div className="absolute inset-0 rounded-full bg-gradient-to-br from-green-100 to-emerald-100 group-hover:from-green-200 group-hover:to-emerald-200 transition-all duration-300 shadow-md flex items-center justify-center">
-                                                                <svg
-                                                                    className="h-6 w-6 text-green-600"
-                                                                    fill="currentColor"
-                                                                    viewBox="0 0 24 24"
-                                                                >
-                                                                    <path d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
-                                                                </svg>
+                                                                {/* Status ring */}
+                                                                <div className="absolute -inset-2 rounded-full border-2 border-green-400/30 opacity-0 group-hover:opacity-100 group-hover:animate-ping transition-opacity duration-300"></div>
                                                             </div>
-                                                            {/* Animated status ring */}
-                                                            {/* Animated status ring — hover only */}
-                                                            <div
-                                                                className="absolute -inset-2 rounded-full border-2 border-green-400/30
-    opacity-0
-    group-hover:opacity-100
-    group-hover:animate-ping
-    transition-opacity duration-300"
-                                                            ></div>
                                                         </div>
-                                                    </div>
 
-                                                    {/* Content area */}
-                                                    <div className="flex-1 relative z-10">
-                                                        <div className="space-y-1">
-                                                            <span className="block text-[16px] font-bold text-gray-800 tracking-tight">
+                                                        {/* Content */}
+                                                        <div className="flex-1 relative z-10">
+                                                            <span className="block text-[16px] font-bold text-gray-800">
                                                                 Live Chat
                                                             </span>
-                                                            <span className="block text-xs text-gray-500 font-medium">
+                                                            <span className="block text-xs text-gray-500">
                                                                 Instant
                                                                 connection
                                                             </span>
@@ -641,156 +618,80 @@ export default function Stepper({
                                                     </div>
 
                                                     {/* Action button */}
-                                                    <div className="relative z-10">
-                                                        <div className="px-4 py-2.5 rounded-xl bg-gradient-to-r from-green-500 to-emerald-500 text-white font-semibold text-sm shadow-md hover:shadow-lg transition-all duration-300 group-hover:translate-x-1">
+                                                    <div className="relative z-10 w-full sm:w-auto">
+                                                        {/* 🔴 CHANGE: w-full sm:w-auto */}
+                                                        <div className="w-full text-center px-4 py-2.5 rounded-xl bg-gradient-to-r from-green-500 to-emerald-500 text-white font-semibold text-sm shadow-md hover:shadow-lg transition-all duration-300 sm:group-hover:translate-x-1">
                                                             Start now
                                                         </div>
-                                                        <div className="absolute -bottom-1 left-1/2 transform -translate-x-1/2 h-1 w-8 bg-gradient-to-r from-green-400/50 to-emerald-400/50 rounded-full blur-sm opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                                                     </div>
                                                 </Link>
                                             </div>
 
-                                            {/* Phone Call - Perfected Design */}
-                                            <div className="flex-1 group">
+                                            {/* Phone Call */}
+                                            <div className="flex-1 group w-full">
                                                 <a
                                                     href="tel:03301131333"
-                                                    className="relative flex items-center gap-4 p-5 rounded-2xl bg-gradient-to-br from-white to-blue-50/30 border-r-4 border-blue-400 hover:border-blue-500 transition-all duration-300 hover:shadow-lg group-hover:shadow-blue-100/50 overflow-hidden"
+                                                    className="
+                    relative flex flex-col sm:flex-row sm:items-center gap-4
+                    p-4 sm:p-5
+                    rounded-2xl bg-gradient-to-br from-white to-blue-50/30
+                    border-r-4 border-blue-400 hover:border-blue-500
+                    transition-all duration-300 hover:shadow-lg
+                    group-hover:shadow-blue-100/50 overflow-hidden
+                "
+                                                    // 🔴 CHANGE: flex-col sm:flex-row + p-4 sm:p-5
                                                 >
-                                                    {/* Background gradient accent */}
+                                                    {/* Background accent */}
                                                     <div className="absolute left-0 top-0 bottom-0 w-20 bg-gradient-to-r from-blue-400/5 to-transparent"></div>
+                                                    <div className="flex flex-row gap-2 items-center">
+                                                        {/* Icon */}
+                                                        <div className="relative z-10">
+                                                            <div className="relative h-12 w-12 sm:h-14 sm:w-14">
+                                                                {/* 🔴 CHANGE */}
+                                                                <div className="absolute inset-0 rounded-full bg-gradient-to-br from-blue-100 to-cyan-100 group-hover:from-blue-200 group-hover:to-cyan-200 transition-all duration-300 shadow-md flex items-center justify-center">
+                                                                    <svg
+                                                                        className="h-6 w-6 text-primary"
+                                                                        fill="currentColor"
+                                                                        viewBox="0 0 24 24"
+                                                                    >
+                                                                        <path d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                                                                    </svg>
+                                                                </div>
 
-                                                    {/* Icon with perfected status ring (same as chat) */}
-                                                    <div className="relative z-10">
-                                                        <div className="relative h-14 w-14">
-                                                            <div className="absolute inset-0 rounded-full bg-gradient-to-br from-blue-100 to-cyan-100 group-hover:from-blue-200 group-hover:to-cyan-200 transition-all duration-300 shadow-md flex items-center justify-center">
-                                                                <svg
-                                                                    className="h-6 w-6 text-primary"
-                                                                    fill="currentColor"
-                                                                    viewBox="0 0 24 24"
-                                                                >
-                                                                    <path d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
-                                                                </svg>
+                                                                <div className="absolute -inset-2 rounded-full border-2 border-blue-400/30 opacity-0 group-hover:opacity-100 group-hover:animate-ping transition-opacity duration-300"></div>
                                                             </div>
-                                                            {/* Fixed: Added same animated status ring as chat */}
-                                                            {/* Animated status ring — hover only */}
-                                                            <div
-                                                                className="absolute -inset-2 rounded-full border-2 border-blue-400/30
-    opacity-0
-    group-hover:opacity-100
-    group-hover:animate-ping
-    transition-opacity duration-300"
-                                                            ></div>
                                                         </div>
-                                                    </div>
 
-                                                    {/* Content area */}
-                                                    <div className="flex-1 relative z-10">
-                                                        <div className="space-y-1">
-                                                            <span className="block text-[14px] font-bold text-gray-800 tracking-tight">
+                                                        {/* Content */}
+                                                        <div className="flex-1 relative z-10">
+                                                            <span className="block text-[14px] font-bold text-gray-800">
                                                                 Phone Call
                                                             </span>
-                                                            <span className="block text-xs text-gray-500 font-medium">
+                                                            <span className="block text-xs text-gray-500">
                                                                 conversation
                                                             </span>
                                                         </div>
                                                     </div>
-
-                                                    {/* Phone number display */}
-                                                    <div className="relative z-10">
-                                                        <div className="px-4 py-2.5 rounded-xl bg-gradient-to-r from-primary to-secondary text-white font-semibold text-sm shadow-md hover:shadow-lg transition-all duration-300 group-hover:-translate-x-1">
-                                                            <div className="flex items-center gap-2">
+                                                    {/* Phone number */}
+                                                    <div className="relative z-10 w-full sm:w-auto">
+                                                        {/* 🔴 CHANGE */}
+                                                        <div className="w-full text-center px-4 py-2.5 rounded-xl bg-gradient-to-r from-primary to-secondary text-white font-semibold text-sm shadow-md hover:shadow-lg transition-all duration-300 sm:group-hover:-translate-x-1">
+                                                            <div className="flex items-center justify-center gap-2">
                                                                 <span>
                                                                     0330
                                                                 </span>
-                                                                <div className="h-1 w-1 rounded-full bg-white/50"></div>
+                                                                <span className="h-1 w-1 rounded-full bg-white/50"></span>
                                                                 <span>113</span>
-                                                                <div className="h-1 w-1 rounded-full bg-white/50"></div>
+                                                                <span className="h-1 w-1 rounded-full bg-white/50"></span>
                                                                 <span>
                                                                     1333
                                                                 </span>
                                                             </div>
                                                         </div>
-                                                        <div className="absolute -bottom-1 left-1/2 transform -translate-x-1/2 h-1 w-8 bg-gradient-to-r from-blue-400/50 to-cyan-400/50 rounded-full blur-sm opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                                                     </div>
                                                 </a>
                                             </div>
                                         </div>
-
-                                        {/* Perfect restart button */}
-                                        <div className="mt-12 relative flex justify-center">
-                                            <div className="relative inline-block group mx-auto block text-center">
-                                                <button
-                                                    onClick={restart}
-                                                    className="relative px-6 py-3 cursor-pointer rounded-full text-[18px] font-medium text-gray-700 hover:text-gray-900 transition-colors duration-500"
-                                                >
-                                                    <div className="flex items-center gap-3">
-                                                        {/* Animated restart icon */}
-                                                        <div className="relative h-8 w-8">
-                                                            <div className="absolute inset-0 rounded-full bg-gradient-to-r from-green-100 to-blue-100 flex items-center justify-center group-hover:from-green-200 group-hover:to-blue-200 transition-all duration-300">
-                                                                <svg
-                                                                    className="h-5 w-5 transform group-hover:rotate-180 transition-all duration-700"
-                                                                    fill="none"
-                                                                    stroke="currentColor"
-                                                                    viewBox="0 0 24 24"
-                                                                >
-                                                                    <path
-                                                                        strokeLinecap="round"
-                                                                        strokeLinejoin="round"
-                                                                        strokeWidth="2"
-                                                                        d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
-                                                                    />
-                                                                </svg>
-                                                            </div>
-                                                            <div className="absolute -inset-2 rounded-full border-2 border-green-400/20 group-hover:border-blue-400/20 transition-all duration-500"></div>
-                                                        </div>
-
-                                                        <span className="font-semibold tracking-tight">
-                                                            Start fresh
-                                                            conversation
-                                                        </span>
-                                                    </div>
-
-                                                    {/* Floating particles */}
-                                                    <div className="absolute inset-0 overflow-hidden rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-                                                        <div className="absolute -top-2 left-1/4 h-1 w-1 rounded-full bg-green-400 animate-bounce"></div>
-                                                        <div
-                                                            className="absolute -top-1 left-1/2 h-1 w-1 rounded-full bg-blue-400 animate-bounce"
-                                                            style={{
-                                                                animationDelay:
-                                                                    "150ms",
-                                                            }}
-                                                        ></div>
-                                                        <div
-                                                            className="absolute -top-2 left-3/4 h-1 w-1 rounded-full bg-green-400 animate-bounce"
-                                                            style={{
-                                                                animationDelay:
-                                                                    "300ms",
-                                                            }}
-                                                        ></div>
-                                                    </div>
-                                                </button>
-                                            </div>
-                                        </div>
-
-                                        {/* Add custom animation keyframes if needed */}
-                                        <style jsx>{`
-                                            @keyframes pulse-slow {
-                                                0%,
-                                                100% {
-                                                    opacity: 1;
-                                                    transform: scale(1);
-                                                }
-                                                50% {
-                                                    opacity: 0.8;
-                                                    transform: scale(0.98);
-                                                }
-                                            }
-                                            .animate-pulse-slow {
-                                                animation: pulse-slow 2s
-                                                    cubic-bezier(0.4, 0, 0.6, 1)
-                                                    infinite;
-                                            }
-                                        `}</style>
                                     </div>
                                 )}
 
@@ -844,11 +745,12 @@ export default function Stepper({
 
                                                             {/* Internal zoom layer */}
                                                             <div
-                                                                className={`absolute inset-0 transition-opacity duration-300 ${hoveredIndex ===
+                                                                className={`absolute inset-0 transition-opacity duration-300 ${
+                                                                    hoveredIndex ===
                                                                     index
-                                                                    ? "opacity-100"
-                                                                    : "opacity-0"
-                                                                    }`}
+                                                                        ? "opacity-100"
+                                                                        : "opacity-0"
+                                                                }`}
                                                             >
                                                                 <img
                                                                     src={
@@ -864,11 +766,12 @@ export default function Stepper({
 
                                                             {/* Focus frame */}
                                                             <div
-                                                                className={`pointer-events-none absolute inset-5 rounded-2xl border border-white/70 transition-opacity duration-300 ${hoveredIndex ===
+                                                                className={`pointer-events-none absolute inset-5 rounded-2xl border border-white/70 transition-opacity duration-300 ${
+                                                                    hoveredIndex ===
                                                                     index
-                                                                    ? "opacity-100"
-                                                                    : "opacity-0"
-                                                                    }`}
+                                                                        ? "opacity-100"
+                                                                        : "opacity-0"
+                                                                }`}
                                                             />
 
                                                             {/* Label */}
@@ -940,10 +843,11 @@ export default function Stepper({
                                             {isDropdownOpen && (
                                                 <div
                                                     ref={dropdownRef}
-                                                    className={`absolute inset-x-0 z-50 ${openUpwards
-                                                        ? "bottom-full mb-2"
-                                                        : "top-full mt-2"
-                                                        }`}
+                                                    className={`absolute inset-x-0 z-50 ${
+                                                        openUpwards
+                                                            ? "bottom-full mb-2"
+                                                            : "top-full mt-2"
+                                                    }`}
                                                 >
                                                     <div className="bg-white border-2 border-dark/20 rounded-xl overflow-hidden">
                                                         <div className="max-h-80 overflow-y-auto">
@@ -1017,10 +921,11 @@ export default function Stepper({
                                                     ({ key, label, full }) => (
                                                         <div
                                                             key={key}
-                                                            className={`relative ${full
-                                                                ? "md:col-span-2"
-                                                                : ""
-                                                                }`}
+                                                            className={`relative ${
+                                                                full
+                                                                    ? "md:col-span-2"
+                                                                    : ""
+                                                            }`}
                                                         >
                                                             <label className="absolute -top-2 left-5 z-10 bg-white px-1 text-xs font-medium text-slate-500">
                                                                 {label}
@@ -1029,8 +934,8 @@ export default function Stepper({
                                                             <input
                                                                 value={
                                                                     answers[
-                                                                    current
-                                                                        .id
+                                                                        current
+                                                                            .id
                                                                     ]?.[key] ||
                                                                     ""
                                                                 }
@@ -1041,15 +946,15 @@ export default function Stepper({
                                                                         ) => ({
                                                                             ...s,
                                                                             [current.id]:
-                                                                            {
-                                                                                ...s[
-                                                                                current
-                                                                                    .id
-                                                                                ],
-                                                                                [key]: e
-                                                                                    .target
-                                                                                    .value,
-                                                                            },
+                                                                                {
+                                                                                    ...s[
+                                                                                        current
+                                                                                            .id
+                                                                                    ],
+                                                                                    [key]: e
+                                                                                        .target
+                                                                                        .value,
+                                                                                },
                                                                         })
                                                                     )
                                                                 }
@@ -1119,10 +1024,11 @@ export default function Stepper({
                                                 return (
                                                     <div
                                                         key={opt.label}
-                                                        className={`option-card ${active
-                                                            ? "option-active sheen"
-                                                            : "option-inactive"
-                                                            }`}
+                                                        className={`option-card ${
+                                                            active
+                                                                ? "option-active sheen"
+                                                                : "option-inactive"
+                                                        }`}
                                                     >
                                                         <button
                                                             type="button"
@@ -1133,13 +1039,25 @@ export default function Stepper({
                                                         >
                                                             <div className="flex items-center gap-5">
                                                                 <div
-                                                                    className={`radial-dot ${active
-                                                                        ? "radial-dot-active"
-                                                                        : "radial-dot-inactive"
-                                                                        }`}
+                                                                    className={`radial-dot ${
+                                                                        active
+                                                                            ? "radial-dot-active"
+                                                                            : "radial-dot-inactive"
+                                                                    }`}
                                                                 >
                                                                     <span className="radial-dot-core" />
                                                                 </div>
+                                                                {opt.image && (
+                                                                    <img
+                                                                        src={
+                                                                            opt.image
+                                                                        }
+                                                                        alt={
+                                                                            opt.label
+                                                                        }
+                                                                        className="w-14 h-14 object-contain rounded-lg"
+                                                                    />
+                                                                )}
 
                                                                 <div className="flex-1 text-left flex gap-4">
                                                                     <div>
@@ -1150,7 +1068,7 @@ export default function Stepper({
                                                                         </p>
                                                                         <p className="text-xs text-muted-foreground mt-0.5">
                                                                             {active
-                                                                                ? "Best choice"
+                                                                                ? "Selected"
                                                                                 : "Tap to select"}
                                                                         </p>
                                                                     </div>
@@ -1246,7 +1164,7 @@ export default function Stepper({
                                 )}
 
                                 {/* CONTROLS */}
-                                <div className="mt-auto pt-10 flex items-center justify-between">
+                                <div className="mt-auto pt-6 md:pt-10 flex flex-col md:flex-row items-start md:items-center gap-4 md:gap-0 md:justify-between">
                                     <p className="text-sm text-muted-foreground">
                                         {answers[current?.id]
                                             ? "Answer recorded"
@@ -1257,10 +1175,11 @@ export default function Stepper({
                                         <button
                                             onClick={back}
                                             disabled={index === 0}
-                                            className={`btn-pill flex gap-1 items-center cursor-pointer ${index === 0
-                                                ? "btn-disabled"
-                                                : ""
-                                                }`}
+                                            className={`btn-pill flex gap-1 items-center cursor-pointer ${
+                                                index === 0
+                                                    ? "btn-disabled"
+                                                    : ""
+                                            }`}
                                         >
                                             <FiChevronLeft /> Back
                                         </button>
@@ -1293,10 +1212,11 @@ export default function Stepper({
                                                 }
                                             }}
                                             disabled={!canProceed}
-                                            className={`btn-gloss flex gap-1 items-center cursor-pointer ${!canProceed
-                                                ? "btn-disabled"
-                                                : ""
-                                                }`}
+                                            className={`btn-gloss flex gap-1 items-center cursor-pointer ${
+                                                !canProceed
+                                                    ? "btn-disabled"
+                                                    : ""
+                                            }`}
                                         >
                                             Next <FiChevronRight />
                                         </button>
@@ -1325,7 +1245,6 @@ export default function Stepper({
                 onClose={() => setShowInstantQuote(false)}
                 serviceKey={serviceKey}
             />
-
         </>
     );
 }

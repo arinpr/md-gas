@@ -8,7 +8,7 @@ export default defineConfig({
     plugins: [
         laravel({
             input: "resources/js/app.jsx",
-            ssr: "resources/js/ssr.jsx", // <-- SSR entry
+            ssr: "resources/js/ssr.jsx",
             refresh: true,
         }),
         react(),
@@ -21,15 +21,15 @@ export default defineConfig({
         },
     },
     server: {
-        host: "192.168.1.215", // allow LAN access
+        host: "192.168.1.100",
         port: 5173,
         strictPort: true,
         cors: {
-            origin: "http://192.168.1.215:8000",
+            origin: "http://192.168.1.100:8000",
             credentials: true,
         },
         hmr: {
-            host: "192.168.1.215", // important: HMR must point to LAN IP
+            host: "192.168.1.100",
             port: 5173,
         },
     },

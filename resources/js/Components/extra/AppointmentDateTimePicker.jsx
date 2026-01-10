@@ -124,18 +124,18 @@ const AppointmentDateRangePicker = ({ type, value, onChange }) => {
     return (
         <div className="w-full max-w-6xl rounded-xl border border-slate-200 bg-white shadow-sm overflow-hidden lg:h-[600px]">
             {/* Header */}
-            <div className="flex items-center justify-between px-6 py-4 border-b border-slate-200">
+            <div className="flex items-center justify-between px-4 lg:px-6 py-4 border-b border-slate-200">
                 <div>
-                    <div className="text-base font-semibold text-slate-900">
+                    <div className="text-base font-semibold text-slate-900 line-clamp-1">
                         Select a date and time
                     </div>
-                    <div className="text-sm text-slate-600">
+                    <div className="text-sm text-slate-600 line-clamp-1">
                         Choose an available slot to confirm your appointment.
                     </div>
                 </div>
 
                 {serviceKey ? (
-                    <span className="inline-flex items-center rounded-full border border-slate-200 bg-slate-50 px-3 py-1 text-xs font-medium text-slate-700">
+                    <span className="inline-flex items-center rounded-full border text-center border-slate-200 bg-slate-50 px-3 py-1 text-[10px] lg:text-xs font-medium text-slate-700 whitespace-nowrap">
                         {String(serviceKey).replaceAll("_", " ").toUpperCase()}
                     </span>
                 ) : (
@@ -159,7 +159,7 @@ const AppointmentDateRangePicker = ({ type, value, onChange }) => {
                         </div>
                     </div>
 
-                    <div className="rounded-lg border border-slate-200 bg-white p-3">
+                    <div className="rounded-lg border border-slate-200 bg-white p-0 md:p-3">
                         <Calendar
                             mode="single"
                             month={month}
@@ -208,7 +208,7 @@ const AppointmentDateRangePicker = ({ type, value, onChange }) => {
                 </div>
 
                 {/* Right: Slots */}
-                <div className="p-5 sm:p-6 flex flex-col h-[510px] overflow-y-auto">
+                <div className="p-5 sm:p-6 flex flex-col max-h-[510px] overflow-y-auto">
                     {/* Fixed header */}
                     <div className="flex items-center justify-between gap-3 mb-3">
                         <div className="flex items-center gap-2">

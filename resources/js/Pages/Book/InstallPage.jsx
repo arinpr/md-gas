@@ -5,11 +5,10 @@ import { useMemo, useRef, useState, useEffect } from "react";
 import axios from "axios";
 import { toast } from "react-hot-toast";
 import { FiCreditCard, FiLoader } from "react-icons/fi";
-import { add } from "date-fns";
 
 export default function InstallPage({ booking }) {
     const { symbol } = usePage().props;
-    console.log("Postcode ", booking)
+    console.log("Postcode ", booking);
 
     const [selectedDate, setSelectedDate] = useState("");
     const [selectedTime, setSelectedTime] = useState(null);
@@ -34,6 +33,34 @@ export default function InstallPage({ booking }) {
     const [processing, setProcessing] = useState(false);
     const mounted = useRef(true);
 
+    // scroll to customer details
+    const autoScrolledRef = useRef(false);
+
+    useEffect(() => {
+        if (selectedDate && selectedTime && titleRef.current) {
+            // prevent repeated auto-scrolls
+            if (autoScrolledRef.current) return;
+
+            autoScrolledRef.current = true;
+
+            // slight delay for smoother UX (calendar animation settle)
+            setTimeout(() => {
+                titleRef.current.scrollIntoView({
+                    behavior: "smooth",
+                    block: "center",
+                });
+
+                // focus the first customer field
+                titleRef.current.focus();
+            }, 300);
+        }
+
+        // reset if appointment is cleared/changed
+        if (!selectedDate || !selectedTime) {
+            autoScrolledRef.current = false;
+        }
+    }, [selectedDate, selectedTime]);
+
     useEffect(() => {
         mounted.current = true;
         return () => {
@@ -47,7 +74,7 @@ export default function InstallPage({ booking }) {
             if (prev.address?.trim()) return prev;
             return { ...prev, address: postcode ? `${postcode} ` : "" };
         });
-    }, [])
+    }, []);
 
     // refs to scroll/focus to invalid section
     const dateRef = useRef(null);
@@ -72,17 +99,17 @@ export default function InstallPage({ booking }) {
     // Your vertical flue item can have different keys, so match by key OR label
     const verticalFlueItem =
         addOns.find((x) => x.key?.includes("vertical_flue")) ||
-        addOns.find((x) => String(x.label || "").toLowerCase().includes("vertical flue"));
+        addOns.find((x) =>
+            String(x.label || "")
+                .toLowerCase()
+                .includes("vertical flue")
+        );
 
-
-    const hasSmartThermostat = addOns.some(
-        (x) => x.key === "smart_stat"
-    );
+    const hasSmartThermostat = addOns.some((x) => x.key === "smart_stat");
 
     const thermostatLabel = hasSmartThermostat
         ? "Smart Thermostat"
         : "Standard Wireless Thermostat";
-
 
     const scrollToRef = (ref) => {
         const el = ref?.current;
@@ -104,13 +131,17 @@ export default function InstallPage({ booking }) {
         const next = {};
 
         // appointment
-        if (!selectedDate) next.appointment = "Please select an installation date.";
-        else if (!selectedTime) next.appointment = "Please select an installation time.";
+        if (!selectedDate)
+            next.appointment = "Please select an installation date.";
+        else if (!selectedTime)
+            next.appointment = "Please select an installation time.";
 
         // customer fields
         if (!formData.title) next.title = "Please select a title.";
-        if (!formData.firstName?.trim()) next.firstName = "First name is required.";
-        if (!formData.lastName?.trim()) next.lastName = "Last name is required.";
+        if (!formData.firstName?.trim())
+            next.firstName = "First name is required.";
+        if (!formData.lastName?.trim())
+            next.lastName = "Last name is required.";
 
         const email = (formData.email || "").trim();
         if (!email) next.email = "Email is required.";
@@ -121,7 +152,8 @@ export default function InstallPage({ booking }) {
         if (!phone) next.phone = "Phone number is required.";
         else {
             const digits = phone.replace(/[^\d]/g, "");
-            if (digits.length < 10) next.phone = "Please enter a valid phone number.";
+            if (digits.length < 10)
+                next.phone = "Please enter a valid phone number.";
         }
 
         if (!formData.address?.trim()) next.address = "Address is required.";
@@ -161,7 +193,10 @@ export default function InstallPage({ booking }) {
 
         setFormData((prev) => ({
             ...prev,
-            notes: date && time ? `Preferred appointment: ${date} at ${time}` : prev.notes,
+            notes:
+                date && time
+                    ? `Preferred appointment: ${date} at ${time}`
+                    : prev.notes,
         }));
     };
 
@@ -172,9 +207,11 @@ export default function InstallPage({ booking }) {
         const messages = Object.values(errorsObj).flat().filter(Boolean);
         if (!messages.length) return;
 
-        messages.slice(0, 4).forEach((m) =>
-            toast.error(m, { duration: 5000, position: "top-center" })
-        );
+        messages
+            .slice(0, 4)
+            .forEach((m) =>
+                toast.error(m, { duration: 5000, position: "top-center" })
+            );
         if (messages.length > 4) {
             toast.error("Please review the highlighted fields and try again.", {
                 duration: 5000,
@@ -190,7 +227,8 @@ export default function InstallPage({ booking }) {
         // If backend keys come as customer.first_name etc, map them to your local keys.
         const mapKey = (k) => {
             const key = String(k || "");
-            if (key === "appointment_date" || key === "appointment_time") return "appointment";
+            if (key === "appointment_date" || key === "appointment_time")
+                return "appointment";
             if (key === "customer.title") return "title";
             if (key === "customer.first_name") return "firstName";
             if (key === "customer.last_name") return "lastName";
@@ -260,8 +298,8 @@ export default function InstallPage({ booking }) {
             visit_time: {
                 datetime: {
                     date: selectedDate,
-                    time: selectedTime
-                }
+                    time: selectedTime,
+                },
             },
             // customer form
             customer_details: {
@@ -272,10 +310,10 @@ export default function InstallPage({ booking }) {
                 address: formData.address,
                 notes: formData.notes,
             },
-            product: productDetails
+            product: productDetails,
         };
 
-        console.log("Form Data", payload);
+        // console.log("Form Data", payload);
         // console.log("Answers", answers);
         // return false;
         try {
@@ -294,7 +332,8 @@ export default function InstallPage({ booking }) {
             );
 
             const checkoutUrl = res?.data?.data?.checkout_url;
-            if (!checkoutUrl) throw new Error("Checkout URL missing from response.");
+            if (!checkoutUrl)
+                throw new Error("Checkout URL missing from response.");
 
             window.location.assign(checkoutUrl);
         } catch (err) {
@@ -305,21 +344,30 @@ export default function InstallPage({ booking }) {
                 showValidationErrors(backendErrors);
                 hydrateInlineErrorsFromBackend(backendErrors);
             } else if (status >= 500) {
-                toast.error("Payment service is temporarily unavailable. Please try again shortly.", {
-                    duration: 5000,
-                    position: "top-center",
-                });
+                toast.error(
+                    "Payment service is temporarily unavailable. Please try again shortly.",
+                    {
+                        duration: 5000,
+                        position: "top-center",
+                    }
+                );
             } else if (err?.code === "ECONNABORTED") {
-                toast.error("Request timed out. Please check your connection and try again.", {
-                    duration: 5000,
-                    position: "top-center",
-                });
+                toast.error(
+                    "Request timed out. Please check your connection and try again.",
+                    {
+                        duration: 5000,
+                        position: "top-center",
+                    }
+                );
             } else {
                 const message =
                     err?.response?.data?.message ||
                     err?.message ||
                     "Unable to initiate payment. Please try again.";
-                toast.error(message, { duration: 5000, position: "top-center" });
+                toast.error(message, {
+                    duration: 5000,
+                    position: "top-center",
+                });
             }
 
             if (mounted.current) setProcessing(false);
@@ -340,15 +388,27 @@ export default function InstallPage({ booking }) {
                             className="group flex w-fit items-center gap-2 text-[14px] cursor-pointer font-bold uppercase tracking-wide text-slate-400 transition-colors hover:text-slate-900"
                         >
                             <span className="flex h-7 w-7 items-center justify-center rounded-full bg-slate-100 transition-transform duration-300 group-hover:-translate-x-1 group-hover:bg-slate-200">
-                                <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
-                                    <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
+                                <svg
+                                    className="h-4 w-4"
+                                    fill="none"
+                                    viewBox="0 0 24 24"
+                                    stroke="currentColor"
+                                    strokeWidth={3}
+                                >
+                                    <path
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                        d="M15 19l-7-7 7-7"
+                                    />
                                 </svg>
                             </span>
                             Go Back
                         </button>
 
                         <div className="relative">
-                            <h2 className="text-3xl font-black text-slate-900 tracking-tight">Finalize Booking</h2>
+                            <h2 className="text-xl md:text-2xl lg:text-3xl font-black text-slate-900 tracking-tight whitespace-nowrap">
+                                Finalize Booking
+                            </h2>
                             <div className="absolute -bottom-2 right-0 h-1 w-12 rounded-full bg-emerald-500"></div>
                         </div>
                     </div>
@@ -360,10 +420,18 @@ export default function InstallPage({ booking }) {
                                 <div className="pointer-events-none absolute -right-32 -top-32 h-96 w-96 rounded-full bg-primary/10 blur-[100px]" />
                                 <div className="pointer-events-none absolute -bottom-32 -left-32 h-96 w-96 rounded-full bg-blue-400/10 blur-[100px]" />
 
-                                <div className="flex flex-col gap-1 border-b border-slate-100 p-8">
-                                    <div className="flex items-center justify-between">
-                                        <h2 className="text-xl font-bold text-slate-900">Select Installation Date</h2>
-                                        <div className="flex items-center gap-2 rounded-full bg-emerald-50 px-4 py-2 text-[10px] font-bold uppercase tracking-wide text-primary">
+                                <div className="flex flex-col gap-2 border-b border-slate-100 p-4 md:6 lg:p-8">
+                                    <div className="flex-1 flex gap-2 items-center justify-between">
+                                        <div>
+                                            <h2 className="text-[16px] lg:text-xl font-bold text-slate-900">
+                                                Select Installation Date
+                                            </h2>
+                                            <p className="text-sm text-slate-500 line-clamp-1">
+                                                Our engineers are available in
+                                                your area.
+                                            </p>
+                                        </div>
+                                        <div className="flex items-center gap-2 rounded-full bg-emerald-50 px-4 py-2 text-[10px] font-bold uppercase tracking-wide text-primary ">
                                             <span className="relative flex h-2 w-2">
                                                 <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75"></span>
                                                 <span className="relative inline-flex h-2 w-2 rounded-full bg-primary"></span>
@@ -371,20 +439,29 @@ export default function InstallPage({ booking }) {
                                             Real-time Availability
                                         </div>
                                     </div>
-                                    <p className="text-sm text-slate-500">Our engineers are available in your area.</p>
                                 </div>
 
                                 <div className="flex flex-col md:flex-row">
-                                    <div className="flex-1 p-6 md:p-8">
-                                        <div ref={dateRef} className="min-h-[300px]">
+                                    <div className="flex-1 p-4 md:p-7">
+                                        <div
+                                            ref={dateRef}
+                                            className="min-h-[300px]"
+                                        >
                                             <AppointmentDateRangePicker
                                                 type="new_boiler_quote"
-                                                value={{ date: selectedDate, time: selectedTime }}
-                                                onChange={handleAppointmentChange}
+                                                value={{
+                                                    date: selectedDate,
+                                                    time: selectedTime,
+                                                }}
+                                                onChange={
+                                                    handleAppointmentChange
+                                                }
                                             />
 
                                             {errors.appointment && (
-                                                <p className="mt-3 text-sm font-semibold text-red-600">{errors.appointment}</p>
+                                                <p className="mt-3 text-sm font-semibold text-red-600">
+                                                    {errors.appointment}
+                                                </p>
                                             )}
                                         </div>
                                     </div>
@@ -399,18 +476,27 @@ export default function InstallPage({ booking }) {
                                 <div className="relative border-b border-slate-200/50 px-8 py-5">
                                     <div className="flex items-center justify-between">
                                         <div>
-                                            <h2 className="text-2xl font-bold tracking-tight text-slate-900">Personal Details</h2>
+                                            <h2 className="text-2xl font-bold tracking-tight text-slate-900">
+                                                Personal Details
+                                            </h2>
                                             <div className="mt-1 flex items-center gap-2">
                                                 <span className="relative flex h-2 w-2">
                                                     <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75"></span>
                                                     <span className="relative inline-flex h-2 w-2 rounded-full bg-primary"></span>
                                                 </span>
-                                                <p className="text-sm font-medium text-slate-500">Secure checkout active</p>
+                                                <p className="text-sm font-medium text-slate-500">
+                                                    Secure checkout active
+                                                </p>
                                             </div>
                                         </div>
 
                                         <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-white to-slate-50 shadow-[0_8px_16px_-6px_rgba(0,0,0,0.05)] ring-1 ring-slate-100">
-                                            <svg className="h-6 w-6 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <svg
+                                                className="h-6 w-6 text-primary"
+                                                fill="none"
+                                                viewBox="0 0 24 24"
+                                                stroke="currentColor"
+                                            >
                                                 <path
                                                     strokeLinecap="round"
                                                     strokeLinejoin="round"
@@ -429,10 +515,11 @@ export default function InstallPage({ booking }) {
                                             <div className="flex gap-6">
                                                 <div className="flex-grow">
                                                     <h3 className="mb-4 text-sm font-bold uppercase tracking-wider text-slate-400 transition-colors group-focus-within:text-primary">
-                                                        Who are we installing for?
+                                                        Who are we installing
+                                                        for?
                                                     </h3>
 
-                                                    <div className="grid grid-cols-4 gap-4">
+                                                    <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
                                                         {/* Title */}
                                                         <div className="col-span-1">
                                                             <div className="relative transition-all duration-300 focus-within:-translate-y-1">
@@ -442,32 +529,72 @@ export default function InstallPage({ booking }) {
 
                                                                 <div className="relative">
                                                                     <select
-                                                                        ref={titleRef}
+                                                                        ref={
+                                                                            titleRef
+                                                                        }
                                                                         name="title"
-                                                                        value={formData.title}
-                                                                        onChange={handleInputChange}
+                                                                        value={
+                                                                            formData.title
+                                                                        }
+                                                                        onChange={
+                                                                            handleInputChange
+                                                                        }
                                                                         className={`w-full appearance-none rounded-xl border-0 bg-slate-50/80 px-4 py-3.5 text-sm font-semibold text-slate-900 ring-1 transition-all hover:bg-white focus:bg-white focus:ring-2 focus:shadow-lg focus:outline-none
-                                      ${errors.title
-                                                                                ? "ring-red-400 focus:ring-red-400/50 focus:shadow-red-500/10"
-                                                                                : "ring-slate-200 focus:ring-primary/50 focus:shadow-primary/10"
-                                                                            }`}
+                                      ${
+                                          errors.title
+                                              ? "ring-red-400 focus:ring-red-400/50 focus:shadow-red-500/10"
+                                              : "ring-slate-200 focus:ring-primary/50 focus:shadow-primary/10"
+                                      }`}
                                                                     >
-                                                                        <option value="">--</option>
-                                                                        {titleOptions.map((t) => (
-                                                                            <option key={t} value={t}>
-                                                                                {t}
-                                                                            </option>
-                                                                        ))}
+                                                                        <option value="">
+                                                                            --
+                                                                        </option>
+                                                                        {titleOptions.map(
+                                                                            (
+                                                                                t
+                                                                            ) => (
+                                                                                <option
+                                                                                    key={
+                                                                                        t
+                                                                                    }
+                                                                                    value={
+                                                                                        t
+                                                                                    }
+                                                                                >
+                                                                                    {
+                                                                                        t
+                                                                                    }
+                                                                                </option>
+                                                                            )
+                                                                        )}
                                                                     </select>
 
                                                                     <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-3 text-slate-400">
-                                                                        <svg className="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M19 9l-7 7-7-7" />
+                                                                        <svg
+                                                                            className="h-3 w-3"
+                                                                            fill="none"
+                                                                            viewBox="0 0 24 24"
+                                                                            stroke="currentColor"
+                                                                        >
+                                                                            <path
+                                                                                strokeLinecap="round"
+                                                                                strokeLinejoin="round"
+                                                                                strokeWidth={
+                                                                                    3
+                                                                                }
+                                                                                d="M19 9l-7 7-7-7"
+                                                                            />
                                                                         </svg>
                                                                     </div>
                                                                 </div>
 
-                                                                {errors.title && <p className="mt-2 text-xs font-semibold text-red-600">{errors.title}</p>}
+                                                                {errors.title && (
+                                                                    <p className="mt-2 text-xs font-semibold text-red-600">
+                                                                        {
+                                                                            errors.title
+                                                                        }
+                                                                    </p>
+                                                                )}
                                                             </div>
                                                         </div>
 
@@ -478,19 +605,30 @@ export default function InstallPage({ booking }) {
                                                                     First Name
                                                                 </label>
                                                                 <input
-                                                                    ref={firstNameRef}
+                                                                    ref={
+                                                                        firstNameRef
+                                                                    }
                                                                     name="firstName"
                                                                     placeholder="e.g. John"
-                                                                    value={formData.firstName}
-                                                                    onChange={handleInputChange}
+                                                                    value={
+                                                                        formData.firstName
+                                                                    }
+                                                                    onChange={
+                                                                        handleInputChange
+                                                                    }
                                                                     className={`w-full rounded-xl border-0 bg-slate-50/80 px-4 py-3.5 text-sm font-semibold text-slate-900 ring-1 transition-all placeholder:font-normal placeholder:text-slate-400 hover:bg-white focus:bg-white focus:ring-2 focus:outline-none
-                                    ${errors.firstName
-                                                                            ? "ring-red-400 focus:ring-red-400/50 focus:shadow-lg focus:shadow-red-500/10"
-                                                                            : "ring-slate-200 focus:ring-primary/50 focus:shadow-lg focus:shadow-primary/10"
-                                                                        }`}
+                                    ${
+                                        errors.firstName
+                                            ? "ring-red-400 focus:ring-red-400/50 focus:shadow-lg focus:shadow-red-500/10"
+                                            : "ring-slate-200 focus:ring-primary/50 focus:shadow-lg focus:shadow-primary/10"
+                                    }`}
                                                                 />
                                                                 {errors.firstName && (
-                                                                    <p className="mt-2 text-xs font-semibold text-red-600">{errors.firstName}</p>
+                                                                    <p className="mt-2 text-xs font-semibold text-red-600">
+                                                                        {
+                                                                            errors.firstName
+                                                                        }
+                                                                    </p>
                                                                 )}
                                                             </div>
 
@@ -499,19 +637,30 @@ export default function InstallPage({ booking }) {
                                                                     Last Name
                                                                 </label>
                                                                 <input
-                                                                    ref={lastNameRef}
+                                                                    ref={
+                                                                        lastNameRef
+                                                                    }
                                                                     name="lastName"
                                                                     placeholder="e.g. Doe"
-                                                                    value={formData.lastName}
-                                                                    onChange={handleInputChange}
+                                                                    value={
+                                                                        formData.lastName
+                                                                    }
+                                                                    onChange={
+                                                                        handleInputChange
+                                                                    }
                                                                     className={`w-full rounded-xl border-0 bg-slate-50/80 px-4 py-3.5 text-sm font-semibold text-slate-900 ring-1 transition-all placeholder:font-normal placeholder:text-slate-400 hover:bg-white focus:bg-white focus:ring-2 focus:outline-none
-                                    ${errors.lastName
-                                                                            ? "ring-red-400 focus:ring-red-400/50 focus:shadow-lg focus:shadow-red-500/10"
-                                                                            : "ring-slate-200 focus:ring-primary/50 focus:shadow-lg focus:shadow-primary/10"
-                                                                        }`}
+                                    ${
+                                        errors.lastName
+                                            ? "ring-red-400 focus:ring-red-400/50 focus:shadow-lg focus:shadow-red-500/10"
+                                            : "ring-slate-200 focus:ring-primary/50 focus:shadow-lg focus:shadow-primary/10"
+                                    }`}
                                                                 />
                                                                 {errors.lastName && (
-                                                                    <p className="mt-2 text-xs font-semibold text-red-600">{errors.lastName}</p>
+                                                                    <p className="mt-2 text-xs font-semibold text-red-600">
+                                                                        {
+                                                                            errors.lastName
+                                                                        }
+                                                                    </p>
                                                                 )}
                                                             </div>
                                                         </div>
@@ -535,30 +684,50 @@ export default function InstallPage({ booking }) {
                                                             </label>
                                                             <div className="relative">
                                                                 <input
-                                                                    ref={emailRef}
+                                                                    ref={
+                                                                        emailRef
+                                                                    }
                                                                     type="email"
                                                                     name="email"
                                                                     placeholder="your@email.com"
-                                                                    value={formData.email}
-                                                                    onChange={handleInputChange}
+                                                                    value={
+                                                                        formData.email
+                                                                    }
+                                                                    onChange={
+                                                                        handleInputChange
+                                                                    }
                                                                     className={`w-full rounded-xl border-0 bg-slate-50/80 pl-11 pr-4 py-3.5 text-sm font-semibold text-slate-900 ring-1 transition-all placeholder:font-normal placeholder:text-slate-400 hover:bg-white focus:bg-white focus:ring-2 focus:outline-none
-                                    ${errors.email
-                                                                            ? "ring-red-400 focus:ring-red-400/50 focus:shadow-lg focus:shadow-red-500/10"
-                                                                            : "ring-slate-200 focus:ring-primary/50 focus:shadow-lg focus:shadow-primary/10"
-                                                                        }`}
+                                    ${
+                                        errors.email
+                                            ? "ring-red-400 focus:ring-red-400/50 focus:shadow-lg focus:shadow-red-500/10"
+                                            : "ring-slate-200 focus:ring-primary/50 focus:shadow-lg focus:shadow-primary/10"
+                                    }`}
                                                                 />
                                                                 <div className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400">
-                                                                    <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                                    <svg
+                                                                        className="w-5 h-5"
+                                                                        fill="none"
+                                                                        viewBox="0 0 24 24"
+                                                                        stroke="currentColor"
+                                                                    >
                                                                         <path
                                                                             strokeLinecap="round"
                                                                             strokeLinejoin="round"
-                                                                            strokeWidth={1.5}
+                                                                            strokeWidth={
+                                                                                1.5
+                                                                            }
                                                                             d="M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v1.5a2.5 2.5 0 005 0V12a9 9 0 10-9 9m4.5-1.206a8.959 8.959 0 01-4.5 1.207"
                                                                         />
                                                                     </svg>
                                                                 </div>
                                                             </div>
-                                                            {errors.email && <p className="mt-2 text-xs font-semibold text-red-600">{errors.email}</p>}
+                                                            {errors.email && (
+                                                                <p className="mt-2 text-xs font-semibold text-red-600">
+                                                                    {
+                                                                        errors.email
+                                                                    }
+                                                                </p>
+                                                            )}
                                                         </div>
 
                                                         <div className="relative transition-all duration-300 focus-within:-translate-y-1">
@@ -567,29 +736,49 @@ export default function InstallPage({ booking }) {
                                                             </label>
                                                             <div className="relative">
                                                                 <input
-                                                                    ref={phoneRef}
+                                                                    ref={
+                                                                        phoneRef
+                                                                    }
                                                                     name="phone"
                                                                     placeholder="07xxx xxxxxx"
-                                                                    value={formData.phone}
-                                                                    onChange={handleInputChange}
+                                                                    value={
+                                                                        formData.phone
+                                                                    }
+                                                                    onChange={
+                                                                        handleInputChange
+                                                                    }
                                                                     className={`w-full rounded-xl border-0 bg-slate-50/80 pl-11 pr-4 py-3.5 text-sm font-semibold text-slate-900 ring-1 transition-all placeholder:font-normal placeholder:text-slate-400 hover:bg-white focus:bg-white focus:ring-2 focus:outline-none
-                                    ${errors.phone
-                                                                            ? "ring-red-400 focus:ring-red-400/50 focus:shadow-lg focus:shadow-red-500/10"
-                                                                            : "ring-slate-200 focus:ring-primary/50 focus:shadow-lg focus:shadow-primary/10"
-                                                                        }`}
+                                    ${
+                                        errors.phone
+                                            ? "ring-red-400 focus:ring-red-400/50 focus:shadow-lg focus:shadow-red-500/10"
+                                            : "ring-slate-200 focus:ring-primary/50 focus:shadow-lg focus:shadow-primary/10"
+                                    }`}
                                                                 />
                                                                 <div className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400">
-                                                                    <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                                    <svg
+                                                                        className="w-5 h-5"
+                                                                        fill="none"
+                                                                        viewBox="0 0 24 24"
+                                                                        stroke="currentColor"
+                                                                    >
                                                                         <path
                                                                             strokeLinecap="round"
                                                                             strokeLinejoin="round"
-                                                                            strokeWidth={1.5}
+                                                                            strokeWidth={
+                                                                                1.5
+                                                                            }
                                                                             d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"
                                                                         />
                                                                     </svg>
                                                                 </div>
                                                             </div>
-                                                            {errors.phone && <p className="mt-2 text-xs font-semibold text-red-600">{errors.phone}</p>}
+                                                            {errors.phone && (
+                                                                <p className="mt-2 text-xs font-semibold text-red-600">
+                                                                    {
+                                                                        errors.phone
+                                                                    }
+                                                                </p>
+                                                            )}
                                                         </div>
                                                     </div>
                                                 </div>
@@ -612,37 +801,59 @@ export default function InstallPage({ booking }) {
 
                                                             <div className="relative group/input">
                                                                 <input
-                                                                    ref={addressRef}
+                                                                    ref={
+                                                                        addressRef
+                                                                    }
                                                                     name="address"
                                                                     placeholder="Start typing postcode or address..."
-                                                                    value={formData.address}
-                                                                    onChange={handleInputChange}
+                                                                    value={
+                                                                        formData.address
+                                                                    }
+                                                                    onChange={
+                                                                        handleInputChange
+                                                                    }
                                                                     className={`w-full rounded-xl border-0 bg-slate-50/80 pl-11 pr-4 py-3.5 text-sm font-semibold text-slate-900 ring-1 transition-all placeholder:font-normal placeholder:text-slate-400 hover:bg-white focus:bg-white focus:ring-2 focus:outline-none
-                                    ${errors.address
-                                                                            ? "ring-red-400 focus:ring-red-400/50 focus:shadow-lg focus:shadow-red-500/10"
-                                                                            : "ring-slate-200 focus:ring-primary/50 focus:shadow-lg focus:shadow-primary/10"
-                                                                        }`}
+                                    ${
+                                        errors.address
+                                            ? "ring-red-400 focus:ring-red-400/50 focus:shadow-lg focus:shadow-red-500/10"
+                                            : "ring-slate-200 focus:ring-primary/50 focus:shadow-lg focus:shadow-primary/10"
+                                    }`}
                                                                 />
 
                                                                 <div className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400">
-                                                                    <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                                    <svg
+                                                                        className="w-5 h-5"
+                                                                        fill="none"
+                                                                        viewBox="0 0 24 24"
+                                                                        stroke="currentColor"
+                                                                    >
                                                                         <path
                                                                             strokeLinecap="round"
                                                                             strokeLinejoin="round"
-                                                                            strokeWidth={1.5}
+                                                                            strokeWidth={
+                                                                                1.5
+                                                                            }
                                                                             d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
                                                                         />
                                                                         <path
                                                                             strokeLinecap="round"
                                                                             strokeLinejoin="round"
-                                                                            strokeWidth={1.5}
+                                                                            strokeWidth={
+                                                                                1.5
+                                                                            }
                                                                             d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
                                                                         />
                                                                     </svg>
                                                                 </div>
                                                             </div>
 
-                                                            {errors.address && <p className="mt-2 text-xs font-semibold text-red-600">{errors.address}</p>}
+                                                            {errors.address && (
+                                                                <p className="mt-2 text-xs font-semibold text-red-600">
+                                                                    {
+                                                                        errors.address
+                                                                    }
+                                                                </p>
+                                                            )}
                                                         </div>
 
                                                         {/* <div className="relative transition-all duration-300 focus-within:-translate-y-1">
@@ -661,9 +872,15 @@ export default function InstallPage({ booking }) {
                                                         </div> */}
                                                     </div>
 
-                                                    {Object.keys(errors).length > 0 && (
+                                                    {Object.keys(errors)
+                                                        .length > 0 && (
                                                         <div className="mt-6 rounded-xl border border-red-200 bg-red-50 p-4">
-                                                            <p className="text-sm font-bold text-red-700">Please fix the highlighted fields to continue.</p>
+                                                            <p className="text-sm font-bold text-red-700">
+                                                                Please fix the
+                                                                highlighted
+                                                                fields to
+                                                                continue.
+                                                            </p>
                                                         </div>
                                                     )}
                                                 </div>
@@ -700,23 +917,27 @@ export default function InstallPage({ booking }) {
                                     <div className="p-6 space-y-4">
                                         <div className="flex items-center justify-between">
                                             <div className="space-y-2">
-                                                <p className="font-bold text-[18px] text-slate-900">{booking?.model}</p>
+                                                <p className="font-bold text-[18px] text-slate-900">
+                                                    {booking?.model}
+                                                </p>
                                                 <div className="flex flex-wrap gap-2">
                                                     <span className="bg-primary/10 text-primary text-[14px] px-2 py-0.5 rounded font-mono">
                                                         {booking?.kw}KW
                                                     </span>
                                                     <span className="bg-slate-100 text-slate-600 text-[14px] px-2 py-0.5 rounded font-mono">
-                                                        {booking?.warrantyYears}Y Warranty
+                                                        {booking?.warrantyYears}
+                                                        Y Warranty
                                                     </span>
                                                 </div>
                                             </div>
 
-                                            <div className="h-20 w-20 bg-slate-100 rounded-full flex items-center justify-center text-xl p-2">
+                                            <div className="h-20 w-20 bg-slate-100/40 rounded-full flex items-center justify-center text-xl p-2">
                                                 <img
                                                     src={booking?.images?.[0]}
                                                     className="h-full object-contain drop-shadow-2xl"
                                                     onError={(e) => {
-                                                        e.target.src = "/images/ideal-20logic.png";
+                                                        e.target.src =
+                                                            "/images/ideal-20logic.png";
                                                     }}
                                                 />
                                             </div>
@@ -725,82 +946,127 @@ export default function InstallPage({ booking }) {
                                         <div className="w-full border-t-2 border-dashed border-dark/40" />
 
                                         <div className="space-y-3">
-                                            <p className="text-[14px] font-bold uppercase text-dark/60 tracking-wider">What's Included</p>
+                                            <p className="text-[14px] font-bold uppercase text-dark/60 tracking-wider">
+                                                What's Included
+                                            </p>
 
                                             {includes.length > 0 && (
                                                 <div className="space-y-3">
                                                     <ul
-                                                        className={`space-y-2 overflow-hidden transition-all duration-500 ease-in-out ${showAllIncludes ? "max-h-[600px]" : "max-h-[180px]"
-                                                            }`}
+                                                        className={`space-y-2 overflow-hidden transition-all duration-500 ease-in-out ${
+                                                            showAllIncludes
+                                                                ? "max-h-[600px]"
+                                                                : "max-h-[180px]"
+                                                        }`}
                                                     >
-
                                                         <div className="space-y-3">
                                                             {/* TRV */}
                                                             {trvItem && (
                                                                 <div className="flex items-center justify-between text-[14px]">
-                                                                    <div className="text-slate-700 font-semibold">TRV supply & fit</div>
+                                                                    <div className="text-slate-700 font-semibold">
+                                                                        TRV
+                                                                        supply &
+                                                                        fit
+                                                                    </div>
                                                                     <div className="text-slate-900 font-bold">
-                                                                        {trvItem ? `${trvItem.qty} × £${trvItem.unitPrice} = £${trvItem.total}` : "—"}
+                                                                        {trvItem
+                                                                            ? `${trvItem.qty} × £${trvItem.unitPrice} = £${trvItem.total}`
+                                                                            : "—"}
                                                                     </div>
                                                                 </div>
                                                             )}
 
                                                             {(() => {
-                                                                const relocation = addOns.find(x => x.key === "boiler_relocation");
-                                                                if (!relocation) return null;
+                                                                const relocation =
+                                                                    addOns.find(
+                                                                        (x) =>
+                                                                            x.key ===
+                                                                            "boiler_relocation"
+                                                                    );
+                                                                if (!relocation)
+                                                                    return null;
 
                                                                 return (
                                                                     <div className="flex items-center justify-between text-[14px]">
                                                                         <div className="text-slate-700 font-semibold">
-                                                                            {relocation.label}
+                                                                            {
+                                                                                relocation.label
+                                                                            }
                                                                         </div>
                                                                         <div className="text-slate-900 font-bold">
-                                                                            £{relocation.total}
+                                                                            £
+                                                                            {
+                                                                                relocation.total
+                                                                            }
                                                                         </div>
                                                                     </div>
                                                                 );
                                                             })()}
 
                                                             {(() => {
-                                                                const convert_to_combi = addOns.find(x => x.key === "convert_to_combi");
-                                                                if (!convert_to_combi) return null;
+                                                                const convert_to_combi =
+                                                                    addOns.find(
+                                                                        (x) =>
+                                                                            x.key ===
+                                                                            "convert_to_combi"
+                                                                    );
+                                                                if (
+                                                                    !convert_to_combi
+                                                                )
+                                                                    return null;
 
                                                                 return (
                                                                     <div className="flex items-center justify-between text-[14px]">
                                                                         <div className="text-slate-700 font-semibold">
-                                                                            {convert_to_combi.label}
+                                                                            {
+                                                                                convert_to_combi.label
+                                                                            }
                                                                         </div>
                                                                         <div className="text-slate-900 font-bold">
-                                                                            £{convert_to_combi.total}
+                                                                            £
+                                                                            {
+                                                                                convert_to_combi.total
+                                                                            }
                                                                         </div>
                                                                     </div>
                                                                 );
                                                             })()}
 
-
-
                                                             {/* Flue Type */}
                                                             <div className="flex items-center justify-between text-[14px]">
-                                                                <div className="text-slate-700 font-semibold">Flue Type</div>
+                                                                <div className="text-slate-700 font-semibold">
+                                                                    Flue Type
+                                                                </div>
 
                                                                 <div className="flex items-center gap-2">
                                                                     <span
-                                                                        className={`px-2 py-0.5 rounded font-bold text-[12px] uppercase tracking-wider ${isVertical ? "bg-amber-100 text-amber-900" : "bg-emerald-100 text-emerald-900"
-                                                                            }`}
+                                                                        className={`px-2 py-0.5 rounded font-bold text-[12px] uppercase tracking-wider ${
+                                                                            isVertical
+                                                                                ? "bg-amber-100 text-amber-900"
+                                                                                : "bg-emerald-100 text-emerald-900"
+                                                                        }`}
                                                                     >
-                                                                        {isVertical ? "Vertical" : "Horizontal"}
+                                                                        {isVertical
+                                                                            ? "Vertical"
+                                                                            : "Horizontal"}
                                                                     </span>
 
                                                                     {/* Only show cost if vertical add-on exists */}
-                                                                    {isVertical && verticalFlueItem ? (
-                                                                        <span className="text-slate-900 font-bold">£{verticalFlueItem.total}</span>
+                                                                    {isVertical &&
+                                                                    verticalFlueItem ? (
+                                                                        <span className="text-slate-900 font-bold">
+                                                                            £
+                                                                            {
+                                                                                verticalFlueItem.total
+                                                                            }
+                                                                        </span>
                                                                     ) : (
-                                                                        <span className="text-slate-500 font-semibold text-[13px]">Included</span>
+                                                                        <span className="text-slate-500 font-semibold text-[13px]">
+                                                                            Included
+                                                                        </span>
                                                                     )}
                                                                 </div>
                                                             </div>
-
-
                                                         </div>
 
                                                         <div className="flex items-center justify-between text-[14px]">
@@ -809,38 +1075,54 @@ export default function InstallPage({ booking }) {
                                                             </span>
 
                                                             <span
-                                                                className={`font-bold ${hasSmartThermostat
-                                                                    ? "text-primary"
-                                                                    : "text-slate-700"
-                                                                    }`}
+                                                                className={`font-bold ${
+                                                                    hasSmartThermostat
+                                                                        ? "text-primary"
+                                                                        : "text-slate-700"
+                                                                }`}
                                                             >
-                                                                {thermostatLabel}
+                                                                {
+                                                                    thermostatLabel
+                                                                }
                                                             </span>
                                                         </div>
 
-
-                                                        {visibleIncludes.map((item, i) => (
-                                                            <li
-                                                                key={i}
-                                                                className="flex justify-between items-center font-medium text-dark opacity-0 included-animation"
-                                                                style={{ animationDelay: `${i * 40}ms` }}
-                                                            >
-                                                                <span className="max-w-[90%] text-[15px] line-clamp-1">{item}</span>
-                                                                <span className="text-primary text-sm font-semibold">Included</span>
-                                                            </li>
-                                                        ))}
-
-
-
+                                                        {visibleIncludes.map(
+                                                            (item, i) => (
+                                                                <li
+                                                                    key={i}
+                                                                    className="flex justify-between items-center font-medium text-dark opacity-0 included-animation"
+                                                                    style={{
+                                                                        animationDelay: `${
+                                                                            i *
+                                                                            40
+                                                                        }ms`,
+                                                                    }}
+                                                                >
+                                                                    <span className="max-w-[90%] text-[15px] line-clamp-1">
+                                                                        {item}
+                                                                    </span>
+                                                                    <span className="text-primary text-sm font-semibold">
+                                                                        Included
+                                                                    </span>
+                                                                </li>
+                                                            )
+                                                        )}
                                                     </ul>
 
                                                     {includes.length > 3 && (
                                                         <button
                                                             type="button"
-                                                            onClick={() => setShowAllIncludes((v) => !v)}
+                                                            onClick={() =>
+                                                                setShowAllIncludes(
+                                                                    (v) => !v
+                                                                )
+                                                            }
                                                             className="text-[14px] mt-3 border border-gray-200 cursor-pointer hover:border-primary px-3 py-2 uppercase tracking-wider font-semibold text-dark/80 hover:text-primary transition-colors"
                                                         >
-                                                            {showAllIncludes ? "- Hide full item" : `+ See full item (${includes.length})`}
+                                                            {showAllIncludes
+                                                                ? "- Hide full item"
+                                                                : `+ See full item (${includes.length})`}
                                                         </button>
                                                     )}
                                                 </div>
@@ -852,15 +1134,17 @@ export default function InstallPage({ booking }) {
                                             <button
                                                 type="button"
                                                 onClick={handlePayAndBook}
-                                                disabled={!isFormValid || processing}
+                                                disabled={
+                                                    !isFormValid || processing
+                                                }
                                                 aria-busy={processing}
                                                 className={[
                                                     "w-full py-4 text-sm font-bold rounded-sm uppercase tracking-widest border-2 transition-all flex items-center justify-center gap-2",
                                                     processing
                                                         ? "bg-gray-400 border-gray-400 cursor-not-allowed text-white"
                                                         : isFormValid
-                                                            ? "bg-primary border-primary text-foreground hover:text-dark hover:bg-foreground"
-                                                            : "bg-transparent border-slate-700 text-slate-500 cursor-not-allowed",
+                                                        ? "bg-primary border-primary text-foreground hover:text-dark hover:bg-foreground"
+                                                        : "bg-transparent border-slate-700 text-slate-500 cursor-not-allowed",
                                                 ].join(" ")}
                                             >
                                                 {processing ? (
