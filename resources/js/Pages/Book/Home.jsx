@@ -140,16 +140,11 @@ export default function Home() {
                                     spellCheck={false}
                                 />
 
-                                {touched && normalized && !valid ? (
+                                {touched && normalized && !valid && (
                                     <div className="mt-2 text-left text-sm text-red-600 font-semibold">
                                         {!validFormat
                                             ? "Please enter a valid UK postcode."
                                             : "We currently only serve postcodes starting with LS, BD, WF, or HG."}
-                                    </div>
-                                ) : (
-                                    <div className="mt-2 text-left text-xs text-slate-500">
-                                        Tip: We’ll use this to check availability
-                                        and pricing in your area.
                                     </div>
                                 )}
                             </div>
@@ -158,7 +153,7 @@ export default function Home() {
                                 type="button"
                                 onClick={submit}
                                 className={[
-                                    "px-8 py-5 rounded-2xl font-semibold transition flex items-center justify-center",
+                                    "px-8 py-5 rounded-2xl font-semibold transition flex items-center justify-center h-full",
                                     valid
                                         ? "bg-primary text-white hover:opacity-95"
                                         : "bg-slate-200 text-slate-500 cursor-not-allowed",
@@ -168,11 +163,15 @@ export default function Home() {
                                 Get instant quote →
                             </button>
                         </div>
+
+                       
                     </div>
 
-                    <div className="mt-8 text-sm text-slate-500">
-                        Fixed pricing · No obligation · 0% finance available
-                    </div>
+                    <div className="mt-5 flex justify-center">
+                            <p className="text-xs text-slate-500 text-center max-w-md">
+                                Tip: We’ll use this to check availability and pricing in your area.
+                            </p>
+                        </div>
                 </div>
             </section>
 
