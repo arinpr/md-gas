@@ -21,15 +21,15 @@ export default defineConfig({
         },
     },
     server: {
-        host: "192.168.1.100",
+        host: "192.168.0.173",
         port: 5173,
         strictPort: true,
         cors: {
-            origin: "http://192.168.1.100:8000",
+            origin: "http://192.168.0.173:8000",
             credentials: true,
         },
         hmr: {
-            host: "192.168.1.100",
+            host: "192.168.0.173",
             port: 5173,
         },
     },

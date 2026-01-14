@@ -89,6 +89,7 @@ export default function InstallPage({ booking }) {
     const visibleIncludes = showAllIncludes ? includes : includes.slice(0, 3);
 
     const visibleAddOns = booking?.answers?.addOns;
+    console.log("Add Ons", visibleAddOns);
 
     const addOns = visibleAddOns?.items || [];
 
@@ -540,11 +541,10 @@ export default function InstallPage({ booking }) {
                                                                             handleInputChange
                                                                         }
                                                                         className={`w-full appearance-none rounded-xl border-0 bg-slate-50/80 px-4 py-3.5 text-sm font-semibold text-slate-900 ring-1 transition-all hover:bg-white focus:bg-white focus:ring-2 focus:shadow-lg focus:outline-none
-                                      ${
-                                          errors.title
-                                              ? "ring-red-400 focus:ring-red-400/50 focus:shadow-red-500/10"
-                                              : "ring-slate-200 focus:ring-primary/50 focus:shadow-primary/10"
-                                      }`}
+                                      ${errors.title
+                                                                                ? "ring-red-400 focus:ring-red-400/50 focus:shadow-red-500/10"
+                                                                                : "ring-slate-200 focus:ring-primary/50 focus:shadow-primary/10"
+                                                                            }`}
                                                                     >
                                                                         <option value="">
                                                                             --
@@ -617,11 +617,10 @@ export default function InstallPage({ booking }) {
                                                                         handleInputChange
                                                                     }
                                                                     className={`w-full rounded-xl border-0 bg-slate-50/80 px-4 py-3.5 text-sm font-semibold text-slate-900 ring-1 transition-all placeholder:font-normal placeholder:text-slate-400 hover:bg-white focus:bg-white focus:ring-2 focus:outline-none
-                                    ${
-                                        errors.firstName
-                                            ? "ring-red-400 focus:ring-red-400/50 focus:shadow-lg focus:shadow-red-500/10"
-                                            : "ring-slate-200 focus:ring-primary/50 focus:shadow-lg focus:shadow-primary/10"
-                                    }`}
+                                    ${errors.firstName
+                                                                            ? "ring-red-400 focus:ring-red-400/50 focus:shadow-lg focus:shadow-red-500/10"
+                                                                            : "ring-slate-200 focus:ring-primary/50 focus:shadow-lg focus:shadow-primary/10"
+                                                                        }`}
                                                                 />
                                                                 {errors.firstName && (
                                                                     <p className="mt-2 text-xs font-semibold text-red-600">
@@ -649,11 +648,10 @@ export default function InstallPage({ booking }) {
                                                                         handleInputChange
                                                                     }
                                                                     className={`w-full rounded-xl border-0 bg-slate-50/80 px-4 py-3.5 text-sm font-semibold text-slate-900 ring-1 transition-all placeholder:font-normal placeholder:text-slate-400 hover:bg-white focus:bg-white focus:ring-2 focus:outline-none
-                                    ${
-                                        errors.lastName
-                                            ? "ring-red-400 focus:ring-red-400/50 focus:shadow-lg focus:shadow-red-500/10"
-                                            : "ring-slate-200 focus:ring-primary/50 focus:shadow-lg focus:shadow-primary/10"
-                                    }`}
+                                    ${errors.lastName
+                                                                            ? "ring-red-400 focus:ring-red-400/50 focus:shadow-lg focus:shadow-red-500/10"
+                                                                            : "ring-slate-200 focus:ring-primary/50 focus:shadow-lg focus:shadow-primary/10"
+                                                                        }`}
                                                                 />
                                                                 {errors.lastName && (
                                                                     <p className="mt-2 text-xs font-semibold text-red-600">
@@ -697,11 +695,10 @@ export default function InstallPage({ booking }) {
                                                                         handleInputChange
                                                                     }
                                                                     className={`w-full rounded-xl border-0 bg-slate-50/80 pl-11 pr-4 py-3.5 text-sm font-semibold text-slate-900 ring-1 transition-all placeholder:font-normal placeholder:text-slate-400 hover:bg-white focus:bg-white focus:ring-2 focus:outline-none
-                                    ${
-                                        errors.email
-                                            ? "ring-red-400 focus:ring-red-400/50 focus:shadow-lg focus:shadow-red-500/10"
-                                            : "ring-slate-200 focus:ring-primary/50 focus:shadow-lg focus:shadow-primary/10"
-                                    }`}
+                                    ${errors.email
+                                                                            ? "ring-red-400 focus:ring-red-400/50 focus:shadow-lg focus:shadow-red-500/10"
+                                                                            : "ring-slate-200 focus:ring-primary/50 focus:shadow-lg focus:shadow-primary/10"
+                                                                        }`}
                                                                 />
                                                                 <div className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400">
                                                                     <svg
@@ -748,11 +745,10 @@ export default function InstallPage({ booking }) {
                                                                         handleInputChange
                                                                     }
                                                                     className={`w-full rounded-xl border-0 bg-slate-50/80 pl-11 pr-4 py-3.5 text-sm font-semibold text-slate-900 ring-1 transition-all placeholder:font-normal placeholder:text-slate-400 hover:bg-white focus:bg-white focus:ring-2 focus:outline-none
-                                    ${
-                                        errors.phone
-                                            ? "ring-red-400 focus:ring-red-400/50 focus:shadow-lg focus:shadow-red-500/10"
-                                            : "ring-slate-200 focus:ring-primary/50 focus:shadow-lg focus:shadow-primary/10"
-                                    }`}
+                                    ${errors.phone
+                                                                            ? "ring-red-400 focus:ring-red-400/50 focus:shadow-lg focus:shadow-red-500/10"
+                                                                            : "ring-slate-200 focus:ring-primary/50 focus:shadow-lg focus:shadow-primary/10"
+                                                                        }`}
                                                                 />
                                                                 <div className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400">
                                                                     <svg
@@ -813,11 +809,10 @@ export default function InstallPage({ booking }) {
                                                                         handleInputChange
                                                                     }
                                                                     className={`w-full rounded-xl border-0 bg-slate-50/80 pl-11 pr-4 py-3.5 text-sm font-semibold text-slate-900 ring-1 transition-all placeholder:font-normal placeholder:text-slate-400 hover:bg-white focus:bg-white focus:ring-2 focus:outline-none
-                                    ${
-                                        errors.address
-                                            ? "ring-red-400 focus:ring-red-400/50 focus:shadow-lg focus:shadow-red-500/10"
-                                            : "ring-slate-200 focus:ring-primary/50 focus:shadow-lg focus:shadow-primary/10"
-                                    }`}
+                                    ${errors.address
+                                                                            ? "ring-red-400 focus:ring-red-400/50 focus:shadow-lg focus:shadow-red-500/10"
+                                                                            : "ring-slate-200 focus:ring-primary/50 focus:shadow-lg focus:shadow-primary/10"
+                                                                        }`}
                                                                 />
 
                                                                 <div className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400">
@@ -874,15 +869,15 @@ export default function InstallPage({ booking }) {
 
                                                     {Object.keys(errors)
                                                         .length > 0 && (
-                                                        <div className="mt-6 rounded-xl border border-red-200 bg-red-50 p-4">
-                                                            <p className="text-sm font-bold text-red-700">
-                                                                Please fix the
-                                                                highlighted
-                                                                fields to
-                                                                continue.
-                                                            </p>
-                                                        </div>
-                                                    )}
+                                                            <div className="mt-6 rounded-xl border border-red-200 bg-red-50 p-4">
+                                                                <p className="text-sm font-bold text-red-700">
+                                                                    Please fix the
+                                                                    highlighted
+                                                                    fields to
+                                                                    continue.
+                                                                </p>
+                                                            </div>
+                                                        )}
                                                 </div>
                                             </div>
                                         </div>
@@ -953,11 +948,10 @@ export default function InstallPage({ booking }) {
                                             {includes.length > 0 && (
                                                 <div className="space-y-3">
                                                     <ul
-                                                        className={`space-y-2 overflow-hidden transition-all duration-500 ease-in-out ${
-                                                            showAllIncludes
+                                                        className={`space-y-2 overflow-hidden transition-all duration-500 ease-in-out ${showAllIncludes
                                                                 ? "max-h-[600px]"
                                                                 : "max-h-[180px]"
-                                                        }`}
+                                                            }`}
                                                     >
                                                         <div className="space-y-3">
                                                             {/* TRV */}
@@ -1040,11 +1034,10 @@ export default function InstallPage({ booking }) {
 
                                                                 <div className="flex items-center gap-2">
                                                                     <span
-                                                                        className={`px-2 py-0.5 rounded font-bold text-[12px] uppercase tracking-wider ${
-                                                                            isVertical
+                                                                        className={`px-2 py-0.5 rounded font-bold text-[12px] uppercase tracking-wider ${isVertical
                                                                                 ? "bg-amber-100 text-amber-900"
                                                                                 : "bg-emerald-100 text-emerald-900"
-                                                                        }`}
+                                                                            }`}
                                                                     >
                                                                         {isVertical
                                                                             ? "Vertical"
@@ -1053,7 +1046,7 @@ export default function InstallPage({ booking }) {
 
                                                                     {/* Only show cost if vertical add-on exists */}
                                                                     {isVertical &&
-                                                                    verticalFlueItem ? (
+                                                                        verticalFlueItem ? (
                                                                         <span className="text-slate-900 font-bold">
                                                                             £
                                                                             {
@@ -1075,11 +1068,10 @@ export default function InstallPage({ booking }) {
                                                             </span>
 
                                                             <span
-                                                                className={`font-bold ${
-                                                                    hasSmartThermostat
+                                                                className={`font-bold ${hasSmartThermostat
                                                                         ? "text-primary"
                                                                         : "text-slate-700"
-                                                                }`}
+                                                                    }`}
                                                             >
                                                                 {
                                                                     thermostatLabel
@@ -1093,10 +1085,9 @@ export default function InstallPage({ booking }) {
                                                                     key={i}
                                                                     className="flex justify-between items-center font-medium text-dark opacity-0 included-animation"
                                                                     style={{
-                                                                        animationDelay: `${
-                                                                            i *
+                                                                        animationDelay: `${i *
                                                                             40
-                                                                        }ms`,
+                                                                            }ms`,
                                                                     }}
                                                                 >
                                                                     <span className="max-w-[90%] text-[15px] line-clamp-1">
@@ -1143,8 +1134,8 @@ export default function InstallPage({ booking }) {
                                                     processing
                                                         ? "bg-gray-400 border-gray-400 cursor-not-allowed text-white"
                                                         : isFormValid
-                                                        ? "bg-primary border-primary text-foreground hover:text-dark hover:bg-foreground"
-                                                        : "bg-transparent border-slate-700 text-slate-500 cursor-not-allowed",
+                                                            ? "bg-primary border-primary text-foreground hover:text-dark hover:bg-foreground"
+                                                            : "bg-transparent border-slate-700 text-slate-500 cursor-not-allowed",
                                                 ].join(" ")}
                                             >
                                                 {processing ? (

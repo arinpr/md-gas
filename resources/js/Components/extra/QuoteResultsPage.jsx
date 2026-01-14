@@ -221,7 +221,7 @@ export default function QuoteResultsPage({ answers }) {
 
                                     <div className="relative z-10">
                                         <div className="text-sm opacity-80 flex items-center gap-2">
-                                            Total Price (inc. VAT)
+                                            Total Price
                                         </div>
 
                                         <div className="flex justify-between items-end mt-3">
@@ -255,12 +255,12 @@ export default function QuoteResultsPage({ answers }) {
                                                 // badge / tier
                                                 tier:
                                                     product.id ===
-                                                    recommendedProductId
+                                                        recommendedProductId
                                                         ? "Recommended"
                                                         : "",
                                                 badge:
                                                     product.id ===
-                                                    recommendedProductId
+                                                        recommendedProductId
                                                         ? "bg-primary text-white"
                                                         : "",
 

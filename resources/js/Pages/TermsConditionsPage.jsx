@@ -85,10 +85,9 @@ export default function TermsConditionsPage() {
                                             key={s.id}
                                             href={`#${s.id}`}
                                             className={`whitespace-nowrap rounded-full px-4 py-2 text-sm font-medium transition
-                                                ${
-                                                    isActive
-                                                        ? "bg-primary text-white shadow-sm"
-                                                        : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+                                                ${isActive
+                                                    ? "bg-primary text-white shadow-sm"
+                                                    : "bg-gray-100 text-gray-700 hover:bg-gray-200"
                                                 }`}
                                         >
                                             {s.title}
@@ -125,10 +124,9 @@ export default function TermsConditionsPage() {
                                                 <a
                                                     href={`#${s.id}`}
                                                     className={`block px-3 py-1.5 transition-all border-l-4
-                                                        ${
-                                                            isActive
-                                                                ? "border-primary text-primary font-semibold"
-                                                                : "border-transparent text-gray-600 hover:text-primary hover:border-secondary/70"
+                                                        ${isActive
+                                                            ? "border-primary text-primary font-semibold"
+                                                            : "border-transparent text-gray-600 hover:text-primary hover:border-secondary/70"
                                                         }`}
                                                 >
                                                     {s.title}
@@ -199,7 +197,7 @@ export default function TermsConditionsPage() {
                                 isActive={activeSectionId === "pricing"}
                             >
                                 <ul className="list-disc pl-5 space-y-2">
-                                    <li>Prices include VAT.</li>
+                                    {/* <li>Prices include VAT.</li> */}
                                     <li>Labour fixed, parts extra.</li>
                                     <li>Payment due on completion.</li>
                                     <li>Cash, card, bank transfer accepted.</li>
@@ -289,16 +287,14 @@ const TermsSection = ({
     <section id={id} className="relative">
         {/* Timeline dot – desktop only */}
         <div
-            className={`hidden md:block absolute -left-[37px] top-2 h-3 w-3 rounded-full border-2 ${
-                isActive
+            className={`hidden md:block absolute -left-[37px] top-2 h-3 w-3 rounded-full border-2 ${isActive
                     ? "bg-primary border-secondary/60"
                     : "bg-white border-light-grey"
-            }`}
+                }`}
         />
         <h3
-            className={`text-xl sm:text-2xl font-extrabold mb-4 ${
-                isContact || isActive ? "text-primary" : "text-gray-900"
-            }`}
+            className={`text-xl sm:text-2xl font-extrabold mb-4 ${isContact || isActive ? "text-primary" : "text-gray-900"
+                }`}
         >
             {title}
         </h3>

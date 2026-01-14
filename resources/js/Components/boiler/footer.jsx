@@ -84,19 +84,19 @@ export function Footer() {
                         <ul className="space-y-3">
                             {[
                                 {
-                                    href: "/book/repair",
+                                    href: "/book/quote?service=repair",
                                     label: "Boiler Repair",
                                 },
                                 {
-                                    href: "/book/service",
+                                    href: "/book/quote?service=service",
                                     label: "Annual Servicing",
                                 },
                                 {
-                                    href: "/book/quote",
+                                    href: "/book",
                                     label: "New Installations",
                                 },
                                 {
-                                    href: "/book/power-flush",
+                                    href: "/book/quote?service=powerflush",
                                     label: "Power Flush",
                                 },
                                 // {

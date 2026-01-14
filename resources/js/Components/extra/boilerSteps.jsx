@@ -101,7 +101,7 @@ export const SERVICE_QUESTIONS = {
             showIf: (a) =>
                 ["Regular / Standard boiler", "System boiler"].includes(
                     a.current_boiler_type?.label
-                ) || a.pressure_gauge?.label === "Yes",
+                ) || a.pressure_gauge?.label === "Yes" || (a.boiler_type_known?.label == 'No' && a.has_water_tank?.label == 'Yes' && a.pressure_gauge?.label == 'No'),
         },
 
         {
@@ -234,9 +234,27 @@ export const SERVICE_QUESTIONS = {
 
         {
             id: "thermostat_type",
-            question: "Thermostat choice",
+            question: "Which thermostat do you require?",
             type: "select",
-            options: [{ label: "Basic" }, { label: "Smart" }],
+            infoBox: {
+                badge: "Tip",
+                text: `A smart thermostat allows you to control your heating remotely via iOS or Android, set schedules, and improve efficiency.
+
+If you’re happy to keep your existing thermostat, please select Basic.
+• Standard wireless thermostat (included)
+• Smart thermostat +£100`,
+            },
+            options: [
+                {
+                    label: "Basic",
+                    image: "/images/stepper/STANDARD_room_thermostat-removebg-preview.png",
+
+                },
+                {
+                    label: "Smart",
+                    image: "/images/stepper/SMART_room_thermostat-removebg-preview.png",
+                }
+            ],
             preset: { label: "Basic" },
             showIf: (a) => !!a.radiators,
         },
@@ -245,7 +263,18 @@ export const SERVICE_QUESTIONS = {
             id: "trv_required",
             question: "Do you require new/additional TRVs?",
             type: "select",
-            options: [{ label: "No" }, { label: "Yes" }],
+            infoBox: {
+                badge: "Tip",
+                text: `Thermostatic Radiator Valves (TRVs)
+                Required under current Building Regulations to allow individual room temperature control.
+
+                Any missing or faulty TRVs will need to be replaced to ensure compliance with current standards.
+
+£35 per radiator
+
+                `
+            },
+            options: [{ label: "No" }, { label: "Yes", image: "/images/stepper/TRV-removebg-preview.png", }],
             preset: { label: "No" },
             showIf: (a) => !!a.thermostat_type,
         },

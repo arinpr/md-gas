@@ -103,9 +103,9 @@ export default function Stepper({
             typeof opt === "string"
                 ? { label: opt, price: 0 }
                 : {
-                      ...opt,
-                      requiresText: opt.requiresText || false,
-                  }
+                    ...opt,
+                    requiresText: opt.requiresText || false,
+                }
         );
     }, [current]);
 
@@ -131,17 +131,25 @@ export default function Stepper({
     function choose(option) {
         if (!current) return;
 
-        setAnswers((s) => ({
-            ...s,
-            [current.id]: {
-                ...option,
-                price: option.price || 0, // ✅ generic & safe
-                extraText: "",
-            },
-        }));
+        setAnswers((s) => {
+            const updated = {
+                ...s,
+                [current.id]: {
+                    ...option,
+                    price: option.price || 0,
+                    extraText: "",
+                },
+            };
+
+            console.log("All answers state:", updated); // ✅ FULL STATE
+
+            return updated;
+        });
     }
 
+
     function updateText(value) {
+        // console.log(value)
         setAnswers((s) => ({
             ...s,
             [current.id]: {
@@ -432,11 +440,10 @@ export default function Stepper({
                                 {current?.type === "checkbox_quantity" && (
                                     <div className="max-w-2xl mx-auto w-full">
                                         <div
-                                            className={`flex items-center justify-between rounded-2xl border px-6 py-5 transition ${
-                                                answers[current.id]?.enabled
-                                                    ? "border-primary bg-primary/5"
-                                                    : "border-dark/20 bg-white"
-                                            }`}
+                                            className={`flex items-center justify-between rounded-2xl border px-6 py-5 transition ${answers[current.id]?.enabled
+                                                ? "border-primary bg-primary/5"
+                                                : "border-dark/20 bg-white"
+                                                }`}
                                         >
                                             <label className="flex items-center gap-4 cursor-pointer">
                                                 <input
@@ -454,19 +461,19 @@ export default function Stepper({
                                                             [current.id]:
                                                                 enabled
                                                                     ? {
-                                                                          enabled: true,
-                                                                          qty: 1,
-                                                                          unitPrice:
-                                                                              current.price,
-                                                                          price: current.price,
-                                                                      }
+                                                                        enabled: true,
+                                                                        qty: 1,
+                                                                        unitPrice:
+                                                                            current.price,
+                                                                        price: current.price,
+                                                                    }
                                                                     : {
-                                                                          enabled: false,
-                                                                          qty: 0,
-                                                                          unitPrice:
-                                                                              current.price,
-                                                                          price: 0,
-                                                                      },
+                                                                        enabled: false,
+                                                                        qty: 0,
+                                                                        unitPrice:
+                                                                            current.price,
+                                                                        price: 0,
+                                                                    },
                                                         }));
                                                     }}
                                                     className="h-5 w-5 accent-primary"
@@ -581,7 +588,7 @@ export default function Stepper({
                     transition-all duration-300 hover:shadow-lg
                     group-hover:shadow-green-100/50 overflow-hidden
                     "
-                                                    // 🔴 CHANGE: flex-col sm:flex-row + p-4 sm:p-5
+                                                // 🔴 CHANGE: flex-col sm:flex-row + p-4 sm:p-5
                                                 >
                                                     {/* Background accent */}
                                                     <div className="absolute right-0 top-0 bottom-0 w-20 bg-gradient-to-l from-green-400/5 to-transparent"></div>
@@ -639,7 +646,7 @@ export default function Stepper({
                     transition-all duration-300 hover:shadow-lg
                     group-hover:shadow-blue-100/50 overflow-hidden
                 "
-                                                    // 🔴 CHANGE: flex-col sm:flex-row + p-4 sm:p-5
+                                                // 🔴 CHANGE: flex-col sm:flex-row + p-4 sm:p-5
                                                 >
                                                     {/* Background accent */}
                                                     <div className="absolute left-0 top-0 bottom-0 w-20 bg-gradient-to-r from-blue-400/5 to-transparent"></div>
@@ -745,12 +752,11 @@ export default function Stepper({
 
                                                             {/* Internal zoom layer */}
                                                             <div
-                                                                className={`absolute inset-0 transition-opacity duration-300 ${
-                                                                    hoveredIndex ===
+                                                                className={`absolute inset-0 transition-opacity duration-300 ${hoveredIndex ===
                                                                     index
-                                                                        ? "opacity-100"
-                                                                        : "opacity-0"
-                                                                }`}
+                                                                    ? "opacity-100"
+                                                                    : "opacity-0"
+                                                                    }`}
                                                             >
                                                                 <img
                                                                     src={
@@ -766,12 +772,11 @@ export default function Stepper({
 
                                                             {/* Focus frame */}
                                                             <div
-                                                                className={`pointer-events-none absolute inset-5 rounded-2xl border border-white/70 transition-opacity duration-300 ${
-                                                                    hoveredIndex ===
+                                                                className={`pointer-events-none absolute inset-5 rounded-2xl border border-white/70 transition-opacity duration-300 ${hoveredIndex ===
                                                                     index
-                                                                        ? "opacity-100"
-                                                                        : "opacity-0"
-                                                                }`}
+                                                                    ? "opacity-100"
+                                                                    : "opacity-0"
+                                                                    }`}
                                                             />
 
                                                             {/* Label */}
@@ -843,11 +848,10 @@ export default function Stepper({
                                             {isDropdownOpen && (
                                                 <div
                                                     ref={dropdownRef}
-                                                    className={`absolute inset-x-0 z-50 ${
-                                                        openUpwards
-                                                            ? "bottom-full mb-2"
-                                                            : "top-full mt-2"
-                                                    }`}
+                                                    className={`absolute inset-x-0 z-50 ${openUpwards
+                                                        ? "bottom-full mb-2"
+                                                        : "top-full mt-2"
+                                                        }`}
                                                 >
                                                     <div className="bg-white border-2 border-dark/20 rounded-xl overflow-hidden">
                                                         <div className="max-h-80 overflow-y-auto">
@@ -921,11 +925,10 @@ export default function Stepper({
                                                     ({ key, label, full }) => (
                                                         <div
                                                             key={key}
-                                                            className={`relative ${
-                                                                full
-                                                                    ? "md:col-span-2"
-                                                                    : ""
-                                                            }`}
+                                                            className={`relative ${full
+                                                                ? "md:col-span-2"
+                                                                : ""
+                                                                }`}
                                                         >
                                                             <label className="absolute -top-2 left-5 z-10 bg-white px-1 text-xs font-medium text-slate-500">
                                                                 {label}
@@ -934,8 +937,8 @@ export default function Stepper({
                                                             <input
                                                                 value={
                                                                     answers[
-                                                                        current
-                                                                            .id
+                                                                    current
+                                                                        .id
                                                                     ]?.[key] ||
                                                                     ""
                                                                 }
@@ -946,15 +949,15 @@ export default function Stepper({
                                                                         ) => ({
                                                                             ...s,
                                                                             [current.id]:
-                                                                                {
-                                                                                    ...s[
-                                                                                        current
-                                                                                            .id
-                                                                                    ],
-                                                                                    [key]: e
-                                                                                        .target
-                                                                                        .value,
-                                                                                },
+                                                                            {
+                                                                                ...s[
+                                                                                current
+                                                                                    .id
+                                                                                ],
+                                                                                [key]: e
+                                                                                    .target
+                                                                                    .value,
+                                                                            },
                                                                         })
                                                                     )
                                                                 }
@@ -1024,11 +1027,10 @@ export default function Stepper({
                                                 return (
                                                     <div
                                                         key={opt.label}
-                                                        className={`option-card ${
-                                                            active
-                                                                ? "option-active sheen"
-                                                                : "option-inactive"
-                                                        }`}
+                                                        className={`option-card ${active
+                                                            ? "option-active sheen"
+                                                            : "option-inactive"
+                                                            }`}
                                                     >
                                                         <button
                                                             type="button"
@@ -1039,11 +1041,10 @@ export default function Stepper({
                                                         >
                                                             <div className="flex items-center gap-5">
                                                                 <div
-                                                                    className={`radial-dot ${
-                                                                        active
-                                                                            ? "radial-dot-active"
-                                                                            : "radial-dot-inactive"
-                                                                    }`}
+                                                                    className={`radial-dot ${active
+                                                                        ? "radial-dot-active"
+                                                                        : "radial-dot-inactive"
+                                                                        }`}
                                                                 >
                                                                     <span className="radial-dot-core" />
                                                                 </div>
@@ -1121,7 +1122,7 @@ export default function Stepper({
                                             {/* Editorial content */}
                                             <div className="space-y-4">
                                                 {/* Main text */}
-                                                <p className="text-[16px] leading-relaxed text-slate-700 max-w-2xl">
+                                                <p className="text-[16px] leading-relaxed text-slate-700 max-w-2xl whitespace-pre-line">
                                                     {current.infoBox.text}
                                                 </p>
 
@@ -1175,11 +1176,10 @@ export default function Stepper({
                                         <button
                                             onClick={back}
                                             disabled={index === 0}
-                                            className={`btn-pill flex gap-1 items-center cursor-pointer ${
-                                                index === 0
-                                                    ? "btn-disabled"
-                                                    : ""
-                                            }`}
+                                            className={`btn-pill flex gap-1 items-center cursor-pointer ${index === 0
+                                                ? "btn-disabled"
+                                                : ""
+                                                }`}
                                         >
                                             <FiChevronLeft /> Back
                                         </button>
@@ -1212,11 +1212,10 @@ export default function Stepper({
                                                 }
                                             }}
                                             disabled={!canProceed}
-                                            className={`btn-gloss flex gap-1 items-center cursor-pointer ${
-                                                !canProceed
-                                                    ? "btn-disabled"
-                                                    : ""
-                                            }`}
+                                            className={`btn-gloss flex gap-1 items-center cursor-pointer ${!canProceed
+                                                ? "btn-disabled"
+                                                : ""
+                                                }`}
                                         >
                                             Next <FiChevronRight />
                                         </button>

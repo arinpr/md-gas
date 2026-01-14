@@ -16,8 +16,16 @@ const COMBI_NOTES = [
 ];
 
 const SYSTEM_HEAT_INCLUDES = [
-
+    "Magnetic system filter",
+    "Chemical system flush + inhibitor",
+    "Old boiler removal & disposal",
+    "Hot water cylinder connection (existing)",
+    "System boiler commissioning",
+    "Gas Safe registration",
+    "Building Control compliance certificate",
+    "Manufacturer warranty registration",
 ];
+
 
 const SYSTEM_HEAT_NOTES = [
 
