@@ -9,7 +9,9 @@ import ProductTabs from "./Tabs";
 import { useRef, useState } from "react";
 import { router } from "@inertiajs/react";
 
-export default function DetailsQuoteSidebar({ detailsQuote, onClose }) {
+
+
+export default function DetailsQuoteSidebar({ detailsQuote, onClose, answers, product, selectedPower }) {
     if (!detailsQuote) return null;
 
     // 1. We create the reference here
@@ -32,11 +34,41 @@ export default function DetailsQuoteSidebar({ detailsQuote, onClose }) {
 
     const safePrice = Number(price) || 0;
 
+    // Calculate Price: Handle nulls from your screenshot (base + margin + addons)
+    const calculatePrice = (product) => {
+        console.log("Calculating price for product:", product);
+        if (product.pricing?.total) return product.pricing.total;
+
+        const base = parseFloat(product.pricing?.base || 0);
+        const margin = parseFloat(product.pricing?.marginApplied || 0);
+        const addons = parseFloat(product.pricing?.addOnsTotal || 0);
+        return base + margin + addons;
+    };
+
+    const finalPrice = calculatePrice(product);
+
     const carouselImages = Array.isArray(productImages)
         ? productImages
         : productImages
         ? [productImages]
         : ["/images/ideal-20logic.png"];
+
+
+    console.log("Detailed Quote", {
+                                                    boiler_id: product.id,
+                                                    brand: product.brand,
+                                                    model: product.model,
+                                                    includes:
+                                                        product.includes ?? [],
+                                                    images:
+                                                        product.images ?? [],
+                                                    kw: product.kw,
+                                                    warrantyYears:
+                                                        product.warrantyYears,
+                                                    price: finalPrice,
+                                                    power: selectedPower,
+                                                    answers: answers,
+                                                })
 
     return (
         <>
@@ -69,8 +101,8 @@ export default function DetailsQuoteSidebar({ detailsQuote, onClose }) {
                                 {/* Save Button - Glass Panel */}
                                 <button
                                     className="
-            group relative flex items-center gap-3 
-            px-6 py-3 
+            group relative flex items-center gap-3
+            px-6 py-3
             bg-gradient-to-b from-slate-800/50 to-slate-900/50
             border border-slate-700 hover:border-emerald-500/50
             backdrop-blur-sm rounded-lg
@@ -92,7 +124,7 @@ export default function DetailsQuoteSidebar({ detailsQuote, onClose }) {
                                 onClick={onClose}
                                 className="
             group relative h-10 w-10 cursor-pointer
-            flex items-center justify-center 
+            flex items-center justify-center
             rounded-lg border border-slate-800 bg-slate-900/50
             hover:border-red-500/30 hover:bg-red-500/10
             transition-all duration-300
@@ -162,20 +194,25 @@ export default function DetailsQuoteSidebar({ detailsQuote, onClose }) {
                                 <button
                                     type="button"
                                     onClick={() =>
-                                        router.post("/book/quote/new/install", {
-                                            boiler_id: detailsQuote?.id,
-                                            brand: detailsQuote?.brand,
-                                            model: detailsQuote?.model,
-                                            images: detailsQuote?.productImages,
-                                            kw: detailsQuote?.kw,
-                                            warrantyYears:
-                                                detailsQuote?.warrantyYears,
-                                            price: detailsQuote?.price,
-                                            includes:
-                                                detailsQuote?.includes ?? [],
-                                            power: "auto",
-                                        })
-                                    }
+                                            router.post(
+                                                "/book/quote/new/install",
+                                                {
+                                                    boiler_id: product.id,
+                                                    brand: product.brand,
+                                                    model: product.model,
+                                                    includes:
+                                                        product.includes ?? [],
+                                                    images:
+                                                        product.images ?? [],
+                                                    kw: product.kw,
+                                                    warrantyYears:
+                                                        product.warrantyYears,
+                                                    price: finalPrice,
+                                                    power: selectedPower,
+                                                    answers: answers,
+                                                }
+                                            )
+                                        }
                                     className="group relative cursor-pointer w-full flex items-center gap-4 p-5 rounded-2xl bg-gradient-to-r from-secondary/30 to-secondary/15 border border-secondary/20 hover:border-secondary/50 hover:from-secondary/30 transition-all duration-300 shadow-[0_0_20px_rgba(16,185,129,0.1)] hover:shadow-[0_0_30px_rgba(16,185,129,0.2)]"
                                 >
                                     <div className="h-12 w-12 flex items-center justify-center rounded-xl bg-secondary text-black shadow-lg shadow-secondary/20 shrink-0">

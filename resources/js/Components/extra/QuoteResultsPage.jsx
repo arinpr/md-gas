@@ -21,6 +21,8 @@ export default function QuoteResultsPage({ answers }) {
     const [selectedPower, setSelectedPower] = useState("25");
     const [visibleCount, setVisibleCount] = useState(3);
 
+    const [productDetails, setProductDetails] = useState({});
+
     // --- Helpers for Dynamic Data ---
 
     // Generate gradients based on index so api data doesn't need style info
@@ -239,7 +241,8 @@ export default function QuoteResultsPage({ answers }) {
                                 {/* Action Buttons */}
                                 <div className="mt-6 space-y-3">
                                     <button
-                                        onClick={() =>
+                                        onClick={() =>{
+                                            setProductDetails(product);
                                             setDetailsQuote({
                                                 id: product.id,
 
@@ -271,6 +274,8 @@ export default function QuoteResultsPage({ answers }) {
                                                 notes: product.notes,
                                                 includes: product.includes,
                                             })
+                                        }
+
                                         }
                                         className="w-full rounded-xl border-2 cursor-pointer border-primary/25 hover:border-primary hover:bg-primary/5 py-3.5 text-primary font-semibold transition-all duration-200 flex items-center justify-center gap-2 group"
                                     >
@@ -437,6 +442,8 @@ export default function QuoteResultsPage({ answers }) {
                     detailsQuote={detailsQuote}
                     onClose={() => setDetailsQuote(null)}
                     selectedPower={selectedPower}
+                    answers={answers}
+                    product={productDetails}
                 />
             )}
         </div>
